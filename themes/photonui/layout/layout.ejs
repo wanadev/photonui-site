@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title><% if (page.title) { %><%- page.title %> - <%- config.title %><% } else { %><%- config.title %>: <%- config.description %><% } %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/png" href="<%- url_for("images/favicon.png") %>" />
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,300italic' rel='stylesheet' type='text/css'>
+        <%- css('style/style') %>
+        <%- js("js/photonui.js") %>
+        <%- js("js/highlight.pack.js") %>
+    </head>
+
+    <body>
+
+        <%- partial("partial/header") %>
+
+        <div id="content">
+            <%- body %>
+        </div>
+
+        <%- partial("partial/footer") %>
+
+    </body>
+
+</html>
+

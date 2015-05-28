@@ -1,0 +1,19 @@
+- name: Button
+  image: doc/widgets/button.png
+  url: doc/widgets/button.html
+
+- name: Text
+  image: doc/widgets/text.png
+  url: doc/widgets/text.html
+
+- name: TextField
+  image: doc/widgets/text-field.png
+  url: doc/widgets/text-field.html
+
+- name: Translation
+  image: doc/widgets/translation.png
+  url: doc/widgets/translation.html
+
+- name: Window
+  image: doc/widgets/window.png
+  url: doc/widgets/window.html

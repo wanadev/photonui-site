@@ -1,0 +1,21 @@
+<% if (page.demo_script) { %>
+
+    <div class="demo-runner">
+        <div class="page">
+            <div class="left">
+                <% if (page.title) { %>
+                    <h2><%- page.title %></h2>
+                <% } %>
+                <div id="demo"></div>
+            </div>
+            <div class="right">
+                <div id="demo-error"></div>
+                <pre id="demo-code" contenteditable spellcheck="false"><%- getFileContent(page.demo_script) %></pre>
+                <button id="run-script"><i class="fa fa-play"></i> Run (Ctrl+Enter)</button>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <%- js("js/script-runner.js") %>
+
+<% } %>

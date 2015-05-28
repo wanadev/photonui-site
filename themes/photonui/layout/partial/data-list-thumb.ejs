@@ -1,0 +1,16 @@
+<% if (page.data) { %>
+    <ul class="data-list-thumb">
+        <% for (var i in site.data[page.data].sort(function(a, b) { return (a.name > b.name) ? 1 : -1; })) { %>
+            <li>
+                <a href="<%- url_for(site.data[page.data][i].url) %>">
+                    <% if (fileExists(site.data[page.data][i].image)) { %>
+                        <span><img src="<%- url_for(site.data[page.data][i].image) %>" alt="<%- site.data[page.data][i].name %>" /></span>
+                    <% } else { %>
+                        <span><img src="<%- url_for("doc/widgets/default.png") %>" alt="<%- site.data[page.data][i].name %>" /></span>
+                    <% } %>
+                    <span><%- site.data[page.data][i].name %></span>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+<% } %>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/container/layout/gridlayout.js - photonui</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/photonui.&lt;WIDGET CLASS NAME&gt;.html">photonui.&lt;WIDGET CLASS NAME&gt;</a></li>
+                                <li><a href="../classes/photonui.AccelManager.html">photonui.AccelManager</a></li>
+                                <li><a href="../classes/photonui.Base.html">photonui.Base</a></li>
+                                <li><a href="../classes/photonui.BaseIcon.html">photonui.BaseIcon</a></li>
+                                <li><a href="../classes/photonui.BaseWindow.html">photonui.BaseWindow</a></li>
+                                <li><a href="../classes/photonui.BoxLayout.html">photonui.BoxLayout</a></li>
+                                <li><a href="../classes/photonui.Button.html">photonui.Button</a></li>
+                                <li><a href="../classes/photonui.Canvas.html">photonui.Canvas</a></li>
+                                <li><a href="../classes/photonui.CheckBox.html">photonui.CheckBox</a></li>
+                                <li><a href="../classes/photonui.Color.html">photonui.Color</a></li>
+                                <li><a href="../classes/photonui.ColorButton.html">photonui.ColorButton</a></li>
+                                <li><a href="../classes/photonui.ColorPalette.html">photonui.ColorPalette</a></li>
+                                <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
+                                <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
+                                <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
+                                <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
+                                <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
+                                <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
+                                <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
+                                <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
+                                <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
+                                <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
+                                <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
+                                <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
+                                <li><a href="../classes/photonui.NumericField.html">photonui.NumericField</a></li>
+                                <li><a href="../classes/photonui.PopupMenu.html">photonui.PopupMenu</a></li>
+                                <li><a href="../classes/photonui.PopupWindow.html">photonui.PopupWindow</a></li>
+                                <li><a href="../classes/photonui.ProgressBar.html">photonui.ProgressBar</a></li>
+                                <li><a href="../classes/photonui.Select.html">photonui.Select</a></li>
+                                <li><a href="../classes/photonui.Separator.html">photonui.Separator</a></li>
+                                <li><a href="../classes/photonui.Slider.html">photonui.Slider</a></li>
+                                <li><a href="../classes/photonui.SpriteIcon.html">photonui.SpriteIcon</a></li>
+                                <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
+                                <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
+                                <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
+                                <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
+                                <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
+                                <li><a href="../classes/photonui.ToggleButton.html">photonui.ToggleButton</a></li>
+                                <li><a href="../classes/photonui.Translation.html">photonui.Translation</a></li>
+                                <li><a href="../classes/photonui.Viewport.html">photonui.Viewport</a></li>
+                                <li><a href="../classes/photonui.Widget.html">photonui.Widget</a></li>
+                                <li><a href="../classes/photonui.Window.html">photonui.Window</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/&lt;SUBMUDULE (Input, Container, Visual, Event, Composite,...)&gt;.html">&lt;SUBMUDULE (Input, Container, Visual, Event, Composite,...)&gt;</a></li>
+                                <li><a href="../modules/Composite.html">Composite</a></li>
+                                <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/Event.html">Event</a></li>
+                                <li><a href="../modules/Helpers.html">Helpers</a></li>
+                                <li><a href="../modules/Input.html">Input</a></li>
+                                <li><a href="../modules/Misc.html">Misc</a></li>
+                                <li><a href="../modules/PhotonUI.html">PhotonUI</a></li>
+                                <li><a href="../modules/Visual.html">Visual</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: src/container/layout/gridlayout.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*
+ * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *   * Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *   * Neither the name of Wanadev nor the names of its contributors may be used
+ *     to endorse or promote products derived from this software without specific
+ *     prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
+ */
+
+/**
+ * PhotonUI - Javascript Web User Interface.
+ *
+ * @module PhotonUI
+ * @submodule Container
+ * @namespace photonui
+ */
+
+var Helpers = require(&quot;../../helpers.js&quot;);
+var Layout = require(&quot;./layout.js&quot;);
+
+/**
+ * Grid layout.
+ *
+ * Layout Options:
+ *
+ *     {
+ *          verticalExpansion: &lt;Boolean, default: true&gt;,
+ *          horizontalExpansion: &lt;Boolean, default: true&gt;,
+ *          width: &lt;Number, default: undefined&gt;,
+ *          height: &lt;Number, default: undefined&gt;,
+ *          minWidth: &lt;Number, default: undefined&gt;,
+ *          minHeight: &lt;Number, default: undefined&gt;,
+ *          maxWidth: &lt;Number, default: undefined&gt;,
+ *          maxHeight: &lt;Number, default: undefined&gt;,
+ *          horizontalAlign: &lt;String (left, center, right), default: center&gt;,
+ *          gridX: &lt;Number, default: 0&gt;,
+ *          gridY: &lt;Number, default: 0&gt;,
+ *          gridWidth: &lt;Number, default: 1&gt;,
+ *          gridHeight: &lt;Number, default: 1&gt;,
+ *     }
+ *
+ * @class GridLayout
+ * @constructor
+ * @extends photonui.Layout
+ */
+var GridLayout = Layout.$extend({
+
+    // Constructor
+    __init__: function(params) {
+        this.$super(params);
+        this._updateProperties([&quot;verticalSpacing&quot;]);
+    },
+
+
+    //////////////////////////////////////////
+    // Properties and Accessors             //
+    //////////////////////////////////////////
+
+
+    // ====== Public properties ======
+
+
+    /**
+     * The vertical spacing between children widgets.
+     *
+     * @property verticalSpacing
+     * @type Number
+     * @default 5
+     */
+    _verticalSpacing: 5,
+
+    getVerticalSpacing: function() {
+        return this._verticalSpacing;
+    },
+
+    setVerticalSpacing: function(verticalSpacing) {
+        this._verticalSpacing = verticalSpacing;
+        this.__html.grid.style.borderSpacing = this.verticalSpacing + &quot;px &quot; + this.horizontalSpacing + &quot;px&quot;;
+    },
+
+    /**
+     * The horizontal spacing between children widgets.
+     *
+     * @property horizontalSpacing
+     * @type Number
+     * @default 5
+     */
+    _horizontalSpacing: 5,
+
+    getHorizontalSpacing: function() {
+        return this._horizontalSpacing;
+    },
+
+    setHorizontalSpacing: function(horizontalSpacing) {
+        this._horizontalSpacing = horizontalSpacing;
+        this.__html.grid.style.borderSpacing = this.verticalSpacing + &quot;px &quot; + this.horizontalSpacing + &quot;px&quot;;
+    },
+
+    /**
+     * Html outer element of the widget (if any).
+     *
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getHtml: function() {
+        return this.__html.outerbox;
+    },
+
+    //////////////////////////////////////////
+    // Methods                              //
+    //////////////////////////////////////////
+
+
+    // ====== Private methods ======
+
+
+    /**
+     * Build the widget HTML.
+     *
+     * @method _buildHtml
+     * @private
+     */
+    _buildHtml: function() {
+        this.__html.outerbox = document.createElement(&quot;div&quot;);
+        this.__html.outerbox.className = &quot;photonui-widget photonui-gridlayout&quot;;
+
+        this.__html.grid = document.createElement(&quot;table&quot;);
+        this.__html.outerbox.appendChild(this.__html.grid);
+
+        this.__html.gridBody = document.createElement(&quot;tbody&quot;);
+        this.__html.grid.appendChild(this.__html.gridBody);
+    },
+
+    /**
+     * Update the layout.
+     *
+     * @method _updateLayout
+     * @private
+     */
+    _updateLayout: function() {
+        // Calculate geometry
+        var ox = Infinity;  // Offset X
+        var oy = Infinity;  // Offset Y
+        var nc = 0;  // Number of columns
+        var nr = 0;  // Number of rows
+        var children = this.children;
+        for (var i=0 ; i&lt;children.length ; i++) {
+            children[i].layoutOptions.gridX = (children[i].layoutOptions.gridX != undefined) ? children[i].layoutOptions.gridX : 0;
+            children[i].layoutOptions.gridY = (children[i].layoutOptions.gridY != undefined) ? children[i].layoutOptions.gridY : 0;
+            children[i].layoutOptions.gridWidth = Math.max(children[i].layoutOptions.gridWidth, 1) || 1;
+            children[i].layoutOptions.gridHeight = Math.max(children[i].layoutOptions.gridHeight, 1) || 1;
+            ox = Math.min(ox, children[i].layoutOptions.gridX);
+            oy = Math.min(oy, children[i].layoutOptions.gridY);
+            nc = Math.max(nc, children[i].layoutOptions.gridX + children[i].layoutOptions.gridWidth);
+            nr = Math.max(nr, children[i].layoutOptions.gridY + children[i].layoutOptions.gridHeight);
+        }
+        nc -= ox;
+        nr -= oy;
+
+        // Find and fix conflicts
+        // TODO
+
+        // Build
+        Helpers.cleanNode(this.__html.gridBody);
+        var map = [];
+        for (var y=0 ; y&lt;nr ; y++) {
+            var row = [];
+            for (var x=0 ; x&lt;nc ; x++) {
+                row.push(false);
+            }
+            map.push(row);
+        }
+        for (var y=0 ; y&lt;nr ; y++) {
+            var e_tr = document.createElement(&quot;tr&quot;);
+            this.__html.gridBody.appendChild(e_tr);
+            for (var x=0 ; x&lt;nc ; x++) {
+                if (map[y][x]) {
+                    continue;
+                }
+                var widget = false;
+                var e_td = document.createElement(&quot;td&quot;);
+                e_td.className = &quot;photonui-container photonui-gridlayout-cell&quot;;
+                e_tr.appendChild(e_td);
+                for (var i=0 ; i&lt;children.length ; i++) {
+                    if (children[i].layoutOptions.gridX - ox == x &amp;&amp; children[i].layoutOptions.gridY - oy == y) {
+                        widget = true;
+                        var cs = children[i].layoutOptions.gridWidth;
+                        var rs = children[i].layoutOptions.gridHeight;
+                        e_td.colSpan = cs;
+                        e_td.rowSpan = rs;
+                        e_td.appendChild(children[i].html);
+
+                        if (children[i].layoutOptions.horizontalExpansion == undefined
+                        ||  children[i].layoutOptions.horizontalExpansion) {
+                            e_td.className += &quot; photonui-container-expand-child-horizontal&quot;
+                        }
+                        if (children[i].layoutOptions.verticalExpansion == undefined
+                        ||  children[i].layoutOptions.verticalExpansion) {
+                            e_td.className += &quot; photonui-container-expand-child-vertical&quot;
+                        }
+
+                        // Layout Options: width
+                        if (children[i].layoutOptions.width != undefined) {
+                            e_td.style.height = children[i].layoutOptions.width + &quot;px&quot;;
+                        }
+                        // Layout Options: height
+                        if (children[i].layoutOptions.height != undefined) {
+                            e_td.style.height = children[i].layoutOptions.height + &quot;px&quot;;
+                        }
+                        // Layout Options: minWidth
+                        if (children[i].layoutOptions.minWidth != undefined) {
+                            e_td.style.minWidth = children[i].layoutOptions.minWidth + &quot;px&quot;;
+                        }
+                        // Layout Options: minHeight
+                        if (children[i].layoutOptions.minHeight != undefined) {
+                            e_td.style.minHeight = children[i].layoutOptions.minHeight + &quot;px&quot;;
+                        }
+                        // Layout Options: maxWidth
+                        if (children[i].layoutOptions.maxWidth != undefined) {
+                            e_td.style.maxWidth = children[i].layoutOptions.maxWidth + &quot;px&quot;;
+                        }
+                        // Layout Options: maxHeight
+                        if (children[i].layoutOptions.maxHeight != undefined) {
+                            e_td.style.maxHeight = children[i].layoutOptions.maxHeight + &quot;px&quot;;
+                        }
+                        // Layout Options: horizontalAlign
+                        if (children[i].layoutOptions.horizontalAlign != undefined) {
+                            e_td.style.textAlign = children[i].layoutOptions.horizontalAlign;
+                        }
+
+                        if (cs &gt; 1 || rs &gt; 1) {
+                            for (var r=y ; r&lt;y+rs ; r++) {
+                                for (var c=x ; c&lt;x+cs ; c++) {
+                                    map[r][c] = true;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+                if (!widget) {
+                    e_td.innerHTML = &quot;&amp;nbsp;&quot;;
+                }
+            }
+        }
+
+        // Hack for Gecko and Trident
+        //var cells = document.querySelectorAll(&quot;#&quot; + this.name + &quot; td&quot;);
+        //var heights = [];
+        //var padding = 0;
+        //for (var i=0 ; i&lt;cells.length ; i++) {
+            //if (cells[i].childNodes.length == 1 &amp;&amp; cells[i].childNodes[0] instanceof HTMLElement) {
+                //padding = parseInt(getComputedStyle(cells[i].childNodes[0]).paddingTop);
+                //padding += parseInt(getComputedStyle(cells[i].childNodes[0]).paddingBottom);
+            //}
+            //heights[i] = (cells[i].offsetHeight - padding) + &quot;px&quot;;
+        //}
+        //for (var i=0 ; i&lt;cells.length ; i++) {
+            //cells[i].style.height = heights[i];
+        //}
+    }
+});
+
+module.exports = GridLayout;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
