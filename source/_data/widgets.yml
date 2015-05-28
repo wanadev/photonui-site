@@ -2,6 +2,10 @@
   image: doc/widgets/button.png
   url: doc/widgets/button.html
 
+- name: Select
+  image: doc/widgets/select.png
+  url: doc/widgets/select.html
+
 - name: Slider
   image: doc/widgets/slider.png
   url: doc/widgets/slider.html
