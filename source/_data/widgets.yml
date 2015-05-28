@@ -2,6 +2,10 @@
   image: doc/widgets/button.png
   url: doc/widgets/button.html
 
+- name: SpriteIcon
+  image: doc/widgets/sprite-icon.png
+  url: doc/widgets/sprite-icon.html
+
 - name: Text
   image: doc/widgets/text.png
   url: doc/widgets/text.html
