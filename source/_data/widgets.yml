@@ -48,7 +48,8 @@
   url: /PhotonUI/ref/classes/photonui.MouseManager.html
 
 - name: NumericField
-  url: /PhotonUI/ref/classes/photonui.NumericField.html
+  image: doc/widgets/numericfield.png
+  url: doc/widgets/numericfield.html
 
 - name: PopupMenu
   url: /PhotonUI/ref/classes/photonui.PopupMenu.html
