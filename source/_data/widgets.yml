@@ -91,7 +91,8 @@
   url: doc/widgets/spriteicon.html
 
 - name: Switch
-  url: /PhotonUI/ref/classes/photonui.Switch.html
+  image: doc/widgets/switch.png
+  url: doc/widgets/switch.html
 
 - name: Text
   image: doc/widgets/text.png
