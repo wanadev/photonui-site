@@ -1,5 +1,5 @@
 title: SpriteIcon
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/spriteicon.js
 ---
 

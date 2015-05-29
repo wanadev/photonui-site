@@ -22,6 +22,22 @@ a:hover {
     color: #3B95A4;
 }
 
+a.button-big {
+    border: #4EC8DB solid 2px;
+    color: #3B95A4;
+    text-decoration: none;
+    display: inline-block;
+    padding: 15px 20px;
+    font-size: 140%;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+a.button-big:hover {
+    background: #4EC8DB;
+    color: #fff;
+}
+
 header {
     display: block;
     background: #4EC8DB;
@@ -90,6 +106,12 @@ header a:hover {
 #content h2 {
     font-family: 'Titillium Web', sans-serif;
     font-size: 180%;
+    color: #1C8495;
+}
+
+#content h3 {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 150%;
     color: #1C8495;
 }
 
@@ -220,6 +242,22 @@ footer {
     background: #D25440;
 }
 
+code {
+    font-size: 10pt;
+    color: #1C8495;
+    border: #eee solid 1px;
+    background: #f8f8f8;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+pre code {
+    color: inherit;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
 
 figure {
     box-sizing: border-box;
@@ -266,6 +304,17 @@ figure .run-script {
 
 figure .run-script:hover {
     background: #D25440;
+}
+
+article > pre {
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+    background: #333;
+    color: #ddd;
+    margin: 0;
+    padding: 10px;
+    font-size: 10pt;
 }
 
 

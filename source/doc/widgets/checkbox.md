@@ -1,5 +1,5 @@
 title: CheckBox
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/checkbox.js
 ---
 

@@ -1,5 +1,5 @@
 title: Translation
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/translation.js
 ---
 

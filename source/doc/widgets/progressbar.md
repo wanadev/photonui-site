@@ -1,5 +1,5 @@
 title: ProgressBar
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/progressbar.js
 ---
 

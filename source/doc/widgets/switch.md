@@ -1,5 +1,5 @@
 title: Switch
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/switch.js
 ---
 

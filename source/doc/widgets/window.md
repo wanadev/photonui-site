@@ -1,5 +1,5 @@
 title: Window
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/window.js
 ---
 

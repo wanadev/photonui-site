@@ -1,5 +1,5 @@
 title: TextField
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/textfield.js
 ---
 

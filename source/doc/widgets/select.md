@@ -1,5 +1,5 @@
 title: Select
-layout: widget
+layout: page-width-demo
 demo_script: doc/widgets/select.js
 ---
 
