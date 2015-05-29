@@ -15,8 +15,14 @@
   image: doc/widgets/checkbox.png
   url: doc/widgets/checkbox.html
 
+- name: Color
+  url: /PhotonUI/ref/classes/photonui.Color.html
+
 - name: ColorButton
   url: /PhotonUI/ref/classes/photonui.ColorButton.html
+
+- name: ColorPalette
+  url: /PhotonUI/ref/classes/photonui.ColorPalette.html
 
 - name: ColorPicker
   url: /PhotonUI/ref/classes/photonui.ColorPicker.html
@@ -42,8 +48,14 @@
 - name: GridLayout
   url: /PhotonUI/ref/classes/photonui.GridLayout.html
 
+- name: Label
+  url: /PhotonUI/ref/classes/photonui.Label.html
+
 - name: Menu
   url: /PhotonUI/ref/classes/photonui.Menu.html
+
+- name: MenuItem
+  url: /PhotonUI/ref/classes/photonui.MenuItem.html
 
 - name: MouseManager
   url: /PhotonUI/ref/classes/photonui.MouseManager.html
@@ -55,6 +67,9 @@
 - name: PopupMenu
   url: /PhotonUI/ref/classes/photonui.PopupMenu.html
 
+- name: PopupWindow
+  url: /PhotonUI/ref/classes/photonui.PopupWindow.html
+
 - name: ProgressBar
   image: doc/widgets/progressbar.png
   url: doc/widgets/progressbar.html
@@ -62,6 +77,9 @@
 - name: Select
   image: doc/widgets/select.png
   url: doc/widgets/select.html
+
+- name: Separator
+  url: /PhotonUI/ref/classes/photonui.Separator.html
 
 - name: Slider
   image: doc/widgets/slider.png
@@ -71,9 +89,15 @@
   image: doc/widgets/spriteicon.png
   url: doc/widgets/spriteicon.html
 
+- name: Switch
+  url: /PhotonUI/ref/classes/photonui.Switch.html
+
 - name: Text
   image: doc/widgets/text.png
   url: doc/widgets/text.html
+
+- name: TextAreaField
+  url: /PhotonUI/ref/classes/photonui.TextAreaField.html
 
 - name: TextField
   image: doc/widgets/textfield.png
@@ -82,6 +106,12 @@
 - name: Translation
   image: doc/widgets/translation.png
   url: doc/widgets/translation.html
+
+- name: ToggleButton
+  url: /PhotonUI/ref/classes/photonui.ToggleButton.html
+
+- name: Viewport
+  url: /PhotonUI/ref/classes/photonui.Viewport.html
 
 - name: Window
   image: doc/widgets/window.png
