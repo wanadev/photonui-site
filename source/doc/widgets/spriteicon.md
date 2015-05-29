@@ -1,6 +1,6 @@
 title: SpriteIcon
 layout: widget
-demo_script: doc/widgets/sprite-icon.js
+demo_script: doc/widgets/spriteicon.js
 ---
 
 ## Class Reference

@@ -2,6 +2,10 @@
   image: doc/widgets/button.png
   url: doc/widgets/button.html
 
+- name: ProgressBar
+  image: doc/widgets/progressbar.png
+  url: doc/widgets/progressbar.html
+
 - name: Select
   image: doc/widgets/select.png
   url: doc/widgets/select.html
@@ -11,16 +15,16 @@
   url: doc/widgets/slider.html
 
 - name: SpriteIcon
-  image: doc/widgets/sprite-icon.png
-  url: doc/widgets/sprite-icon.html
+  image: doc/widgets/spriteicon.png
+  url: doc/widgets/spriteicon.html
 
 - name: Text
   image: doc/widgets/text.png
   url: doc/widgets/text.html
 
 - name: TextField
-  image: doc/widgets/text-field.png
-  url: doc/widgets/text-field.html
+  image: doc/widgets/textfield.png
+  url: doc/widgets/textfield.html
 
 - name: Translation
   image: doc/widgets/translation.png

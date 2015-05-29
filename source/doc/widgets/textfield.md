@@ -1,6 +1,6 @@
 title: TextField
 layout: widget
-demo_script: doc/widgets/text-field.js
+demo_script: doc/widgets/textfield.js
 ---
 
 ## Class Reference
