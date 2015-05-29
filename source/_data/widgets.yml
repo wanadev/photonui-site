@@ -12,7 +12,8 @@
   url: /PhotonUI/ref/classes/photonui.Canvas.html
 
 - name: CheckBox
-  url: /PhotonUI/ref/classes/photonui.CheckBox.html
+  image: doc/widgets/checkbox.png
+  url: doc/widgets/checkbox.html
 
 - name: ColorButton
   url: /PhotonUI/ref/classes/photonui.ColorButton.html
