@@ -1,6 +1,57 @@
+- name: AccelManager
+  url: /PhotonUI/ref/classes/photonui.AccelManager.html
+
+- name: BoxLayout
+  url: /PhotonUI/ref/classes/photonui.BoxLayout.html
+
 - name: Button
   image: doc/widgets/button.png
   url: doc/widgets/button.html
+
+- name: Canvas
+  url: /PhotonUI/ref/classes/photonui.Canvas.html
+
+- name: CheckBox
+  url: /PhotonUI/ref/classes/photonui.CheckBox.html
+
+- name: ColorButton
+  url: /PhotonUI/ref/classes/photonui.ColorButton.html
+
+- name: ColorPicker
+  url: /PhotonUI/ref/classes/photonui.ColorPicker.html
+
+- name: ColorPickerDialog
+  url: /PhotonUI/ref/classes/photonui.ColorPickerDialog.html
+
+- name: Dialog
+  url: /PhotonUI/ref/classes/photonui.Dialog.html
+
+- name: FAIcon
+  url: /PhotonUI/ref/classes/photonui.FAIcon.html
+
+- name: FileManager
+  url: /PhotonUI/ref/classes/photonui.FileManager.html
+
+- name: FluidLayout
+  url: /PhotonUI/ref/classes/photonui.FluidLayout.html
+
+- name: FontSelect
+  url: /PhotonUI/ref/classes/photonui.FontSelect.html
+
+- name: GridLayout
+  url: /PhotonUI/ref/classes/photonui.GridLayout.html
+
+- name: Menu
+  url: /PhotonUI/ref/classes/photonui.Menu.html
+
+- name: MouseManager
+  url: /PhotonUI/ref/classes/photonui.MouseManager.html
+
+- name: NumericField
+  url: /PhotonUI/ref/classes/photonui.NumericField.html
+
+- name: PopupMenu
+  url: /PhotonUI/ref/classes/photonui.PopupMenu.html
 
 - name: ProgressBar
   image: doc/widgets/progressbar.png
