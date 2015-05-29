@@ -1,5 +1,5 @@
 var check = new photonui.CheckBox({
-    value: true,
+    value: true
 });
 
 photonui.domInsert(check, "demo");

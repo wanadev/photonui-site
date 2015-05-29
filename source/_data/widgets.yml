@@ -79,7 +79,8 @@
   url: doc/widgets/select.html
 
 - name: Separator
-  url: /PhotonUI/ref/classes/photonui.Separator.html
+  image: doc/widgets/separator.png
+  url: doc/widgets/separator.html
 
 - name: Slider
   image: doc/widgets/slider.png
