@@ -3,7 +3,7 @@ layout: page-width-demo
 demo_script: doc/empty-demo.js
 ---
 
-Welcome to the PhotonUI quick start guide. If you want to learn how to build UI using PhotonUI, you are at the right place.
+Welcome to the PhotonUI quick start guide. If you want to learn how to build a UI using PhotonUI, you are in the right place.
 
 
 ### Get PhotonUI
@@ -14,7 +14,7 @@ To start using PhotonUI in your projects, you first need to download it:
 
 * or clone the [git repository][gh]: `git clone git@github.com:wanadev/PhotonUI.git`
 
-All files you need are in the `dist` folder. You just have to import
+All the files you need are in the `dist` folder. You just have to import
 
 * `photonui-base.css` (must be imported first),
 
@@ -118,17 +118,17 @@ photonui.domInsert(btn, "demo");
 
 ### Building More Complex UI Using Layouts
 
-There is mostly 5 type of widgets in PhotonUI:
+There are mostly 5 types of widgets in PhotonUI:
 
 * **Interactive widgets:** widgets used to get feedbacks from the user (e.g. [`photonui.Button`][doc-button], [`photonui.TextField`][doc-textfield],...),
 
 * **Visual-only widgets:** only intended to be displayed, no interaction with the user (e.g. [`photonui.FAIcon`][doc-faicon], [`photonui.Label`][doc-label], [`photonui.Separator`][doc-separator],...),
 
-* **Non-visual widgets:** widgets that does not display anything but that work behind the scene (e.g. [`photonui.Translation`][doc-translation], [`photonui.FileManager`][doc-filemanager], [`photonui.MouseManager`][doc-mousemanager]),
+* **Non-visual widgets:** widgets that do not display anything but that work behind the scene (e.g. [`photonui.Translation`][doc-translation], [`photonui.FileManager`][doc-filemanager], [`photonui.MouseManager`][doc-mousemanager]),
 
 * **Container widgets:** widgets, interactive or not, that can contain **one** child widget (e.g. [`photonui.Window`][doc-window], [`photonui.MenuItem`][doc-menuitem],...),
 
-* and **Layout widgets:** widgets used to arrange other widgets in order to create UI (e.g. [`photonui.BoxLayout`][doc-boxlayout], [`photonui.GridLayout`][doc-gridlayout],...).
+* and **Layout widgets:** widgets used to arrange other widgets in order to create a UI (e.g. [`photonui.BoxLayout`][doc-boxlayout], [`photonui.GridLayout`][doc-gridlayout],...).
 
 
 So if we want to create a window with two buttons inside, we will need to use a layout. The most basic and simple layout widget is [`photonui.BoxLayout`][doc-boxlayout], let's use it to build our UI:
@@ -170,7 +170,7 @@ btn1.registerCallback("foobar", "click", function(widget, event) {
 
 ### One more thing
 
-In the examples above, we "manually" built the UI by declaring many variable to store widgets and then assembling things all together. There is a more efficient way to build your UI (called "declarative way") that is used in most of the example of the PhotonUI documentation.
+In the examples above, we "manually" built the UI by declaring many variables to store widgets and then assembling things all together. There is a more efficient way to build your UI (called "declarative way") that is used in most of the example of the PhotonUI documentation.
 
 Let's rewrite our last example (the window with two buttons) in the declarative way:
 
