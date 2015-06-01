@@ -34,7 +34,8 @@
   url: /PhotonUI/ref/classes/photonui.Dialog.html
 
 - name: FAIcon
-  url: /PhotonUI/ref/classes/photonui.FAIcon.html
+  image: doc/widgets/faicon.png
+  url: doc/widgets/faicon.html
 
 - name: FileManager
   url: /PhotonUI/ref/classes/photonui.FileManager.html

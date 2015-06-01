@@ -154,7 +154,6 @@ var btn2 = new photonui.Button({
     text: "Button 2"
 });
 
-
 // Build the UI using the layout
 box.addChild(btn1);  // Alternative syntax:
 box.addChild(btn2);  // box.children = [btn1, btn2];
@@ -208,7 +207,7 @@ You are now ready to start using PhotonUI on your own project. :)
 [doc-window]: widgets/window.html
 [doc-button]: widgets/button.html
 [doc-translation]: widgets/translation.html
-[doc-faicon]: ../ref/classes/photonui.FAIcon.html
+[doc-faicon]: widgets/faicon.html
 [doc-boxlayout]: ../ref/classes/photonui.BoxLayout.html
 [doc-gridlayout]: ../ref/classes/photonui.GridLayout.html
 [doc-separator]: widgets/separator.html
