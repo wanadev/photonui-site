@@ -3,14 +3,14 @@ layout: page-width-demo
 demo_script: doc/empty-demo.js
 ---
 
-Creating a PhotonUI widget is not difficult, but you will need to learn few things about how PhotonUI is built and works behind the scene, especially the Class system, the widgets hierarchy and the automagic functionality of the Base PhotonUI class ([`photonui.Base`][ref-base]).
+Creating a PhotonUI widget is not difficult, but you will need to learn a few things about how PhotonUI is built and works behind the scene, especially the Class system, the widgets hierarchy and the automagical functionality of the Base PhotonUI class ([`photonui.Base`][ref-base]).
 
 Also, I recommend you to look at the [class reference documentation][ref] and at the existing widgets to have a better understanding of how widgets work.
 
 
 ### Class system
 
-The heart of the PhotonUI class system is based on tiny javascript library called [Classy][classy].
+The heart of the PhotonUI class system is based on a tiny javascript library called [Classy][classy].
 
 
 #### Dealing with classes
@@ -53,18 +53,18 @@ var MySecondClass = MyClass.$extend({
 });
 ```
 
-Classy provides a lot of interesting functionalities like mixin and class vars... For more informatons [read the Classy documentation][classy].
+Classy provides a lot of interesting functionalities like mixin and class vars... For more information [read the Classy documentation][classy].
 
 __NOTE¹:__ PhotonUI does not exposes the `Class` object in the global scope. If you want to use it, use `photonui.lib.Class` instead.
 
 
 #### The "Base" class
 
-In PhotonUI, no widget extend directly the `Class` class from Classy. All widgets extend at least the [`photonui.Base`][ref-base] class, and most often, the [`photonui.Widget`][ref-widget] class.
+In PhotonUI, no widget directly extends the `Class` class from Classy. All widgets extend at least the [`photonui.Base`][ref-base] class, and most often, the [`photonui.Widget`][ref-widget] class.
 
-##### Automagic properties
+##### Automagical properties
 
-The [`photonui.Base`][ref-base] create automatically properties from available getters and setters. To understand the principle, let's study a simple example:
+The [`photonui.Base`][ref-base] automatically creates properties from available getters and setters. To understand the principle, let's study a simple example:
 
 ```js
 var Person = photonui.Base.$extend({
@@ -82,7 +82,7 @@ var Person = photonui.Base.$extend({
 });
 ```
 
-There is many ways to getting and setting the `firstName` of the `Person` class:
+There are many ways to get and set the `firstName` of the `Person` class:
 
 ```js
 // When instantiating the class
@@ -98,15 +98,15 @@ var name = p.firstName;
 
 ```
 
-__NOTE¹:__ Take care of the underscore when we defined the `_firstName` attribute. As the `firstName` property will be automatically created by the [`photonui.Base`][ref-base] class, you will create an infinite loop if you name your private property the same way.
+__NOTE¹:__ Pay attention to the underscore when we defined the `_firstName` attribute. Since the `firstName` property will be automatically created by the [`photonui.Base`][ref-base] class, you will create an infinite loop if you name your private property the same way.
 
 
 
 ##### The constructor
 
-The constructor method of all PhotonUI widgets **always** call the constructor method of the [`photonui.Base`][ref-base] class, generally using the `this.$super(params)`. The constructor method of each widgets also **always** take one argument: a parameter object that should be passed to the [`photonui.Base`][ref-base] class constructor.
+The constructor method of all PhotonUI widgets **always** calls the constructor method of the [`photonui.Base`][ref-base] class, generally using the `this.$super(params)`. The constructor method of each widgets also **always** takes one argument: a parameter object that should be passed to the [`photonui.Base`][ref-base] class constructor.
 
-A simple example for the understanding:
+A simple example to understand:
 
 ```js
 var MyWidget = photonui.Widget.$extend({
@@ -122,7 +122,7 @@ var MyWidget = photonui.Widget.$extend({
 
 ### Choosing The Right Base Class
 
-When you will create a PhotonUI widget, you will extend different classes depending of what kind of widget you want to create.
+When you create a PhotonUI widget, you will extend different classes depending of what kind of widget you want to create.
 
 There are mostly 5 types of widgets in PhotonUI:
 
@@ -134,13 +134,13 @@ There are mostly 5 types of widgets in PhotonUI:
 
 * and for **Layout widgets** (like [`photonui.BoxLayout`][doc-boxlayout] or [`photonui.GridLayout`][doc-gridlayout]) you should extend the [`photonui.Layout`][ref-layout] class.
 
-Of course, if you want to build a most specific widget, you can extend more specialized classes.
+Of course, if you want to build a more specific widget, you can extend more specialized classes.
 
 
 
 ### Minimal Widget Templates
 
-Depending of what kind of widget you want to create, you will inherit from different classes, and you will have to define different methods to make things work.
+Depending on what kind of widget you want to create, you will inherit from different classes, and you will have to define different methods to make things work.
 
 
 #### Template for "Non-Visual" Widgets
@@ -185,7 +185,7 @@ var MyWidget = photonui.Widget.$extend({
     _buildHtml: function() {
         // We build the widget's HTML in this method.
         
-        // All the HTML nodes goes in the "this.__html" object
+        // All the HTML nodes go in the "this.__html" object
         this.__html.div = document.createElement("div");
         
         // All PhotonUI Widget have the "photonui-wiget" class on their
@@ -199,7 +199,7 @@ var MyWidget = photonui.Widget.$extend({
 
 #### Template for "Container" Widgets
 
-The container widgets have the same methods that the interactive and visual widgets **plus** `getContainerNode`:
+The container widgets have the same methods as the interactive and visual widgets **plus** `getContainerNode`:
 
 ```javascript
 var MyWidget = photonui.Container.$extend({
@@ -227,7 +227,7 @@ var MyWidget = photonui.Container.$extend({
 
 #### Template for "Layout" Widgets
 
-The layout widgets are the most difficult to build: in addition to `getHtml` and `_buildHtml` methods, you have to implement the `_updateLayout` method that will have to build the HTML that glue children widgets each together in the layout.
+The layout widgets are the most difficult to build: in addition to `getHtml` and `_buildHtml` methods, you have to implement the `_updateLayout` method which will have to build the HTML that glues children widgets together in the layout.
 
 You can look at the [`photonui.BoxLayout`][code-boxlayout] code if you want a simple example of layout widget. 
 
@@ -248,7 +248,7 @@ var MyWidget = photonui.Layout.$extend({
     },
     
     _updateLayout: function() {
-        // Build / Update the layout HTML with the widgets listed in
+        // Build / Update the HTML layout with the widgets listed in
         // this.children
     },
 
@@ -263,7 +263,7 @@ No more theory, let's build a real widget: a simple button with a `text` propert
 
 #### HTML and Basic Code
 
-Here we just apply all what we saw before to create the visual part of the button. You can also add a bit of CSS make it looks better, but that's not the topic.
+Here we just apply everything we saw before to create the visual part of the button. You can also add a bit of CSS to make it looks better, but that's not the topic.
 
 ```js
 var SimpleButton = photonui.Widget.$extend({
@@ -287,7 +287,7 @@ var SimpleButton = photonui.Widget.$extend({
 
 #### The "text" Property
 
-Then we had our `text` property that allow to set the button's text:
+Then we add our `text` property that allows to set the button's text:
 
 ```js
 _text: "Button",
@@ -304,7 +304,7 @@ setText: function(text) {
 
 ```
 
-__NOTE:__ The code as we wrote it here works, but if the user never set the `text` property, the widget will not display the default text defined in the class (in the `_text` attribute) as the setter is never called. To force properties to be refreshed even when not setted, you must use the `_updateProperties` method:
+__NOTE:__ The code as we wrote it here works, but if the user never sets the `text` property, the widget will not display the default text defined in the class (in the `_text` attribute) since the setter is never called. To force properties to be refreshed even when not set, you must use the `_updateProperties` method:
 
 ```js
 __init__: function(params) {
@@ -316,13 +316,13 @@ __init__: function(params) {
 
 #### Adding Interactivity (wEvent)
 
-There is two kind of events to deals with when you build a PhotonUI widget:
+There are two kinds of events to deal with when you build a PhotonUI widget:
 
 * The native javascript events, that will be used only behind the scene by the widget,
 
 * and the wEvents, that are exposed through the widget API
 
-So the widget binds native js event to its DOM elements and can exposes a corresponding wEvent if required.
+So the widget binds native js event to its DOM elements and can expose a corresponding wEvent if required.
 
 First, we have to declare the available wEvents of the widget. This can be done with the `_registerWEvents`:
 
@@ -333,7 +333,7 @@ __init__: function(params) {
 }
 ```
 
-Then, we have to bind the native javascript `click` event on the button. For binding native js events, PhotonUI provides an event manager that will automatically unbind the events when the widget is destroyed; you can use it through two methods: `_bindEvent` and `_unbindEvent`.
+Then, we have to bind the native javascript `click` event to the button. For binding native js events, PhotonUI provides an event manager that will automatically unbind the events when the widget is destroyed; you can use it through two methods: `_bindEvent` and `_unbindEvent`.
 
 ```js
 __init__: function(params) {
@@ -347,7 +347,7 @@ __init__: function(params) {
 }
 ```
 
-Finally we create our internal callback that wil lbe charged to call the callbacks of our wEvent using the `_callCallbacks` method:
+Finally we create our internal callback that will be in charge of calling the callbacks of our wEvent using the `_callCallbacks` method:
 
 ```js
 __onButtonClicked: function(event) {
@@ -374,7 +374,7 @@ var SimpleButton = photonui.Widget.$extend({
 
     __init__: function(params) {
         //  /!\ WARNING: we have to register wEvents BEFORE calling
-        //  the parent constructor, else the declarative syntax will
+        //  the parent constructor, otherwise the declarative syntax will
         //  fail to register the callbacks...
         this._registerWEvents(["click"]);
     
