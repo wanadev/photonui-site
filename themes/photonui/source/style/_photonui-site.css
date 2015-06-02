@@ -107,12 +107,18 @@ header a:hover {
     font-family: 'Titillium Web', sans-serif;
     font-size: 180%;
     color: #1C8495;
+    line-height: 1.3em;
 }
 
 #content h3 {
     font-family: 'Titillium Web', sans-serif;
     font-size: 150%;
     color: #1C8495;
+    line-height: 1.3em;
+}
+
+#content h4 {
+    color: #DB624F;
 }
 
 

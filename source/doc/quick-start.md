@@ -122,9 +122,9 @@ There are mostly 5 types of widgets in PhotonUI:
 
 * **Interactive widgets:** widgets used to get feedbacks from the user (e.g. [`photonui.Button`][doc-button], [`photonui.TextField`][doc-textfield],...),
 
-* **Visual-only widgets:** only intended to be displayed, no interaction with the user (e.g. [`photonui.FAIcon`][doc-faicon], [`photonui.Label`][doc-label], [`photonui.Separator`][doc-separator],...),
+* **Visual-Only widgets:** only intended to be displayed, no interaction with the user (e.g. [`photonui.FAIcon`][doc-faicon], [`photonui.Label`][doc-label], [`photonui.Separator`][doc-separator],...),
 
-* **Non-visual widgets:** widgets that do not display anything but that work behind the scene (e.g. [`photonui.Translation`][doc-translation], [`photonui.FileManager`][doc-filemanager], [`photonui.MouseManager`][doc-mousemanager]),
+* **Non-Visual widgets:** widgets that do not display anything but that work behind the scene (e.g. [`photonui.Translation`][doc-translation], [`photonui.FileManager`][doc-filemanager], [`photonui.MouseManager`][doc-mousemanager],...),
 
 * **Container widgets:** widgets, interactive or not, that can contain **one** child widget (e.g. [`photonui.Window`][doc-window], [`photonui.MenuItem`][doc-menuitem],...),
 
