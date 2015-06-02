@@ -21,7 +21,7 @@ This widget display icons using [Font Awesome](http://fontawesome.io).
 * http://fontawesome.io/examples/#larger
 
 
-## Simplified declaration
+## Short declaration
 
 `photonui.FAIcon` can be insancied in a shorter way:
 

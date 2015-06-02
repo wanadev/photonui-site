@@ -50,7 +50,8 @@
   url: /PhotonUI/ref/classes/photonui.GridLayout.html
 
 - name: Label
-  url: /PhotonUI/ref/classes/photonui.Label.html
+  image: doc/widgets/label.png
+  url: doc/widgets/label.html
 
 - name: Menu
   url: /PhotonUI/ref/classes/photonui.Menu.html

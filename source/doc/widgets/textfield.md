@@ -15,6 +15,14 @@ var grid = new photonui.GridLayout({
     verticalSpacing: 5,
     horizontalSpacing: 5,
     children: [
+        new photonui.Label({
+            text: "Username:",
+            forInputName: "username-field",
+            layoutOptions: {
+                gridX: 0,
+                gridY: 0
+            }
+        }),
         new photonui.TextField({
             name: "username-field",
             placeholder: "Username",
@@ -25,11 +33,11 @@ var grid = new photonui.GridLayout({
             }
         }),
         new photonui.Label({
-            text: "Username:",
-            forInputName: "username-field",
+            text: "Password:",
+            forInputName: "password-field",
             layoutOptions: {
                 gridX: 0,
-                gridY: 0
+                gridY: 1
             }
         }),
         new photonui.TextField({
@@ -39,14 +47,6 @@ var grid = new photonui.GridLayout({
             value: "D4RK51D3",
             layoutOptions: {
                 gridX: 1,
-                gridY: 1
-            }
-        }),
-        new photonui.Label({
-            text: "Password:",
-            forInputName: "password-field",
-            layoutOptions: {
-                gridX: 0,
                 gridY: 1
             }
         }),
