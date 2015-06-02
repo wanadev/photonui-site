@@ -8,12 +8,12 @@ Creating a PhotonUI widget is not difficult, but you will need to learn a few th
 Also, I recommend you to look at the [class reference documentation][ref] and at the existing widgets to have a better understanding of how widgets work.
 
 
-### Class system
+### Class System
 
 The heart of the PhotonUI class system is based on a tiny javascript library called [Classy][classy].
 
 
-#### Dealing with classes
+#### Dealing With Classes
 
 Declaring a class using Classy is very simple:
 
@@ -58,11 +58,11 @@ Classy provides a lot of interesting functionalities like mixin and class vars..
 __NOTE¹:__ PhotonUI does not exposes the `Class` object in the global scope. If you want to use it, use `photonui.lib.Class` instead.
 
 
-#### The "Base" class
+#### The "Base" Class
 
 In PhotonUI, no widget directly extends the `Class` class from Classy. All widgets extend at least the [`photonui.Base`][ref-base] class, and most often, the [`photonui.Widget`][ref-widget] class.
 
-##### Automagical properties
+##### Automagical Properties
 
 The [`photonui.Base`][ref-base] automatically creates properties from available getters and setters. To understand the principle, let's study a simple example:
 
@@ -102,7 +102,7 @@ __NOTE¹:__ Pay attention to the underscore when we defined the `_firstName` att
 
 
 
-##### The constructor
+##### The Constructor
 
 The constructor method of all PhotonUI widgets **always** calls the constructor method of the [`photonui.Base`][ref-base] class, generally using the `this.$super(params)`. The constructor method of each widgets also **always** takes one argument: a parameter object that should be passed to the [`photonui.Base`][ref-base] class constructor.
 
@@ -367,7 +367,7 @@ function myWEventCallback( widget [, additionalParam1 [, additionalParam2 [, ...
 ```
 
 
-#### The Final code
+#### The Final Code
 
 ```javascript
 var SimpleButton = photonui.Widget.$extend({
@@ -417,7 +417,7 @@ var SimpleButton = photonui.Widget.$extend({
 });
 
 
-// A bit for code to test our widget
+// A bit of code to test our widget
 var btn = new SimpleButton({
     text: "My First Widget",
     callbacks: {
@@ -431,7 +431,7 @@ photonui.domInsert(btn, "demo");
 ```
 
 
-### Here we are
+### Here We Are
 
 Voilà, you created your first PhotonUI widget. Not too difficult right ? ;)
 
