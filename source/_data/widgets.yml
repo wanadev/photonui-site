@@ -38,7 +38,8 @@
   url: doc/widgets/faicon.html
 
 - name: FileManager
-  url: /PhotonUI/ref/classes/photonui.FileManager.html
+  image: doc/widgets/filemanager.png
+  url: doc/widgets/filemanager.html
 
 - name: FluidLayout
   url: /PhotonUI/ref/classes/photonui.FluidLayout.html
