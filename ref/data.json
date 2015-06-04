@@ -3,7 +3,7 @@
         "name": "photonui",
         "description": "A work-in-progress MVC/Swing style JavaScript UI library.",
         "version": "0.1.1",
-        "url": "http://wanadev.github.io/PhotonUI/demo/index.html"
+        "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
         "src/composite/colorpickerdialog.js": {
@@ -1979,7 +1979,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 84,
+            "line": 101,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -1992,7 +1992,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 138,
+            "line": 155,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -2015,7 +2015,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 153,
+            "line": 174,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -2033,7 +2033,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 167,
+            "line": 189,
             "description": "Destroy all children of the layout",
             "itemtype": "method",
             "name": "empty",
@@ -2044,7 +2044,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 182,
+            "line": 203,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2055,7 +2055,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 196,
+            "line": 217,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -2068,7 +2068,7 @@
         },
         {
             "file": "src/container/layout/layout.js",
-            "line": 212,
+            "line": 233,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -2956,7 +2956,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 81,
+            "line": 86,
             "description": "The child widget.",
             "itemtype": "property",
             "name": "child",
@@ -2969,7 +2969,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 100,
+            "line": 105,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -2982,7 +2982,25 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 121,
+            "line": 125,
+            "description": "Remove the given child.",
+            "itemtype": "method",
+            "name": "removeChild",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "The widget to remove/",
+                    "type": "photonui.Widget"
+                }
+            ],
+            "class": "photonui.Container",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/container.js",
+            "line": 137,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -6193,7 +6211,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 71,
+            "line": 82,
             "description": "The label text.",
             "itemtype": "property",
             "name": "text",
@@ -6206,7 +6224,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 90,
+            "line": 101,
             "description": "The text horizontal alignement.\n\n  * \"left\",\n  * \"center\",\n  * \"right\".",
             "itemtype": "property",
             "name": "textAlign",
@@ -6219,7 +6237,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 115,
+            "line": 126,
             "description": "Link the label with the given input (Field, CheckBox,...) widget.",
             "itemtype": "property",
             "name": "forInputName",
@@ -6232,7 +6250,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 137,
+            "line": 155,
             "description": "Link the label with the given input (Field, CheckBox,...) widget.",
             "itemtype": "property",
             "name": "forInput",
@@ -6245,7 +6263,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 152,
+            "line": 170,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -6259,7 +6277,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 173,
+            "line": 191,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7025,6 +7043,32 @@
         {
             "file": "src/widget.js",
             "line": 134,
+            "description": "The parent widget name.",
+            "itemtype": "property",
+            "name": "parentName",
+            "type": "String",
+            "readonly": "",
+            "default": "null (no parent)",
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 148,
+            "description": "The parent widget.",
+            "itemtype": "property",
+            "name": "parent",
+            "type": "photonui.Widget",
+            "readonly": "",
+            "default": "null (no parent)",
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 160,
             "description": "Is the widget visible or hidden.",
             "itemtype": "property",
             "name": "visible",
@@ -7036,7 +7080,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 162,
+            "line": 188,
             "description": "Tooltip.",
             "itemtype": "property",
             "name": "tooltip",
@@ -7048,7 +7092,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 185,
+            "line": 211,
             "description": "The name of the managed contextual menu (`photonui.PopupWindow().name`).",
             "itemtype": "property",
             "name": "contextMenuName",
@@ -7060,7 +7104,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 202,
+            "line": 228,
             "description": "The managed contextual menu.",
             "itemtype": "property",
             "name": "contextMenu",
@@ -7072,7 +7116,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 223,
+            "line": 249,
             "description": "Layout options.",
             "itemtype": "property",
             "name": "layoutOptions",
@@ -7084,7 +7128,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 242,
+            "line": 268,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7097,7 +7141,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 255,
+            "line": 281,
             "description": "Absolute position of the widget on the page.\n\n`{x: Number, y: Number}`",
             "itemtype": "property",
             "name": "absolutePosition",
@@ -7109,7 +7153,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 271,
+            "line": 297,
             "description": "Widget width (outer HTML element).",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -7121,7 +7165,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 285,
+            "line": 311,
             "description": "Widget height (outer HTML element).",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -7133,7 +7177,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 303,
+            "line": 329,
             "description": "Object containing references to the widget HTML elements",
             "itemtype": "property",
             "name": "__html",
@@ -7146,7 +7190,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 321,
+            "line": 347,
             "description": "Display the widget (equivalent to widget.visible = true).",
             "itemtype": "method",
             "name": "show",
@@ -7156,7 +7200,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 330,
+            "line": 356,
             "description": "DHide the widget (equivalent to widget.visible = false).",
             "itemtype": "method",
             "name": "hide",
@@ -7166,7 +7210,17 @@
         },
         {
             "file": "src/widget.js",
-            "line": 339,
+            "line": 365,
+            "description": "Detache the widget from its parent.",
+            "itemtype": "method",
+            "name": "unparent",
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 376,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -7176,7 +7230,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 352,
+            "line": 387,
             "description": "Add a class to the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "addClass",
@@ -7193,7 +7247,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 369,
+            "line": 404,
             "description": "Remove a class from the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "removeClass",
@@ -7210,7 +7264,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 391,
+            "line": 426,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7222,7 +7276,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 407,
+            "line": 442,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -7240,7 +7294,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 422,
+            "line": 457,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
