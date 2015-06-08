@@ -121,6 +121,9 @@ header a:hover {
     color: #DB624F;
 }
 
+#content img {
+    max-width: 100%;
+}
 
 
 ul.data-list-thumb {

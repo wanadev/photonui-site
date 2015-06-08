@@ -173,7 +173,7 @@
  */
 
 var Helpers = require(&quot;../../helpers.js&quot;);
-var GridLayout = require(&quot;./gridlayout.js&quot;);
+var Layout = require(&quot;./layout.js&quot;);
 
 /**
  * Vertical and horizontal box layout.
@@ -181,22 +181,22 @@ var GridLayout = require(&quot;./gridlayout.js&quot;);
  * Layout Options:
  *
  *     {
- *          verticalExpansion: &lt;Boolean, default: true&gt;,
- *          horizontalExpansion: &lt;Boolean, default: true&gt;,
- *          width: &lt;Number, default: undefined&gt;,
- *          height: &lt;Number, default: undefined&gt;,
- *          minWidth: &lt;Number, default: undefined&gt;,
- *          minHeight: &lt;Number, default: undefined&gt;,
- *          maxWidth: &lt;Number, default: undefined&gt;,
- *          maxHeight: &lt;Number, default: undefined&gt;,
- *          horizontalAlign: &lt;String (left, center, right), default: undefined&gt;
+ *         align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default: stretch&gt;,
+ *
+ *         minWidth: &lt;Number (null=auto), default=null&gt;,
+ *         maxWidth: &lt;Number (null=auto), default=null&gt;,
+ *         width: &lt;Number (null=auto), default=null&gt;,
+ *
+ *         minHeight: &lt;Number (null=auto), default=null&gt;,
+ *         maxHeight: &lt;Number (null=auto), default=null&gt;,
+ *         height: &lt;Number (null=auto), default=null&gt;
  *     }
  *
  * @class BoxLayout
  * @constructor
- * @extends photonui.GridLayout
+ * @extends photonui.Layout
  */
-var BoxLayout = GridLayout.$extend({
+var BoxLayout = Layout.$extend({
 
     // Constructor
     __init__: function(params) {
@@ -235,7 +235,86 @@ var BoxLayout = GridLayout.$extend({
         this.removeClass(&quot;photonui-layout-orientation-vertical&quot;);
         this.removeClass(&quot;photonui-layout-orientation-horizontal&quot;);
         this.addClass(&quot;photonui-layout-orientation-&quot; + this.orientation);
-        this._updateLayout();
+        this._updateProperties([&quot;spacing&quot;]);
+    },
+
+    /**
+     * Vertical padding (px).
+     *
+     * @property verticalPadding
+     * @type Number
+     * @default 0
+     */
+    _verticalPadding: 0,
+
+    getVerticalPadding: function() {
+        return this._verticalPadding;
+    },
+
+    setVerticalPadding: function(padding) {
+        this._verticalPadding = padding|0;
+        this.__html.outerbox.style.paddingTop = this._verticalPadding + &quot;px&quot;;
+        this.__html.outerbox.style.paddingBottom = this._verticalPadding + &quot;px&quot;;
+    },
+
+    /**
+     * Horizontal padding (px).
+     *
+     * @property horizontalPadding
+     * @type Number
+     * @default 0
+     */
+    _horizontalPadding: 0,
+
+    getHorizontalPadding: function() {
+        return this._horizontalPadding;
+    },
+
+    setHorizontalPadding: function(padding) {
+        this._horizontalPadding = padding|0;
+        this.__html.outerbox.style.paddingLeft = this._horizontalPadding + &quot;px&quot;;
+        this.__html.outerbox.style.paddingRight = this._horizontalPadding + &quot;px&quot;;
+    },
+
+    /**
+     * Spacing between children widgets.
+     *
+     * @property spacing
+     * @type Number
+     * @default 5
+     */
+    _spacing: 5,
+
+    getSpacing: function() {
+        return this._spacing;
+    },
+
+    setSpacing: function(spacing) {
+        this._spacing = spacing|0;
+
+        var nodes = this.__html.outerbox.childNodes;
+        for (var i=0 ; i&lt;nodes.length-1 ; i++) {
+            if (this.orientation == &quot;horizontal&quot;) {
+                nodes[i].style.marginRight = this._spacing + &quot;px&quot;;
+                nodes[i].style.marginBottom = &quot;0px&quot;;
+            }
+            else {
+                nodes[i].style.marginRight = &quot;0px&quot;;
+                nodes[i].style.marginBottom = this._spacing + &quot;px&quot;;
+            }
+        }
+    },
+
+    /**
+     * Html outer element of the widget (if any).
+     *
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getHtml: function() {
+        return this.__html.outerbox;
     },
 
 
@@ -254,7 +333,7 @@ var BoxLayout = GridLayout.$extend({
      * @private
      */
     _buildHtml: function() {
-        this.$super();
+        this.__html.outerbox = document.createElement(&quot;div&quot;);
         this.__html.outerbox.className = &quot;photonui-widget photonui-boxlayout&quot;;
     },
 
@@ -265,82 +344,94 @@ var BoxLayout = GridLayout.$extend({
      * @private
      */
     _updateLayout: function() {
-        Helpers.cleanNode(this.__html.gridBody);
+        Helpers.cleanNode(this.__html.outerbox);
 
-        var e_tr = null;
-        if (this.getOrientation() == &quot;horizontal&quot;) {
-            e_tr = document.createElement(&quot;tr&quot;);
-            this.__html.gridBody.appendChild(e_tr);
-        }
-
+        var fragment = document.createDocumentFragment();
         var children = this.children;
 
+        var container = null;
         for (var i=0 ; i&lt;children.length ; i++) {
-            if (this.getOrientation() == &quot;vertical&quot;) {
-                e_tr = document.createElement(&quot;tr&quot;);
-                this.__html.gridBody.appendChild(e_tr);
-            }
+            var options = this._computeLayoutOptions(children[i]);
 
-            var e_td = document.createElement(&quot;td&quot;);
-            e_td.className = &quot;photonui-container photonui-boxlayout-cell&quot;;
-            e_tr.appendChild(e_td);
+            container = document.createElement(&quot;div&quot;);
+            container.className = &quot;photonui-container photonui-boxlayout-item&quot;;
 
-            // Layout Options: Expansion
-            if (children[i].layoutOptions.horizontalExpansion == undefined
-            ||  children[i].layoutOptions.horizontalExpansion) {
-                e_td.className += &quot; photonui-container-expand-child-horizontal&quot;;
-            }
-            if (children[i].layoutOptions.verticalExpansion == undefined
-            ||  children[i].layoutOptions.verticalExpansion) {
-                e_td.className += &quot; photonui-container-expand-child-vertical&quot;;
-            }
+            // layout option: align
+            container.className += &quot; photonui-layout-align-&quot; + options.align;
 
-            // Layout Options: width
-            if (children[i].layoutOptions.width != undefined) {
-                e_td.style.width = children[i].layoutOptions.width + &quot;px&quot;;
-            }
-            // Layout Options: height
-            if (children[i].layoutOptions.height != undefined) {
-                e_td.style.height = children[i].layoutOptions.height + &quot;px&quot;;
-            }
-            // Layout Options: minWidth
-            if (children[i].layoutOptions.minWidth != undefined) {
-                e_td.style.minWidth = this.childrenWidgets[i].layoutOptions.minWidth + &quot;px&quot;;
-            }
-            // Layout Options: minHeight
-            if (children[i].layoutOptions.minHeight != undefined) {
-                e_td.style.minHeight = this.childrenWidgets[i].layoutOptions.minHeight + &quot;px&quot;;
-            }
-            // Layout Options: maxWidth
-            if (children[i].layoutOptions.maxWidth != undefined) {
-                e_td.style.maxWidth = this.childrenWidgets[i].layoutOptions.maxWidth + &quot;px&quot;;
-            }
-            // Layout Options: maxHeight
-            if (children[i].layoutOptions.maxHeight != undefined) {
-                e_td.style.maxHeight = this.childrenWidgets[i].layoutOptions.maxHeight + &quot;px&quot;;
-            }
-            // Layout Options: horizontalAlign
-            if (children[i].layoutOptions.horizontalAlign != undefined) {
-                e_td.style.textAlign = this.childrenWidgets[i].layoutOptions.horizontalAlign; console.log(&quot;hhhh&quot;);
-            }
+            // layout options: *width
+            if (options.minWidth !== null) container.style.minWidth = options.minWidth + &quot;px&quot;;
+            if (options.maxWidth !== null) container.style.maxWidth = options.maxWidth + &quot;px&quot;;
+            if (options.width !== null) container.style.width = options.width + &quot;px&quot;;
 
-            e_td.appendChild(children[i].html);
+            // layout options: *height
+            if (options.minHeight !== null) container.style.minHeight = options.minHeight + &quot;px&quot;;
+            if (options.maxHeight !== null) container.style.maxHeight = options.maxHeight + &quot;px&quot;;
+            if (options.height !== null) container.style.height = options.height + &quot;px&quot;;
+
+            container.appendChild(children[i].html);
+            fragment.appendChild(container);
         }
 
-        // Hack for Gecko and Trident
-        //var cells = document.querySelectorAll(&quot;#&quot; + this.name + &quot; td&quot;);
-        //var heights = [];
-        //var padding = 0;
-        //for (var i=0 ; i&lt;cells.length ; i++) {
-            //if (cells[i].childNodes.length == 1 &amp;&amp; cells[i].childNodes[0] instanceof HTMLElement) {
-                //padding = parseInt(getComputedStyle(cells[i].childNodes[0]).paddingTop);
-                //padding += parseInt(getComputedStyle(cells[i].childNodes[0]).paddingBottom);
-            //}
-            //heights[i] = (cells[i].offsetHeight - padding) + &quot;px&quot;;
-        //}
-        //for (var i=0 ; i&lt;cells.length ; i++) {
-            //cells[i].style.height = heights[i];
-        //}
+        this.__html.outerbox.appendChild(fragment);
+
+        this._updateProperties([&quot;spacing&quot;]);
+    },
+
+    _computeLayoutOptions: function(widget) {
+        var woptions = widget.layoutOptions || {};
+
+        var options = {
+            align: &quot;stretch&quot;,
+            minWidth: null,
+            maxWidth: null,
+            width: null,
+            minHeight: null,
+            maxHeight: null,
+            height: null
+        }
+
+        // align
+        if ([&quot;stretch&quot;, &quot;expend&quot;].indexOf(woptions.align) &gt; -1) {
+            options.align = &quot;stretch&quot;;
+        }
+        else if ([&quot;center&quot;, &quot;middle&quot;].indexOf(woptions.align) &gt; -1) {
+            options.align = &quot;center&quot;;
+        }
+        else if ([&quot;start&quot;, &quot;begin&quot;, &quot;top&quot;, &quot;left&quot;].indexOf(woptions.align) &gt; -1) {
+            options.align = &quot;start&quot;;
+        }
+        else if ([&quot;end&quot;, &quot;bottom&quot;, &quot;right&quot;].indexOf(woptions.align) &gt; -1) {
+            options.align = &quot;end&quot;;
+        }
+
+        // *width
+        if (woptions.minWidth !== undefined &amp;&amp; woptions.minWidth !== null) {
+            options.minWidth = woptions.minWidth|0;
+        }
+        if (woptions.maxWidth !== undefined &amp;&amp; woptions.maxWidth !== null) {
+            options.maxWidth = woptions.maxWidth|0;
+        }
+        if (woptions.width !== undefined &amp;&amp; woptions.width !== null) {
+            options.width = woptions.width|0;
+            options.minWidth = woptions.width|0;
+            options.maxWidth = woptions.width|0;
+        }
+
+        // *height
+        if (woptions.minHeight !== undefined &amp;&amp; woptions.minHeight !== null) {
+            options.minHeight = woptions.minHeight|0;
+        }
+        if (woptions.maxHeight !== undefined &amp;&amp; woptions.maxHeight !== null) {
+            options.maxHeight = woptions.maxHeight|0;
+        }
+        if (woptions.height !== undefined &amp;&amp; woptions.height !== null) {
+            options.height = woptions.height|0;
+            options.minHeight = woptions.height|0;
+            options.maxHeight = woptions.height|0;
+        }
+
+        return options;
     }
 });
 

@@ -851,9 +851,9 @@
             "namespace": "photonui",
             "file": "src/container/layout/boxlayout.js",
             "line": 42,
-            "description": "Vertical and horizontal box layout.\n\nLayout Options:\n\n    {\n         verticalExpansion: <Boolean, default: true>,\n         horizontalExpansion: <Boolean, default: true>,\n         width: <Number, default: undefined>,\n         height: <Number, default: undefined>,\n         minWidth: <Number, default: undefined>,\n         minHeight: <Number, default: undefined>,\n         maxWidth: <Number, default: undefined>,\n         maxHeight: <Number, default: undefined>,\n         horizontalAlign: <String (left, center, right), default: undefined>\n    }",
+            "description": "Vertical and horizontal box layout.\n\nLayout Options:\n\n    {\n        align: <String (stretch, start|left|top, center|middle, end|right|bottom), default: stretch>,\n\n        minWidth: <Number (null=auto), default=null>,\n        maxWidth: <Number (null=auto), default=null>,\n        width: <Number (null=auto), default=null>,\n\n        minHeight: <Number (null=auto), default=null>,\n        maxHeight: <Number (null=auto), default=null>,\n        height: <Number (null=auto), default=null>\n    }",
             "is_constructor": 1,
-            "extends": "photonui.GridLayout"
+            "extends": "photonui.Layout"
         },
         "photonui.FluidLayout": {
             "name": "photonui.FluidLayout",
@@ -1720,7 +1720,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 304,
+            "line": 307,
             "description": "Update the fields of the UI.",
             "itemtype": "method",
             "name": "_updateUi",
@@ -1733,7 +1733,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 326,
+            "line": 329,
             "itemtype": "method",
             "name": "__onCancel",
             "access": "private",
@@ -1745,7 +1745,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 339,
+            "line": 342,
             "itemtype": "method",
             "name": "__onValidate",
             "access": "private",
@@ -1757,7 +1757,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 353,
+            "line": 356,
             "itemtype": "method",
             "name": "__onColorChanged",
             "access": "private",
@@ -1808,7 +1808,60 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 114,
+            "line": 105,
+            "description": "Vertical padding (px).",
+            "itemtype": "property",
+            "name": "verticalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.BoxLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/boxlayout.js",
+            "line": 124,
+            "description": "Horizontal padding (px).",
+            "itemtype": "property",
+            "name": "horizontalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.BoxLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/boxlayout.js",
+            "line": 143,
+            "description": "Spacing between children widgets.",
+            "itemtype": "property",
+            "name": "spacing",
+            "type": "Number",
+            "default": "5",
+            "class": "photonui.BoxLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/boxlayout.js",
+            "line": 172,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.BoxLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/boxlayout.js",
+            "line": 193,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -1821,7 +1874,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 125,
+            "line": 204,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",

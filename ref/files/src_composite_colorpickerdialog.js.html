@@ -282,7 +282,10 @@ var ColorPickerDialog = Dialog.$extend({
     _buildUi: function() {
 
         // == Main UI ==
-        this.__widgets.hbox = new BoxLayout({orientation: &quot;horizontal&quot;});
+        this.__widgets.hbox = new BoxLayout({
+            orientation: &quot;horizontal&quot;,
+            verticalPadding: 5
+        });
         this.child = this.__widgets.hbox;
 
         // Color Picker

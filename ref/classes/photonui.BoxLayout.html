@@ -134,7 +134,7 @@
 <div class="box meta">
 
         <div class="extends">
-            Extends <a href="../classes/photonui.GridLayout.html" class="crosslink">photonui.GridLayout</a>
+            Extends <a href="../classes/photonui.Layout.html" class="crosslink">photonui.Layout</a>
         </div>
 
         <div class="foundat">
@@ -151,15 +151,15 @@
     <p>Vertical and horizontal box layout.</p>
 <p>Layout Options:</p>
 <pre class="code prettyprint"><code>{
-     verticalExpansion: &lt;Boolean, default: true&gt;,
-     horizontalExpansion: &lt;Boolean, default: true&gt;,
-     width: &lt;Number, default: undefined&gt;,
-     height: &lt;Number, default: undefined&gt;,
-     minWidth: &lt;Number, default: undefined&gt;,
-     minHeight: &lt;Number, default: undefined&gt;,
-     maxWidth: &lt;Number, default: undefined&gt;,
-     maxHeight: &lt;Number, default: undefined&gt;,
-     horizontalAlign: &lt;String (left, center, right), default: undefined&gt;
+    align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default: stretch&gt;,
+
+    minWidth: &lt;Number (null=auto), default=null&gt;,
+    maxWidth: &lt;Number (null=auto), default=null&gt;,
+    width: &lt;Number (null=auto), default=null&gt;,
+
+    minHeight: &lt;Number (null=auto), default=null&gt;,
+    maxHeight: &lt;Number (null=auto), default=null&gt;,
+    height: &lt;Number (null=auto), default=null&gt;
 }
 </code></pre>
 </div>
@@ -345,11 +345,11 @@
                                 <a href="#property_contextMenuName">contextMenuName</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_horizontalSpacing">horizontalSpacing</a>
+                            <li class="index-item property">
+                                <a href="#property_horizontalPadding">horizontalPadding</a>
 
                             </li>
-                            <li class="index-item property inherited inherited">
+                            <li class="index-item property inherited">
                                 <a href="#property_html">html</a>
 
                             </li>
@@ -381,12 +381,16 @@
                                 <a href="#property_parentName">parentName</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_spacing">spacing</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_tooltip">tooltip</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_verticalSpacing">verticalSpacing</a>
+                            <li class="index-item property">
+                                <a href="#property_verticalPadding">verticalPadding</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -607,7 +611,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_layout_boxlayout.js.html#l114"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:114</code></a>
+        <a href="../files/src_container_layout_boxlayout.js.html#l193"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:193</code></a>
         </p>
 
 
@@ -822,7 +826,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 photonui.Layout
             </a>
             but overwritten in
-        <a href="../files/src_container_layout_boxlayout.js.html#l125"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:125</code></a>
+        <a href="../files/src_container_layout_boxlayout.js.html#l204"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:204</code></a>
         </p>
 
 
@@ -1727,8 +1731,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
-                    <div id="property_horizontalSpacing" class="property item inherited">
-                        <h3 class="name"><code>horizontalSpacing</code></h3>
+                    <div id="property_horizontalPadding" class="property item">
+                        <h3 class="name"><code>horizontalPadding</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                     
                     
@@ -1736,24 +1740,24 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                         <div class="meta">
-                                    <p>Inherited from
-                                    <a href="../classes/photonui.GridLayout.html#property_horizontalSpacing">photonui.GridLayout</a>:
-                            <a href="../files/src_container_layout_gridlayout.js.html#l102"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:102</code></a>
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_container_layout_boxlayout.js.html#l124"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:124</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>The horizontal spacing between children widgets.</p>
+                            <p>Horizontal padding (px).</p>
                     
                         </div>
                     
-                            <p><strong>Default:</strong> 5</p>
+                            <p><strong>Default:</strong> 0</p>
                     
                     
                     </div>
-                    <div id="property_html" class="property item inherited">
+                    <div id="property_html" class="property item">
                         <h3 class="name"><code>html</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
                     
@@ -1767,7 +1771,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                                     photonui.Widget
                                 </a>
                                 but overwritten in
-                            <a href="../files/src_container_layout_gridlayout.js.html#l120"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:120</code></a>
+                            <a href="../files/src_container_layout_boxlayout.js.html#l172"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:172</code></a>
                             </p>
                     
                     
@@ -1962,6 +1966,32 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
+                    <div id="property_spacing" class="property item">
+                        <h3 class="name"><code>spacing</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_container_layout_boxlayout.js.html#l143"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:143</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Spacing between children widgets.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 5</p>
+                    
+                    
+                    </div>
                     <div id="property_tooltip" class="property item inherited">
                         <h3 class="name"><code>tooltip</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
@@ -1988,8 +2018,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
-                    <div id="property_verticalSpacing" class="property item inherited">
-                        <h3 class="name"><code>verticalSpacing</code></h3>
+                    <div id="property_verticalPadding" class="property item">
+                        <h3 class="name"><code>verticalPadding</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                     
                     
@@ -1997,20 +2027,20 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                         <div class="meta">
-                                    <p>Inherited from
-                                    <a href="../classes/photonui.GridLayout.html#property_verticalSpacing">photonui.GridLayout</a>:
-                            <a href="../files/src_container_layout_gridlayout.js.html#l84"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:84</code></a>
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_container_layout_boxlayout.js.html#l105"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:105</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>The vertical spacing between children widgets.</p>
+                            <p>Vertical padding (px).</p>
                     
                         </div>
                     
-                            <p><strong>Default:</strong> 5</p>
+                            <p><strong>Default:</strong> 0</p>
                     
                     
                     </div>
