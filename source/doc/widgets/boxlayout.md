@@ -3,17 +3,17 @@ layout: page-width-demo
 demo_script: doc/widgets/boxlayout.js
 ---
 
-`photonui.BoxLayout` is a layout widget that allow you to align widgets on vertical or horizontal boxes (1D grid).
+`photonui.BoxLayout` is a layout widget that allows you to align widgets on vertical or horizontal boxes (1D grid).
 
 
-### Globale Options
+### Global Options
 
-`photonui.BoxLayout` provides options to define its look and feel. Globale options are applied to the layout itself.
+`photonui.BoxLayout` provides options to define its look and feel. Global options are applied to the layout itself.
 
 
 #### orientation
 
-Define if the widgets must be displayed vertically or horizontally.
+Defines if the widgets must be displayed vertically or horizontally.
 
 Possible values:
 
@@ -25,49 +25,49 @@ Possible values:
 
 #### spacing
 
-Define the spacing between the widgets (5px by default). 
+Defines the spacing between the widgets (5px by default). 
 
 <p style="text-align: center;"><img src="boxlayout-spacing.png" alt="BoxLayout Spacing Schema" /></p>
 
 
 #### verticalPadding
 
-Define the spacing between the widgets and the left and right edge of the layout (0px by default).
+Defines the spacing between the widgets and the left and right edge of the layout (0px by default).
 
 <p style="text-align: center;"><img src="boxlayout-verticalpadding.png" alt="BoxLayout Vertical Padding Schema" /></p>
 
 
 #### horizontalPadding
 
-Define the spacing between the widgets and the top and bottom edge of the layout (0px by default).
+Defines the spacing between the widgets and the top and bottom edge of the layout (0px by default).
 
 <p style="text-align: center;"><img src="boxlayout-horizontalpadding.png" alt="BoxLayout Horizontal Padding Schema" /></p>
 
 
 ### Layout Options
 
-`photonui.BoxLayout` allow widgets to sets plenty of options to customize the way they are displayed in the layout. Layout options are associated to only one widget of the layout.
+`photonui.BoxLayout` allows widgets to set plenty of options to customize the way they are displayed in the layout. Layout options are associated with only one widget of the layout.
 
 #### align
 
-Define how the widget must be aligned in the layout.
+Defines how the widget must be aligned in the layout.
 
 Possible values:
 
 * `stretch` (default, alias: `expend`): the widget is stretched to take all available space in its box,
 
-* `start` (alias: `top`, `left`): the widget is placed at the top or at the left of its box depending of the layout orientation,
+* `start` (alias: `top`, `left`): the widget is placed at the top or on the left of its box depending on the layout orientation,
 
-* `center` (alias: `middle`): the widget centered in its box,
+* `center` (alias: `middle`): the widget is centered in its box,
 
-* `end` (alias: `bottom`, `right`): the widget is placed at the bottom or at the right of its box depending of the layout orientation.
+* `end` (alias: `bottom`, `right`): the widget is placed at the bottom or on the right of its box depending on the layout orientation.
 
 <p style="text-align: center;"><img src="boxlayout-lo-align.png" alt="BoxLayout Align Layout Option Schema" /></p>
 
 
 #### order
 
-Define the order of the widgets (0 by default).
+Defines the order of the widgets (0 by default).
 
 ```javascript
 var box = new photonui.BoxLayout({
@@ -99,32 +99,32 @@ photonui.domInsert(box, "demo");
 
 #### width
 
-Define the fixed width of the widget (default = `null`, `null` means "auto").
+Defines the fixed width of the widget (default = `null`, `null` means "auto").
 
 
 #### minWidth
 
-Define the minimum width of the widget (default = `null`, `null` means no limitation).
+Defines the minimum width of the widget (default = `null`, `null` means no limitation).
 
 
 #### maxWidth
 
-Define the maximum width of the widget (default = `null`, `null` means no limitation).
+Defines the maximum width of the widget (default = `null`, `null` means no limitation).
 
 
 #### height
 
-Define the fixed height of the widget (default = `null`, `null` means "auto").
+Defines the fixed height of the widget (default = `null`, `null` means "auto").
 
 
 #### minHeight
 
-Define the minimum height of the widget (default = `null`, `null` means no limitation).
+Defines the minimum height of the widget (default = `null`, `null` means no limitation).
 
 
 #### maxHeight
 
-Define the maximum height of the widget (default = `null`, `null` means no limitation).
+Defines the maximum height of the widget (default = `null`, `null` means no limitation).
 
 
 ### Class Reference
@@ -132,7 +132,7 @@ Define the maximum height of the widget (default = `null`, `null` means no limit
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 var box = new photonui.BoxLayout({
