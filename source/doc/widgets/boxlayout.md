@@ -54,7 +54,7 @@ Defines how the widget must be aligned in the layout.
 
 Possible values:
 
-* `stretch` (default, alias: `expend`): the widget is stretched to take all available space in its box,
+* `stretch` (default, alias: `expand`): the widget is stretched to take all available space in its box,
 
 * `start` (alias: `top`, `left`): the widget is placed at the top or on the left of its box depending on the layout orientation,
 
@@ -144,7 +144,7 @@ var box = new photonui.BoxLayout({
         new photonui.Button({
             text: "align: stretch",
             layoutOptions: {
-                align: "stretch" // default, alias: expend
+                align: "stretch" // default, alias: expand
             }
         }),
         new photonui.Button({

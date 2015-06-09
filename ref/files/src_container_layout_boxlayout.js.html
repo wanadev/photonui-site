@@ -183,7 +183,7 @@ var Layout = require(&quot;./layout.js&quot;);
  * Layout Options:
  *
  *     {
- *         align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default=stretch&gt;,
+ *         align: &lt;String (stretch|expand, start|left|top, center|middle, end|right|bottom), default=stretch&gt;,
  *
  *         order: &lt;Number default=null (auto)&gt;
  *
@@ -421,7 +421,7 @@ var BoxLayout = Layout.$extend({
         }
 
         // align
-        if ([&quot;stretch&quot;, &quot;expend&quot;].indexOf(woptions.align) &gt; -1) {
+        if ([&quot;stretch&quot;, &quot;expand&quot;].indexOf(woptions.align) &gt; -1) {
             options.align = &quot;stretch&quot;;
         }
         else if ([&quot;center&quot;, &quot;middle&quot;].indexOf(woptions.align) &gt; -1) {

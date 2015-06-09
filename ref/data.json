@@ -883,7 +883,7 @@
             "namespace": "photonui",
             "file": "src/container/layout/boxlayout.js",
             "line": 42,
-            "description": "Vertical and horizontal box layout.\n\nLayout Options:\n\n    {\n        align: <String (stretch, start|left|top, center|middle, end|right|bottom), default=stretch>,\n\n        order: <Number default=null (auto)>\n\n        minWidth: <Number (null=auto), default=null>,\n        maxWidth: <Number (null=auto), default=null>,\n        width: <Number (null=auto), default=null>,\n\n        minHeight: <Number (null=auto), default=null>,\n        maxHeight: <Number (null=auto), default=null>,\n        height: <Number (null=auto), default=null>\n    }",
+            "description": "Vertical and horizontal box layout.\n\nLayout Options:\n\n    {\n        align: <String (stretch|expand, start|left|top, center|middle, end|right|bottom), default=stretch>,\n\n        order: <Number default=null (auto)>\n\n        minWidth: <Number (null=auto), default=null>,\n        maxWidth: <Number (null=auto), default=null>,\n        width: <Number (null=auto), default=null>,\n\n        minHeight: <Number (null=auto), default=null>,\n        maxHeight: <Number (null=auto), default=null>,\n        height: <Number (null=auto), default=null>\n    }",
             "is_constructor": 1,
             "extends": "photonui.Layout"
         },
