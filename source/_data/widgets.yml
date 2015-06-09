@@ -51,6 +51,10 @@
 - name: GridLayout
   url: /PhotonUI/ref/classes/photonui.GridLayout.html
 
+- name: Image
+  image: doc/widgets/image.png
+  url: doc/widgets/image.html
+
 - name: Label
   image: doc/widgets/label.png
   url: doc/widgets/label.html
