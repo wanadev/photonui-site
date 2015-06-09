@@ -61,6 +61,7 @@
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
+                                <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
@@ -97,6 +98,7 @@
                                 <li><a href="../modules/Misc.html">Misc</a></li>
                                 <li><a href="../modules/PhotonUI.html">PhotonUI</a></li>
                                 <li><a href="../modules/Visual.html">Visual</a></li>
+                                <li><a href="../modules/visual.html">visual</a></li>
                             </ul>
                         </div>
                     </div>
@@ -181,7 +183,9 @@ var Layout = require(&quot;./layout.js&quot;);
  * Layout Options:
  *
  *     {
- *         align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default: stretch&gt;,
+ *         align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default=stretch&gt;,
+ *
+ *         order: &lt;Number default=null (auto)&gt;
  *
  *         minWidth: &lt;Number (null=auto), default=null&gt;,
  *         maxWidth: &lt;Number (null=auto), default=null&gt;,
@@ -253,8 +257,8 @@ var BoxLayout = Layout.$extend({
 
     setVerticalPadding: function(padding) {
         this._verticalPadding = padding|0;
-        this.__html.outerbox.style.paddingTop = this._verticalPadding + &quot;px&quot;;
-        this.__html.outerbox.style.paddingBottom = this._verticalPadding + &quot;px&quot;;
+        this.__html.outerbox.style.paddingLeft = this._verticalPadding + &quot;px&quot;;
+        this.__html.outerbox.style.paddingRight = this._verticalPadding + &quot;px&quot;;
     },
 
     /**
@@ -272,8 +276,8 @@ var BoxLayout = Layout.$extend({
 
     setHorizontalPadding: function(padding) {
         this._horizontalPadding = padding|0;
-        this.__html.outerbox.style.paddingLeft = this._horizontalPadding + &quot;px&quot;;
-        this.__html.outerbox.style.paddingRight = this._horizontalPadding + &quot;px&quot;;
+        this.__html.outerbox.style.paddingTop = this._horizontalPadding + &quot;px&quot;;
+        this.__html.outerbox.style.paddingBottom = this._horizontalPadding + &quot;px&quot;;
     },
 
     /**
@@ -292,16 +296,37 @@ var BoxLayout = Layout.$extend({
     setSpacing: function(spacing) {
         this._spacing = spacing|0;
 
+        var children = this.children;
         var nodes = this.__html.outerbox.childNodes;
-        for (var i=0 ; i&lt;nodes.length-1 ; i++) {
+        var last = 0;
+        var lastOrder, currentOrder;
+        for (var i=0 ; i&lt;nodes.length ; i++) {
+            lastOrder = 0;
+            currentOrder = 0;
+            if (children[last] &amp;&amp; children[last].layoutOptions &amp;&amp; children[last].layoutOptions.order) {
+                lastOrder = children[last].layoutOptions.order|0;
+            }
+            if (children[i] &amp;&amp; children[i].layoutOptions &amp;&amp; children[i].layoutOptions.order) {
+                currentOrder = children[i].layoutOptions.order|0;
+            }
+
+            if (currentOrder &gt;= lastOrder) {
+                last = i;
+            }
+
             if (this.orientation == &quot;horizontal&quot;) {
                 nodes[i].style.marginRight = this._spacing + &quot;px&quot;;
-                nodes[i].style.marginBottom = &quot;0px&quot;;
+                nodes[i].style.marginBottom = &quot;&quot;;
             }
             else {
-                nodes[i].style.marginRight = &quot;0px&quot;;
+                nodes[i].style.marginRight = &quot;&quot;;
                 nodes[i].style.marginBottom = this._spacing + &quot;px&quot;;
             }
+        }
+
+        if (nodes.length &gt; 0) {
+            nodes[last].style.marginRight = &quot;&quot;;
+            nodes[last].style.marginBottom = &quot;&quot;;
         }
     },
 
@@ -359,6 +384,9 @@ var BoxLayout = Layout.$extend({
             // layout option: align
             container.className += &quot; photonui-layout-align-&quot; + options.align;
 
+            // layout options: order
+            if (options.order !== null) container.style.order = options.order;
+
             // layout options: *width
             if (options.minWidth !== null) container.style.minWidth = options.minWidth + &quot;px&quot;;
             if (options.maxWidth !== null) container.style.maxWidth = options.maxWidth + &quot;px&quot;;
@@ -388,7 +416,8 @@ var BoxLayout = Layout.$extend({
             width: null,
             minHeight: null,
             maxHeight: null,
-            height: null
+            height: null,
+            order: null
         }
 
         // align
@@ -403,6 +432,11 @@ var BoxLayout = Layout.$extend({
         }
         else if ([&quot;end&quot;, &quot;bottom&quot;, &quot;right&quot;].indexOf(woptions.align) &gt; -1) {
             options.align = &quot;end&quot;;
+        }
+
+        // order
+        if (woptions.order !== undefined &amp;&amp; woptions.order !== null) {
+            options.order = woptions.order|0;
         }
 
         // *width

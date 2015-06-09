@@ -3,19 +3,19 @@ layout: page-width-demo
 demo_script: doc/widgets/translation.js
 ---
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-## Extracting strings and generating catalogs
+### Extracting strings and generating catalogs
 
 `photonui.Translation` is based on *stone.js*. You can find its documentation on GitHub:
 
 * https://github.com/flozz/stone.js
 
 
-## More example
+### More example
 
 ```javascript
 // Translation

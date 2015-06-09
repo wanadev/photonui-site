@@ -425,6 +425,19 @@
                 "photonui": 1
             }
         },
+        "src/visual/image.js": {
+            "name": "src/visual/image.js",
+            "modules": {
+                "visual": 1
+            },
+            "classes": {
+                "photonui.Image": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
         "src/visual/label.js": {
             "name": "src/visual/label.js",
             "modules": {},
@@ -561,6 +574,7 @@
                 "Input": 1,
                 "Misc": 1,
                 "Visual": 1,
+                "visual": 1,
                 "<SUBMUDULE (Input, Container, Visual, Event, Composite,...)>": 1,
                 "Helpers": 1
             },
@@ -602,6 +616,7 @@
                 "photonui.BaseIcon": 1,
                 "photonui.Canvas": 1,
                 "photonui.FAIcon": 1,
+                "photonui.Image": 1,
                 "photonui.Label": 1,
                 "photonui.ProgressBar": 1,
                 "photonui.Separator": 1,
@@ -762,6 +777,23 @@
             "line": 43,
             "description": "PhotonUI - Javascript Web User Interface."
         },
+        "visual": {
+            "name": "visual",
+            "submodules": {},
+            "classes": {
+                "photonui.Image": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {
+                "photonui": 1
+            },
+            "module": "PhotonUI",
+            "namespace": "",
+            "file": "src/visual/image.js",
+            "line": 41,
+            "description": "PhotonUI - Javascript Web User Interface."
+        },
         "<SUBMUDULE (Input, Container, Visual, Event, Composite,...)>": {
             "name": "<SUBMUDULE (Input, Container, Visual, Event, Composite,...)>",
             "submodules": {},
@@ -851,7 +883,7 @@
             "namespace": "photonui",
             "file": "src/container/layout/boxlayout.js",
             "line": 42,
-            "description": "Vertical and horizontal box layout.\n\nLayout Options:\n\n    {\n        align: <String (stretch, start|left|top, center|middle, end|right|bottom), default: stretch>,\n\n        minWidth: <Number (null=auto), default=null>,\n        maxWidth: <Number (null=auto), default=null>,\n        width: <Number (null=auto), default=null>,\n\n        minHeight: <Number (null=auto), default=null>,\n        maxHeight: <Number (null=auto), default=null>,\n        height: <Number (null=auto), default=null>\n    }",
+            "description": "Vertical and horizontal box layout.\n\nLayout Options:\n\n    {\n        align: <String (stretch, start|left|top, center|middle, end|right|bottom), default=stretch>,\n\n        order: <Number default=null (auto)>\n\n        minWidth: <Number (null=auto), default=null>,\n        maxWidth: <Number (null=auto), default=null>,\n        width: <Number (null=auto), default=null>,\n\n        minHeight: <Number (null=auto), default=null>,\n        maxHeight: <Number (null=auto), default=null>,\n        height: <Number (null=auto), default=null>\n    }",
             "is_constructor": 1,
             "extends": "photonui.Layout"
         },
@@ -1504,6 +1536,30 @@
             "is_constructor": 1,
             "extends": "photonui.BaseIcon"
         },
+        "photonui.Image": {
+            "name": "photonui.Image",
+            "shortname": "Image",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "visual",
+            "namespace": "photonui",
+            "file": "src/visual/image.js",
+            "line": 41,
+            "description": "Image.",
+            "is_constructor": 1,
+            "extends": "photonui.Widget",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object that can contain any property of the widget (optional).",
+                    "type": "Object"
+                }
+            ]
+        },
         "photonui.Label": {
             "name": "photonui.Label",
             "shortname": "Label",
@@ -1795,7 +1851,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 80,
+            "line": 82,
             "description": "The layout orientation (\"vertical\" or \"horizontal\").",
             "itemtype": "property",
             "name": "orientation",
@@ -1808,7 +1864,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 105,
+            "line": 107,
             "description": "Vertical padding (px).",
             "itemtype": "property",
             "name": "verticalPadding",
@@ -1821,7 +1877,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 124,
+            "line": 126,
             "description": "Horizontal padding (px).",
             "itemtype": "property",
             "name": "horizontalPadding",
@@ -1834,7 +1890,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 143,
+            "line": 145,
             "description": "Spacing between children widgets.",
             "itemtype": "property",
             "name": "spacing",
@@ -1847,7 +1903,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 172,
+            "line": 195,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -1861,7 +1917,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 193,
+            "line": 216,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -1874,7 +1930,7 @@
         },
         {
             "file": "src/container/layout/boxlayout.js",
-            "line": 204,
+            "line": 227,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -6263,6 +6319,72 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/visual/image.js",
+            "line": 58,
+            "description": "The image URL.",
+            "itemtype": "property",
+            "name": "url",
+            "type": "String",
+            "default": "\"\"",
+            "class": "photonui.Image",
+            "module": "PhotonUI",
+            "submodule": "visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/image.js",
+            "line": 76,
+            "description": "The image width (null = auto).",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "default": "null",
+            "class": "photonui.Image",
+            "module": "PhotonUI",
+            "submodule": "visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/image.js",
+            "line": 98,
+            "description": "The image height (null = auto).",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "default": "null",
+            "class": "photonui.Image",
+            "module": "PhotonUI",
+            "submodule": "visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/image.js",
+            "line": 120,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.Image",
+            "module": "PhotonUI",
+            "submodule": "visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/image.js",
+            "line": 141,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.Image",
+            "module": "PhotonUI",
+            "submodule": "visual",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/visual/label.js",
             "line": 82,
             "description": "The label text.",
@@ -7273,7 +7395,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 376,
+            "line": 379,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -7283,7 +7405,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 387,
+            "line": 390,
             "description": "Add a class to the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "addClass",
@@ -7300,7 +7422,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 404,
+            "line": 407,
             "description": "Remove a class from the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "removeClass",
@@ -7317,7 +7439,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 426,
+            "line": 429,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7329,7 +7451,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 442,
+            "line": 445,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -7347,7 +7469,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 457,
+            "line": 460,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",

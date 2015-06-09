@@ -3,12 +3,12 @@ layout: page-width-demo
 demo_script: doc/widgets/select.js
 ---
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-## More example
+### More example
 
 ```javascript
 var select = new photonui.Select({

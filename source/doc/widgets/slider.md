@@ -3,12 +3,12 @@ layout: page-width-demo
 demo_script: doc/widgets/slider.js
 ---
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-## More example
+### More example
 
 ```javascript
 var box = new photonui.BoxLayout({

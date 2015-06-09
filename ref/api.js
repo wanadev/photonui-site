@@ -24,6 +24,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.FontSelect",
         "photonui.GridLayout",
         "photonui.Helpers",
+        "photonui.Image",
         "photonui.Label",
         "photonui.Layout",
         "photonui.Menu",
@@ -58,7 +59,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "Input",
         "Misc",
         "PhotonUI",
-        "Visual"
+        "Visual",
+        "visual"
     ],
     "allModules": [
         {
@@ -104,6 +106,11 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "Visual",
             "name": "Visual",
+            "description": "PhotonUI - Javascript Web User Interface."
+        },
+        {
+            "displayName": "visual",
+            "name": "visual",
             "description": "PhotonUI - Javascript Web User Interface."
         }
     ]

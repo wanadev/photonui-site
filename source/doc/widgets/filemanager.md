@@ -13,7 +13,7 @@ The file manager provides you two ways to open file stored on the user's hard di
 __NOTE:__ You cannot open the "file open" dialog as you wish. The `photonui.FileManager.open` method **must** be called in response to an user event (click,...) else the browser will not allow you to open the dialog.
 
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 

@@ -2,7 +2,8 @@
   url: /PhotonUI/ref/classes/photonui.AccelManager.html
 
 - name: BoxLayout
-  url: /PhotonUI/ref/classes/photonui.BoxLayout.html
+  image: doc/widgets/boxlayout.png
+  url: doc/widgets/boxlayout.html
 
 - name: Button
   image: doc/widgets/button.png

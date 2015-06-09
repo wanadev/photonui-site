@@ -1757,7 +1757,10 @@ var ColorPickerDialog = Dialog.$extend({
     _buildUi: function() {
 
         // == Main UI ==
-        this.__widgets.hbox = new BoxLayout({orientation: "horizontal"});
+        this.__widgets.hbox = new BoxLayout({
+            orientation: "horizontal",
+            verticalPadding: 5
+        });
         this.child = this.__widgets.hbox;
 
         // Color Picker
@@ -1976,7 +1979,7 @@ var ColorPickerDialog = Dialog.$extend({
 
 module.exports = ColorPickerDialog;
 
-},{"../../lib/stone.js":1,"../container/layout/boxlayout.js":8,"../container/layout/gridlayout.js":10,"../container/window/dialog.js":17,"../input/button/button.js":23,"../input/color/color.js":28,"../input/color/colorpalette.js":29,"../input/color/colorpicker.js":30,"../input/slider/slider.js":37,"../visual/faicon.js":43,"../visual/label.js":44,"../visual/separator.js":46}],6:[function(require,module,exports){
+},{"../../lib/stone.js":1,"../container/layout/boxlayout.js":8,"../container/layout/gridlayout.js":10,"../container/window/dialog.js":17,"../input/button/button.js":23,"../input/color/color.js":28,"../input/color/colorpalette.js":29,"../input/color/colorpicker.js":30,"../input/slider/slider.js":37,"../visual/faicon.js":43,"../visual/label.js":45,"../visual/separator.js":47}],6:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -2171,10 +2174,15 @@ Container = Widget.$extend({
     setChildName: function(childName) {
         if (this.childName && this.containerNode && this.child && this.child.html) {
             this.containerNode.removeChild(this.child.html);
+            this.child._parentName = null;
         }
         this._childName = childName;
+        if (this.child && this.child._parentName) {
+            this.child.parent.child = null;
+        }
         if (this.childName && this.containerNode && this.child && this.child.html) {
             this.containerNode.appendChild(this.child.html);
+            this.child._parentName = this.name;
         }
     },
 
@@ -2190,7 +2198,7 @@ Container = Widget.$extend({
     },
 
     setChild: function(child) {
-        if (!child instanceof Widget) {
+        if ((!child) || (!child instanceof Widget)) {
             this.childName = null;
             return;
         }
@@ -2217,6 +2225,17 @@ Container = Widget.$extend({
 
     // ====== Public methods ======
 
+    /**
+     * Remove the given child.
+     *
+     * @method removeChild
+     * @param {photonui.Widget} widget The widget to remove/
+     */
+    removeChild: function(widget) {
+        if (this.child == widget) {
+            this.child = null;
+        }
+    },
 
     /**
      * Destroy the widget.
@@ -2233,7 +2252,7 @@ Container = Widget.$extend({
 
 module.exports = Container;
 
-},{"../widget.js":50}],8:[function(require,module,exports){
+},{"../widget.js":51}],8:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -2273,7 +2292,7 @@ module.exports = Container;
  */
 
 var Helpers = require("../../helpers.js");
-var GridLayout = require("./gridlayout.js");
+var Layout = require("./layout.js");
 
 /**
  * Vertical and horizontal box layout.
@@ -2281,22 +2300,24 @@ var GridLayout = require("./gridlayout.js");
  * Layout Options:
  *
  *     {
- *          verticalExpansion: <Boolean, default: true>,
- *          horizontalExpansion: <Boolean, default: true>,
- *          width: <Number, default: undefined>,
- *          height: <Number, default: undefined>,
- *          minWidth: <Number, default: undefined>,
- *          minHeight: <Number, default: undefined>,
- *          maxWidth: <Number, default: undefined>,
- *          maxHeight: <Number, default: undefined>,
- *          horizontalAlign: <String (left, center, right), default: undefined>
+ *         align: <String (stretch, start|left|top, center|middle, end|right|bottom), default=stretch>,
+ *
+ *         order: <Number default=null (auto)>
+ *
+ *         minWidth: <Number (null=auto), default=null>,
+ *         maxWidth: <Number (null=auto), default=null>,
+ *         width: <Number (null=auto), default=null>,
+ *
+ *         minHeight: <Number (null=auto), default=null>,
+ *         maxHeight: <Number (null=auto), default=null>,
+ *         height: <Number (null=auto), default=null>
  *     }
  *
  * @class BoxLayout
  * @constructor
- * @extends photonui.GridLayout
+ * @extends photonui.Layout
  */
-var BoxLayout = GridLayout.$extend({
+var BoxLayout = Layout.$extend({
 
     // Constructor
     __init__: function(params) {
@@ -2335,7 +2356,107 @@ var BoxLayout = GridLayout.$extend({
         this.removeClass("photonui-layout-orientation-vertical");
         this.removeClass("photonui-layout-orientation-horizontal");
         this.addClass("photonui-layout-orientation-" + this.orientation);
-        this._updateLayout();
+        this._updateProperties(["spacing"]);
+    },
+
+    /**
+     * Vertical padding (px).
+     *
+     * @property verticalPadding
+     * @type Number
+     * @default 0
+     */
+    _verticalPadding: 0,
+
+    getVerticalPadding: function() {
+        return this._verticalPadding;
+    },
+
+    setVerticalPadding: function(padding) {
+        this._verticalPadding = padding|0;
+        this.__html.outerbox.style.paddingLeft = this._verticalPadding + "px";
+        this.__html.outerbox.style.paddingRight = this._verticalPadding + "px";
+    },
+
+    /**
+     * Horizontal padding (px).
+     *
+     * @property horizontalPadding
+     * @type Number
+     * @default 0
+     */
+    _horizontalPadding: 0,
+
+    getHorizontalPadding: function() {
+        return this._horizontalPadding;
+    },
+
+    setHorizontalPadding: function(padding) {
+        this._horizontalPadding = padding|0;
+        this.__html.outerbox.style.paddingTop = this._horizontalPadding + "px";
+        this.__html.outerbox.style.paddingBottom = this._horizontalPadding + "px";
+    },
+
+    /**
+     * Spacing between children widgets.
+     *
+     * @property spacing
+     * @type Number
+     * @default 5
+     */
+    _spacing: 5,
+
+    getSpacing: function() {
+        return this._spacing;
+    },
+
+    setSpacing: function(spacing) {
+        this._spacing = spacing|0;
+
+        var children = this.children;
+        var nodes = this.__html.outerbox.childNodes;
+        var last = 0;
+        var lastOrder, currentOrder;
+        for (var i=0 ; i<nodes.length ; i++) {
+            lastOrder = 0;
+            currentOrder = 0;
+            if (children[last] && children[last].layoutOptions && children[last].layoutOptions.order) {
+                lastOrder = children[last].layoutOptions.order|0;
+            }
+            if (children[i] && children[i].layoutOptions && children[i].layoutOptions.order) {
+                currentOrder = children[i].layoutOptions.order|0;
+            }
+
+            if (currentOrder >= lastOrder) {
+                last = i;
+            }
+
+            if (this.orientation == "horizontal") {
+                nodes[i].style.marginRight = this._spacing + "px";
+                nodes[i].style.marginBottom = "";
+            }
+            else {
+                nodes[i].style.marginRight = "";
+                nodes[i].style.marginBottom = this._spacing + "px";
+            }
+        }
+
+        if (nodes.length > 0) {
+            nodes[last].style.marginRight = "";
+            nodes[last].style.marginBottom = "";
+        }
+    },
+
+    /**
+     * Html outer element of the widget (if any).
+     *
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getHtml: function() {
+        return this.__html.outerbox;
     },
 
 
@@ -2354,7 +2475,7 @@ var BoxLayout = GridLayout.$extend({
      * @private
      */
     _buildHtml: function() {
-        this.$super();
+        this.__html.outerbox = document.createElement("div");
         this.__html.outerbox.className = "photonui-widget photonui-boxlayout";
     },
 
@@ -2365,88 +2486,109 @@ var BoxLayout = GridLayout.$extend({
      * @private
      */
     _updateLayout: function() {
-        Helpers.cleanNode(this.__html.gridBody);
+        Helpers.cleanNode(this.__html.outerbox);
 
-        var e_tr = null;
-        if (this.getOrientation() == "horizontal") {
-            e_tr = document.createElement("tr");
-            this.__html.gridBody.appendChild(e_tr);
-        }
-
+        var fragment = document.createDocumentFragment();
         var children = this.children;
 
+        var container = null;
         for (var i=0 ; i<children.length ; i++) {
-            if (this.getOrientation() == "vertical") {
-                e_tr = document.createElement("tr");
-                this.__html.gridBody.appendChild(e_tr);
-            }
+            var options = this._computeLayoutOptions(children[i]);
 
-            var e_td = document.createElement("td");
-            e_td.className = "photonui-container photonui-boxlayout-cell";
-            e_tr.appendChild(e_td);
+            container = document.createElement("div");
+            container.className = "photonui-container photonui-boxlayout-item";
 
-            // Layout Options: Expansion
-            if (children[i].layoutOptions.horizontalExpansion == undefined
-            ||  children[i].layoutOptions.horizontalExpansion) {
-                e_td.className += " photonui-container-expand-child-horizontal";
-            }
-            if (children[i].layoutOptions.verticalExpansion == undefined
-            ||  children[i].layoutOptions.verticalExpansion) {
-                e_td.className += " photonui-container-expand-child-vertical";
-            }
+            // layout option: align
+            container.className += " photonui-layout-align-" + options.align;
 
-            // Layout Options: width
-            if (children[i].layoutOptions.width != undefined) {
-                e_td.style.height = children[i].layoutOptions.width + "px";
-            }
-            // Layout Options: height
-            if (children[i].layoutOptions.height != undefined) {
-                e_td.style.height = children[i].layoutOptions.height + "px";
-            }
-            // Layout Options: minWidth
-            if (children[i].layoutOptions.minWidth != undefined) {
-                e_td.style.minWidth = this.childrenWidgets[i].layoutOptions.minWidth + "px";
-            }
-            // Layout Options: minHeight
-            if (children[i].layoutOptions.minHeight != undefined) {
-                e_td.style.minHeight = this.childrenWidgets[i].layoutOptions.minHeight + "px";
-            }
-            // Layout Options: maxWidth
-            if (children[i].layoutOptions.maxWidth != undefined) {
-                e_td.style.maxWidth = this.childrenWidgets[i].layoutOptions.maxWidth + "px";
-            }
-            // Layout Options: maxHeight
-            if (children[i].layoutOptions.maxHeight != undefined) {
-                e_td.style.maxHeight = this.childrenWidgets[i].layoutOptions.maxHeight + "px";
-            }
-            // Layout Options: horizontalAlign
-            if (children[i].layoutOptions.horizontalAlign != undefined) {
-                e_td.style.textAlign = this.childrenWidgets[i].layoutOptions.horizontalAlign; console.log("hhhh");
-            }
+            // layout options: order
+            if (options.order !== null) container.style.order = options.order;
 
-            e_td.appendChild(children[i].html);
+            // layout options: *width
+            if (options.minWidth !== null) container.style.minWidth = options.minWidth + "px";
+            if (options.maxWidth !== null) container.style.maxWidth = options.maxWidth + "px";
+            if (options.width !== null) container.style.width = options.width + "px";
+
+            // layout options: *height
+            if (options.minHeight !== null) container.style.minHeight = options.minHeight + "px";
+            if (options.maxHeight !== null) container.style.maxHeight = options.maxHeight + "px";
+            if (options.height !== null) container.style.height = options.height + "px";
+
+            container.appendChild(children[i].html);
+            fragment.appendChild(container);
         }
 
-        // Hack for Gecko and Trident
-        //var cells = document.querySelectorAll("#" + this.name + " td");
-        //var heights = [];
-        //var padding = 0;
-        //for (var i=0 ; i<cells.length ; i++) {
-            //if (cells[i].childNodes.length == 1 && cells[i].childNodes[0] instanceof HTMLElement) {
-                //padding = parseInt(getComputedStyle(cells[i].childNodes[0]).paddingTop);
-                //padding += parseInt(getComputedStyle(cells[i].childNodes[0]).paddingBottom);
-            //}
-            //heights[i] = (cells[i].offsetHeight - padding) + "px";
-        //}
-        //for (var i=0 ; i<cells.length ; i++) {
-            //cells[i].style.height = heights[i];
-        //}
+        this.__html.outerbox.appendChild(fragment);
+
+        this._updateProperties(["spacing"]);
+    },
+
+    _computeLayoutOptions: function(widget) {
+        var woptions = widget.layoutOptions || {};
+
+        var options = {
+            align: "stretch",
+            minWidth: null,
+            maxWidth: null,
+            width: null,
+            minHeight: null,
+            maxHeight: null,
+            height: null,
+            order: null
+        }
+
+        // align
+        if (["stretch", "expend"].indexOf(woptions.align) > -1) {
+            options.align = "stretch";
+        }
+        else if (["center", "middle"].indexOf(woptions.align) > -1) {
+            options.align = "center";
+        }
+        else if (["start", "begin", "top", "left"].indexOf(woptions.align) > -1) {
+            options.align = "start";
+        }
+        else if (["end", "bottom", "right"].indexOf(woptions.align) > -1) {
+            options.align = "end";
+        }
+
+        // order
+        if (woptions.order !== undefined && woptions.order !== null) {
+            options.order = woptions.order|0;
+        }
+
+        // *width
+        if (woptions.minWidth !== undefined && woptions.minWidth !== null) {
+            options.minWidth = woptions.minWidth|0;
+        }
+        if (woptions.maxWidth !== undefined && woptions.maxWidth !== null) {
+            options.maxWidth = woptions.maxWidth|0;
+        }
+        if (woptions.width !== undefined && woptions.width !== null) {
+            options.width = woptions.width|0;
+            options.minWidth = woptions.width|0;
+            options.maxWidth = woptions.width|0;
+        }
+
+        // *height
+        if (woptions.minHeight !== undefined && woptions.minHeight !== null) {
+            options.minHeight = woptions.minHeight|0;
+        }
+        if (woptions.maxHeight !== undefined && woptions.maxHeight !== null) {
+            options.maxHeight = woptions.maxHeight|0;
+        }
+        if (woptions.height !== undefined && woptions.height !== null) {
+            options.height = woptions.height|0;
+            options.minHeight = woptions.height|0;
+            options.maxHeight = woptions.height|0;
+        }
+
+        return options;
     }
 });
 
 module.exports = BoxLayout;
 
-},{"../../helpers.js":22,"./gridlayout.js":10}],9:[function(require,module,exports){
+},{"../../helpers.js":22,"./layout.js":11}],9:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -2972,7 +3114,24 @@ var Layout = Container.$extend({
     },
 
     setChildrenNames: function(childrenNames) {
-        this._childrenNames = childrenNames;
+        for (var i=0 ; i<this._childrenNames.length ; i++) {
+            var widget = photonui.getWidget(this._childrenNames[i]);
+            var index = this._childrenNames.indexOf(widget.name);
+            if (index >= 0) {
+                widget._parentName = null;
+            }
+        }
+        this._childrenNames = [];
+        for (var i=0 ; i<childrenNames.length ; i++) {
+            var widget = photonui.getWidget(childrenNames[i]);
+            if (widget) {
+                if (widget.parent) {
+                    widget.unparent();
+                }
+                this._childrenNames.push(widget.name);
+                widget._parentName = this.name;
+            }
+        }
         this._updateLayout();
     },
 
@@ -3038,10 +3197,14 @@ var Layout = Container.$extend({
      * @param {Object} layoutOption Specific option for the layout (optional).
      */
     addChild: function(widget, layoutOptions) {
+        if (widget.parent) {
+            widget.unparent();
+        }
         if (layoutOptions) {
             widget.layoutOptions = layoutOptions;
         }
         this._childrenNames.push(widget.name);
+        widget._parentName = this.name;
         this._updateLayout();
     },
 
@@ -3055,10 +3218,11 @@ var Layout = Container.$extend({
         var index = this._childrenNames.indexOf(widget.name);
         if (index >= 0) {
             this._childrenNames.splice(index, 1);
+            widget._parentName = null;
         }
         this._updateLayout();
     },
-    
+
     /**
      * Destroy all children of the layout
      *
@@ -3071,7 +3235,6 @@ var Layout = Container.$extend({
                 children[i].destroy();
             }
         }
-        this.children = [];
     },
 
     /**
@@ -3117,7 +3280,7 @@ var Layout = Container.$extend({
 
 module.exports = Layout;
 
-},{"../../widget.js":50,"../container.js":7}],12:[function(require,module,exports){
+},{"../../widget.js":51,"../container.js":7}],12:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -3503,7 +3666,7 @@ var MenuItem = Container.$extend({
 
 module.exports = MenuItem;
 
-},{"../../helpers.js":22,"../../visual/baseicon.js":41,"../../widget.js":50,"../container.js":7}],14:[function(require,module,exports){
+},{"../../helpers.js":22,"../../visual/baseicon.js":41,"../../widget.js":51,"../container.js":7}],14:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -3643,7 +3806,7 @@ var SubMenuItem = MenuItem.$extend({
 
 module.exports = SubMenuItem;
 
-},{"../../widget.js":50,"./menu.js":12,"./menuitem.js":13}],15:[function(require,module,exports){
+},{"../../widget.js":51,"./menu.js":12,"./menuitem.js":13}],15:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -4232,7 +4395,7 @@ var BaseWindow = Container.$extend({
 
 module.exports = BaseWindow;
 
-},{"../../widget.js":50,"../container.js":7}],17:[function(require,module,exports){
+},{"../../widget.js":51,"../container.js":7}],17:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -4414,7 +4577,7 @@ var Dialog = Window.$extend({
 
 module.exports = Dialog;
 
-},{"../../helpers.js":22,"../../widget.js":50,"./window.js":19}],18:[function(require,module,exports){
+},{"../../helpers.js":22,"../../widget.js":51,"./window.js":19}],18:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -5789,7 +5952,7 @@ var MouseManager = Base.$extend({
 
 module.exports = MouseManager;
 
-},{"../base.js":4,"../helpers.js":22,"../widget.js":50}],22:[function(require,module,exports){
+},{"../base.js":4,"../helpers.js":22,"../widget.js":51}],22:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -6319,7 +6482,7 @@ Button._buttonMixin = {
 
 module.exports = Button;
 
-},{"../../helpers.js":22,"../../visual/baseicon.js":41,"../../widget.js":50}],24:[function(require,module,exports){
+},{"../../helpers.js":22,"../../visual/baseicon.js":41,"../../widget.js":51}],24:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -6777,7 +6940,7 @@ var CheckBox = Widget.$extend({
 
 module.exports = CheckBox;
 
-},{"../../widget.js":50}],26:[function(require,module,exports){
+},{"../../widget.js":51}],26:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -7627,7 +7790,7 @@ ColorPalette.palette = [
 
 module.exports = ColorPalette;
 
-},{"../../helpers.js":22,"../../widget.js":50,"./color.js":28}],30:[function(require,module,exports){
+},{"../../helpers.js":22,"../../widget.js":51,"./color.js":28}],30:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -8148,7 +8311,7 @@ var MouseManager = require("../../event/mousemanager.js");
 
 module.exports = ColorPicker;
 
-},{"../../event/mousemanager.js":21,"../../helpers.js":22,"../../widget.js":50,"./color.js":28}],31:[function(require,module,exports){
+},{"../../event/mousemanager.js":21,"../../helpers.js":22,"../../widget.js":51,"./color.js":28}],31:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -8346,7 +8509,7 @@ var Field = Widget.$extend({
 
 module.exports = Field;
 
-},{"../../widget.js":50}],32:[function(require,module,exports){
+},{"../../widget.js":51}],32:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -9461,7 +9624,7 @@ var Select = Widget.$extend({
 
 module.exports = Select;
 
-},{"../../../lib/stone.js":1,"../../composite/popupmenu.js":6,"../../container/menu/menuitem.js":13,"../../helpers.js":22,"../../widget.js":50}],37:[function(require,module,exports){
+},{"../../../lib/stone.js":1,"../../composite/popupmenu.js":6,"../../container/menu/menuitem.js":13,"../../helpers.js":22,"../../widget.js":51}],37:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -10316,6 +10479,7 @@ photonui.MouseManager = require("./event/mousemanager.js");
 
 photonui.BaseIcon = require("./visual/baseicon.js");
 photonui.FAIcon = require("./visual/faicon.js");
+photonui.Image = require("./visual/image.js");
 photonui.SpriteSheet = require("./visual/spritesheet.js");
 photonui.SpriteIcon = require("./visual/spriteicon.js");
 photonui.Canvas = require("./visual/canvas.js");
@@ -10376,7 +10540,7 @@ photonui.lib.Stone = require("../lib/stone");
 
 module.exports = photonui;
 
-},{"../lib/stone":1,"./base.js":4,"./composite/colorpickerdialog.js":5,"./composite/popupmenu.js":6,"./container/container.js":7,"./container/layout/boxlayout.js":8,"./container/layout/fluidlayout.js":9,"./container/layout/gridlayout.js":10,"./container/layout/layout.js":11,"./container/menu/menu.js":12,"./container/menu/menuitem.js":13,"./container/menu/submenuitem.js":14,"./container/viewport/viewport.js":15,"./container/window/basewindow.js":16,"./container/window/dialog.js":17,"./container/window/popupwindow.js":18,"./container/window/window.js":19,"./event/accelmanager.js":20,"./event/mousemanager.js":21,"./helpers.js":22,"./input/button/button.js":23,"./input/button/colorbutton.js":24,"./input/checkbox/checkbox.js":25,"./input/checkbox/switch.js":26,"./input/checkbox/togglebutton.js":27,"./input/color/color.js":28,"./input/color/colorpalette.js":29,"./input/color/colorpicker.js":30,"./input/field/field.js":31,"./input/field/numericfield.js":32,"./input/field/textareafield.js":33,"./input/field/textfield.js":34,"./input/select/fontselect.js":35,"./input/select/select.js":36,"./input/slider/slider.js":37,"./misc/filemanager.js":38,"./misc/translation.js":39,"./visual/baseicon.js":41,"./visual/canvas.js":42,"./visual/faicon.js":43,"./visual/label.js":44,"./visual/progressbar.js":45,"./visual/separator.js":46,"./visual/spriteicon.js":47,"./visual/spritesheet.js":48,"./visual/text.js":49,"./widget.js":50,"classyjs":2,"keyboardjs":3}],41:[function(require,module,exports){
+},{"../lib/stone":1,"./base.js":4,"./composite/colorpickerdialog.js":5,"./composite/popupmenu.js":6,"./container/container.js":7,"./container/layout/boxlayout.js":8,"./container/layout/fluidlayout.js":9,"./container/layout/gridlayout.js":10,"./container/layout/layout.js":11,"./container/menu/menu.js":12,"./container/menu/menuitem.js":13,"./container/menu/submenuitem.js":14,"./container/viewport/viewport.js":15,"./container/window/basewindow.js":16,"./container/window/dialog.js":17,"./container/window/popupwindow.js":18,"./container/window/window.js":19,"./event/accelmanager.js":20,"./event/mousemanager.js":21,"./helpers.js":22,"./input/button/button.js":23,"./input/button/colorbutton.js":24,"./input/checkbox/checkbox.js":25,"./input/checkbox/switch.js":26,"./input/checkbox/togglebutton.js":27,"./input/color/color.js":28,"./input/color/colorpalette.js":29,"./input/color/colorpicker.js":30,"./input/field/field.js":31,"./input/field/numericfield.js":32,"./input/field/textareafield.js":33,"./input/field/textfield.js":34,"./input/select/fontselect.js":35,"./input/select/select.js":36,"./input/slider/slider.js":37,"./misc/filemanager.js":38,"./misc/translation.js":39,"./visual/baseicon.js":41,"./visual/canvas.js":42,"./visual/faicon.js":43,"./visual/image.js":44,"./visual/label.js":45,"./visual/progressbar.js":46,"./visual/separator.js":47,"./visual/spriteicon.js":48,"./visual/spritesheet.js":49,"./visual/text.js":50,"./widget.js":51,"classyjs":2,"keyboardjs":3}],41:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -10446,7 +10610,7 @@ var BaseIcon = Widget.$extend({
 
 module.exports = BaseIcon;
 
-},{"../widget.js":50}],42:[function(require,module,exports){
+},{"../widget.js":51}],42:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -10733,7 +10897,7 @@ var Canvas = Widget.$extend({
 
 module.exports = Canvas;
 
-},{"../widget.js":50}],43:[function(require,module,exports){
+},{"../widget.js":51}],43:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -10940,6 +11104,165 @@ module.exports = FAIcon;
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ * Authored by: Clément LEVASSEUR
+ */
+
+/**
+ * PhotonUI - Javascript Web User Interface.
+ *
+ * @module PhotonUI
+ * @submodule visual
+ * @namespace photonui
+ */
+
+var Widget = require("../widget.js");
+
+/**
+ * Image.
+ *
+ * @class Image
+ * @constructor
+ * @extends photonui.Widget
+ * @param {Object} params An object that can contain any property of the widget (optional).
+ */
+var Image = Widget.$extend({
+
+    //////////////////////////////////////////
+    // Properties and Accessors             //
+    //////////////////////////////////////////
+
+
+    // ====== Public properties ======
+
+    /**
+     * The image URL.
+     *
+     * @property url
+     * @type String
+     * @default ""
+     */
+    _url: "",
+
+    getUrl: function() {
+        return this._url;
+    },
+
+    setUrl: function(url) {
+        this._url = url;
+        this.__html.image.src = url;
+    },
+
+    /**
+     * The image width (null = auto).
+     *
+     * @property width
+     * @type Number
+     * @default null
+     */
+    _width: null,
+
+    getWidth: function() {
+        return this._width;
+    },
+
+    setWidth: function(width) {
+        if (width !== null) {
+            this._width = width;
+            this.__html.image.width = width;
+        } else {
+            this.__html.image.width = '';
+        }
+    },
+
+    /**
+     * The image height (null = auto).
+     *
+     * @property height
+     * @type Number
+     * @default null
+     */
+    _height: null,
+
+    getHeight: function() {
+        return this._height;
+    },
+
+    setHeight: function(height) {
+        if (height !== null) {
+            this._height = height;
+            this.__html.image.height = height;
+        } else {
+            this.__html.image.height = '';
+        }
+    },
+
+    /**
+     * Html outer element of the widget (if any).
+     *
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getHtml: function() {
+        return this.__html.div;
+    },
+
+
+    //////////////////////////////////////////
+    // Methods                              //
+    //////////////////////////////////////////
+
+
+    // ====== Private methods ======
+
+
+    /**
+     * Build the widget HTML.
+     *
+     * @method _buildHtml
+     * @private
+     */
+    _buildHtml: function() {
+        this.__html.div = document.createElement("div");
+        this.__html.div.className = "photonui-widget photonui-image";
+
+        this.__html.image = document.createElement('img');
+        this.__html.div.appendChild(this.__html.image);
+    }
+
+});
+
+module.exports = Image;
+
+},{"../widget.js":51}],45:[function(require,module,exports){
+/*
+ * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *   * Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *   * Neither the name of Wanadev nor the names of its contributors may be used
+ *     to endorse or promote products derived from this software without specific
+ *     prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  * Authored by: Fabien LOISON <http://flozz.fr/>
  */
 
@@ -11117,7 +11440,7 @@ var Label = Widget.$extend({
 
 module.exports = Label;
 
-},{"../helpers.js":22,"../widget.js":50}],45:[function(require,module,exports){
+},{"../helpers.js":22,"../widget.js":51}],46:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -11345,7 +11668,7 @@ var ProgressBar = Widget.$extend({
 
 module.exports = ProgressBar;
 
-},{"../widget.js":50}],46:[function(require,module,exports){
+},{"../widget.js":51}],47:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -11487,7 +11810,7 @@ var Separator = Widget.$extend({
 
 module.exports = Separator;
 
-},{"../widget.js":50}],47:[function(require,module,exports){
+},{"../widget.js":51}],48:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -11676,7 +11999,7 @@ var SpriteIcon = BaseIcon.$extend({
 
 module.exports = SpriteIcon;
 
-},{"./baseicon.js":41,"./spritesheet.js":48}],48:[function(require,module,exports){
+},{"./baseicon.js":41,"./spritesheet.js":49}],49:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -11908,7 +12231,7 @@ SpriteSheet.getSpriteSheet = function(name) {
 
 module.exports = SpriteSheet;
 
-},{"../base.js":4}],49:[function(require,module,exports){
+},{"../base.js":4}],50:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -12061,7 +12384,7 @@ var Text = Widget.$extend({
 
 module.exports = Text;
 
-},{"../../lib/stone.js":1,"../helpers.js":22,"../widget.js":50}],50:[function(require,module,exports){
+},{"../../lib/stone.js":1,"../helpers.js":22,"../widget.js":51}],51:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -12193,6 +12516,32 @@ var Widget = Base.$extend({
         if (this.html) {
             this.html.id = this.name;
         }
+    },
+
+    /**
+     * The parent widget name.
+     *
+     * @property parentName
+     * @type String
+     * @readOnly
+     * @default null (no parent)
+     */
+    _parentName: null,
+
+    getParentName: function() {
+        return this._parentName;
+    },
+
+    /**
+     * The parent widget.
+     *
+     * @property parent
+     * @type photonui.Widget
+     * @readOnly
+     * @default null (no parent)
+     */
+    getParent: function() {
+        return Widget.getWidget(this.parentName);
     },
 
     /**
@@ -12401,16 +12750,28 @@ var Widget = Base.$extend({
     },
 
     /**
+     * Detache the widget from its parent.
+     *
+     * @method unparent
+     */
+    unparent: function() {
+        if (this.parent) {
+            this.parent.removeChild(this);
+        }
+        else if (this.html && this.html.parentNode) {
+            this.html.parentNode.removeChild(this.html);
+        }
+    },
+
+    /**
      * Destroy the widget.
      *
      * @method destroy
      */
     destroy: function() {
         this.$super();
+        this.unparent();
         delete _widgets[this.name];
-        if (this.html && this.html.parentNode) {
-            this.html.parentNode.removeChild(this.html);
-        }
     },
 
     /**

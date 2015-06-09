@@ -3,12 +3,12 @@ layout: page-width-demo
 demo_script: doc/widgets/label.js
 ---
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-## Short declaration
+### Short declaration
 
 `photonui.Label` can be insancied in a shorter way:
 
@@ -28,7 +28,7 @@ photonui.domInsert(label, "demo");
 ```
 
 
-## More example
+### More example
 
 ```javascript
 var grid = new photonui.BoxLayout({

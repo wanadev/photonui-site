@@ -61,6 +61,7 @@
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
+                                <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
@@ -97,6 +98,7 @@
                                 <li><a href="../modules/Misc.html">Misc</a></li>
                                 <li><a href="../modules/PhotonUI.html">PhotonUI</a></li>
                                 <li><a href="../modules/Visual.html">Visual</a></li>
+                                <li><a href="../modules/visual.html">visual</a></li>
                             </ul>
                         </div>
                     </div>
@@ -151,7 +153,9 @@
     <p>Vertical and horizontal box layout.</p>
 <p>Layout Options:</p>
 <pre class="code prettyprint"><code>{
-    align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default: stretch&gt;,
+    align: &lt;String (stretch, start|left|top, center|middle, end|right|bottom), default=stretch&gt;,
+
+    order: &lt;Number default=null (auto)&gt;
 
     minWidth: &lt;Number (null=auto), default=null&gt;,
     maxWidth: &lt;Number (null=auto), default=null&gt;,
@@ -428,7 +432,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method___onContextMenu">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l442"><code>src&#x2F;widget.js:442</code></a>
+        <a href="../files/src_widget.js.html#l445"><code>src&#x2F;widget.js:445</code></a>
         </p>
 
 
@@ -611,7 +615,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_layout_boxlayout.js.html#l193"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:193</code></a>
+        <a href="../files/src_container_layout_boxlayout.js.html#l216"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:216</code></a>
         </p>
 
 
@@ -826,7 +830,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 photonui.Layout
             </a>
             but overwritten in
-        <a href="../files/src_container_layout_boxlayout.js.html#l204"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:204</code></a>
+        <a href="../files/src_container_layout_boxlayout.js.html#l227"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:227</code></a>
         </p>
 
 
@@ -986,7 +990,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_addClass">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l387"><code>src&#x2F;widget.js:387</code></a>
+        <a href="../files/src_widget.js.html#l390"><code>src&#x2F;widget.js:390</code></a>
         </p>
 
 
@@ -1345,7 +1349,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_removeClass">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l404"><code>src&#x2F;widget.js:404</code></a>
+        <a href="../files/src_widget.js.html#l407"><code>src&#x2F;widget.js:407</code></a>
         </p>
 
 
@@ -1742,7 +1746,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_layout_boxlayout.js.html#l124"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:124</code></a>
+                            <a href="../files/src_container_layout_boxlayout.js.html#l126"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:126</code></a>
                             </p>
                     
                     
@@ -1771,7 +1775,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                                     photonui.Widget
                                 </a>
                                 but overwritten in
-                            <a href="../files/src_container_layout_boxlayout.js.html#l172"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:172</code></a>
+                            <a href="../files/src_container_layout_boxlayout.js.html#l195"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:195</code></a>
                             </p>
                     
                     
@@ -1899,7 +1903,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_layout_boxlayout.js.html#l80"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:80</code></a>
+                            <a href="../files/src_container_layout_boxlayout.js.html#l82"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:82</code></a>
                             </p>
                     
                     
@@ -1977,7 +1981,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_layout_boxlayout.js.html#l143"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:143</code></a>
+                            <a href="../files/src_container_layout_boxlayout.js.html#l145"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:145</code></a>
                             </p>
                     
                     
@@ -2029,7 +2033,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_layout_boxlayout.js.html#l105"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:105</code></a>
+                            <a href="../files/src_container_layout_boxlayout.js.html#l107"><code>src&#x2F;container&#x2F;layout&#x2F;boxlayout.js:107</code></a>
                             </p>
                     
                     

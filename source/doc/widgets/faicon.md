@@ -6,22 +6,22 @@ demo_script: doc/widgets/faicon.js
 This widget display icons using [Font Awesome](http://fontawesome.io).
 
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-## Icon list
+### Icon list
 
 * http://fontawesome.io/icons/
 
 
-## Icon size
+### Icon size
 
 * http://fontawesome.io/examples/#larger
 
 
-## Short declaration
+### Short declaration
 
 `photonui.FAIcon` can be insancied in a shorter way:
 

@@ -3,12 +3,12 @@ layout: page-width-demo
 demo_script: doc/widgets/progressbar.js
 ---
 
-## Class Reference
+### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-## More example
+### More example
 
 ```javascript
 // Pulsating Progress Bar
