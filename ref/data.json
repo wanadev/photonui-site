@@ -917,7 +917,7 @@
             "namespace": "photonui",
             "file": "src/container/layout/gridlayout.js",
             "line": 42,
-            "description": "Grid layout.\n\nLayout Options:\n\n    {\n         verticalExpansion: <Boolean, default: true>,\n         horizontalExpansion: <Boolean, default: true>,\n         width: <Number, default: undefined>,\n         height: <Number, default: undefined>,\n         minWidth: <Number, default: undefined>,\n         minHeight: <Number, default: undefined>,\n         maxWidth: <Number, default: undefined>,\n         maxHeight: <Number, default: undefined>,\n         horizontalAlign: <String (left, center, right), default: center>,\n         gridX: <Number, default: 0>,\n         gridY: <Number, default: 0>,\n         gridWidth: <Number, default: 1>,\n         gridHeight: <Number, default: 1>,\n    }",
+            "description": "Grid layout.\n\nLayout Options:\n\n    {\n         x: <Number, default: 0>,\n         y: <Number, default: 0>,\n         cols: <Number, default: 1>,\n         rows: <Number, default: 1>,\n\n         horizontalAlign: <String (stretch|expand, start|left, center, end|right), default: stretch>,\n         verticalAlign: <String (stretch|expand, start|top, center|middle, end|bottom), default: stretch>,\n\n         minWidth: <Number, default: null>,\n         maxWidth: <Number, default: null>,\n         width: <Number, default: null>,\n\n         minHeight: <Number, default: null>,\n         maxHeight: <Number, default: null>,\n         height: <Number, default: null>,\n    }",
             "is_constructor": 1,
             "extends": "photonui.Layout"
         },
@@ -1942,6 +1942,30 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/container/layout/boxlayout.js",
+            "line": 271,
+            "description": "Returns a normalized layoutOption for a given widget.",
+            "itemtype": "method",
+            "name": "_computeLayoutOptions",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "",
+                    "type": "photonui.Widget"
+                }
+            ],
+            "return": {
+                "description": "the layout options",
+                "type": "Object"
+            },
+            "class": "photonui.BoxLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/container/layout/fluidlayout.js",
             "line": 59,
             "description": "The vertical spacing between children widgets.",
@@ -2009,7 +2033,33 @@
         },
         {
             "file": "src/container/layout/gridlayout.js",
-            "line": 84,
+            "line": 92,
+            "description": "Vertical padding (px).",
+            "itemtype": "property",
+            "name": "verticalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/gridlayout.js",
+            "line": 114,
+            "description": "Horizontal padding (px).",
+            "itemtype": "property",
+            "name": "horizontalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/gridlayout.js",
+            "line": 136,
             "description": "The vertical spacing between children widgets.",
             "itemtype": "property",
             "name": "verticalSpacing",
@@ -2022,7 +2072,7 @@
         },
         {
             "file": "src/container/layout/gridlayout.js",
-            "line": 102,
+            "line": 157,
             "description": "The horizontal spacing between children widgets.",
             "itemtype": "property",
             "name": "horizontalSpacing",
@@ -2035,7 +2085,7 @@
         },
         {
             "file": "src/container/layout/gridlayout.js",
-            "line": 120,
+            "line": 178,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -2049,7 +2099,22 @@
         },
         {
             "file": "src/container/layout/gridlayout.js",
-            "line": 140,
+            "line": 192,
+            "description": "Flag to indicate that the layout is actually been updated.",
+            "itemtype": "property",
+            "name": "_updatingLayout",
+            "access": "private",
+            "tagname": "",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/gridlayout.js",
+            "line": 210,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2062,10 +2127,60 @@
         },
         {
             "file": "src/container/layout/gridlayout.js",
-            "line": 157,
+            "line": 227,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/gridlayout.js",
+            "line": 345,
+            "description": "Returns a normalized layoutOption for a given widget.",
+            "itemtype": "method",
+            "name": "_computeLayoutOptions",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "",
+                    "type": "photonui.Widget"
+                }
+            ],
+            "return": {
+                "description": "the layout options",
+                "type": "Object"
+            },
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/gridlayout.js",
+            "line": 474,
+            "description": "Update the spacing between widgets",
+            "itemtype": "method",
+            "name": "_updateSpacing",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/layout/gridlayout.js",
+            "line": 488,
+            "description": "Hack to get thing working with Gecko and Trident.\n\nMSIE 11:\n\n  * The hack fixes all the issues,\n\nMSIE 10:\n\n  * There is issues with rowspan\n  * The dynamic resizing does not works\n\nFirefox:\n\n  * There is some minor issues with rowspan",
+            "itemtype": "method",
+            "name": "_sizingHack",
             "access": "private",
             "tagname": "",
             "class": "photonui.GridLayout",

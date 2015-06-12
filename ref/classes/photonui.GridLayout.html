@@ -153,19 +153,21 @@
     <p>Grid layout.</p>
 <p>Layout Options:</p>
 <pre class="code prettyprint"><code>{
-     verticalExpansion: &lt;Boolean, default: true&gt;,
-     horizontalExpansion: &lt;Boolean, default: true&gt;,
-     width: &lt;Number, default: undefined&gt;,
-     height: &lt;Number, default: undefined&gt;,
-     minWidth: &lt;Number, default: undefined&gt;,
-     minHeight: &lt;Number, default: undefined&gt;,
-     maxWidth: &lt;Number, default: undefined&gt;,
-     maxHeight: &lt;Number, default: undefined&gt;,
-     horizontalAlign: &lt;String (left, center, right), default: center&gt;,
-     gridX: &lt;Number, default: 0&gt;,
-     gridY: &lt;Number, default: 0&gt;,
-     gridWidth: &lt;Number, default: 1&gt;,
-     gridHeight: &lt;Number, default: 1&gt;,
+     x: &lt;Number, default: 0&gt;,
+     y: &lt;Number, default: 0&gt;,
+     cols: &lt;Number, default: 1&gt;,
+     rows: &lt;Number, default: 1&gt;,
+
+     horizontalAlign: &lt;String (stretch|expand, start|left, center, end|right), default: stretch&gt;,
+     verticalAlign: &lt;String (stretch|expand, start|top, center|middle, end|bottom), default: stretch&gt;,
+
+     minWidth: &lt;Number, default: null&gt;,
+     maxWidth: &lt;Number, default: null&gt;,
+     width: &lt;Number, default: null&gt;,
+
+     minHeight: &lt;Number, default: null&gt;,
+     maxHeight: &lt;Number, default: null&gt;,
+     height: &lt;Number, default: null&gt;,
 }
 </code></pre>
 </div>
@@ -240,8 +242,16 @@
                                 <a href="#method__callCallbacks">_callCallbacks</a>
 
                             </li>
+                            <li class="index-item method private">
+                                <a href="#method__computeLayoutOptions">_computeLayoutOptions</a>
+
+                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__registerWEvents">_registerWEvents</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__sizingHack">_sizingHack</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -254,6 +264,10 @@
                             </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__updateProperties">_updateProperties</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__updateSpacing">_updateSpacing</a>
 
                             </li>
                             <li class="index-item method inherited">
@@ -319,6 +333,10 @@
                                 <a href="#property___html">__html</a>
 
                             </li>
+                            <li class="index-item property private">
+                                <a href="#property__updatingLayout">_updatingLayout</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_absolutePosition">absolutePosition</a>
 
@@ -349,6 +367,10 @@
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_contextMenuName">contextMenuName</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_horizontalPadding">horizontalPadding</a>
 
                             </li>
                             <li class="index-item property">
@@ -385,6 +407,10 @@
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_tooltip">tooltip</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_verticalPadding">verticalPadding</a>
 
                             </li>
                             <li class="index-item property">
@@ -609,7 +635,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_layout_gridlayout.js.html#l140"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:140</code></a>
+        <a href="../files/src_container_layout_gridlayout.js.html#l210"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:210</code></a>
         </p>
 
 
@@ -696,6 +722,72 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
+<div id="method__computeLayoutOptions" class="method item private">
+    <h3 class="name"><code>_computeLayoutOptions</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>widget</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_layout_gridlayout.js.html#l345"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:345</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns a normalized layoutOption for a given widget.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">widget</code>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>the layout options</p>
+
+            </div>
+        </div>
+
+
+</div>
 <div id="method__registerWEvents" class="method item private inherited">
     <h3 class="name"><code>_registerWEvents</code></h3>
 
@@ -746,6 +838,51 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 </li>
             </ul>
         </div>
+
+
+
+</div>
+<div id="method__sizingHack" class="method item private">
+    <h3 class="name"><code>_sizingHack</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_layout_gridlayout.js.html#l488"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:488</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Hack to get thing working with Gecko and Trident.</p>
+<p>MSIE 11:</p>
+<ul>
+<li>The hack fixes all the issues,</li>
+</ul>
+<p>MSIE 10:</p>
+<ul>
+<li>There is issues with rowspan</li>
+<li>The dynamic resizing does not works</li>
+</ul>
+<p>Firefox:</p>
+<ul>
+<li>There is some minor issues with rowspan</li>
+</ul>
+
+    </div>
+
 
 
 
@@ -824,7 +961,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 photonui.Layout
             </a>
             but overwritten in
-        <a href="../files/src_container_layout_gridlayout.js.html#l157"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:157</code></a>
+        <a href="../files/src_container_layout_gridlayout.js.html#l227"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:227</code></a>
         </p>
 
 
@@ -891,6 +1028,38 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 </li>
             </ul>
         </div>
+
+
+
+</div>
+<div id="method__updateSpacing" class="method item private">
+    <h3 class="name"><code>_updateSpacing</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_layout_gridlayout.js.html#l474"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:474</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Update the spacing between widgets</p>
+
+    </div>
+
 
 
 
@@ -1522,6 +1691,33 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
+                    <div id="property__updatingLayout" class="property item private">
+                        <h3 class="name"><code>_updatingLayout</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_container_layout_gridlayout.js.html#l192"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:192</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag to indicate that the layout is actually been updated.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
                     <div id="property_absolutePosition" class="property item inherited">
                         <h3 class="name"><code>absolutePosition</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
@@ -1729,6 +1925,32 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
+                    <div id="property_horizontalPadding" class="property item">
+                        <h3 class="name"><code>horizontalPadding</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_container_layout_gridlayout.js.html#l114"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:114</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Horizontal padding (px).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 0</p>
+                    
+                    
+                    </div>
                     <div id="property_horizontalSpacing" class="property item">
                         <h3 class="name"><code>horizontalSpacing</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1740,7 +1962,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_layout_gridlayout.js.html#l102"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:102</code></a>
+                            <a href="../files/src_container_layout_gridlayout.js.html#l157"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:157</code></a>
                             </p>
                     
                     
@@ -1769,7 +1991,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                                     photonui.Widget
                                 </a>
                                 but overwritten in
-                            <a href="../files/src_container_layout_gridlayout.js.html#l120"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:120</code></a>
+                            <a href="../files/src_container_layout_gridlayout.js.html#l178"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:178</code></a>
                             </p>
                     
                     
@@ -1964,6 +2186,32 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
+                    <div id="property_verticalPadding" class="property item">
+                        <h3 class="name"><code>verticalPadding</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_container_layout_gridlayout.js.html#l92"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:92</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Vertical padding (px).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 0</p>
+                    
+                    
+                    </div>
                     <div id="property_verticalSpacing" class="property item">
                         <h3 class="name"><code>verticalSpacing</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1975,7 +2223,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_layout_gridlayout.js.html#l84"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:84</code></a>
+                            <a href="../files/src_container_layout_gridlayout.js.html#l136"><code>src&#x2F;container&#x2F;layout&#x2F;gridlayout.js:136</code></a>
                             </p>
                     
                     
