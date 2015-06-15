@@ -38,7 +38,6 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/photonui.&lt;WIDGET CLASS NAME&gt;.html">photonui.&lt;WIDGET CLASS NAME&gt;</a></li>
                                 <li><a href="../classes/photonui.AccelManager.html">photonui.AccelManager</a></li>
                                 <li><a href="../classes/photonui.Base.html">photonui.Base</a></li>
                                 <li><a href="../classes/photonui.BaseIcon.html">photonui.BaseIcon</a></li>
@@ -89,16 +88,14 @@
                             </ul>
                 
                             <ul id="api-modules" class="apis modules">
-                                <li><a href="../modules/&lt;SUBMUDULE (Input, Container, Visual, Event, Composite,...)&gt;.html">&lt;SUBMUDULE (Input, Container, Visual, Event, Composite,...)&gt;</a></li>
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
-                                <li><a href="../modules/Event.html">Event</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
-                                <li><a href="../modules/Input.html">Input</a></li>
-                                <li><a href="../modules/Misc.html">Misc</a></li>
+                                <li><a href="../modules/Interactive.html">Interactive</a></li>
+                                <li><a href="../modules/Layout.html">Layout</a></li>
+                                <li><a href="../modules/NonVisual.html">NonVisual</a></li>
                                 <li><a href="../modules/PhotonUI.html">PhotonUI</a></li>
                                 <li><a href="../modules/Visual.html">Visual</a></li>
-                                <li><a href="../modules/visual.html">visual</a></li>
                             </ul>
                         </div>
                     </div>
@@ -181,16 +178,16 @@ photonui.Helpers = require(&quot;./helpers.js&quot;);
 photonui.Base = require(&quot;./base.js&quot;);
 photonui.Widget = require(&quot;./widget.js&quot;);
 
-photonui.FileManager = require(&quot;./misc/filemanager.js&quot;);
-photonui.Translation = require(&quot;./misc/translation.js&quot;);
+photonui.FileManager = require(&quot;./nonvisual/filemanager.js&quot;);
+photonui.Translation = require(&quot;./nonvisual/translation.js&quot;);
 
-photonui.AccelManager = require(&quot;./event/accelmanager.js&quot;);
-photonui.MouseManager = require(&quot;./event/mousemanager.js&quot;);
+photonui.AccelManager = require(&quot;./nonvisual/accelmanager.js&quot;);
+photonui.MouseManager = require(&quot;./nonvisual/mousemanager.js&quot;);
 
 photonui.BaseIcon = require(&quot;./visual/baseicon.js&quot;);
 photonui.FAIcon = require(&quot;./visual/faicon.js&quot;);
 photonui.Image = require(&quot;./visual/image.js&quot;);
-photonui.SpriteSheet = require(&quot;./visual/spritesheet.js&quot;);
+photonui.SpriteSheet = require(&quot;./nonvisual/spritesheet.js&quot;);
 photonui.SpriteIcon = require(&quot;./visual/spriteicon.js&quot;);
 photonui.Canvas = require(&quot;./visual/canvas.js&quot;);
 photonui.Label = require(&quot;./visual/label.js&quot;);
@@ -198,43 +195,43 @@ photonui.Text = require(&quot;./visual/text.js&quot;);
 photonui.ProgressBar = require(&quot;./visual/progressbar.js&quot;);
 photonui.Separator = require(&quot;./visual/separator.js&quot;);
 
-photonui.Button = require(&quot;./input/button/button.js&quot;);
-photonui.ColorButton = require(&quot;./input/button/colorbutton.js&quot;);
+photonui.Button = require(&quot;./interactive/button.js&quot;);
+photonui.ColorButton = require(&quot;./composite/colorbutton.js&quot;);
 
-photonui.CheckBox = require(&quot;./input/checkbox/checkbox.js&quot;);
-photonui.Switch = require(&quot;./input/checkbox/switch.js&quot;);
-photonui.ToggleButton = require(&quot;./input/checkbox/togglebutton.js&quot;);
+photonui.CheckBox = require(&quot;./interactive/checkbox.js&quot;);
+photonui.Switch = require(&quot;./interactive/switch.js&quot;);
+photonui.ToggleButton = require(&quot;./interactive/togglebutton.js&quot;);
 
-photonui.Color = require(&quot;./input/color/color.js&quot;);
-photonui.ColorPalette = require(&quot;./input/color/colorpalette.js&quot;);
-photonui.ColorPicker = require(&quot;./input/color/colorpicker.js&quot;);
+photonui.Color = require(&quot;./nonvisual/color.js&quot;);
+photonui.ColorPalette = require(&quot;./interactive/colorpalette.js&quot;);
+photonui.ColorPicker = require(&quot;./interactive/colorpicker.js&quot;);
 
-photonui.Field = require(&quot;./input/field/field.js&quot;);
-photonui.NumericField = require(&quot;./input/field/numericfield.js&quot;);
-photonui.TextAreaField = require(&quot;./input/field/textareafield.js&quot;);
-photonui.TextField = require(&quot;./input/field/textfield.js&quot;);
+photonui.Field = require(&quot;./interactive/field.js&quot;);
+photonui.NumericField = require(&quot;./interactive/numericfield.js&quot;);
+photonui.TextAreaField = require(&quot;./interactive/textareafield.js&quot;);
+photonui.TextField = require(&quot;./interactive/textfield.js&quot;);
 
-photonui.Select = require(&quot;./input/select/select.js&quot;);
-photonui.FontSelect = require(&quot;./input/select/fontselect.js&quot;);
+photonui.Select = require(&quot;./composite/select.js&quot;);
+photonui.FontSelect = require(&quot;./composite/fontselect.js&quot;);
 
-photonui.Slider = require(&quot;./input/slider/slider.js&quot;);
+photonui.Slider = require(&quot;./interactive/slider.js&quot;);
 
 photonui.Container = require(&quot;./container/container.js&quot;);
-photonui.Layout = require(&quot;./container/layout/layout.js&quot;);
-photonui.BoxLayout = require(&quot;./container/layout/boxlayout.js&quot;);
-photonui.FluidLayout = require(&quot;./container/layout/fluidlayout.js&quot;);
-photonui.GridLayout = require(&quot;./container/layout/gridlayout.js&quot;);
+photonui.Layout = require(&quot;./layout/layout.js&quot;);
+photonui.BoxLayout = require(&quot;./layout/boxlayout.js&quot;);
+photonui.FluidLayout = require(&quot;./layout/fluidlayout.js&quot;);
+photonui.GridLayout = require(&quot;./layout/gridlayout.js&quot;);
 
-photonui.Menu = require(&quot;./container/menu/menu.js&quot;);
-photonui.MenuItem = require(&quot;./container/menu/menuitem.js&quot;);
-photonui.SubMenuItem = require(&quot;./container/menu/submenuitem.js&quot;);
+photonui.Menu = require(&quot;./layout/menu.js&quot;);
+photonui.MenuItem = require(&quot;./container/menuitem.js&quot;);
+photonui.SubMenuItem = require(&quot;./container/submenuitem.js&quot;);
 
-photonui.Viewport = require(&quot;./container/viewport/viewport.js&quot;);
+photonui.Viewport = require(&quot;./container/viewport.js&quot;);
 
-photonui.BaseWindow = require(&quot;./container/window/basewindow.js&quot;);
-photonui.Window = require(&quot;./container/window/window.js&quot;);
-photonui.PopupWindow = require(&quot;./container/window/popupwindow.js&quot;);
-photonui.Dialog = require(&quot;./container/window/dialog.js&quot;);
+photonui.BaseWindow = require(&quot;./container/basewindow.js&quot;);
+photonui.Window = require(&quot;./container/window.js&quot;);
+photonui.PopupWindow = require(&quot;./container/popupwindow.js&quot;);
+photonui.Dialog = require(&quot;./container/dialog.js&quot;);
 
 photonui.ColorPickerDialog = require(&quot;./composite/colorpickerdialog.js&quot;);
 photonui.PopupMenu = require(&quot;./composite/popupmenu.js&quot;);

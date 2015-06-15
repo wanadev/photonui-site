@@ -1,7 +1,6 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "photonui.<WIDGET CLASS NAME>",
         "photonui.AccelManager",
         "photonui.Base",
         "photonui.BaseIcon",
@@ -51,23 +50,16 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.Window"
     ],
     "modules": [
-        "<SUBMUDULE (Input, Container, Visual, Event, Composite,...)>",
         "Composite",
         "Container",
-        "Event",
         "Helpers",
-        "Input",
-        "Misc",
+        "Interactive",
+        "Layout",
+        "NonVisual",
         "PhotonUI",
-        "Visual",
-        "visual"
+        "Visual"
     ],
     "allModules": [
-        {
-            "displayName": "<SUBMUDULE (Input, Container, Visual, Event, Composite,...)>",
-            "name": "<SUBMUDULE (Input, Container, Visual, Event, Composite,...)>",
-            "description": "PhotonUI - Javascript Web User Interface."
-        },
         {
             "displayName": "Composite",
             "name": "Composite",
@@ -79,23 +71,23 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "PhotonUI - Javascript Web User Interface."
         },
         {
-            "displayName": "Event",
-            "name": "Event",
-            "description": "PhotonUI - Javascript Web User Interface."
-        },
-        {
             "displayName": "Helpers",
             "name": "Helpers",
             "description": "PhotonUI - Javascript Web User Interface."
         },
         {
-            "displayName": "Input",
-            "name": "Input",
+            "displayName": "Interactive",
+            "name": "Interactive",
             "description": "PhotonUI - Javascript Web User Interface."
         },
         {
-            "displayName": "Misc",
-            "name": "Misc",
+            "displayName": "Layout",
+            "name": "Layout",
+            "description": "PhotonUI - Javascript Web User Interface."
+        },
+        {
+            "displayName": "NonVisual",
+            "name": "NonVisual",
             "description": "PhotonUI - Javascript Web User Interface."
         },
         {
@@ -106,11 +98,6 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "Visual",
             "name": "Visual",
-            "description": "PhotonUI - Javascript Web User Interface."
-        },
-        {
-            "displayName": "visual",
-            "name": "visual",
             "description": "PhotonUI - Javascript Web User Interface."
         }
     ]
