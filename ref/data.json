@@ -7012,7 +7012,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 110,
+            "line": 112,
             "description": "The progressbar orientation (\"vertical\" or \"horizontal\").",
             "itemtype": "property",
             "name": "orientation",
@@ -7025,7 +7025,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 134,
+            "line": 139,
             "description": "Enable or disable the progressbar pulsate mode.",
             "itemtype": "property",
             "name": "pulsate",
@@ -7038,7 +7038,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 164,
+            "line": 169,
             "description": "Display/hide the progression text.",
             "itemtype": "property",
             "name": "textVisible",
@@ -7051,7 +7051,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 187,
+            "line": 192,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7064,7 +7064,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 215,
+            "line": 228,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",

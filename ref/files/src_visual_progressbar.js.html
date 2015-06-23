@@ -237,9 +237,11 @@ var ProgressBar = Widget.$extend({
         this._value = Math.min(Math.max(value, 0), 1);
         if (this.orientation == &quot;horizontal&quot;) {
             this.__html.bar.style.width = Math.floor(this.value * 100) + &quot;%&quot;;
+            this.__html.bar.style.height = &quot;&quot;;
         }
         else {
             this.__html.bar.style.height = Math.floor(this.value * 100) + &quot;%&quot;;
+            this.__html.bar.style.width = &quot;&quot;;
         }
         this.__html.textContent.innerHTML = Math.floor(this.value * 100) + &quot; %&quot;;
     },
@@ -266,6 +268,9 @@ var ProgressBar = Widget.$extend({
         this.removeClass(&quot;photonui-progressbar-vertical&quot;);
         this.removeClass(&quot;photonui-progressbar-horizontal&quot;);
         this.addClass(&quot;photonui-progressbar-&quot; + this.orientation);
+
+        // Refresh the value...
+        this.value = this.value;
     },
 
     /**
@@ -330,6 +335,14 @@ var ProgressBar = Widget.$extend({
     _buildHtml: function() {
         this.__html.outer = document.createElement(&quot;div&quot;);
         this.__html.outer.className = &quot;photonui-widget photonui-progressbar&quot;;
+
+        // Hack: needed to help grid layout (&lt;table&gt;) to size properly its cells...
+        this.__html.filldiv = document.createElement(&quot;div&quot;);
+        this.__html.filldiv.className = &quot;photonui-progressbar-fill&quot;;
+        this.__html.filldiv.innerHTML = &quot;xxxxxxxxxxx&quot;;
+        this.__html.filldiv.style.opacity = 0;
+        this.__html.filldiv.style.pointerEvents = &quot;none&quot;;
+        this.__html.outer.appendChild(this.__html.filldiv);
 
         this.__html.text = document.createElement(&quot;div&quot;);
         this.__html.text.className = &quot;photonui-progressbar-text&quot;;
