@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -265,8 +267,8 @@ var Slider = NumericField.$extend({
         var v = value - this.min;
         var m = this.max - this.min;
         var p = Math.min(Math.max(v/m, 0), 1);
-        var w = this.__html.slider.offsetWidth - this.__html.grip.offsetWidth - 4;
-        this.__html.grip.style.left = Math.floor(p*w) + 2 + &quot;px&quot;;
+        var w = this.__html.slider.offsetWidth - this.__html.grip.offsetWidth;
+        this.__html.grip.style.left = Math.floor(p*w) + &quot;px&quot;;
     },
 
 
@@ -288,7 +290,7 @@ var Slider = NumericField.$extend({
         this.$super();
 
         this.__html.outer = document.createElement(&quot;div&quot;);
-        this.__html.outer.className = &quot;photonui-widget photonui-slider&quot;;
+        this.__html.outer.className = &quot;photonui-widget photonui-slider photonui-widget-fixed-height&quot;;
 
         this.__html.slider = document.createElement(&quot;div&quot;);
         this.__html.slider.className = &quot;photonui-slider-slider&quot;;

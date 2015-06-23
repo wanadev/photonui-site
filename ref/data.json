@@ -131,6 +131,17 @@
                 "photonui": 1
             }
         },
+        "src/container/tabitem.js": {
+            "name": "src/container/tabitem.js",
+            "modules": {},
+            "classes": {
+                "photonui.TabItem": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
         "src/container/viewport.js": {
             "name": "src/container/viewport.js",
             "modules": {},
@@ -327,6 +338,17 @@
             "modules": {},
             "classes": {
                 "photonui.Menu": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/layout/tablayout.js": {
+            "name": "src/layout/tablayout.js",
+            "modules": {},
+            "classes": {
+                "photonui.TabLayout": 1
             },
             "fors": {},
             "namespaces": {
@@ -573,6 +595,7 @@
                 "photonui.MenuItem": 1,
                 "photonui.PopupWindow": 1,
                 "photonui.SubMenuItem": 1,
+                "photonui.TabItem": 1,
                 "photonui.Viewport": 1,
                 "photonui.Window": 1,
                 "photonui.Button": 1,
@@ -591,6 +614,7 @@
                 "photonui.GridLayout": 1,
                 "photonui.Layout": 1,
                 "photonui.Menu": 1,
+                "photonui.TabLayout": 1,
                 "photonui.AccelManager": 1,
                 "photonui.Color": 1,
                 "photonui.FileManager": 1,
@@ -651,6 +675,7 @@
                 "photonui.MenuItem": 1,
                 "photonui.PopupWindow": 1,
                 "photonui.SubMenuItem": 1,
+                "photonui.TabItem": 1,
                 "photonui.Viewport": 1,
                 "photonui.Window": 1
             },
@@ -700,7 +725,8 @@
                 "photonui.FluidLayout": 1,
                 "photonui.GridLayout": 1,
                 "photonui.Layout": 1,
-                "photonui.Menu": 1
+                "photonui.Menu": 1,
+                "photonui.TabLayout": 1
             },
             "fors": {},
             "is_submodule": 1,
@@ -709,8 +735,8 @@
             },
             "module": "PhotonUI",
             "namespace": "",
-            "file": "src/layout/menu.js",
-            "line": 42,
+            "file": "src/layout/tablayout.js",
+            "line": 46,
             "description": "PhotonUI - Javascript Web User Interface."
         },
         "NonVisual": {
@@ -971,6 +997,30 @@
             "description": "Submenu Menu item (fold/unfold a submenu).",
             "is_constructor": 1,
             "extends": "photonui.MenuItem"
+        },
+        "photonui.TabItem": {
+            "name": "photonui.TabItem",
+            "shortname": "TabItem",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui",
+            "file": "src/container/tabitem.js",
+            "line": 44,
+            "description": "Tab Item.",
+            "is_constructor": 1,
+            "extends": "photonui.Container",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object that can contain any property of the widget (optional).",
+                    "type": "Object"
+                }
+            ]
         },
         "photonui.Viewport": {
             "name": "photonui.Viewport",
@@ -1307,6 +1357,30 @@
             "description": "Menu.",
             "is_constructor": 1,
             "extends": "photonui.Layout"
+        },
+        "photonui.TabLayout": {
+            "name": "photonui.TabLayout",
+            "shortname": "TabLayout",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui",
+            "file": "src/layout/tablayout.js",
+            "line": 46,
+            "description": "Tab Layout",
+            "is_constructor": 1,
+            "extends": "photonui.Layout",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object that can contain any property of the widget (optional).",
+                    "type": "Object"
+                }
+            ]
         },
         "photonui.AccelManager": {
             "name": "photonui.AccelManager",
@@ -1820,7 +1894,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 92,
+            "line": 94,
             "description": "The color.",
             "itemtype": "property",
             "name": "color",
@@ -1832,7 +1906,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 140,
+            "line": 142,
             "description": "Make the UI.",
             "itemtype": "method",
             "name": "_buildUi",
@@ -1845,7 +1919,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 307,
+            "line": 308,
             "description": "Update the fields of the UI.",
             "itemtype": "method",
             "name": "_updateUi",
@@ -1858,7 +1932,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 329,
+            "line": 330,
             "itemtype": "method",
             "name": "__onCancel",
             "access": "private",
@@ -1870,7 +1944,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 342,
+            "line": 343,
             "itemtype": "method",
             "name": "__onValidate",
             "access": "private",
@@ -1882,7 +1956,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 356,
+            "line": 357,
             "itemtype": "method",
             "name": "__onColorChanged",
             "access": "private",
@@ -2465,7 +2539,33 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 58,
+            "line": 70,
+            "description": "Horizontaly expand the container's child widget.",
+            "itemtype": "property",
+            "name": "horizontalChildExpansion",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.Container",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/container.js",
+            "line": 94,
+            "description": "Verticaly expand the container's child widget.",
+            "itemtype": "property",
+            "name": "verticalChildExpansion",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.Container",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/container.js",
+            "line": 118,
             "description": "The child widget name.",
             "itemtype": "property",
             "name": "childName",
@@ -2478,7 +2578,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 86,
+            "line": 146,
             "description": "The child widget.",
             "itemtype": "property",
             "name": "child",
@@ -2491,7 +2591,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 105,
+            "line": 165,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -2504,7 +2604,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 125,
+            "line": 184,
             "description": "Remove the given child.",
             "itemtype": "method",
             "name": "removeChild",
@@ -2522,7 +2622,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 137,
+            "line": 196,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2848,6 +2948,86 @@
             "access": "private",
             "tagname": "",
             "class": "photonui.SubMenuItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 71,
+            "description": "Tab title.",
+            "itemtype": "property",
+            "name": "title",
+            "type": "String",
+            "default": "\"Tab\"",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 90,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 102,
+            "description": "Tab Html element.",
+            "itemtype": "property",
+            "name": "tabHtml",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 114,
+            "description": "HTML Element that contain the child widget HTML.",
+            "itemtype": "property",
+            "name": "containerNode",
+            "type": "HTMLElement",
+            "readonly": "",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 125,
+            "description": "Is the widget visible or hidden.",
+            "itemtype": "property",
+            "name": "visible",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 169,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.TabItem",
             "module": "PhotonUI",
             "submodule": "Container",
             "namespace": "photonui"
@@ -3290,6 +3470,19 @@
         {
             "file": "src/interactive/button.js",
             "line": 262,
+            "description": "Button's color.\n\nThe available colors depends on the theme. Particle, the\ndefault PhotonUI theme provides the following colors:\n\n  * `blue`\n  * `red`\n  * `yellow`\n  * `green`\n  * null (default)",
+            "itemtype": "property",
+            "name": "buttonColor",
+            "type": "string",
+            "default": "null",
+            "class": "photonui.Button",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/button.js",
+            "line": 294,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3303,7 +3496,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 283,
+            "line": 315,
             "description": "Update the button content",
             "itemtype": "method",
             "name": "_update",
@@ -3316,7 +3509,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 313,
+            "line": 345,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3329,7 +3522,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 342,
+            "line": 374,
             "description": "Called when the button is clicked.",
             "itemtype": "method",
             "name": "__onButtonClicked",
@@ -4449,7 +4642,7 @@
         },
         {
             "file": "src/interactive/togglebutton.js",
-            "line": 83,
+            "line": 85,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4751,7 +4944,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 345,
+            "line": 370,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -4775,7 +4968,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 474,
+            "line": 508,
             "description": "Update the spacing between widgets",
             "itemtype": "method",
             "name": "_updateSpacing",
@@ -4788,7 +4981,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 488,
+            "line": 522,
             "description": "Hack to get thing working with Gecko and Trident.\n\nMSIE 11:\n\n  * The hack fixes all the issues,\n\nMSIE 10:\n\n  * There is issues with rowspan\n  * The dynamic resizing does not works\n\nFirefox:\n\n  * There is some minor issues with rowspan",
             "itemtype": "method",
             "name": "_sizingHack",
@@ -4801,7 +4994,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 66,
+            "line": 72,
             "description": "Layout children widgets name.",
             "itemtype": "property",
             "name": "childrenNames",
@@ -4814,7 +5007,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 101,
+            "line": 107,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -4827,7 +5020,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 155,
+            "line": 159,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -4850,7 +5043,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 174,
+            "line": 178,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -4868,7 +5061,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 189,
+            "line": 193,
             "description": "Destroy all children of the layout",
             "itemtype": "method",
             "name": "empty",
@@ -4879,7 +5072,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 203,
+            "line": 207,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -4890,7 +5083,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 217,
+            "line": 221,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -4903,7 +5096,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 233,
+            "line": 237,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -4963,6 +5156,140 @@
             "access": "private",
             "tagname": "",
             "class": "photonui.Menu",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 71,
+            "description": "Define the tabs position.\n\n  * top\n  * bottom\n  * left\n  * right",
+            "itemtype": "property",
+            "name": "tabsPosition",
+            "type": "String",
+            "default": "\"top\"",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 102,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 114,
+            "description": "Define the active tab name.",
+            "itemtype": "property",
+            "name": "activeTabName",
+            "type": "String",
+            "default": "null",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 146,
+            "description": "Container node padding.",
+            "itemtype": "property",
+            "name": "padding",
+            "type": "Number",
+            "default": "10",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 164,
+            "description": "Define the active tab.",
+            "itemtype": "property",
+            "name": "activeTab",
+            "type": "photonui.Widget",
+            "default": "null",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 208,
+            "description": "Remove a widget from the layout.",
+            "itemtype": "method",
+            "name": "removeChild",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "The widget to remove.",
+                    "type": "photonui.Widget"
+                }
+            ],
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 225,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 248,
+            "description": "Update the layout.",
+            "itemtype": "method",
+            "name": "_updateLayout",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.TabLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/tablayout.js",
+            "line": 285,
+            "description": "Returns a normalized layoutOption for a given widget.",
+            "itemtype": "method",
+            "name": "_computeLayoutOptions",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "",
+                    "type": "photonui.Widget"
+                }
+            ],
+            "return": {
+                "description": "the layout options",
+                "type": "Object"
+            },
+            "class": "photonui.TabLayout",
             "module": "PhotonUI",
             "submodule": "Layout",
             "namespace": "photonui"
@@ -6763,7 +7090,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 89,
+            "line": 98,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -6777,7 +7104,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 110,
+            "line": 119,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -6790,7 +7117,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 129,
+            "line": 138,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",

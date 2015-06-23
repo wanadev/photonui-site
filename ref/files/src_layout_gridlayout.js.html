@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -386,6 +388,8 @@ var GridLayout = Layout.$extend({
             minY = Math.min(options.y, minY);
             maxX = Math.max(options.x, maxX);
             maxY = Math.max(options.y, maxY);
+            maxX = Math.max(options.x + options.cols - 1, maxX);
+            maxY = Math.max(options.y + options.rows - 1, maxY);
         }
 
         var gridWidth = maxX - minX + 1;
@@ -440,14 +444,32 @@ var GridLayout = Layout.$extend({
                     td.className += &quot; photonui-layout-horizontalalign-&quot; + child.o.horizontalAlign;
 
                     // layout options: *width
-                    if (child.o.minWidth !== null) div.style.minWidth = child.o.minWidth + &quot;px&quot;;
-                    if (child.o.maxWidth !== null) div.style.maxWidth = child.o.maxWidth + &quot;px&quot;;
-                    if (child.o.width !== null) div.style.width = child.o.width + &quot;px&quot;;
+                    if (child.o.minWidth !== null) {
+                        div.style.minWidth = child.o.minWidth + &quot;px&quot;;
+                        td.style.minWidth = child.o.minWidth + &quot;px&quot;;
+                    }
+                    if (child.o.maxWidth !== null) {
+                        div.style.maxWidth = child.o.maxWidth + &quot;px&quot;;
+                        td.style.maxWidth = child.o.maxWidth + &quot;px&quot;;
+                    }
+                    if (child.o.width !== null) {
+                        div.style.width = child.o.width + &quot;px&quot;;
+                        td.style.width = child.o.width + &quot;px&quot;;
+                    }
 
                     // layout options: *height
-                    if (child.o.minHeight !== null) div.style.minHeight = child.o.minHeight + &quot;px&quot;;
-                    if (child.o.maxHeight !== null) div.style.maxHeight = child.o.maxHeight + &quot;px&quot;;
-                    if (child.o.height !== null) div.style.height = child.o.height + &quot;px&quot;;
+                    if (child.o.minHeight !== null) {
+                        div.style.minHeight = child.o.minHeight + &quot;px&quot;;
+                        td.style.minHeight = child.o.minHeight + &quot;px&quot;;
+                    }
+                    if (child.o.maxHeight !== null) {
+                        div.style.maxHeight = child.o.maxHeight + &quot;px&quot;;
+                        td.style.maxHeight = child.o.maxHeight + &quot;px&quot;;
+                    }
+                    if (child.o.height !== null) {
+                        div.style.height = child.o.height + &quot;px&quot;;
+                        td.style.height = child.o.height + &quot;px&quot;;
+                    }
 
                     // rowspan / colspan
                     if (child.o.cols &gt; 1 || child.o.rows &gt; 1) {
@@ -460,6 +482,11 @@ var GridLayout = Layout.$extend({
                             }
                         }
                     }
+
+                    // Spacing
+                    if (x+child.o.cols &gt;= gridWidth) td.className += &quot; photonui-gridlayout-lastcol&quot;;
+                    if (y+child.o.rows &gt;= gridHeight) td.className += &quot; photonui-gridlayout-lastrow&quot;;
+
                 }
             }
             this.__html.gridBody.appendChild(tr);
@@ -501,6 +528,15 @@ var GridLayout = Layout.$extend({
             minHeight: null,
             maxHeight: null,
             height: null
+        }
+
+        if (widget.html) {
+            if (widget.html.classList.contains(&quot;photonui-widget-fixed-height&quot;)) {
+                options.verticalAlign = &quot;center&quot;;
+            }
+            if (widget.html.classList.contains(&quot;photonui-widget-fixed-width&quot;)) {
+                options.horizontalAlign = &quot;center&quot;;
+            }
         }
 
         // [Compatibility with old GridLayout] position / place
@@ -671,8 +707,18 @@ var GridLayout = Layout.$extend({
             for (var i=0 ; i&lt;nodes.length ; i++) {
                 nodes[i].style.height = &quot;auto&quot;;
             }
+            var tdHeight;
             for (var i=0 ; i&lt;nodes.length ; i++) {
-                nodes[i].style.height = nodes[i].offsetHeight + &quot;px&quot;;
+                if (nodes[i].style.minHeight &amp;&amp; nodes[i].style.minHeight == nodes[i].style.maxHeight) {
+                    tdHeight = parseFloat(nodes[i].style.minHeight);
+                }
+                else if (nodes[i].classList.contains(&quot;photonui-gridlayout-lastrow&quot;)) {
+                    tdHeight = nodes[i].offsetHeight;
+                }
+                else {
+                    tdHeight = nodes[i].offsetHeight - this.verticalSpacing;
+                }
+                nodes[i].style.height = tdHeight + &quot;px&quot;;
             }
 
             this._updatingLayout = false;

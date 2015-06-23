@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -254,7 +256,7 @@ var CheckBox = Widget.$extend({
      */
     _buildHtml: function() {
         this.__html.outer = document.createElement(&quot;div&quot;);
-        this.__html.outer.className = &quot;photonui-widget photonui-checkbox&quot;;
+        this.__html.outer.className = &quot;photonui-widget photonui-checkbox photonui-widget-fixed-width photonui-widget-fixed-height&quot;;
 
         this.__html.checkbox = document.createElement(&quot;input&quot;);
         this.__html.checkbox.type = &quot;checkbox&quot;;

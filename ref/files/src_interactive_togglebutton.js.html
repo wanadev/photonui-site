@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -191,6 +193,8 @@ var ToggleButton = CheckBox.$extend({
         this.__buttonInit();
         this.removeClass(&quot;photonui-checkbox&quot;);
         this.addClass(&quot;photonui-togglebutton&quot;);
+        this.removeClass(&quot;photonui-widget-fixed-height&quot;);
+        this.removeClass(&quot;photonui-widget-fixed-width&quot;);
     },
 
     // photonui.Button constructor (without the call to $super)

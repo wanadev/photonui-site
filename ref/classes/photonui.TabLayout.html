@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>photonui.Layout - photonui</title>
+    <title>photonui.TabLayout - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -131,15 +131,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>photonui.Layout Class</h1>
+<h1>photonui.TabLayout Class</h1>
 <div class="box meta">
 
         <div class="extends">
-            Extends <a href="../classes/photonui.Container.html" class="crosslink">photonui.Container</a>
+            Extends <a href="../classes/photonui.Layout.html" class="crosslink">photonui.Layout</a>
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_layout_layout.js.html#l42"><code>src&#x2F;layout&#x2F;layout.js:42</code></a>
+            Defined in: <a href="../files/src_layout_tablayout.js.html#l46"><code>src&#x2F;layout&#x2F;tablayout.js:46</code></a>
         </div>
 
             Module: <a href="../modules/Layout.html">Layout</a><br>
@@ -149,16 +149,22 @@
 
 
 <div class="box intro">
-    <p>Base class for layout.</p>
+    <p>Tab Layout</p>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_photonui.Layout" class="method item">
-            <h3 class="name"><code>photonui.Layout</code></h3>
+        <div id="method_photonui.TabLayout" class="method item">
+            <h3 class="name"><code>photonui.TabLayout</code></h3>
         
-                <span class="paren">()</span>
+                <div class="args">
+                    <span class="paren">(</span><ul class="args-list inline commas">
+                        <li class="arg">
+                                <code>params</code>
+                        </li>
+                    </ul><span class="paren">)</span>
+                </div>
         
         
         
@@ -170,7 +176,7 @@
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/src_layout_layout.js.html#l42"><code>src&#x2F;layout&#x2F;layout.js:42</code></a>
+                <a href="../files/src_layout_tablayout.js.html#l46"><code>src&#x2F;layout&#x2F;tablayout.js:46</code></a>
                 </p>
         
         
@@ -181,6 +187,23 @@
                 
             </div>
         
+                <div class="params">
+                    <h4>Parameters:</h4>
+        
+                    <ul class="params-list">
+                        <li class="param">
+                                <code class="param-name">params</code>
+                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        
+        
+                            <div class="param-description">
+                                <p>An object that can contain any property of the widget (optional).</p>
+        
+                            </div>
+        
+                        </li>
+                    </ul>
+                </div>
         
         
         
@@ -207,7 +230,7 @@
                                 <a href="#method___onContextMenu">__onContextMenu</a>
 
                             </li>
-                            <li class="index-item method private inherited">
+                            <li class="index-item method private inherited inherited">
                                 <a href="#method___onLocaleChanged">__onLocaleChanged</a>
 
                             </li>
@@ -223,6 +246,10 @@
                                 <a href="#method__callCallbacks">_callCallbacks</a>
 
                             </li>
+                            <li class="index-item method private">
+                                <a href="#method__computeLayoutOptions">_computeLayoutOptions</a>
+
+                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__registerWEvents">_registerWEvents</a>
 
@@ -231,7 +258,7 @@
                                 <a href="#method__unbindEvent">_unbindEvent</a>
 
                             </li>
-                            <li class="index-item method private">
+                            <li class="index-item method private inherited">
                                 <a href="#method__updateLayout">_updateLayout</a>
 
                             </li>
@@ -239,7 +266,7 @@
                                 <a href="#method__updateProperties">_updateProperties</a>
 
                             </li>
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_addChild">addChild</a>
 
                             </li>
@@ -247,11 +274,11 @@
                                 <a href="#method_addClass">addClass</a>
 
                             </li>
-                            <li class="index-item method inherited">
+                            <li class="index-item method inherited inherited">
                                 <a href="#method_destroy">destroy</a>
 
                             </li>
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_empty">empty</a>
 
                             </li>
@@ -306,6 +333,14 @@
                                 <a href="#property_absolutePosition">absolutePosition</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_activeTab">activeTab</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_activeTabName">activeTabName</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_child">child</a>
 
@@ -314,11 +349,11 @@
                                 <a href="#property_childName">childName</a>
 
                             </li>
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_children">children</a>
 
                             </li>
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_childrenNames">childrenNames</a>
 
                             </li>
@@ -358,12 +393,20 @@
                                 <a href="#property_offsetWidth">offsetWidth</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_padding">padding</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_parent">parent</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_parentName">parentName</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_tabsPosition">tabsPosition</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -441,7 +484,7 @@
 
 
 </div>
-<div id="method___onLocaleChanged" class="method item private">
+<div id="method___onLocaleChanged" class="method item private inherited">
     <h3 class="name"><code>__onLocaleChanged</code></h3>
 
         <span class="paren">()</span>
@@ -573,7 +616,7 @@
 
 
 </div>
-<div id="method__buildHtml" class="method item private inherited">
+<div id="method__buildHtml" class="method item private">
     <h3 class="name"><code>_buildHtml</code></h3>
 
         <span class="paren">()</span>
@@ -587,9 +630,12 @@
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method__buildHtml">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l429"><code>src&#x2F;widget.js:429</code></a>
+            <p>Inherited from
+            <a href="../classes/photonui.Widget.html#method__buildHtml">
+                photonui.Widget
+            </a>
+            but overwritten in
+        <a href="../files/src_layout_tablayout.js.html#l225"><code>src&#x2F;layout&#x2F;tablayout.js:225</code></a>
         </p>
 
 
@@ -673,6 +719,72 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
             </ul>
         </div>
 
+
+
+</div>
+<div id="method__computeLayoutOptions" class="method item private">
+    <h3 class="name"><code>_computeLayoutOptions</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>widget</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_layout_tablayout.js.html#l285"><code>src&#x2F;layout&#x2F;tablayout.js:285</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns a normalized layoutOption for a given widget.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">widget</code>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>the layout options</p>
+
+            </div>
+        </div>
 
 
 </div>
@@ -799,9 +911,12 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
     <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l221"><code>src&#x2F;layout&#x2F;layout.js:221</code></a>
+            <p>Inherited from
+            <a href="../classes/photonui.Layout.html#method__updateLayout">
+                photonui.Layout
+            </a>
+            but overwritten in
+        <a href="../files/src_layout_tablayout.js.html#l248"><code>src&#x2F;layout&#x2F;tablayout.js:248</code></a>
         </p>
 
 
@@ -872,7 +987,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method_addChild" class="method item">
+<div id="method_addChild" class="method item inherited">
     <h3 class="name"><code>addChild</code></h3>
 
         <div class="args">
@@ -894,8 +1009,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
     <div class="meta">
-                <p>
-                Defined in
+                <p>Inherited from
+                <a href="../classes/photonui.Layout.html#method_addChild">photonui.Layout</a>:
         <a href="../files/src_layout_layout.js.html#l159"><code>src&#x2F;layout&#x2F;layout.js:159</code></a>
         </p>
 
@@ -994,7 +1109,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method_destroy" class="method item">
+<div id="method_destroy" class="method item inherited">
     <h3 class="name"><code>destroy</code></h3>
 
         <span class="paren">()</span>
@@ -1028,7 +1143,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method_empty" class="method item">
+<div id="method_empty" class="method item inherited">
     <h3 class="name"><code>empty</code></h3>
 
         <span class="paren">()</span>
@@ -1041,8 +1156,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
     <div class="meta">
-                <p>
-                Defined in
+                <p>Inherited from
+                <a href="../classes/photonui.Layout.html#method_empty">photonui.Layout</a>:
         <a href="../files/src_layout_layout.js.html#l193"><code>src&#x2F;layout&#x2F;layout.js:193</code></a>
         </p>
 
@@ -1266,7 +1381,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 photonui.Container
             </a>
             but overwritten in
-        <a href="../files/src_layout_layout.js.html#l178"><code>src&#x2F;layout&#x2F;layout.js:178</code></a>
+        <a href="../files/src_layout_tablayout.js.html#l208"><code>src&#x2F;layout&#x2F;tablayout.js:208</code></a>
         </p>
 
 
@@ -1525,6 +1640,58 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
+                    <div id="property_activeTab" class="property item">
+                        <h3 class="name"><code>activeTab</code></h3>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_tablayout.js.html#l164"><code>src&#x2F;layout&#x2F;tablayout.js:164</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Define the active tab.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_activeTabName" class="property item">
+                        <h3 class="name"><code>activeTabName</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_tablayout.js.html#l114"><code>src&#x2F;layout&#x2F;tablayout.js:114</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Define the active tab name.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
                     <div id="property_child" class="property item inherited">
                         <h3 class="name"><code>child</code></h3>
                         <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
@@ -1577,7 +1744,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
-                    <div id="property_children" class="property item">
+                    <div id="property_children" class="property item inherited">
                         <h3 class="name"><code>children</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
                     
@@ -1586,8 +1753,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                         <div class="meta">
-                                    <p>
-                                    Defined in
+                                    <p>Inherited from
+                                    <a href="../classes/photonui.Layout.html#property_children">photonui.Layout</a>:
                             <a href="../files/src_layout_layout.js.html#l107"><code>src&#x2F;layout&#x2F;layout.js:107</code></a>
                             </p>
                     
@@ -1603,7 +1770,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
-                    <div id="property_childrenNames" class="property item">
+                    <div id="property_childrenNames" class="property item inherited">
                         <h3 class="name"><code>childrenNames</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
                     
@@ -1612,8 +1779,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                         <div class="meta">
-                                    <p>
-                                    Defined in
+                                    <p>Inherited from
+                                    <a href="../classes/photonui.Layout.html#property_childrenNames">photonui.Layout</a>:
                             <a href="../files/src_layout_layout.js.html#l72"><code>src&#x2F;layout&#x2F;layout.js:72</code></a>
                             </p>
                     
@@ -1732,7 +1899,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
-                    <div id="property_html" class="property item inherited">
+                    <div id="property_html" class="property item">
                         <h3 class="name"><code>html</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
                     
@@ -1741,9 +1908,12 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                         <div class="meta">
-                                    <p>Inherited from
-                                    <a href="../classes/photonui.Widget.html#property_html">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l268"><code>src&#x2F;widget.js:268</code></a>
+                                <p>Inherited from
+                                <a href="../classes/photonui.Widget.html#property_html">
+                                    photonui.Widget
+                                </a>
+                                but overwritten in
+                            <a href="../files/src_layout_tablayout.js.html#l102"><code>src&#x2F;layout&#x2F;tablayout.js:102</code></a>
                             </p>
                     
                     
@@ -1860,6 +2030,32 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                     
                     
                     </div>
+                    <div id="property_padding" class="property item">
+                        <h3 class="name"><code>padding</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_tablayout.js.html#l146"><code>src&#x2F;layout&#x2F;tablayout.js:146</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Container node padding.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 10</p>
+                    
+                    
+                    </div>
                     <div id="property_parent" class="property item inherited">
                         <h3 class="name"><code>parent</code></h3>
                         <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
@@ -1909,6 +2105,38 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                             <p><strong>Default:</strong> null (no parent)</p>
+                    
+                    
+                    </div>
+                    <div id="property_tabsPosition" class="property item">
+                        <h3 class="name"><code>tabsPosition</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_tablayout.js.html#l71"><code>src&#x2F;layout&#x2F;tablayout.js:71</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Define the tabs position.</p>
+                    <ul>
+                    <li>top</li>
+                    <li>bottom</li>
+                    <li>left</li>
+                    <li>right</li>
+                    </ul>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &quot;top&quot;</p>
                     
                     
                     </div>

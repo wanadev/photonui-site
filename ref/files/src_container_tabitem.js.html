@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/container/dialog.js - photonui</title>
+    <title>src/container/tabitem.js - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -131,12 +131,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: src/container/dialog.js</h1>
+<h1 class="file-heading">File: src/container/tabitem.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -162,7 +162,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
+ * Authored by: Fabien LOISON &lt;https://github.com/flozz&gt;
  */
 
 /**
@@ -172,26 +172,28 @@
  * @submodule Container
  * @namespace photonui
  */
- 
-var Helpers = require(&quot;../helpers.js&quot;);
-var Widget = require(&quot;../widget.js&quot;);
-var Window = require(&quot;./window.js&quot;);
 
-var _windowList = [];
+
+var Helpers = require(&quot;../helpers.js&quot;);
+var Container = require(&quot;./container.js&quot;);
+
 
 /**
- * Dialog Window.
+ * Tab Item.
  *
- * @class Dialog
+ * @class TabItem
  * @constructor
- * @extends photonui.Window
+ * @extends photonui.Container
+ * @param {Object} params An object that can contain any property of the widget (optional).
  */
-var Dialog = Window.$extend({
+var TabItem = Container.$extend({
 
     // Constructor
     __init__: function(params) {
-        this._buttonsNames = [];
         this.$super(params);
+        this._updateProperties([&quot;title&quot;]);
+
+        this._bindEvent(&quot;tab-click&quot;, this.__html.tab, &quot;click&quot;, this.show.bind(this));
     },
 
 
@@ -204,63 +206,92 @@ var Dialog = Window.$extend({
 
 
     /**
-     * Dialog button widgets name.
+     * Tab title.
      *
-     * @property buttonsNames
-     * @type Array
-     * @default []
+     * @property title
+     * @type String
+     * @default &quot;Tab&quot;
      */
-    _buttonsNames: [],
+    _title: &quot;Tab&quot;,
 
-    getButtonsNames: function() {
-        return this._buttonsNames;
+    getTitle: function() {
+        return this._title;
     },
 
-    setButtonsNames: function(buttonsNames) {
-        for (var i=0 ; i&lt;this._buttonsNames.length ; i++) {
-            var widget = photonui.getWidget(this._buttonsNames[i]);
-            var index = this._buttonsNames.indexOf(widget.name);
-            if (index &gt;= 0) {
-                widget._parentName = null;
-            }
-        }
-        this._buttonsNames = [];
-        for (var i=0 ; i&lt;buttonsNames.length ; i++) {
-            var widget = photonui.getWidget(buttonsNames[i]);
-            if (widget) {
-                if (widget.parent) {
-                    widget.unparent();
-                }
-                this._buttonsNames.push(widget.name);
-                widget._parentName = this.name;
-            }
-        }
-        this._updateButtons();
+    setTitle: function(title) {
+        this._title = title;
+        Helpers.cleanNode(this.__html.tab);
+        this.__html.tab.appendChild(document.createTextNode(title));
     },
 
     /**
-     * Dialog buttons widgets.
+     * Html outer element of the widget (if any).
      *
-     * @property buttons
-     * @type Array
-     * @default []
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
      */
-    getButtons: function() {
-        var buttons = [];
-        for (var i=0 ; i&lt;this._buttonsNames.length ; i++) {
-            buttons.push(Widget.getWidget(this._buttonsNames[i]));
-        }
-        return buttons;
+    getHtml: function() {
+        return this.__html.div;
     },
 
-    setButtons: function(buttons) {
-        var buttonsNames = [];
-        for (var i=0 ; i&lt;buttons.length ; i++) {
-            if (buttons[i] instanceof Widget) {
-                buttonsNames.push(buttons[i].name);
+    /**
+     * Tab Html element.
+     *
+     * @property tabHtml
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getTabHtml: function() {
+        return this.__html.tab;
+    },
+
+    /**
+     * HTML Element that contain the child widget HTML.
+     *
+     * @property containerNode
+     * @type HTMLElement
+     * @readOnly
+     */
+    getContainerNode: function() {
+        return this.__html.div;
+    },
+
+    /**
+     * Is the widget visible or hidden.
+     *
+     * @property visible
+     * @type Boolean
+     * @default false
+     */
+    _visible: false,
+
+    setVisible: function(visible, noParent) {
+        this.$super(visible);
+
+        if (visible) {
+            if (this.parent) {
+                var children = this.parent.children;
+                for (var i=0 ; i&lt;children.length ; i++) {
+                    if (!(children[i] instanceof TabItem)) continue;
+                    if (children[i] === this) continue;
+                    if (children[i].visible) children[i].setVisible(false, true);
+                }
+                this.parent._activeTabName = this.name;
             }
+
+            this.addClass(&quot;photonui-tabitem-active&quot;);
+            this.__html.tab.className = &quot;photonui-tabitem-tab photonui-tabitem-active&quot;;
         }
-        this.buttonsNames = buttonsNames;
+        else {
+            if (this.parent &amp;&amp; !noParent) {
+                this.parent.activeTab = null;
+            }
+            this.removeClass(&quot;photonui-tabitem-active&quot;);
+            this.__html.tab.className = &quot;photonui-tabitem-tab&quot;;
+        }
     },
 
 
@@ -269,79 +300,8 @@ var Dialog = Window.$extend({
     //////////////////////////////////////////
 
 
-    // ====== Public methods ======
-
-
-    /**
-     * Add a button to the dialog.
-     *
-     * @method addButton
-     * @param {photonui.Widget} widget The button to add.
-     */
-    addButton: function(widget, layoutOptions) {
-        if (widget.parent) {
-            widget.unparent();
-        }
-        if (layoutOptions) {
-            widget.layoutOptions = layoutOptions;
-        }
-        this._buttonsNames.push(widget.name);
-        widget._parentName = this.name;
-        this._updateButtons();
-    },
-
-    /**
-     * Remove a button from the dialog.
-     *
-     * @method removeButton
-     * @param {photonui.Widget} widget The button to remove.
-     */
-    removeButton: function(widget) {
-        var index = this._buttonsNames.indexOf(widget.name);
-        if (index &gt;= 0) {
-            this._buttonsNames.splice(index, 1);
-            widget._parentName = null;
-        }
-        this._updateButtons();
-    },
-
-    // Alias needed for photonui.Widget.unparent()
-    removeChild: function() {
-        this.removeButton.apply(this, arguments);
-    },
-
-    /**
-     * Destroy the widget.
-     *
-     * @method destroy
-     */
-    destroy: function() {
-        var buttons = this.buttons;
-        for (var i=0 ; i&lt;buttons.length ; i++) {
-            if (buttons[i]) {
-                buttons[i].destroy();
-            }
-        }
-        this.$super();
-    },
-
-
     // ====== Private methods ======
 
-
-    /**
-     * Update dialog buttons.
-     *
-     * @method _updateButtons
-     * @private
-     */
-    _updateButtons: function() {
-        Helpers.cleanNode(this.__html.buttons);
-        var buttons = this.buttons;
-        for (var i=buttons.length-1 ; i&gt;=0 ; i--) {
-            this.__html.buttons.appendChild(buttons[i].html);
-        }
-    },
 
     /**
      * Build the widget HTML.
@@ -350,16 +310,17 @@ var Dialog = Window.$extend({
      * @private
      */
     _buildHtml: function() {
-        this.$super();
-        this.addClass(&quot;photonui-dialog&quot;);
-
-        this.__html.buttons = document.createElement(&quot;div&quot;);
-        this.__html.buttons.className = &quot;photonui-dialog-buttons&quot;;
-        this.__html[&quot;window&quot;].appendChild(this.__html.buttons);
+        this.__html.div = document.createElement(&quot;div&quot;);
+        this.__html.div.className = &quot;photonui-widget photonui-tabitem photonui-container&quot;;
+        this.__html.tab = document.createElement(&quot;div&quot;);
+        this.__html.tab.className = &quot;photonui-tabitem-tab&quot;;
     }
+
 });
 
-module.exports = Dialog;
+
+module.exports = TabItem;
+
 
     </pre>
 </div>

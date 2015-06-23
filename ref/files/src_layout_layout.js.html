@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -187,6 +189,12 @@ var Layout = Container.$extend({
     __init__: function(params) {
         this._childrenNames = [];  // new instance
         this.$super(params);
+
+        // Force to update the parent of the children
+        var children = this.children;
+        for (var i=0 ; i&lt;children.length ; i++) {
+            children[i]._parentName = this.name;
+        }
     },
 
 
@@ -261,7 +269,6 @@ var Layout = Container.$extend({
     // Override getChildName / setChildName / getChild / setChild
 
     getChildName: function() {
-        console.warn(&quot;Warning: You cannot use getChild() on layout widgets, please use getChildren() instead.&quot;);
         return null;
     },
 
@@ -270,7 +277,6 @@ var Layout = Container.$extend({
     },
 
     getChild: function() {
-        console.warn(&quot;Warning: You cannot use getChild() on layout widgets, please use getChildren() instead.&quot;);
         return null;
     },
 

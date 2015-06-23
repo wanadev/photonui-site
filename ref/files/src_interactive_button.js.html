@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -395,6 +397,38 @@ var Button = Widget.$extend({
     },
 
     /**
+     * Button&#x27;s color.
+     *
+     * The available colors depends on the theme. Particle, the
+     * default PhotonUI theme provides the following colors:
+     *
+     *   * &#x60;blue&#x60;
+     *   * &#x60;red&#x60;
+     *   * &#x60;yellow&#x60;
+     *   * &#x60;green&#x60;
+     *   * null (default)
+     *
+     * @property buttonColor
+     * @type string
+     * @default null
+     */
+    _buttonColor: null,
+
+    getButtonColor: function() {
+        return this._buttonColor;
+    },
+
+    setButtonColor: function(buttonColor) {
+        if (this._buttonColor) {
+            this.__html.button.classList.remove(&quot;photonui-button-color-&quot; + this._buttonColor);
+        }
+        this._buttonColor = buttonColor
+        if (buttonColor) {
+            this.__html.button.classList.add(&quot;photonui-button-color-&quot; + this._buttonColor);
+        }
+    },
+
+    /**
      * Html outer element of the widget (if any).
      *
      * @property html
@@ -515,6 +549,9 @@ Button._buttonMixin = {
     _appearance:         Button.prototype._appearance,
     getAppearance:       Button.prototype.getAppearance,
     setAppearance:       Button.prototype.setAppearance,
+    _buttonColor:        Button.prototype._buttonColor,
+    getButtonColor:      Button.prototype.getButtonColor,
+    setButtonColor:      Button.prototype.setButtonColor,
     // Private methods
     _update:             Button.prototype._update,
     _buildButtonHtml:    Button.prototype._buildHtml,
