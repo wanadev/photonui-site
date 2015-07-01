@@ -1968,7 +1968,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 70,
+            "line": 72,
             "description": "The font list",
             "itemtype": "property",
             "name": "fonts",
@@ -1981,20 +1981,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 90,
-            "description": "The field value.",
-            "itemtype": "property",
-            "name": "value",
-            "type": "String (maybe)",
-            "default": "\"sans-serif\"",
-            "class": "photonui.FontSelect",
-            "module": "PhotonUI",
-            "submodule": "Composite",
-            "namespace": "photonui"
-        },
-        {
-            "file": "src/composite/fontselect.js",
-            "line": 99,
+            "line": 92,
             "description": "The placeholder displayed if nothing is selected.",
             "itemtype": "property",
             "name": "Placeholder",
@@ -2007,7 +1994,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 117,
+            "line": 110,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -2024,8 +2011,21 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/composite/fontselect.js",
+            "line": 127,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.FontSelect",
+            "module": "PhotonUI",
+            "submodule": "Composite",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/composite/popupmenu.js",
-            "line": 87,
+            "line": 88,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2038,7 +2038,7 @@
         },
         {
             "file": "src/composite/popupmenu.js",
-            "line": 108,
+            "line": 109,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -2051,7 +2051,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 87,
+            "line": 89,
             "description": "The field value.",
             "itemtype": "property",
             "name": "value",
@@ -2064,7 +2064,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 120,
+            "line": 122,
             "description": "The placeholder displayed if nothing is selected.",
             "itemtype": "property",
             "name": "Placeholder",
@@ -2077,7 +2077,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 137,
+            "line": 139,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -2090,7 +2090,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 150,
+            "line": 152,
             "description": "Layout children widgets name.",
             "itemtype": "property",
             "name": "childrenNames",
@@ -2103,7 +2103,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 163,
+            "line": 165,
             "description": "Width of the container node.",
             "itemtype": "property",
             "name": "popupWidth",
@@ -2116,7 +2116,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 173,
+            "line": 175,
             "description": "Height of the popup container node.",
             "itemtype": "property",
             "name": "popupHeight",
@@ -2129,7 +2129,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 183,
+            "line": 185,
             "description": "Maximum width of the popup container node.",
             "itemtype": "property",
             "name": "popupMaxWidth",
@@ -2142,7 +2142,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 193,
+            "line": 195,
             "description": "Minimum width of the popup container node.",
             "itemtype": "property",
             "name": "popupMinWidth",
@@ -2155,7 +2155,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 203,
+            "line": 206,
             "description": "Maximum height of the popup container node.",
             "itemtype": "property",
             "name": "popupMaxHeight",
@@ -2168,7 +2168,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 213,
+            "line": 216,
             "description": "Minimum height of the popup container node.",
             "itemtype": "property",
             "name": "popupMinHeight",
@@ -2181,7 +2181,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 223,
+            "line": 226,
             "description": "Popup width (outer HTML element).",
             "itemtype": "property",
             "name": "popupOffsetWidth",
@@ -2194,7 +2194,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 232,
+            "line": 235,
             "description": "Popup height (outer HTML element).",
             "itemtype": "property",
             "name": "popupOffsetHeight",
@@ -2207,7 +2207,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 241,
+            "line": 244,
             "description": "Window container node padding.",
             "itemtype": "property",
             "name": "popupPadding",
@@ -2220,7 +2220,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 251,
+            "line": 254,
             "description": "Define if icon on menu items are visible.",
             "itemtype": "property",
             "name": "iconVisible",
@@ -2233,7 +2233,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 261,
+            "line": 272,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -2247,7 +2247,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 273,
+            "line": 284,
             "description": "The popupMenu.",
             "itemtype": "property",
             "name": "__popupMenu",
@@ -2261,7 +2261,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 291,
+            "line": 302,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -2284,7 +2284,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 303,
+            "line": 314,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2295,7 +2295,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 317,
+            "line": 328,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2308,7 +2308,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 329,
+            "line": 340,
             "description": "Update the popup items binding.",
             "itemtype": "method",
             "name": "_updateItemsBinding",
@@ -2321,7 +2321,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 352,
+            "line": 363,
             "itemtype": "method",
             "name": "__onClick",
             "access": "private",
@@ -2339,7 +2339,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 361,
+            "line": 375,
             "itemtype": "method",
             "name": "__onItemClicked",
             "access": "private",
@@ -2633,7 +2633,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 69,
+            "line": 75,
             "description": "Dialog button widgets name.",
             "itemtype": "property",
             "name": "buttonsNames",
@@ -2646,7 +2646,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 104,
+            "line": 110,
             "description": "Dialog buttons widgets.",
             "itemtype": "property",
             "name": "buttons",
@@ -2659,7 +2659,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 138,
+            "line": 146,
             "description": "Add a button to the dialog.",
             "itemtype": "method",
             "name": "addButton",
@@ -2677,7 +2677,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 156,
+            "line": 164,
             "description": "Remove a button from the dialog.",
             "itemtype": "method",
             "name": "removeButton",
@@ -2695,7 +2695,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 176,
+            "line": 185,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2706,7 +2706,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 195,
+            "line": 204,
             "description": "Update dialog buttons.",
             "itemtype": "method",
             "name": "_updateButtons",
@@ -2719,7 +2719,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 209,
+            "line": 218,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4436,7 +4436,20 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 146,
+            "line": 135,
+            "description": "Update the value in the html field.",
+            "itemtype": "method",
+            "name": "_updateFieldValue",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.Slider",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/slider.js",
+            "line": 149,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4449,7 +4462,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 170,
+            "line": 173,
             "description": "Update the value form a mouse event occured on the slider.",
             "itemtype": "method",
             "name": "_updateFromMouseEvent",
@@ -4468,7 +4481,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 193,
+            "line": 196,
             "itemtype": "method",
             "name": "__onSliderMouseDown",
             "access": "private",
@@ -4486,7 +4499,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 204,
+            "line": 207,
             "itemtype": "method",
             "name": "__onSliderMouseMove",
             "access": "private",
@@ -4504,7 +4517,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 213,
+            "line": 216,
             "itemtype": "method",
             "name": "__onSliderMouseUp",
             "access": "private",
@@ -4522,7 +4535,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 240,
+            "line": 243,
             "itemtype": "method",
             "name": "__onSliderMouseWheel",
             "access": "private",
@@ -4540,7 +4553,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 276,
+            "line": 279,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -4559,7 +4572,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 291,
+            "line": 294,
             "itemtype": "method",
             "name": "__onFieldContextMenu",
             "access": "private",
@@ -4876,7 +4889,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 157,
+            "line": 158,
             "description": "The horizontal spacing between children widgets.",
             "itemtype": "property",
             "name": "horizontalSpacing",
@@ -4889,7 +4902,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 178,
+            "line": 180,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4903,7 +4916,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 192,
+            "line": 194,
             "description": "Flag to indicate that the layout is actually been updated.",
             "itemtype": "property",
             "name": "_updatingLayout",
@@ -4918,7 +4931,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 210,
+            "line": 212,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4931,7 +4944,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 227,
+            "line": 229,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -4944,7 +4957,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 370,
+            "line": 380,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -4968,7 +4981,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 508,
+            "line": 518,
             "description": "Update the spacing between widgets",
             "itemtype": "method",
             "name": "_updateSpacing",
@@ -4981,7 +4994,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 522,
+            "line": 532,
             "description": "Hack to get thing working with Gecko and Trident.\n\nMSIE 11:\n\n  * The hack fixes all the issues,\n\nMSIE 10:\n\n  * There is issues with rowspan\n  * The dynamic resizing does not works\n\nFirefox:\n\n  * There is some minor issues with rowspan",
             "itemtype": "method",
             "name": "_sizingHack",
@@ -5020,7 +5033,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 159,
+            "line": 161,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -5043,7 +5056,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 178,
+            "line": 180,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -5061,7 +5074,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 193,
+            "line": 195,
             "description": "Destroy all children of the layout",
             "itemtype": "method",
             "name": "empty",
@@ -5072,7 +5085,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 207,
+            "line": 209,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -5083,7 +5096,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 221,
+            "line": 223,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5096,7 +5109,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 237,
+            "line": 239,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -6919,7 +6932,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 101,
+            "line": 110,
             "description": "The text horizontal alignement.\n\n  * \"left\",\n  * \"center\",\n  * \"right\".",
             "itemtype": "property",
             "name": "textAlign",
@@ -6932,7 +6945,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 126,
+            "line": 135,
             "description": "Link the label with the given input (Field, CheckBox,...) widget.",
             "itemtype": "property",
             "name": "forInputName",
@@ -6945,7 +6958,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 155,
+            "line": 167,
             "description": "Link the label with the given input (Field, CheckBox,...) widget.",
             "itemtype": "property",
             "name": "forInput",
@@ -6958,7 +6971,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 170,
+            "line": 182,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -6972,7 +6985,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 191,
+            "line": 203,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",

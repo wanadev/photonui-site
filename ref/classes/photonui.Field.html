@@ -152,31 +152,36 @@
     <p>Base class for fields.</p>
 <p>wEvents:</p>
 <ul>
-<li><p>value-changed:</p>
+<li>
+<p>value-changed:</p>
 <ul>
 <li>description: called when the value was modified.</li>
 <li>callback:    function(widget, value)</li>
 </ul>
 </li>
-<li><p>keydown:</p>
+<li>
+<p>keydown:</p>
 <ul>
 <li>description: called when a key is pressed.</li>
 <li>callback:    function(widget, event)</li>
 </ul>
 </li>
-<li><p>keyup:</p>
+<li>
+<p>keyup:</p>
 <ul>
 <li>description: called when a key is released.</li>
 <li>callback:    function(widget, event)</li>
 </ul>
 </li>
-<li><p>keypress:</p>
+<li>
+<p>keypress:</p>
 <ul>
 <li>description: called just before the insertion of a char.</li>
 <li>callback:    function(widget, event)</li>
 </ul>
 </li>
-<li><p>selection-changed:</p>
+<li>
+<p>selection-changed:</p>
 <ul>
 <li>description: called when the selection was changed.</li>
 <li>callback:    function(widget, selectionStart, selectionEnd, selectedText, event)</li>
@@ -188,36 +193,36 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_photonui.Field" class="method item">
-            <h3 class="name"><code>photonui.Field</code></h3>
+<div id="method_photonui.Field" class="method item">
+    <h3 class="name"><code>photonui.Field</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_interactive_field.js.html#l41"><code>src&#x2F;interactive&#x2F;field.js:41</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
         
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/src_interactive_field.js.html#l41"><code>src&#x2F;interactive&#x2F;field.js:41</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
+    </div>
+
+
+
+
+</div>
     </div>
 
 <div id="classdocs" class="tabview">
@@ -469,8 +474,7 @@
     </div>
 
     <div class="description">
-        <p>Called when the locale is changed.</p>
-
+        Called when the locale is changed.
     </div>
 
 
@@ -516,8 +520,7 @@
     </div>
 
     <div class="description">
-        <p>Javascript event binding (for internal use).</p>
-
+        Javascript event binding (for internal use).
     </div>
 
         <div class="params">
@@ -530,8 +533,7 @@
 
 
                     <div class="param-description">
-                        <p>An unique id for the event.</p>
-
+                        An unique id for the event.
                     </div>
 
                 </li>
@@ -541,8 +543,7 @@
 
 
                     <div class="param-description">
-                        <p>The element on which the event will be bind.</p>
-
+                        The element on which the event will be bind.
                     </div>
 
                 </li>
@@ -552,8 +553,7 @@
 
 
                     <div class="param-description">
-                        <p>The event name (e.g. &quot;mousemove&quot;, &quot;click&quot;,...).</p>
-
+                        The event name (e.g. "mousemove", "click",...).
                     </div>
 
                 </li>
@@ -563,8 +563,7 @@
 
 
                     <div class="param-description">
-                        <p>The function that will be called when the event occured.</p>
-
+                        The function that will be called when the event occured.
                     </div>
 
                 </li>
@@ -630,8 +629,7 @@
     </div>
 
     <div class="description">
-        <p>Build the widget HTML.</p>
-
+        Build the widget HTML.
     </div>
 
 
@@ -671,10 +669,10 @@
     </div>
 
     <div class="description">
-        <p>Call all callbacks for the given wEvent.</p>
-<p>NOTE: the first argument passed to the callback is the current widget.
-NOTE²: if the thisArg of the callback is null, this will be binded to the current widget.</p>
+        Call all callbacks for the given wEvent.
 
+NOTE: the first argument passed to the callback is the current widget.
+NOTE²: if the thisArg of the callback is null, this will be binded to the current widget.
     </div>
 
         <div class="params">
@@ -687,8 +685,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The widget event.</p>
-
+                        The widget event.
                     </div>
 
                 </li>
@@ -698,8 +695,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>Parametters that will be sent to the callbacks.</p>
-
+                        Parametters that will be sent to the callbacks.
                     </div>
 
                 </li>
@@ -739,8 +735,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Register available wEvent.</p>
-
+        Register available wEvent.
     </div>
 
         <div class="params">
@@ -793,8 +788,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Unbind javascript event.</p>
-
+        Unbind javascript event.
     </div>
 
         <div class="params">
@@ -807,8 +801,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The id of the event.</p>
-
+                        The id of the event.
                     </div>
 
                 </li>
@@ -848,8 +841,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Force the update of the given properties.</p>
-
+        Force the update of the given properties.
     </div>
 
         <div class="params">
@@ -862,8 +854,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The properties to update.</p>
-
+                        The properties to update.
                     </div>
 
                 </li>
@@ -902,8 +893,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Add a class to the outer HTML element of the widget.</p>
-
+        Add a class to the outer HTML element of the widget.
     </div>
 
         <div class="params">
@@ -916,8 +906,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The class to add.</p>
-
+                        The class to add.
                     </div>
 
                 </li>
@@ -953,8 +942,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Destroy the widget.</p>
-
+        Destroy the widget.
     </div>
 
 
@@ -984,8 +972,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>DHide the widget (equivalent to widget.visible = false).</p>
-
+        DHide the widget (equivalent to widget.visible = false).
     </div>
 
 
@@ -1030,10 +1017,11 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Register a callback for any PhotonUI/Widget event (called wEvent).</p>
-<p>Callback signature:</p>
-<pre class="code prettyprint"><code>function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
-</code></pre>
+        Register a callback for any PhotonUI/Widget event (called wEvent).
+
+Callback signature:
+
+    function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
     </div>
 
         <div class="params">
@@ -1046,8 +1034,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>An unique id for the callback.</p>
-
+                        An unique id for the callback.
                     </div>
 
                 </li>
@@ -1057,8 +1044,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>the PhotonUI/Widget event name.</p>
-
+                        the PhotonUI/Widget event name.
                     </div>
 
                 </li>
@@ -1068,8 +1054,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The callback function.</p>
-
+                        The callback function.
                     </div>
 
                 </li>
@@ -1079,8 +1064,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The value of this (optionnal, default = current widget).</p>
-
+                        The value of this (optionnal, default = current widget).
                     </div>
 
                 </li>
@@ -1119,8 +1103,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Remove a registered callback.</p>
-
+        Remove a registered callback.
     </div>
 
         <div class="params">
@@ -1133,8 +1116,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The id of the callback.</p>
-
+                        The id of the callback.
                     </div>
 
                 </li>
@@ -1173,8 +1155,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Remove a class from the outer HTML element of the widget.</p>
-
+        Remove a class from the outer HTML element of the widget.
     </div>
 
         <div class="params">
@@ -1187,8 +1168,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The class to remove.</p>
-
+                        The class to remove.
                     </div>
 
                 </li>
@@ -1221,8 +1201,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Display the widget (equivalent to widget.visible = true).</p>
-
+        Display the widget (equivalent to widget.visible = true).
     </div>
 
 
@@ -1252,8 +1231,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Detache the widget from its parent.</p>
-
+        Detache the widget from its parent.
     </div>
 
 
@@ -1284,8 +1262,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references to registered callbacks.</p>
-                    
+                            Object containing references to registered callbacks.
                         </div>
                     
                     
@@ -1310,9 +1287,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references javascript events binding (for widget
-                    internal use).</p>
-                    
+                            Object containing references javascript events binding (for widget
+                    internal use).
                         </div>
                     
                     
@@ -1337,8 +1313,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references to the widget HTML elements</p>
-                    
+                            Object containing references to the widget HTML elements
                         </div>
                     
                     
@@ -1362,9 +1337,9 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Absolute position of the widget on the page.</p>
-                    <p><code>{x: Number, y: Number}</code></p>
+                            Absolute position of the widget on the page.
                     
+                    <code>{x: Number, y: Number}</code>
                         </div>
                     
                     
@@ -1388,8 +1363,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The managed contextual menu.</p>
-                    
+                            The managed contextual menu.
                         </div>
                     
                             <p><strong>Default:</strong> null (= no context menu)</p>
@@ -1414,8 +1388,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The name of the managed contextual menu (<code>photonui.PopupWindow().name</code>).</p>
-                    
+                            The name of the managed contextual menu (<code>photonui.PopupWindow().name</code>).
                         </div>
                     
                             <p><strong>Default:</strong> null (= no context menu)</p>
@@ -1469,8 +1442,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Layout options.</p>
-                    
+                            Layout options.
                         </div>
                     
                             <p><strong>Default:</strong> {}</p>
@@ -1495,8 +1467,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The unique name of the widget.</p>
-                    
+                            The unique name of the widget.
                         </div>
                     
                             <p><strong>Default:</strong> &quot;widget-&quot; + photonui.Helpers.uuid4()</p>
@@ -1521,8 +1492,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Widget height (outer HTML element).</p>
-                    
+                            Widget height (outer HTML element).
                         </div>
                     
                     
@@ -1546,8 +1516,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Widget width (outer HTML element).</p>
-                    
+                            Widget width (outer HTML element).
                         </div>
                     
                     
@@ -1571,8 +1540,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The parent widget.</p>
-                    
+                            The parent widget.
                         </div>
                     
                             <p><strong>Default:</strong> null (no parent)</p>
@@ -1597,8 +1565,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The parent widget name.</p>
-                    
+                            The parent widget name.
                         </div>
                     
                             <p><strong>Default:</strong> null (no parent)</p>
@@ -1649,8 +1616,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Tooltip.</p>
-                    
+                            Tooltip.
                         </div>
                     
                             <p><strong>Default:</strong> null</p>
@@ -1701,8 +1667,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Is the widget visible or hidden.</p>
-                    
+                            Is the widget visible or hidden.
                         </div>
                     
                             <p><strong>Default:</strong> true</p>

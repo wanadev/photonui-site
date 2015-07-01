@@ -32,7 +32,8 @@
   url: /PhotonUI/ref/classes/photonui.ColorPickerDialog.html
 
 - name: Dialog
-  url: /PhotonUI/ref/classes/photonui.Dialog.html
+  image: doc/widgets/dialog.png
+  url: doc/widgets/dialog.html
 
 - name: FAIcon
   image: doc/widgets/faicon.png

@@ -172,7 +172,7 @@
  * @submodule Container
  * @namespace photonui
  */
- 
+
 var Helpers = require(&quot;../helpers.js&quot;);
 var Widget = require(&quot;../widget.js&quot;);
 var Window = require(&quot;./window.js&quot;);
@@ -192,6 +192,12 @@ var Dialog = Window.$extend({
     __init__: function(params) {
         this._buttonsNames = [];
         this.$super(params);
+
+        // Force to update the parent of the buttons
+        var buttons = this.buttons;
+        for (var i=0 ; i&lt;buttons.length ; i++) {
+            buttons[i]._parentName = this.name;
+        }
     },
 
 
@@ -247,8 +253,10 @@ var Dialog = Window.$extend({
      */
     getButtons: function() {
         var buttons = [];
+        var widget;
         for (var i=0 ; i&lt;this._buttonsNames.length ; i++) {
-            buttons.push(Widget.getWidget(this._buttonsNames[i]));
+            widget = Widget.getWidget(this._buttonsNames[i]);
+            if (widget instanceof Widget) buttons.push(widget);
         }
         return buttons;
     },
@@ -307,6 +315,7 @@ var Dialog = Window.$extend({
 
     // Alias needed for photonui.Widget.unparent()
     removeChild: function() {
+        this.$super.apply(this, arguments);
         this.removeButton.apply(this, arguments);
     },
 
@@ -351,7 +360,7 @@ var Dialog = Window.$extend({
      */
     _buildHtml: function() {
         this.$super();
-        this.addClass(&quot;photonui-dialog&quot;);
+        this.__html[&quot;window&quot;].className += &quot; photonui-dialog&quot;;
 
         this.__html.buttons = document.createElement(&quot;div&quot;);
         this.__html.buttons.className = &quot;photonui-dialog-buttons&quot;;

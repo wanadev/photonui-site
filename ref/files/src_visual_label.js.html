@@ -232,7 +232,16 @@ var Label = Widget.$extend({
     setText: function(text) {
         this._text = text;
         photonui.Helpers.cleanNode(this.__html.label);
-        this.__html.label.appendChild(document.createTextNode(text));
+
+        var lines = text.split(&quot;\n&quot;);
+
+        for (var i=0 ; i&lt;lines.length ; i++) {
+            this.__html.label.appendChild(document.createTextNode(lines[i]));
+            if (i&lt;lines.length-1) {
+                this.__html.label.appendChild(document.createElement(&quot;br&quot;));
+            }
+        }
+
     },
 
     /**
@@ -286,6 +295,9 @@ var Label = Widget.$extend({
                         Helpers.escapeHtml(forInputName)
                 );
             }
+        }
+        else {
+            this.__html.label.removeAttribute(&quot;for&quot;);
         }
     },
 

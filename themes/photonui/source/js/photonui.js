@@ -370,12 +370,12 @@
 	function constructAMD() {
 
 		//create a library instance
-		return init();
+		return init(context);
 
 		//spawns a library instance
-		function init() {
+		function init(context) {
 			var library;
-			library = factory('amd');
+			library = factory(context, 'amd');
 			library.fork = init;
 			return library;
 		}
@@ -387,14 +387,14 @@
 	function constructCommonJS() {
 
 		//create a library instance
-		module.exports = init();
+		module.exports = init(context);
 
 		return;
 
 		//spawns a library instance
-		function init() {
+		function init(context) {
 			var library;
-			library = factory('CommonJS');
+			library = factory(context, 'CommonJS');
 			library.fork = init;
 			return library;
 
@@ -409,16 +409,16 @@
 		var library;
 
 		//create a library instance
-		library = init();
-		library.noConflict('KeyboardJS', 'k');
+		library = init(context);
 
 		//spawns a library instance
-		function init() {
+		function init(context) {
 			var library, namespaces = [], previousValues = {};
 
-			library = factory('global');
+			library = factory(context, 'global');
 			library.fork = init;
 			library.noConflict = noConflict;
+			library.noConflict('KeyboardJS', 'k');
 			return library;
 
 			//sets library namespaces
@@ -452,13 +452,13 @@
 		}
 	}
 
-})(this, function(env) {
+})(this, function(targetWindow, env) {
 	var KeyboardJS = {}, locales = {}, locale, map, macros, activeKeys = [], bindings = [], activeBindings = [],
 	activeMacros = [], aI, usLocale;
-
+	targetWindow = targetWindow || window;
 
 	///////////////////////
-	// DEFUALT US LOCALE //
+	// DEFAULT US LOCALE //
 	///////////////////////
 
 	//define US locale
@@ -539,7 +539,7 @@
 			"108": ["numenter"],
 			"109": ["numsubtract", "num-"],
 			"110": ["numdecimal", "num."],
-			"111": ["numdevide", "num/"],
+			"111": ["numdivide", "num/"],
 			"144": ["numlock", "num"],
 
 			//function keys
@@ -587,6 +587,28 @@
 		usLocale.map[aI] = String.fromCharCode(aI + 32);
 		usLocale.macros.push(['shift + ' + String.fromCharCode(aI + 32) + ', capslock + ' + String.fromCharCode(aI + 32), [String.fromCharCode(aI)]]);
 	}
+
+  // Support command key on Mac.
+	// This is unfortunately browser specific
+	if(/^Mac/.test(navigator.platform)){
+		// Chrome,Safari
+		if(/Chrome/.test(navigator.userAgent) ||
+			 /Safari/.test(navigator.userAgent)){
+				 usLocale.map["93"] = usLocale.map["92"];
+		}
+		// Opera
+		if(/Opera/.test(navigator.userAgent)){
+			usLocale.map["17"] = usLocale.map["91"];
+			delete usLocale.map["91"];
+		}
+		// Firefox
+		if(/Firefox/.test(navigator.userAgent)){
+			usLocale.map["224"] = usLocale.map["91"];
+			delete usLocale.map["91"];
+		}
+		delete usLocale.map["92"];
+	}
+
 	registerLocale('us', usLocale);
 	getSetLocale('us');
 
@@ -607,6 +629,8 @@
 	KeyboardJS.enable = enable;
 	KeyboardJS.disable = disable;
 	KeyboardJS.activeKeys = getActiveKeys;
+	KeyboardJS.releaseKey = removeActiveKey;
+	KeyboardJS.pressKey = addActiveKey;
 	KeyboardJS.on = createBinding;
 	KeyboardJS.clear = removeBindingByKeyCombo;
 	KeyboardJS.clear.key = removeBindingByKeyName;
@@ -632,16 +656,16 @@
 	 * Enables KeyboardJS
 	 */
 	function enable() {
-		if(window.addEventListener) {
-			document.addEventListener('keydown', keydown, false);
-			document.addEventListener('keyup', keyup, false);
-			window.addEventListener('blur', reset, false);
-			window.addEventListener('webkitfullscreenchange', reset, false);
-			window.addEventListener('mozfullscreenchange', reset, false);
-		} else if(window.attachEvent) {
-			document.attachEvent('onkeydown', keydown);
-			document.attachEvent('onkeyup', keyup);
-			window.attachEvent('onblur', reset);
+		if(targetWindow.addEventListener) {
+			targetWindow.document.addEventListener('keydown', keydown, false);
+			targetWindow.document.addEventListener('keyup', keyup, false);
+			targetWindow.addEventListener('blur', reset, false);
+			targetWindow.addEventListener('webkitfullscreenchange', reset, false);
+			targetWindow.addEventListener('mozfullscreenchange', reset, false);
+		} else if(targetWindow.attachEvent) {
+			targetWindow.document.attachEvent('onkeydown', keydown);
+			targetWindow.document.attachEvent('onkeyup', keyup);
+			targetWindow.attachEvent('onblur', reset);
 		}
 	}
 
@@ -650,16 +674,16 @@
 	 */
 	function disable() {
 		reset();
-		if(window.removeEventListener) {
-			document.removeEventListener('keydown', keydown, false);
-			document.removeEventListener('keyup', keyup, false);
-			window.removeEventListener('blur', reset, false);
-			window.removeEventListener('webkitfullscreenchange', reset, false);
-			window.removeEventListener('mozfullscreenchange', reset, false);
-		} else if(window.detachEvent) {
-			document.detachEvent('onkeydown', keydown);
-			document.detachEvent('onkeyup', keyup);
-			window.detachEvent('onblur', reset);
+		if(targetWindow.removeEventListener) {
+			targetWindow.document.removeEventListener('keydown', keydown, false);
+			targetWindow.document.removeEventListener('keyup', keyup, false);
+			targetWindow.removeEventListener('blur', reset, false);
+			targetWindow.removeEventListener('webkitfullscreenchange', reset, false);
+			targetWindow.removeEventListener('mozfullscreenchange', reset, false);
+		} else if(targetWindow.detachEvent) {
+			targetWindow.document.detachEvent('onkeydown', keydown);
+			targetWindow.document.detachEvent('onkeyup', keyup);
+			targetWindow.detachEvent('onblur', reset);
 		}
 	}
 
@@ -1248,6 +1272,22 @@
 		var keyCode = getKeyCode(keyName);
 		if(keyCode === '91' || keyCode === '92') { activeKeys = []; } //remove all key on release of super.
 		else { activeKeys.splice(activeKeys.indexOf(keyName), 1); }
+		// Mac Specific remove all keys on release of super
+		if(/^Mac/.test(navigator.platform)){
+			// Chrome,Safari
+			if(/Chrome/.test(navigator.userAgent) ||
+				 /Safari/.test(navigator.userAgent)){
+				if(keyCode === '91' || keyCode === '93') { activeKeys = []; }
+			}
+			// Opera
+			if(/Opera/.test(navigator.userAgent) && keyCode == "17"){
+				activeKeys = [];
+			}
+			// Firefox
+			if(/Firefox/.test(navigator.userAgent) && keyCode == "224"){
+				activeKeys = [];
+			}
+		}
 	}
 
 
@@ -1298,6 +1338,8 @@
 		return locale;
 	}
 });
+
+
 
 },{}],4:[function(require,module,exports){
 /*
@@ -2307,9 +2349,11 @@ var FontSelect = Select.$extend({
 
     // Constructor
     __init__: function(params) {
+        var params = params || {};
         this._fonts = [];
         this.$super(params);
         if (this.fonts.length == 0) this.fonts = ["sans-serif", "serif", "monospace"];
+        this.value = (params.value !== undefined) ? params.value : "sans-serif";
     },
 
 
@@ -2342,15 +2386,6 @@ var FontSelect = Select.$extend({
     },
 
     /**
-     * The field value.
-     *
-     * @property value
-     * @type String (maybe)
-     * @default "sans-serif"
-     */
-    _value: "sans-serif",
-
-    /**
      * The placeholder displayed if nothing is selected.
      *
      * @property Placeholder
@@ -2379,6 +2414,21 @@ var FontSelect = Select.$extend({
         item.html.style.fontFamily = fontName;
         this.addChild(item);
         this._fonts.push(fontName);
+    },
+
+
+    // ====== Private methods ======
+
+
+    /**
+     * Build the widget HTML.
+     *
+     * @method _buildHtml
+     * @private
+     */
+    _buildHtml: function() {
+        this.$super();
+        this.__html.select.className += " photonui-fontselect";
     }
 });
 
@@ -2453,6 +2503,7 @@ var PopupMenu = PopupWindow.$extend({
         setChildName:     Menu.prototype.setChildName,
         getChild:         Menu.prototype.getChild,
         setChild:         Menu.prototype.setChild,
+        _iconVisible:     Menu.prototype._iconVisible,
         isIconVisible:    Menu.prototype.isIconVisible,
         setIconVisible:   Menu.prototype.setIconVisible,
         addChild:         Menu.prototype.addChild,
@@ -2567,17 +2618,19 @@ var Select = Widget.$extend({
 
     // Constructor
     __init__: function(params) {
+        var params = params || {};
+
         // Attach popup & special mixin
         this.__popupMenu = new PopupMenu({
             maxHeight: 300,
             className: "photonui-select-popup",
+            iconVisible: false
         });
-        this.__popupMenu.iconVisible = false;
 
         this._registerWEvents(["value-changed"]);
         this.$super(params);
 
-        this._updateProperties(["value"]);
+        this._updateProperties(["value", "iconVisible"]);
         this._bindEvent("popup", this.html, "click", this.__onClick.bind(this));
 
         this.setValue(params.value || this.value, true);
@@ -2705,8 +2758,9 @@ var Select = Widget.$extend({
      * @type Number
      * @default: null (no minimum)
      */
+    _minWidthDefined: false,
     getPopupMinWidth: function () { return this.__popupMenu.getMinWidth(); },
-    setPopupMinWidth: function (p) { this.__popupMenu.setMinWidth(p); },
+    setPopupMinWidth: function (p) { this._minWidthDefined = true ; this.__popupMenu.setMinWidth(p); },
 
     /**
      * Maximum height of the popup container node.
@@ -2764,7 +2818,15 @@ var Select = Widget.$extend({
      * @default: false
      */
     isIconVisible: function () { return this.__popupMenu.isIconVisible(); },
-    setIconVisible: function (p) { this.__popupMenu.setIconVisible(p); },
+    setIconVisible: function (p) {
+        if (!p) {
+            this.addClass("photonui-select-noicon");
+        }
+        else {
+            this.removeClass("photonui-select-noicon");
+        }
+        this.__popupMenu.setIconVisible(p);
+    },
 
     /**
      * Html outer element of the widget (if any).
@@ -2863,6 +2925,9 @@ var Select = Widget.$extend({
      * @param event
      */
     __onClick: function(event) {
+        if (!this._minWidthDefined) {
+            this.popupMinWidth = this.offsetWidth;
+        }
         this.__popupMenu.popupWidget(this);
     },
 
@@ -3511,7 +3576,7 @@ module.exports = Container;
  * @submodule Container
  * @namespace photonui
  */
- 
+
 var Helpers = require("../helpers.js");
 var Widget = require("../widget.js");
 var Window = require("./window.js");
@@ -3531,6 +3596,12 @@ var Dialog = Window.$extend({
     __init__: function(params) {
         this._buttonsNames = [];
         this.$super(params);
+
+        // Force to update the parent of the buttons
+        var buttons = this.buttons;
+        for (var i=0 ; i<buttons.length ; i++) {
+            buttons[i]._parentName = this.name;
+        }
     },
 
 
@@ -3586,8 +3657,10 @@ var Dialog = Window.$extend({
      */
     getButtons: function() {
         var buttons = [];
+        var widget;
         for (var i=0 ; i<this._buttonsNames.length ; i++) {
-            buttons.push(Widget.getWidget(this._buttonsNames[i]));
+            widget = Widget.getWidget(this._buttonsNames[i]);
+            if (widget instanceof Widget) buttons.push(widget);
         }
         return buttons;
     },
@@ -3646,6 +3719,7 @@ var Dialog = Window.$extend({
 
     // Alias needed for photonui.Widget.unparent()
     removeChild: function() {
+        this.$super.apply(this, arguments);
         this.removeButton.apply(this, arguments);
     },
 
@@ -3690,7 +3764,7 @@ var Dialog = Window.$extend({
      */
     _buildHtml: function() {
         this.$super();
-        this.addClass("photonui-dialog");
+        this.__html["window"].className += " photonui-dialog";
 
         this.__html.buttons = document.createElement("div");
         this.__html.buttons.className = "photonui-dialog-buttons";
@@ -7217,17 +7291,6 @@ var Slider = NumericField.$extend({
         return this.__html.outer;
     },
 
-    // Update the slider when setting the value...
-    setValue: function(value) {
-        this.$super(value);
-
-        var v = value - this.min;
-        var m = this.max - this.min;
-        var p = Math.min(Math.max(v/m, 0), 1);
-        var w = this.__html.slider.offsetWidth - this.__html.grip.offsetWidth;
-        this.__html.grip.style.left = Math.floor(p*w) + "px";
-    },
-
 
     //////////////////////////////////////////
     // Methods                              //
@@ -7236,6 +7299,20 @@ var Slider = NumericField.$extend({
 
     // ====== Private methods ======
 
+
+    /**
+     * Update the value in the html field.
+     *
+     * @method _updateFieldValue
+     * @private
+     */
+    _updateFieldValue: function() {
+        this.$super();
+        var v = this.value - this.min;
+        var m = this.max - this.min;
+        var p = Math.min(Math.max(v/m, 0), 1);
+        this.__html.grip.style.left = "calc(" + Math.floor(p*100) + "% - " + Math.floor(this.__html.grip.offsetWidth*p) + "px)";
+    },
 
     /**
      * Build the widget HTML.
@@ -8443,10 +8520,11 @@ var GridLayout = Layout.$extend({
 
     setVerticalSpacing: function(verticalSpacing) {
         this._verticalSpacing = verticalSpacing;
-        this._updatingLayout = true;
-        this._updateSpacing();
-        this._updatingLayout = false;
-        this._sizingHack();
+        //this._updatingLayout = true;
+        //this._updateSpacing();
+        //this._updatingLayout = false;
+        //this._sizingHack();
+        this._updateLayout();
     },
 
     /**
@@ -8464,10 +8542,11 @@ var GridLayout = Layout.$extend({
 
     setHorizontalSpacing: function(horizontalSpacing) {
         this._horizontalSpacing = horizontalSpacing;
-        this._updatingLayout = true;
-        this._updateSpacing();
-        this._updatingLayout = false;
-        this._sizingHack();
+        //this._updatingLayout = true;
+        //this._updateSpacing();
+        //this._updatingLayout = false;
+        //this._sizingHack();
+        this._updateLayout();
     },
 
     /**
@@ -8597,6 +8676,18 @@ var GridLayout = Layout.$extend({
                 if (child) {
                     div.appendChild(child.w.html);
 
+                    // Spacing exceptions
+                    var horizontalSpacing = this.horizontalSpacing;
+                    var verticalSpacing = this.verticalSpacing;
+                    if (x+child.o.cols >= gridWidth) {
+                        td.className += " photonui-gridlayout-lastcol";
+                        verticalSpacing = 0;
+                    }
+                    if (y+child.o.rows >= gridHeight) {
+                        td.className += " photonui-gridlayout-lastrow";
+                        horizontalSpacing = 0;
+                    }
+
                     // layout options: vertical/horizontal Align
                     td.className += " photonui-layout-verticalalign-" + child.o.verticalAlign;
                     td.className += " photonui-layout-horizontalalign-" + child.o.horizontalAlign;
@@ -8604,29 +8695,29 @@ var GridLayout = Layout.$extend({
                     // layout options: *width
                     if (child.o.minWidth !== null) {
                         div.style.minWidth = child.o.minWidth + "px";
-                        td.style.minWidth = child.o.minWidth + "px";
+                        td.style.minWidth = (child.o.minWidth + verticalSpacing) + "px";
                     }
                     if (child.o.maxWidth !== null) {
                         div.style.maxWidth = child.o.maxWidth + "px";
-                        td.style.maxWidth = child.o.maxWidth + "px";
+                        td.style.maxWidth = (child.o.maxWidth + verticalSpacing) + "px";
                     }
                     if (child.o.width !== null) {
                         div.style.width = child.o.width + "px";
-                        td.style.width = child.o.width + "px";
+                        td.style.width = (child.o.width + verticalSpacing) + "px";
                     }
 
                     // layout options: *height
                     if (child.o.minHeight !== null) {
                         div.style.minHeight = child.o.minHeight + "px";
-                        td.style.minHeight = child.o.minHeight + "px";
+                        td.style.minHeight = (child.o.minHeight + horizontalSpacing) + "px";
                     }
                     if (child.o.maxHeight !== null) {
                         div.style.maxHeight = child.o.maxHeight + "px";
-                        td.style.maxHeight = child.o.maxHeight + "px";
+                        td.style.maxHeight = (child.o.maxHeight + horizontalSpacing) + "px";
                     }
                     if (child.o.height !== null) {
                         div.style.height = child.o.height + "px";
-                        td.style.height = child.o.height + "px";
+                        td.style.height = (child.o.height + horizontalSpacing) + "px";
                     }
 
                     // rowspan / colspan
@@ -8640,10 +8731,6 @@ var GridLayout = Layout.$extend({
                             }
                         }
                     }
-
-                    // Spacing
-                    if (x+child.o.cols >= gridWidth) td.className += " photonui-gridlayout-lastcol";
-                    if (y+child.o.rows >= gridHeight) td.className += " photonui-gridlayout-lastrow";
 
                 }
             }
@@ -8861,22 +8948,37 @@ var GridLayout = Layout.$extend({
         }
 
         function _hack() {
+            function _size(node) {
+                var tdHeight;
+                if (node.style.minHeight && node.style.minHeight == node.style.maxHeight) {
+                    tdHeight = parseFloat(node.style.minHeight);
+                }
+                else if (node.classList.contains("photonui-gridlayout-lastrow")) {
+                    tdHeight = node.offsetHeight;
+                }
+                else {
+                    tdHeight = node.offsetHeight;
+                }
+                node.style.height = tdHeight + "px";
+            }
+
             var nodes = this.__html.outerbox.querySelectorAll("#" + this.name + " > table > tbody > tr > td");
+
+            // 1st pass -> height: auto
             for (var i=0 ; i<nodes.length ; i++) {
                 nodes[i].style.height = "auto";
             }
-            var tdHeight;
+
+            // 2nd pass -> fixed height for all td where rowspan = 1
             for (var i=0 ; i<nodes.length ; i++) {
-                if (nodes[i].style.minHeight && nodes[i].style.minHeight == nodes[i].style.maxHeight) {
-                    tdHeight = parseFloat(nodes[i].style.minHeight);
-                }
-                else if (nodes[i].classList.contains("photonui-gridlayout-lastrow")) {
-                    tdHeight = nodes[i].offsetHeight;
-                }
-                else {
-                    tdHeight = nodes[i].offsetHeight - this.verticalSpacing;
-                }
-                nodes[i].style.height = tdHeight + "px";
+                if (nodes[i].rowSpan && nodes[i].rowSpan > 1) continue;
+                _size(nodes[i]);
+            }
+
+            // 3rd pass -> fixed height for all td where rowspan > 1
+            for (var i=0 ; i<nodes.length ; i++) {
+                if ((!nodes[i].rowSpan) || nodes[i].rowSpan <= 1) continue;
+                _size(nodes[i]);
             }
 
             this._updatingLayout = false;
@@ -9007,8 +9109,10 @@ var Layout = Container.$extend({
      */
     getChildren: function() {
         var children = [];
+        var widget;
         for (var i=0 ; i<this._childrenNames.length ; i++) {
-            children.push(Widget.getWidget(this._childrenNames[i]));
+            widget = Widget.getWidget(this._childrenNames[i]);
+            if (widget instanceof Widget) children.push(widget);
         }
         return children;
     },
@@ -9223,10 +9327,10 @@ var Menu = Layout.$extend({
     setIconVisible: function(iconVisible) {
         this._iconVisible = iconVisible;
         if (iconVisible) {
-            this.removeClass("photonui-menu-noicon");
+            this.__html.outer.classList.remove("photonui-menu-noicon");
         }
         else {
-            this.addClass("photonui-menu-noicon");
+            this.__html.outer.classList.add("photonui-menu-noicon");
         }
     },
 
@@ -12523,7 +12627,16 @@ var Label = Widget.$extend({
     setText: function(text) {
         this._text = text;
         photonui.Helpers.cleanNode(this.__html.label);
-        this.__html.label.appendChild(document.createTextNode(text));
+
+        var lines = text.split("\n");
+
+        for (var i=0 ; i<lines.length ; i++) {
+            this.__html.label.appendChild(document.createTextNode(lines[i]));
+            if (i<lines.length-1) {
+                this.__html.label.appendChild(document.createElement("br"));
+            }
+        }
+
     },
 
     /**
@@ -12577,6 +12690,9 @@ var Label = Widget.$extend({
                         Helpers.escapeHtml(forInputName)
                 );
             }
+        }
+        else {
+            this.__html.label.removeAttribute("for");
         }
     },
 

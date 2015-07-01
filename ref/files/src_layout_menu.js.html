@@ -216,10 +216,10 @@ var Menu = Layout.$extend({
     setIconVisible: function(iconVisible) {
         this._iconVisible = iconVisible;
         if (iconVisible) {
-            this.removeClass(&quot;photonui-menu-noicon&quot;);
+            this.__html.outer.classList.remove(&quot;photonui-menu-noicon&quot;);
         }
         else {
-            this.addClass(&quot;photonui-menu-noicon&quot;);
+            this.__html.outer.classList.add(&quot;photonui-menu-noicon&quot;);
         }
     },
 

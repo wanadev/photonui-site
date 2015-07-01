@@ -152,67 +152,78 @@
     <p>Manage advanced mouse events on Widgets or HTMLElements.</p>
 <p>wEvents:</p>
 <ul>
-<li><p>mouse-event:</p>
+<li>
+<p>mouse-event:</p>
 <ul>
 <li>description: Called for <em>ALL</em> mouse events.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>mouse-down:</p>
+<li>
+<p>mouse-down:</p>
 <ul>
 <li>description: Mouse button pressed.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>mouse-up:</p>
+<li>
+<p>mouse-up:</p>
 <ul>
 <li>description: Mouse button released.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>click:</p>
+<li>
+<p>click:</p>
 <ul>
 <li>description: Click...</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>double-click:</p>
+<li>
+<p>double-click:</p>
 <ul>
 <li>description: Double click...</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>drag-start:</p>
+<li>
+<p>drag-start:</p>
 <ul>
 <li>description: Start dragging.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>dragging:</p>
+<li>
+<p>dragging:</p>
 <ul>
 <li>description: dragging.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>drag-end:</p>
+<li>
+<p>drag-end:</p>
 <ul>
 <li>description: Stop dragging.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>mouse-move:</p>
+<li>
+<p>mouse-move:</p>
 <ul>
 <li>description: Mouse move on the element.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>scroll-up:</p>
+<li>
+<p>scroll-up:</p>
 <ul>
 <li>description: Scroll up.</li>
 <li>callback:    function(manager, mstate)</li>
 </ul>
 </li>
-<li><p>scroll-down:</p>
+<li>
+<p>scroll-down:</p>
 <ul>
 <li>description: Scroll down.</li>
 <li>callback:    function(manager, mstate)</li>
@@ -220,7 +231,7 @@
 </li>
 </ul>
 <p>mstate:</p>
-<p>  A snapshot of the mouse state ath the moment when the event occured.</p>
+<p>A snapshot of the mouse state ath the moment when the event occured.</p>
 <pre class="code prettyprint"><code>{
     event: &lt;Object&gt;,       // The original js event
     action: &lt;String&gt;,      // The event name (mouse-down/up/move, click, double-click, drag-start/end, dragging, scroll-up/down)
@@ -234,79 +245,79 @@
     btnMiddle: &lt;Boolean&gt;,  // Current state of the mouse middle button.
     btnRight: &lt;Boolean&gt;,   // Current state of the mouse right button.
     button: &lt;String&gt;       // The button that triggered the last event (none, &quot;left&quot;, &quot;middle&quot;, &quot;right&quot;).
-}
-</code></pre>
+}</code></pre>
+
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_photonui.MouseManager" class="method item">
-            <h3 class="name"><code>photonui.MouseManager</code></h3>
-        
-                <div class="args">
-                    <span class="paren">(</span><ul class="args-list inline commas">
-                        <li class="arg">
-                                <code>element</code>
-                        </li>
-                        <li class="arg">
-                                <code>element</code>
-                        </li>
-                    </ul><span class="paren">)</span>
-                </div>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/src_nonvisual_mousemanager.js.html#l43"><code>src&#x2F;nonvisual&#x2F;mousemanager.js:43</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-                <div class="params">
-                    <h4>Parameters:</h4>
-        
-                    <ul class="params-list">
-                        <li class="param">
-                                <code class="param-name">element</code>
-                                <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
-        
-        
-                            <div class="param-description">
-                                <p>Any PhotonUI Widget (optional).</p>
-        
-                            </div>
-        
-                        </li>
-                        <li class="param">
-                                <code class="param-name">element</code>
-                                <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
-        
-        
-                            <div class="param-description">
-                                <p>Any HTML element (optional).</p>
-        
-                            </div>
-        
-                        </li>
-                    </ul>
-                </div>
-        
-        
-        
+<div id="method_photonui.MouseManager" class="method item">
+    <h3 class="name"><code>photonui.MouseManager</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>element</code>
+                </li>
+                <li class="arg">
+                        <code>element</code>
+                </li>
+            </ul><span class="paren">)</span>
         </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_mousemanager.js.html#l43"><code>src&#x2F;nonvisual&#x2F;mousemanager.js:43</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+
+
+                    <div class="param-description">
+                        <p>Any PhotonUI Widget (optional).</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+
+
+                    <div class="param-description">
+                        <p>Any HTML element (optional).</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
     </div>
 
 <div id="classdocs" class="tabview">
@@ -897,8 +908,7 @@
     </div>
 
     <div class="description">
-        <p>Javascript event binding (for internal use).</p>
-
+        Javascript event binding (for internal use).
     </div>
 
         <div class="params">
@@ -911,8 +921,7 @@
 
 
                     <div class="param-description">
-                        <p>An unique id for the event.</p>
-
+                        An unique id for the event.
                     </div>
 
                 </li>
@@ -922,8 +931,7 @@
 
 
                     <div class="param-description">
-                        <p>The element on which the event will be bind.</p>
-
+                        The element on which the event will be bind.
                     </div>
 
                 </li>
@@ -933,8 +941,7 @@
 
 
                     <div class="param-description">
-                        <p>The event name (e.g. &quot;mousemove&quot;, &quot;click&quot;,...).</p>
-
+                        The event name (e.g. "mousemove", "click",...).
                     </div>
 
                 </li>
@@ -944,8 +951,7 @@
 
 
                     <div class="param-description">
-                        <p>The function that will be called when the event occured.</p>
-
+                        The function that will be called when the event occured.
                     </div>
 
                 </li>
@@ -988,10 +994,10 @@
     </div>
 
     <div class="description">
-        <p>Call all callbacks for the given wEvent.</p>
-<p>NOTE: the first argument passed to the callback is the current widget.
-NOTE²: if the thisArg of the callback is null, this will be binded to the current widget.</p>
+        Call all callbacks for the given wEvent.
 
+NOTE: the first argument passed to the callback is the current widget.
+NOTE²: if the thisArg of the callback is null, this will be binded to the current widget.
     </div>
 
         <div class="params">
@@ -1004,8 +1010,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The widget event.</p>
-
+                        The widget event.
                     </div>
 
                 </li>
@@ -1015,8 +1020,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>Parametters that will be sent to the callbacks.</p>
-
+                        Parametters that will be sent to the callbacks.
                     </div>
 
                 </li>
@@ -1098,8 +1102,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Register available wEvent.</p>
-
+        Register available wEvent.
     </div>
 
         <div class="params">
@@ -1221,8 +1224,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Unbind javascript event.</p>
-
+        Unbind javascript event.
     </div>
 
         <div class="params">
@@ -1235,8 +1237,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The id of the event.</p>
-
+                        The id of the event.
                     </div>
 
                 </li>
@@ -1308,8 +1309,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Force the update of the given properties.</p>
-
+        Force the update of the given properties.
     </div>
 
         <div class="params">
@@ -1322,8 +1322,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The properties to update.</p>
-
+                        The properties to update.
                     </div>
 
                 </li>
@@ -1356,8 +1355,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Destroy the class.</p>
-
+        Destroy the class.
     </div>
 
 
@@ -1402,10 +1400,11 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Register a callback for any PhotonUI/Widget event (called wEvent).</p>
-<p>Callback signature:</p>
-<pre class="code prettyprint"><code>function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
-</code></pre>
+        Register a callback for any PhotonUI/Widget event (called wEvent).
+
+Callback signature:
+
+    function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
     </div>
 
         <div class="params">
@@ -1418,8 +1417,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>An unique id for the callback.</p>
-
+                        An unique id for the callback.
                     </div>
 
                 </li>
@@ -1429,8 +1427,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>the PhotonUI/Widget event name.</p>
-
+                        the PhotonUI/Widget event name.
                     </div>
 
                 </li>
@@ -1440,8 +1437,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The callback function.</p>
-
+                        The callback function.
                     </div>
 
                 </li>
@@ -1451,8 +1447,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The value of this (optionnal, default = current widget).</p>
-
+                        The value of this (optionnal, default = current widget).
                     </div>
 
                 </li>
@@ -1491,8 +1486,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Remove a registered callback.</p>
-
+        Remove a registered callback.
     </div>
 
         <div class="params">
@@ -1505,8 +1499,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The id of the callback.</p>
-
+                        The id of the callback.
                     </div>
 
                 </li>
@@ -1540,8 +1533,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references to registered callbacks.</p>
-                    
+                            Object containing references to registered callbacks.
                         </div>
                     
                     
@@ -1593,9 +1585,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references javascript events binding (for widget
-                    internal use).</p>
-                    
+                            Object containing references javascript events binding (for widget
+                    internal use).
                         </div>
                     
                     
@@ -1866,7 +1857,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="description">
                             <p>The HTML Element on which the events are binded.</p>
                     <p>NOTE: If a photonui.Widget object is assigned to this property,
-                          its HTML Element will be automatically assigned to the property instead.</p>
+                    its HTML Element will be automatically assigned to the property instead.</p>
                     
                         </div>
                     
