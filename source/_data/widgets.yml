@@ -47,7 +47,8 @@
   url: /PhotonUI/ref/classes/photonui.FluidLayout.html
 
 - name: FontSelect
-  url: /PhotonUI/ref/classes/photonui.FontSelect.html
+  image: doc/widgets/fontselect.png
+  url: doc/widgets/fontselect.html
 
 - name: GridLayout
   url: /PhotonUI/ref/classes/photonui.GridLayout.html

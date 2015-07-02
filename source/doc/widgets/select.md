@@ -12,6 +12,7 @@ demo_script: doc/widgets/select.js
 
 ```javascript
 var select = new photonui.Select({
+    iconVisible: true,
     children: [
         new photonui.MenuItem({
             value: "text-file",
