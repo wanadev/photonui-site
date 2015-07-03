@@ -122,7 +122,8 @@
   url: doc/widgets/translation.html
 
 - name: ToggleButton
-  url: /PhotonUI/ref/classes/photonui.ToggleButton.html
+  image: doc/widgets/togglebutton.png
+  url: doc/widgets/togglebutton.html
 
 - name: Viewport
   url: /PhotonUI/ref/classes/photonui.Viewport.html
