@@ -27,7 +27,8 @@
   url: /PhotonUI/ref/classes/photonui.ColorPalette.html
 
 - name: ColorPicker
-  url: /PhotonUI/ref/classes/photonui.ColorPicker.html
+  image: doc/widgets/colorpicker.png
+  url: doc/widgets/colorpicker.html
 
 - name: ColorPickerDialog
   url: /PhotonUI/ref/classes/photonui.ColorPickerDialog.html
