@@ -18,12 +18,15 @@
   url: doc/widgets/checkbox.html
 
 - name: Color
+  image: doc/widgets/color.png
   url: /PhotonUI/ref/classes/photonui.Color.html
 
 - name: ColorButton
+  image: doc/widgets/colorbutton.png
   url: /PhotonUI/ref/classes/photonui.ColorButton.html
 
 - name: ColorPalette
+  image: doc/widgets/colorpalette.png
   url: /PhotonUI/ref/classes/photonui.ColorPalette.html
 
 - name: ColorPicker
@@ -31,6 +34,7 @@
   url: doc/widgets/colorpicker.html
 
 - name: ColorPickerDialog
+  image: doc/widgets/colorpickerdialog.png
   url: /PhotonUI/ref/classes/photonui.ColorPickerDialog.html
 
 - name: Dialog
