@@ -102,9 +102,18 @@
   image: doc/widgets/spriteicon.png
   url: doc/widgets/spriteicon.html
 
+- name: SubMenuItem
+  url: /PhotonUI/ref/classes/photonui.SubMenuItem.html
+
 - name: Switch
   image: doc/widgets/switch.png
   url: doc/widgets/switch.html
+
+- name: TabItem
+  url: /PhotonUI/ref/classes/photonui.TabItem.html
+
+- name: TabLayout
+  url: /PhotonUI/ref/classes/photonui.TabLayout.html
 
 - name: Text
   image: doc/widgets/text.png
