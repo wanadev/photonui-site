@@ -1,5 +1,6 @@
 - name: AccelManager
-  url: /PhotonUI/ref/classes/photonui.AccelManager.html
+  image: doc/widgets/accelmanager.png
+  url: doc/widgets/accelmanager.html
 
 - name: BoxLayout
   image: doc/widgets/boxlayout.png
