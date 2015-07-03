@@ -110,7 +110,8 @@
   url: doc/widgets/text.html
 
 - name: TextAreaField
-  url: /PhotonUI/ref/classes/photonui.TextAreaField.html
+  image: doc/widgets/textareafield.png
+  url: doc/widgets/textareafield.html
 
 - name: TextField
   image: doc/widgets/textfield.png
