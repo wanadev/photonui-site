@@ -27,7 +27,7 @@
 
 - name: ColorPalette
   image: doc/widgets/colorpalette.png
-  url: /PhotonUI/ref/classes/photonui.ColorPalette.html
+  url: doc/widgets/colorpalette.html
 
 - name: ColorPicker
   image: doc/widgets/colorpicker.png
