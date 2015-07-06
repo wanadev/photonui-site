@@ -35,7 +35,7 @@
 
 - name: ColorPickerDialog
   image: doc/widgets/colorpickerdialog.png
-  url: /PhotonUI/ref/classes/photonui.ColorPickerDialog.html
+  url: doc/widgets/colorpickerdialog.html
 
 - name: Dialog
   image: doc/widgets/dialog.png
