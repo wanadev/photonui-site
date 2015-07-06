@@ -19,7 +19,7 @@
 
 - name: Color
   image: doc/widgets/color.png
-  url: /PhotonUI/ref/classes/photonui.Color.html
+  url: doc/widgets/color.html
 
 - name: ColorButton
   image: doc/widgets/colorbutton.png
