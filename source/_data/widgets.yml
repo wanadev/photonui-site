@@ -114,10 +114,12 @@
   url: doc/widgets/switch.html
 
 - name: TabItem
-  url: /PhotonUI/ref/classes/photonui.TabItem.html
+  image: doc/widgets/tabitem.png
+  url: doc/widgets/tabitem.html
 
 - name: TabLayout
-  url: /PhotonUI/ref/classes/photonui.TabLayout.html
+  image: doc/widgets/tablayout.png
+  url: doc/widgets/tablayout.html
 
 - name: Text
   image: doc/widgets/text.png
