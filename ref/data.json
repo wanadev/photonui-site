@@ -2957,7 +2957,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 95,
+            "line": 105,
             "description": "The submenu widget.",
             "itemtype": "property",
             "name": "menu",
@@ -2970,7 +2970,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 121,
+            "line": 131,
             "itemtype": "method",
             "name": "__onToggleFold",
             "access": "private",
@@ -2982,7 +2982,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 129,
+            "line": 139,
             "itemtype": "method",
             "name": "__onItemClicked",
             "access": "private",

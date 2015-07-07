@@ -70,7 +70,7 @@
 
 - name: Menu
   image: doc/widgets/menu.png
-  url: /PhotonUI/ref/classes/photonui.Menu.html
+  url: doc/widgets/menu.html
 
 - name: MenuItem
   image: doc/widgets/menuitem.png
