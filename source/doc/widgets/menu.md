@@ -23,7 +23,12 @@ var menu = new photonui.Menu({
     children: [
         new photonui.MenuItem({
             text: "Menu Item 1",
-            icon: new photonui.FAIcon("fa-paper-plane")
+            icon: new photonui.FAIcon("fa-paper-plane"),
+            callbacks: {
+                click: function(widget, event) {
+                    alert("You clicked on me!");
+                }
+            }
         }),
         new photonui.MenuItem({
             text: "Menu Item 2",

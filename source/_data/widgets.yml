@@ -74,7 +74,7 @@
 
 - name: MenuItem
   image: doc/widgets/menuitem.png
-  url: /PhotonUI/ref/classes/photonui.MenuItem.html
+  url: doc/widgets/menuitem.html
 
 - name: MouseManager
   url: /PhotonUI/ref/classes/photonui.MouseManager.html
