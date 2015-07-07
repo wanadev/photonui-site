@@ -69,9 +69,11 @@
   url: doc/widgets/label.html
 
 - name: Menu
+  image: doc/widgets/menu.png
   url: /PhotonUI/ref/classes/photonui.Menu.html
 
 - name: MenuItem
+  image: doc/widgets/menuitem.png
   url: /PhotonUI/ref/classes/photonui.MenuItem.html
 
 - name: MouseManager
@@ -82,9 +84,11 @@
   url: doc/widgets/numericfield.html
 
 - name: PopupMenu
+  image: doc/widgets/popupmenu.png
   url: /PhotonUI/ref/classes/photonui.PopupMenu.html
 
 - name: PopupWindow
+  image: doc/widgets/popupwindow.png
   url: /PhotonUI/ref/classes/photonui.PopupWindow.html
 
 - name: ProgressBar
@@ -108,6 +112,7 @@
   url: doc/widgets/spriteicon.html
 
 - name: SubMenuItem
+  image: doc/widgets/submenuitem.png
   url: /PhotonUI/ref/classes/photonui.SubMenuItem.html
 
 - name: Switch
