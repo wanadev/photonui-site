@@ -85,7 +85,7 @@
 
 - name: PopupMenu
   image: doc/widgets/popupmenu.png
-  url: /PhotonUI/ref/classes/photonui.PopupMenu.html
+  url: doc/widgets/popupmenu.html
 
 - name: PopupWindow
   image: doc/widgets/popupwindow.png
