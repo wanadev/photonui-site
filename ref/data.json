@@ -1735,7 +1735,7 @@
             "namespace": "photonui",
             "file": "src/widget.js",
             "line": 45,
-            "description": "Base class for all PhotonUI widgets.\n\nwEvents:\n\n  * show:\n     - description: called when the widget is displayed.\n     - callback:    function(widget)\n\n  * hidden:\n     - description: called when the widget is hidden.\n     - callback:    function(widget)",
+            "description": "Base class for all PhotonUI widgets.\n\nwEvents:\n\n  * show:\n     - description: called when the widget is displayed (a change in the parent's visibility can also trigger this event).\n     - callback:    function(widget)\n\n  * hide:\n     - description: called when the widget is hidden (a change in the parent's visibility can also trigger this event).\n     - callback:    function(widget)",
             "is_constructor": 1,
             "extends": "photonui.Base",
             "params": [
@@ -2604,7 +2604,27 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 184,
+            "line": 176,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "photonui.Container",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/container.js",
+            "line": 199,
             "description": "Remove the given child.",
             "itemtype": "method",
             "name": "removeChild",
@@ -2622,7 +2642,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 196,
+            "line": 211,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2725,6 +2745,26 @@
             "name": "_buildHtml",
             "access": "private",
             "tagname": "",
+            "class": "photonui.Dialog",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/dialog.js",
+            "line": 233,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
             "class": "photonui.Dialog",
             "module": "PhotonUI",
             "submodule": "Container",
@@ -4932,6 +4972,26 @@
         {
             "file": "src/layout/gridlayout.js",
             "line": 212,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "photonui.GridLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/gridlayout.js",
+            "line": 227,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4944,7 +5004,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 229,
+            "line": 244,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -4957,7 +5017,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 380,
+            "line": 395,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -4981,7 +5041,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 518,
+            "line": 533,
             "description": "Update the spacing between widgets",
             "itemtype": "method",
             "name": "_updateSpacing",
@@ -4994,7 +5054,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 532,
+            "line": 547,
             "description": "Hack to get thing working with Gecko and Trident.\n\nMSIE 11:\n\n  * The hack fixes all the issues,\n\nMSIE 10:\n\n  * There is issues with rowspan\n  * The dynamic resizing does not works\n\nFirefox:\n\n  * There is some minor issues with rowspan",
             "itemtype": "method",
             "name": "_sizingHack",
@@ -5109,7 +5169,27 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 239,
+            "line": 233,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "photonui.Layout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/layout.js",
+            "line": 256,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -7426,7 +7506,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 253,
+            "line": 254,
             "description": "Unbind javascript event.",
             "itemtype": "method",
             "name": "_unbindEvent",
@@ -7445,7 +7525,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 269,
+            "line": 271,
             "description": "Register available wEvent.",
             "itemtype": "method",
             "name": "_registerWEvents",
@@ -7464,7 +7544,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 285,
+            "line": 287,
             "description": "Call all callbacks for the given wEvent.\n\nNOTE: the first argument passed to the callback is the current widget.\nNOTE²: if the thisArg of the callback is null, this will be binded to the current widget.",
             "itemtype": "method",
             "name": "_callCallbacks",
@@ -7619,7 +7699,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 188,
+            "line": 187,
             "description": "Tooltip.",
             "itemtype": "property",
             "name": "tooltip",
@@ -7631,7 +7711,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 211,
+            "line": 210,
             "description": "The name of the managed contextual menu (`photonui.PopupWindow().name`).",
             "itemtype": "property",
             "name": "contextMenuName",
@@ -7643,7 +7723,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 228,
+            "line": 227,
             "description": "The managed contextual menu.",
             "itemtype": "property",
             "name": "contextMenu",
@@ -7655,7 +7735,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 249,
+            "line": 248,
             "description": "Layout options.",
             "itemtype": "property",
             "name": "layoutOptions",
@@ -7667,7 +7747,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 268,
+            "line": 267,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7680,7 +7760,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 281,
+            "line": 280,
             "description": "Absolute position of the widget on the page.\n\n`{x: Number, y: Number}`",
             "itemtype": "property",
             "name": "absolutePosition",
@@ -7692,7 +7772,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 297,
+            "line": 296,
             "description": "Widget width (outer HTML element).",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -7704,7 +7784,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 311,
+            "line": 310,
             "description": "Widget height (outer HTML element).",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -7716,7 +7796,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 329,
+            "line": 328,
             "description": "Object containing references to the widget HTML elements",
             "itemtype": "property",
             "name": "__html",
@@ -7729,7 +7809,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 347,
+            "line": 346,
             "description": "Display the widget (equivalent to widget.visible = true).",
             "itemtype": "method",
             "name": "show",
@@ -7739,7 +7819,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 356,
+            "line": 355,
             "description": "DHide the widget (equivalent to widget.visible = false).",
             "itemtype": "method",
             "name": "hide",
@@ -7749,7 +7829,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 365,
+            "line": 364,
             "description": "Detache the widget from its parent.",
             "itemtype": "method",
             "name": "unparent",
@@ -7759,7 +7839,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 379,
+            "line": 378,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -7769,7 +7849,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 390,
+            "line": 389,
             "description": "Add a class to the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "addClass",
@@ -7786,7 +7866,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 407,
+            "line": 406,
             "description": "Remove a class from the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "removeClass",
@@ -7803,7 +7883,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 429,
+            "line": 428,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7815,7 +7895,26 @@
         },
         {
             "file": "src/widget.js",
-            "line": 445,
+            "line": 438,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 461,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -7833,7 +7932,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 460,
+            "line": 476,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",

@@ -185,11 +185,11 @@ var _widgets = {};
  * wEvents:
  *
  *   * show:
- *      - description: called when the widget is displayed.
+ *      - description: called when the widget is displayed (a change in the parent&#x27;s visibility can also trigger this event).
  *      - callback:    function(widget)
  *
- *   * hidden:
- *      - description: called when the widget is hidden.
+ *   * hide:
+ *      - description: called when the widget is hidden (a change in the parent&#x27;s visibility can also trigger this event).
  *      - callback:    function(widget)
  *
  * @class Widget
@@ -308,18 +308,17 @@ var Widget = Base.$extend({
     },
 
     setVisible: function(visible) {
-        this._visible = visible;
+        this._visible = !!visible;
         if (!this.html) {
             return;
         }
-        if (this.visible) {
+        if (visible) {
             this.html.style.display = &quot;&quot;;
-            this._callCallbacks(&quot;show&quot;);
         }
         else {
             this.html.style.display = &quot;none&quot;;
-            this._callCallbacks(&quot;hide&quot;);
         }
+        this._visibilityChanged();
     },
 
     /**
@@ -571,6 +570,23 @@ var Widget = Base.$extend({
      */
     _buildHtml: function() {
         console.warn(&quot;_buildHtml() method not implemented for this widget.&quot;);
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        var visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (visibility) {
+            this._callCallbacks(&quot;show&quot;);
+        }
+        else {
+            this._callCallbacks(&quot;hide&quot;);
+        }
     },
 
 

@@ -11,7 +11,8 @@
   url: doc/widgets/button.html
 
 - name: Canvas
-  url: /PhotonUI/ref/classes/photonui.Canvas.html
+  image: doc/widgets/canvas.png
+  url: doc/widgets/canvas.html
 
 - name: CheckBox
   image: doc/widgets/checkbox.png

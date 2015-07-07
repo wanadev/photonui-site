@@ -1590,6 +1590,7 @@ var Base = Class.$extend({
      * @param {Function} callback The function that will be called when the event occured.
      */
     _bindEvent: function(id, element, evName, callback) {
+        this._unbindEvent(id);
         this.__events[id] = {
             evName: evName,
             element: element,
@@ -1610,6 +1611,7 @@ var Base = Class.$extend({
      * @param {String} id The id of the event.
      */
     _unbindEvent: function(id) {
+        if (!this.__events[id]) return;
         this.__events[id].element.removeEventListener(
                 this.__events[id].evName,
                 this.__events[id].callback,
@@ -3312,8 +3314,8 @@ var BaseWindow = Container.$extend({
         var node = Widget.e_parent || document.getElementsByTagName("body")[0];
         if (!node) return;
         this.setPosition(
-                Math.round((node.offsetWidth - this.offsetWidth) / 2),
-                Math.round((node.offsetHeight - this.offsetHeight) / 2)
+                Math.max((node.offsetWidth - this.offsetWidth) / 2, 0)|0,
+                Math.max((node.offsetHeight - this.offsetHeight) / 2, 0)|0
         );
     },
 
@@ -3509,6 +3511,21 @@ var Container = Widget.$extend({
      */
     getContainerNode: function() {
         return null;
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        var visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (this.child instanceof Widget) {
+            this.child._visibilityChanged(visibility);
+        }
+        this.$super(visibility);
     },
 
 
@@ -3777,7 +3794,24 @@ var Dialog = Window.$extend({
         this.__html.buttons = document.createElement("div");
         this.__html.buttons.className = "photonui-dialog-buttons";
         this.__html["window"].appendChild(this.__html.buttons);
-    }
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        var visibility = (visibility !== undefined) ? visibility : this.visible;
+        var buttons = this.buttons;
+        for (var i=0 ; i<buttons.length ; i++) {
+            if (!this.child instanceof Widget) continue;
+            buttons[i]._visibilityChanged(visibility);
+        }
+        this.$super(visibility);
+    },
 });
 
 module.exports = Dialog;
@@ -8590,6 +8624,21 @@ var GridLayout = Layout.$extend({
 
 
     /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        var visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (visibility) {
+            this._sizingHack();
+        }
+        this.$super(visibility);
+    },
+
+    /**
      * Build the widget HTML.
      *
      * @method _buildHtml
@@ -9232,6 +9281,23 @@ var Layout = Container.$extend({
      */
     _updateLayout: function() {
         throw "Error: you should define the _updateLayout() method when you extend a layout widget.";
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        var visibility = (visibility !== undefined) ? visibility : this.visible;
+        var children = this.children;
+        for (var i=0 ; i<children.length ; i++) {
+            if (!this.child instanceof Widget) continue;
+            children[i]._visibilityChanged(visibility);
+        }
+        this.$super(visibility);
     },
 
 
@@ -13539,11 +13605,11 @@ var _widgets = {};
  * wEvents:
  *
  *   * show:
- *      - description: called when the widget is displayed.
+ *      - description: called when the widget is displayed (a change in the parent's visibility can also trigger this event).
  *      - callback:    function(widget)
  *
- *   * hidden:
- *      - description: called when the widget is hidden.
+ *   * hide:
+ *      - description: called when the widget is hidden (a change in the parent's visibility can also trigger this event).
  *      - callback:    function(widget)
  *
  * @class Widget
@@ -13662,18 +13728,17 @@ var Widget = Base.$extend({
     },
 
     setVisible: function(visible) {
-        this._visible = visible;
+        this._visible = !!visible;
         if (!this.html) {
             return;
         }
-        if (this.visible) {
+        if (visible) {
             this.html.style.display = "";
-            this._callCallbacks("show");
         }
         else {
             this.html.style.display = "none";
-            this._callCallbacks("hide");
         }
+        this._visibilityChanged();
     },
 
     /**
@@ -13925,6 +13990,23 @@ var Widget = Base.$extend({
      */
     _buildHtml: function() {
         console.warn("_buildHtml() method not implemented for this widget.");
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        var visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (visibility) {
+            this._callCallbacks("show");
+        }
+        else {
+            this._callCallbacks("hide");
+        }
     },
 
 
