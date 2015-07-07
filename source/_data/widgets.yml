@@ -113,7 +113,7 @@
 
 - name: SubMenuItem
   image: doc/widgets/submenuitem.png
-  url: /PhotonUI/ref/classes/photonui.SubMenuItem.html
+  url: doc/widgets/submenuitem.html
 
 - name: Switch
   image: doc/widgets/switch.png
