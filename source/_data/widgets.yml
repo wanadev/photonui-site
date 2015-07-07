@@ -89,7 +89,7 @@
 
 - name: PopupWindow
   image: doc/widgets/popupwindow.png
-  url: /PhotonUI/ref/classes/photonui.PopupWindow.html
+  url: doc/widgets/popupwindow.html
 
 - name: ProgressBar
   image: doc/widgets/progressbar.png
