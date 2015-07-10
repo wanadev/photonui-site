@@ -687,7 +687,7 @@
             "module": "PhotonUI",
             "namespace": "",
             "file": "src/container/window.js",
-            "line": 45,
+            "line": 46,
             "description": "PhotonUI - Javascript Web User Interface."
         },
         "Interactive": {
@@ -1034,7 +1034,7 @@
             "submodule": "Container",
             "namespace": "photonui",
             "file": "src/container/viewport.js",
-            "line": 41,
+            "line": 42,
             "description": "Viewport.",
             "is_constructor": 1,
             "extends": "photonui.Container"
@@ -1051,7 +1051,7 @@
             "submodule": "Container",
             "namespace": "photonui",
             "file": "src/container/window.js",
-            "line": 45,
+            "line": 46,
             "description": "Window.\n\nwEvents:\n\n  * close-button-clicked:\n     - description: called when the close button was clicked.\n     - callback:    function(widget)",
             "is_constructor": 1,
             "extends": "photonui.BaseWindow"
@@ -1474,6 +1474,11 @@
                     "name": "element",
                     "description": "Any HTML element (optional).",
                     "type": "HTMLElement"
+                },
+                {
+                    "name": "params",
+                    "description": "additional params (optional).",
+                    "type": "Object"
                 }
             ]
         },
@@ -2666,7 +2671,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 110,
+            "line": 111,
             "description": "Dialog buttons widgets.",
             "itemtype": "property",
             "name": "buttons",
@@ -2679,7 +2684,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 146,
+            "line": 147,
             "description": "Add a button to the dialog.",
             "itemtype": "method",
             "name": "addButton",
@@ -2697,7 +2702,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 164,
+            "line": 165,
             "description": "Remove a button from the dialog.",
             "itemtype": "method",
             "name": "removeButton",
@@ -2715,7 +2720,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 185,
+            "line": 186,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2726,7 +2731,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 204,
+            "line": 205,
             "description": "Update dialog buttons.",
             "itemtype": "method",
             "name": "_updateButtons",
@@ -2739,7 +2744,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 218,
+            "line": 219,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2752,7 +2757,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 233,
+            "line": 234,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -2931,7 +2936,7 @@
         },
         {
             "file": "src/container/popupwindow.js",
-            "line": 161,
+            "line": 165,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2957,7 +2962,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 105,
+            "line": 109,
             "description": "The submenu widget.",
             "itemtype": "property",
             "name": "menu",
@@ -2970,7 +2975,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 131,
+            "line": 135,
             "itemtype": "method",
             "name": "__onToggleFold",
             "access": "private",
@@ -2982,7 +2987,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 139,
+            "line": 143,
             "itemtype": "method",
             "name": "__onItemClicked",
             "access": "private",
@@ -3074,7 +3079,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 66,
+            "line": 69,
             "description": "Window container node padding.",
             "itemtype": "property",
             "name": "padding",
@@ -3087,7 +3092,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 84,
+            "line": 87,
             "description": "Visibility of the vertical scrollbar.\n\n  * `true`: displayed,\n  * `false`: hidden,\n  * `null`: auto.",
             "itemtype": "property",
             "name": "verticalScrollbar",
@@ -3100,7 +3105,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 114,
+            "line": 117,
             "description": "Visibility of the horizontal scrollbar.\n\n  * `true`: displayed,\n  * `false`: hidden,\n  * `null`: auto.",
             "itemtype": "property",
             "name": "horizontalScrollbar",
@@ -3113,7 +3118,85 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 144,
+            "line": 147,
+            "description": "Minimum width.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent width\n    * null: no minimum width",
+            "itemtype": "property",
+            "name": "minWidth",
+            "type": "Number",
+            "default": "null",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 169,
+            "description": "Maximum width.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent width\n    * null: no maximum width",
+            "itemtype": "property",
+            "name": "maxWidth",
+            "type": "Number",
+            "default": "null",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 191,
+            "description": "Width.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent width\n    * null: auto",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "default": "Infinity",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 213,
+            "description": "Minimum height.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent height\n    * null: no minimum height",
+            "itemtype": "property",
+            "name": "minHeight",
+            "type": "Number",
+            "default": "null",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 235,
+            "description": "Maximum height.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent height\n    * null: no maximum height",
+            "itemtype": "property",
+            "name": "maxHeight",
+            "type": "Number",
+            "default": "null",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 257,
+            "description": "Height.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent height\n    * null: auto",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "default": "Infinity",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 279,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3127,7 +3210,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 156,
+            "line": 292,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3140,7 +3223,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 176,
+            "line": 312,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3153,7 +3236,40 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 193,
+            "line": 323,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 336,
+            "description": "HACK: set the right height.",
+            "itemtype": "method",
+            "name": "_sizingHack",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.Viewport",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/viewport.js",
+            "line": 378,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -3166,7 +3282,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 84,
+            "line": 85,
             "description": "The window title.",
             "itemtype": "property",
             "name": "title",
@@ -3179,7 +3295,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 103,
+            "line": 104,
             "description": "Determine if the window can be moved (drag & drop) by the user.",
             "itemtype": "property",
             "name": "movable",
@@ -3192,7 +3308,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 120,
+            "line": 121,
             "description": "Determine if the close button in the title bar is displayed or not.",
             "itemtype": "property",
             "name": "closeButtonVisible",
@@ -3204,7 +3320,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 146,
+            "line": 147,
             "description": "Modal window?",
             "itemtype": "property",
             "name": "modal",
@@ -3217,7 +3333,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 174,
+            "line": 175,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3230,7 +3346,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 210,
+            "line": 211,
             "description": "Bring the window to front.",
             "itemtype": "method",
             "name": "moveToFront",
@@ -3241,7 +3357,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 224,
+            "line": 225,
             "description": "Bring the window to the back.",
             "itemtype": "method",
             "name": "moveToBack",
@@ -3252,7 +3368,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 238,
+            "line": 239,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -3263,7 +3379,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 256,
+            "line": 257,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3276,7 +3392,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 286,
+            "line": 287,
             "description": "Update all the windows.",
             "itemtype": "method",
             "name": "_updateWindowList",
@@ -3289,7 +3405,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 314,
+            "line": 315,
             "description": "Start moving the window.",
             "itemtype": "method",
             "name": "_moveDragStart",
@@ -3309,7 +3425,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 332,
+            "line": 333,
             "description": "Move the window.",
             "itemtype": "method",
             "name": "_moveDragging",
@@ -3339,7 +3455,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 351,
+            "line": 352,
             "description": "Stop moving the window.",
             "itemtype": "method",
             "name": "_moveDragEnd",
@@ -3359,7 +3475,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 364,
+            "line": 365,
             "description": "Close button clicked.",
             "itemtype": "method",
             "name": "_closeButtonClicked",
@@ -3379,7 +3495,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 375,
+            "line": 376,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -4682,7 +4798,7 @@
         },
         {
             "file": "src/interactive/textfield.js",
-            "line": 100,
+            "line": 99,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4721,7 +4837,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 107,
+            "line": 106,
             "description": "Vertical padding (px).",
             "itemtype": "property",
             "name": "verticalPadding",
@@ -4734,7 +4850,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 126,
+            "line": 125,
             "description": "Horizontal padding (px).",
             "itemtype": "property",
             "name": "horizontalPadding",
@@ -4747,7 +4863,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 145,
+            "line": 144,
             "description": "Spacing between children widgets.",
             "itemtype": "property",
             "name": "spacing",
@@ -4760,7 +4876,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 195,
+            "line": 194,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4774,7 +4890,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 216,
+            "line": 215,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4787,7 +4903,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 227,
+            "line": 226,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -4800,7 +4916,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 271,
+            "line": 270,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -4864,7 +4980,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 120,
+            "line": 116,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4877,7 +4993,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 131,
+            "line": 127,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5080,7 +5196,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 107,
+            "line": 108,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -5093,7 +5209,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 161,
+            "line": 162,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -5116,7 +5232,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 180,
+            "line": 181,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -5134,7 +5250,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 195,
+            "line": 196,
             "description": "Destroy all children of the layout",
             "itemtype": "method",
             "name": "empty",
@@ -5145,7 +5261,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 209,
+            "line": 210,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -5156,7 +5272,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 223,
+            "line": 224,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5169,7 +5285,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 233,
+            "line": 234,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -5189,7 +5305,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 256,
+            "line": 257,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -5268,7 +5384,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 102,
+            "line": 101,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -5282,7 +5398,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 114,
+            "line": 113,
             "description": "Define the active tab name.",
             "itemtype": "property",
             "name": "activeTabName",
@@ -5295,7 +5411,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 146,
+            "line": 145,
             "description": "Container node padding.",
             "itemtype": "property",
             "name": "padding",
@@ -5308,7 +5424,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 164,
+            "line": 163,
             "description": "Define the active tab.",
             "itemtype": "property",
             "name": "activeTab",
@@ -5321,7 +5437,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 208,
+            "line": 207,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -5339,7 +5455,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 225,
+            "line": 224,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5352,7 +5468,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 248,
+            "line": 247,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5365,7 +5481,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 285,
+            "line": 284,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -5925,7 +6041,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 140,
+            "line": 146,
             "description": "The HTML Element on which the events are binded.\n\nNOTE: If a photonui.Widget object is assigned to this property,\n      its HTML Element will be automatically assigned to the property instead.",
             "itemtype": "property",
             "name": "element",
@@ -5938,7 +6054,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 169,
+            "line": 175,
             "description": "Minimum distance for triggering a drag-start, and maximum distance\nto consider a mouse down/up as a click.",
             "itemtype": "property",
             "name": "threshold",
@@ -5951,7 +6067,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 187,
+            "line": 193,
             "description": "X position, relative to page top-left corner.",
             "itemtype": "property",
             "name": "pageX",
@@ -5965,7 +6081,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 199,
+            "line": 205,
             "description": "Y position, relative to page top-left corner.",
             "itemtype": "property",
             "name": "pageY",
@@ -5979,7 +6095,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 211,
+            "line": 217,
             "description": "X position, relative to the HTML element.",
             "itemtype": "property",
             "name": "x",
@@ -5992,7 +6108,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 223,
+            "line": 229,
             "description": "Y position, relative to the HTML element.",
             "itemtype": "property",
             "name": "y",
@@ -6005,7 +6121,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 235,
+            "line": 241,
             "description": "Delta X (current_x - previous_x).",
             "itemtype": "property",
             "name": "deltaX",
@@ -6018,7 +6134,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 246,
+            "line": 252,
             "description": "Delta Y (current_y - previous_y).",
             "itemtype": "property",
             "name": "deltaY",
@@ -6031,7 +6147,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 257,
+            "line": 263,
             "description": "The action:\n\n  * \"mouse-down\"\n  * \"moues-up\"\n  * \"click\"\n  * \"double-click\"\n  * \"drag-start\"\n  * \"dragging\"\n  * \"drag-end\"\n  * \"scroll-down\"\n  * \"scroll-up\"\n  * \"mouse-move\"",
             "itemtype": "property",
             "name": "action",
@@ -6044,7 +6160,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 281,
+            "line": 287,
             "description": "Current state of the mouse left button.",
             "itemtype": "property",
             "name": "btnLeft",
@@ -6057,7 +6173,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 294,
+            "line": 300,
             "description": "Current state of the mouse middle button.",
             "itemtype": "property",
             "name": "btnMiddle",
@@ -6070,7 +6186,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 307,
+            "line": 313,
             "description": "Current state of the mouse right button.",
             "itemtype": "property",
             "name": "btnRight",
@@ -6083,7 +6199,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 320,
+            "line": 326,
             "description": "The button that triggered the last event.\n\n  * none\n  * \"left\"\n  * \"middle\"\n  * \"right\"",
             "itemtype": "property",
             "name": "button",
@@ -6096,7 +6212,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 342,
+            "line": 348,
             "description": "Previous state.",
             "itemtype": "property",
             "name": "__prevState",
@@ -6110,7 +6226,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 351,
+            "line": 357,
             "description": "Js event on mouse down.",
             "itemtype": "property",
             "name": "__mouseDownEvent",
@@ -6124,7 +6240,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 360,
+            "line": 366,
             "description": "Last event object.",
             "itemtype": "property",
             "name": "__event",
@@ -6139,7 +6255,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 376,
+            "line": 382,
             "description": "Bind events on the HTML Element.",
             "itemtype": "method",
             "name": "_updateEvents",
@@ -6152,7 +6268,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 403,
+            "line": 409,
             "description": "Take a snapshot of the MouseManager",
             "itemtype": "method",
             "name": "_dump",
@@ -6169,7 +6285,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 427,
+            "line": 433,
             "description": "Analyze and dispatche wEvents.",
             "itemtype": "method",
             "name": "_stateMachine",
@@ -6194,7 +6310,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 543,
+            "line": 549,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -6212,7 +6328,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 552,
+            "line": 558,
             "itemtype": "method",
             "name": "__onMouseUp",
             "access": "private",
@@ -6230,7 +6346,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 561,
+            "line": 567,
             "itemtype": "method",
             "name": "__onDoubleClick",
             "access": "private",
@@ -6248,7 +6364,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 570,
+            "line": 576,
             "itemtype": "method",
             "name": "__onMouseMove",
             "access": "private",
@@ -6266,7 +6382,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 579,
+            "line": 585,
             "description": "Used to detect drag-end outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseUp",
@@ -6285,7 +6401,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 592,
+            "line": 598,
             "description": "Used to detect dragging outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseMove",
@@ -6304,7 +6420,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 605,
+            "line": 611,
             "itemtype": "method",
             "name": "__onMouseWheel",
             "access": "private",
@@ -7118,7 +7234,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 139,
+            "line": 138,
             "description": "Enable or disable the progressbar pulsate mode.",
             "itemtype": "property",
             "name": "pulsate",
@@ -7131,7 +7247,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 169,
+            "line": 168,
             "description": "Display/hide the progression text.",
             "itemtype": "property",
             "name": "textVisible",
@@ -7144,7 +7260,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 192,
+            "line": 191,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7157,7 +7273,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 228,
+            "line": 227,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -7183,7 +7299,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 98,
+            "line": 97,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7197,7 +7313,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 119,
+            "line": 118,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7210,7 +7326,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 138,
+            "line": 137,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -7368,7 +7484,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 135,
+            "line": 136,
             "description": "Object containing references javascript events binding (for widget\ninternal use).",
             "itemtype": "property",
             "name": "__events",
@@ -7381,7 +7497,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 145,
+            "line": 146,
             "description": "Object containing references to registered callbacks.",
             "itemtype": "property",
             "name": "__callbacks",
@@ -7394,7 +7510,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 163,
+            "line": 164,
             "description": "Destroy the class.",
             "itemtype": "method",
             "name": "destroy",
@@ -7404,7 +7520,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 175,
+            "line": 176,
             "description": "Register a callback for any PhotonUI/Widget event (called wEvent).\n\nCallback signature:\n\n    function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])",
             "itemtype": "method",
             "name": "registerCallback",
@@ -7436,7 +7552,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 199,
+            "line": 200,
             "description": "Remove a registered callback.",
             "itemtype": "method",
             "name": "removeCallback",
@@ -7453,7 +7569,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 217,
+            "line": 218,
             "description": "Force the update of the given properties.",
             "itemtype": "method",
             "name": "_updateProperties",
@@ -7472,7 +7588,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 230,
+            "line": 231,
             "description": "Javascript event binding (for internal use).",
             "itemtype": "method",
             "name": "_bindEvent",
@@ -7506,7 +7622,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 254,
+            "line": 255,
             "description": "Unbind javascript event.",
             "itemtype": "method",
             "name": "_unbindEvent",
@@ -7525,7 +7641,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 271,
+            "line": 272,
             "description": "Register available wEvent.",
             "itemtype": "method",
             "name": "_registerWEvents",
@@ -7544,7 +7660,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 287,
+            "line": 288,
             "description": "Call all callbacks for the given wEvent.\n\nNOTE: the first argument passed to the callback is the current widget.\nNOTE²: if the thisArg of the callback is null, this will be binded to the current widget.",
             "itemtype": "method",
             "name": "_callCallbacks",
@@ -7641,6 +7757,38 @@
             "return": {
                 "description": "`{x: <Number>, y: <Number>}",
                 "type": "Object"
+            },
+            "class": "photonui.Helpers",
+            "module": "PhotonUI",
+            "submodule": "Helpers",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/helpers.js",
+            "line": 136,
+            "description": "Check and compute size to valid CSS size\n\nValid values and transformations:\n    undefined  -> defaultValue\n    null       -> \"auto\" (if \"auto\" is alowed, \"0px\" else)\n    +Infinity  -> \"100%\"\n    Number     -> \"<Number>px\"",
+            "itemtype": "method",
+            "name": "numberToCssSize",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "(opt, default=nullValue)",
+                    "type": "Number"
+                },
+                {
+                    "name": "nullValue",
+                    "description": "(opt, default=\"auto\")",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "sanitized version of the size.",
+                "type": "String"
             },
             "class": "photonui.Helpers",
             "module": "PhotonUI",

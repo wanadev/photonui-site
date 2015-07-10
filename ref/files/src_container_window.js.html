@@ -175,6 +175,7 @@
 
 var Stone = require(&quot;stonejs&quot;);
 var Helpers = require(&quot;../helpers.js&quot;);
+var Widget = require(&quot;../widget.js&quot;);
 var BaseWindow = require(&quot;./basewindow.js&quot;);
 
 var _windowList = [];
@@ -202,7 +203,7 @@ var Window = BaseWindow.$extend({
         // Bind js events
         this._bindEvent(&quot;move.dragstart&quot;, this.__html.windowTitle, &quot;mousedown&quot;, this.__moveDragStart.bind(this));
         this._bindEvent(&quot;closeButton.click&quot;, this.__html.windowTitleCloseButton, &quot;click&quot;, this.__closeButtonClicked.bind(this));
-        this._bindEvent(&quot;totop&quot;, this.__html[&quot;window&quot;], &quot;mousedown&quot;, this.moveToFront.bind(this));
+        this._bindEvent(&quot;totop&quot;, this.__html.window, &quot;mousedown&quot;, this.moveToFront.bind(this));
         this._bindEvent(&quot;closeButton.mousedown&quot;, this.__html.windowTitleCloseButton, &quot;mousedown&quot;, function (event) { event.stopPropagation(); });
 
         // Update Properties
@@ -298,7 +299,7 @@ var Window = BaseWindow.$extend({
         if (modal) {
             this.__html.modalBox = document.createElement(&quot;div&quot;);
             this.__html.modalBox.className = &quot;photonui-window-modalbox&quot;;
-            var parentNode = photonui.e_parent || document.getElementsByTagName(&quot;body&quot;)[0];
+            var parentNode = Widget.e_parent || document.getElementsByTagName(&quot;body&quot;)[0];
             parentNode.appendChild(this.__html.modalBox);
             this.visible = this.visible; // Force update
         }
@@ -400,11 +401,11 @@ var Window = BaseWindow.$extend({
         var _ = Stone.lazyGettext;
 
         this.$super();
-        this.__html[&quot;window&quot;].className += &quot; photonui-window&quot;;
+        this.__html.window.className += &quot; photonui-window&quot;;
 
         this.__html.windowTitle = document.createElement(&quot;div&quot;);
         this.__html.windowTitle.className = &quot;photonui-window-title&quot;;
-        this.__html[&quot;window&quot;].appendChild(this.__html.windowTitle);
+        this.__html.window.appendChild(this.__html.windowTitle);
 
         this.__html.windowTitleCloseButton = document.createElement(&quot;button&quot;);
         this.__html.windowTitleCloseButton.className = &quot;photonui-window-title-close-button fa fa-times&quot;;
@@ -417,7 +418,7 @@ var Window = BaseWindow.$extend({
 
         this.__html.windowContent = document.createElement(&quot;div&quot;);
         this.__html.windowContent.className = &quot;photonui-container photonui-window-content&quot;;
-        this.__html[&quot;window&quot;].appendChild(this.__html.windowContent);
+        this.__html.window.appendChild(this.__html.windowContent);
     },
 
     /**
@@ -427,8 +428,8 @@ var Window = BaseWindow.$extend({
      * @private
      */
     _updateWindowList: function() {
-        for (var i=_windowList.length-1, z=0 ; i&gt;=0 ; i--, z++) {
-            if (i == 0) {
+        for (var i=_windowList.length-1, z=0 ; i&gt;=0 ; i--, z++) {   // jshint ignore:line
+            if (i === 0) {
                 _windowList[i].html.style.zIndex = 2001;
                 _windowList[i].addClass(&quot;photonui-active&quot;);
             }
@@ -459,8 +460,8 @@ var Window = BaseWindow.$extend({
         if (!this.movable || event.button &gt; 0) {
             return;
         }
-        var offsetX = (event.offsetX != undefined) ? event.offsetX : event.layerX;
-        var offsetY = (event.offsetY != undefined) ? event.offsetY : event.layerY;
+        var offsetX = (event.offsetX !== undefined) ? event.offsetX : event.layerX;
+        var offsetY = (event.offsetY !== undefined) ? event.offsetY : event.layerY;
         this.__html.windowTitle.style.cursor = &quot;move&quot;;
         this._bindEvent(&quot;move.dragging&quot;, document, &quot;mousemove&quot;, this.__moveDragging.bind(this, offsetX, offsetY));
         this._bindEvent(&quot;move.dragend&quot;, document, &quot;mouseup&quot;, this.__moveDragEnd.bind(this));

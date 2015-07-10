@@ -232,7 +232,6 @@ var BoxLayout = Layout.$extend({
     setOrientation: function(orientation) {
         if (orientation != &quot;vertical&quot; &amp;&amp; orientation != &quot;horizontal&quot;) {
             throw &quot;Error: The orientation should be \&quot;vertical\&quot; or \&quot;horizontal\&quot;.&quot;;
-            return;
         }
         this._orientation = orientation;
         this.removeClass(&quot;photonui-layout-orientation-vertical&quot;);
@@ -425,7 +424,7 @@ var BoxLayout = Layout.$extend({
             maxHeight: null,
             height: null,
             order: null
-        }
+        };
 
         // align
         if ([&quot;stretch&quot;, &quot;expand&quot;].indexOf(woptions.align) &gt; -1) {

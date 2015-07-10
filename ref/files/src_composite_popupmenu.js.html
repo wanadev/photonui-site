@@ -233,7 +233,7 @@ var PopupMenu = PopupWindow.$extend({
         Menu.prototype._buildHtml.call(this);
 
         this.__html.inner.appendChild(this.__html.outer);
-        this.__html[&quot;window&quot;].className += &quot; photonui-popupmenu&quot;;
+        this.__html.window.className += &quot; photonui-popupmenu&quot;;
         this.__html.outer.className = &quot;photonui-widget photonui-menu photonui-menu-style-popupmenu&quot;;
     },
 

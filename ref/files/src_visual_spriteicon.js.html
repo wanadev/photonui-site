@@ -301,7 +301,7 @@ var SpriteIcon = BaseIcon.$extend({
     _update: function() {
         var style = &quot;&quot;;
         if (this.spriteSheetName &amp;&amp; this.iconName) {
-            style = SpriteSheet.getSpriteSheet(this.spriteSheetName).getIconCss(this.iconName)
+            style = SpriteSheet.getSpriteSheet(this.spriteSheetName).getIconCss(this.iconName);
         }
         this.__html.icon.setAttribute(&quot;style&quot;, style);
     },

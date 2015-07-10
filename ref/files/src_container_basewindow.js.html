@@ -197,7 +197,7 @@ var BaseWindow = Container.$extend({
         this.$super(params);
 
         // Windows are hidden by default
-        var params = params || {};
+        params = params || {};
         if (params.visible === undefined) {
             this.visible = false;
         }
@@ -238,7 +238,7 @@ var BaseWindow = Container.$extend({
     },
 
     setPosition: function(x, y) {
-        if (typeof(x) == &quot;object&quot; &amp;&amp; y == undefined) {
+        if (typeof(x) == &quot;object&quot; &amp;&amp; y === undefined) {
             this.html.style.left = x.x + &quot;px&quot;;
             this.html.style.top = x.y + &quot;px&quot;;
             this._x = x.x;
@@ -462,7 +462,7 @@ var BaseWindow = Container.$extend({
      * @readOnly
      */
     getHtml: function() {
-        return this.__html[&quot;window&quot;];
+        return this.__html.window;
     },
 
     /**
@@ -510,8 +510,8 @@ var BaseWindow = Container.$extend({
      * @private
      */
     _buildHtml: function() {
-        this.__html[&quot;window&quot;] = document.createElement(&quot;div&quot;);
-        this.__html[&quot;window&quot;].className = &quot;photonui-widget photonui-basewindow&quot;;
+        this.__html.window = document.createElement(&quot;div&quot;);
+        this.__html.window.className = &quot;photonui-widget photonui-basewindow&quot;;
     }
 });
 

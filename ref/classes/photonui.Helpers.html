@@ -215,6 +215,10 @@
                                     <span class="flag static">static</span>
                             </li>
                             <li class="index-item method">
+                                <a href="#method_numberToCssSize">numberToCssSize</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_uuid4">uuid4</a>
 
                                     <span class="flag static">static</span>
@@ -408,6 +412,104 @@
             <div class="returns-description">
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
                     <p>`{x: <Number>, y: <Number>}</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_numberToCssSize" class="method item">
+    <h3 class="name"><code>numberToCssSize</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>value</code>
+                </li>
+                <li class="arg">
+                        <code>defaultValue</code>
+                </li>
+                <li class="arg">
+                        <code>nullValue</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_helpers.js.html#l136"><code>src&#x2F;helpers.js:136</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check and compute size to valid CSS size</p>
+<p>Valid values and transformations:
+undefined  -&gt; defaultValue
+null       -&gt; &quot;auto&quot; (if &quot;auto&quot; is alowed, &quot;0px&quot; else)
++Infinity  -&gt; &quot;100%&quot;
+Number     -&gt; &quot;<Number>px&quot;</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">defaultValue</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+                    <div class="param-description">
+                        <p>(opt, default=nullValue)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">nullValue</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>(opt, default=&quot;auto&quot;)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
+                    <p>sanitized version of the size.</p>
 
             </div>
         </div>

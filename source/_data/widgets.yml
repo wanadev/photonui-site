@@ -80,7 +80,7 @@
 
 - name: MouseManager
   image: doc/widgets/mousemanager.png
-  url: /PhotonUI/ref/classes/photonui.MouseManager.html
+  url: doc/widgets/mousemanager.html
 
 - name: NumericField
   image: doc/widgets/numericfield.png

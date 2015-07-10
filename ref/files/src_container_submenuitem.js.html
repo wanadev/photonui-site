@@ -217,19 +217,23 @@ var SubMenuItem = MenuItem.$extend({
     },
 
     setMenuName: function(menuName) {
+        var that = this;
+
+        function _init() {
+            if (!that.menu) return;
+            that.menu.registerCallback(&quot;fold&quot;, &quot;hide&quot;, that.__onToggleFold, that);
+            that.menu.registerCallback(&quot;unfold&quot;, &quot;show&quot;, that.__onToggleFold, that);
+            that.active = that.menu.visible;
+        }
+
         if (this.menuName &amp;&amp; this.menu) {
             this.menu.removeCallback(&quot;fold&quot;);
             this.menu.removeCallback(&quot;unfold&quot;);
         }
+
         this._menuName = menuName;
+
         if (this.menuName) {
-            that = this;
-            function _init() {
-                if (!that.menu) return;
-                that.menu.registerCallback(&quot;fold&quot;, &quot;hide&quot;, that.__onToggleFold, that);
-                that.menu.registerCallback(&quot;unfold&quot;, &quot;show&quot;, that.__onToggleFold, that);
-                that.active = that.menu.visible;
-            }
             if (this.menu) {
                 _init();
             }

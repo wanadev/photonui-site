@@ -226,7 +226,6 @@ var TabLayout = Layout.$extend({
     setTabsPosition: function(position) {
         if ([&quot;top&quot;, &quot;bottom&quot;, &quot;left&quot;, &quot;right&quot;].indexOf(position) &lt; 0 ) {
             throw &quot;Error: The tabs position should be \&quot;top\&quot;, \&quot;bottom\&quot;, \&quot;left\&quot; or \&quot;right\&quot;.&quot;;
-            return;
         }
         this._tabsPosition = position;
         this.removeClass(&quot;photonui-tablayout-tabposition-top&quot;);
@@ -432,7 +431,7 @@ var TabLayout = Layout.$extend({
 
         var options = {
             order: null
-        }
+        };
 
         if (woptions.order !== undefined &amp;&amp; woptions.order !== null) {
             options.order = woptions.order|0;

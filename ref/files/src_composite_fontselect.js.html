@@ -190,10 +190,10 @@ var FontSelect = Select.$extend({
 
     // Constructor
     __init__: function(params) {
-        var params = params || {};
+        params = params || {};
         this._fonts = [];
         this.$super(params);
-        if (this.fonts.length == 0) this.fonts = [&quot;sans-serif&quot;, &quot;serif&quot;, &quot;monospace&quot;];
+        if (this.fonts.length === 0) this.fonts = [&quot;sans-serif&quot;, &quot;serif&quot;, &quot;monospace&quot;];
         this.value = (params.value !== undefined) ? params.value : &quot;sans-serif&quot;;
     },
 
