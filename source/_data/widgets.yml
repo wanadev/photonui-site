@@ -51,6 +51,7 @@
   url: doc/widgets/filemanager.html
 
 - name: FluidLayout
+  image: doc/widgets/fluidlayout.png
   url: /PhotonUI/ref/classes/photonui.FluidLayout.html
 
 - name: FontSelect
@@ -58,6 +59,7 @@
   url: doc/widgets/fontselect.html
 
 - name: GridLayout
+  image: doc/widgets/gridlayout.png
   url: /PhotonUI/ref/classes/photonui.GridLayout.html
 
 - name: Image
@@ -77,6 +79,7 @@
   url: doc/widgets/menuitem.html
 
 - name: MouseManager
+  image: doc/widgets/mousemanager.png
   url: /PhotonUI/ref/classes/photonui.MouseManager.html
 
 - name: NumericField
@@ -148,6 +151,7 @@
   url: doc/widgets/togglebutton.html
 
 - name: Viewport
+  image: doc/widgets/viewport.png
   url: /PhotonUI/ref/classes/photonui.Viewport.html
 
 - name: Window
