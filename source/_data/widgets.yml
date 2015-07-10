@@ -52,7 +52,7 @@
 
 - name: FluidLayout
   image: doc/widgets/fluidlayout.png
-  url: /PhotonUI/ref/classes/photonui.FluidLayout.html
+  url: doc/widgets/fluidlayout.html
 
 - name: FontSelect
   image: doc/widgets/fontselect.png
