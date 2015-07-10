@@ -152,7 +152,7 @@
 
 - name: Viewport
   image: doc/widgets/viewport.png
-  url: /PhotonUI/ref/classes/photonui.Viewport.html
+  url: doc/widgets/viewport.html
 
 - name: Window
   image: doc/widgets/window.png
