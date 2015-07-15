@@ -451,14 +451,12 @@ Voilà, you created your first PhotonUI widget. Not too difficult right ? ;)
 [doc-button]: widgets/button.html
 [doc-translation]: widgets/translation.html
 [doc-faicon]: widgets/faicon.html
-[doc-boxlayout]: ../ref/classes/photonui.BoxLayout.html
-[doc-gridlayout]: ../ref/classes/photonui.GridLayout.html
+[doc-boxlayout]: widgets/boxlayout.html
+[doc-gridlayout]: widgets/gridlayout.html
 [doc-separator]: widgets/separator.html
 [doc-label]: widgets/label.html
 [doc-textfield]: widgets/textfield.html
-[doc-menuitem]: ../ref/classes/photonui.MenuItem.html
+[doc-menuitem]: widgets/menuitem.html
 [doc-filemanager]: widgets/filemanager.html
-[doc-mousemanager]: ../ref/classes/photonui.MouseManager.html
-
-
+[doc-mousemanager]: widgets/mousemanager.html
 
