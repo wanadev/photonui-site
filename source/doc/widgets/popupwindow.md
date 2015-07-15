@@ -8,7 +8,7 @@ demo_script: doc/widgets/popupwindow.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 #### Popup next to a widget
 

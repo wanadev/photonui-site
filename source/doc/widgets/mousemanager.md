@@ -13,7 +13,7 @@ demo_script: doc/widgets/mousemanager.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 // --- UI ---

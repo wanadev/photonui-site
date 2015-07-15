@@ -8,7 +8,7 @@ demo_script: doc/widgets/select.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 var select = new photonui.Select({

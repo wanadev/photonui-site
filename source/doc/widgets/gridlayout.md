@@ -28,14 +28,14 @@ Defines the horizontal spacing between the widgets (5px by default).
 
 #### verticalPadding
 
-Defines the spacing between the widgets and the left and right edge of the layout (0px by default).
+Defines the spacing between the widgets and the left and right edges of the layout (0px by default).
 
 <p style="text-align: center;"><img src="gridlayout-verticalpadding.png" alt="GridLayout verticalPadding Schema" /></p>
 
 
 #### horizontalPadding
 
-Defines the spacing between the widgets and the top and bottom edge of the layout (0px by default).
+Defines the spacing between the widgets and the top and bottom edges of the layout (0px by default).
 
 <p style="text-align: center;"><img src="gridlayout-horizontalpadding.png" alt="GridLayout horizontalPadding Schema" /></p>
 
@@ -47,7 +47,7 @@ Defines the spacing between the widgets and the top and bottom edge of the layou
 
 #### x, y
 
-Defines the widget position in the grid.
+Defines the widget's position on the grid.
 
 <p style="text-align: center;"><img src="gridlayout-lo-xy.png" alt="GridLayout x and y layout options Schema" /></p>
 
@@ -73,7 +73,7 @@ Defines how the widget must be vertically aligned in the layout.
 
 Possible values:
 
-* `stretch` (default, alias: `expand`): the widget is stretched to take all available vertical space in its box,
+* `stretch` (default, alias: `expand`): the widget is stretched to use all the available vertical space in its box,
 
 * `start` (alias: `top`): the widget is placed at the top of its box,
 
@@ -90,7 +90,7 @@ Defines how the widget must be vertically aligned in the layout.
 
 Possible values:
 
-* `stretch` (default, alias: `expand`): the widget is stretched to take all available horizontal space in its box,
+* `stretch` (default, alias: `expand`): the widget is stretched to use all the available horizontal space in its box,
 
 * `start` (alias: `left`): the widget is placed at the left of its box,
 

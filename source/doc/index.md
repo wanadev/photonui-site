@@ -11,9 +11,9 @@ layout: homepage
 
 ## Class reference
 
-Full class reference documentation is build using Yuidoc and is available here:
+The full class reference documentation is built using Yuidoc and is available here:
 
-* [Class References](../ref/)
+* [Class Reference](../ref/)
 
 
 ## Widgets

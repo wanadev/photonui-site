@@ -32,14 +32,14 @@ Defines the spacing between the widgets (5px by default).
 
 #### verticalPadding
 
-Defines the spacing between the widgets and the left and right edge of the layout (0px by default).
+Defines the spacing between the widgets and the left and right edges of the layout (0px by default).
 
 <p style="text-align: center;"><img src="boxlayout-verticalpadding.png" alt="BoxLayout Vertical Padding Schema" /></p>
 
 
 #### horizontalPadding
 
-Defines the spacing between the widgets and the top and bottom edge of the layout (0px by default).
+Defines the spacing between the widgets and the top and bottom edges of the layout (0px by default).
 
 <p style="text-align: center;"><img src="boxlayout-horizontalpadding.png" alt="BoxLayout Horizontal Padding Schema" /></p>
 
@@ -54,7 +54,7 @@ Defines how the widget must be aligned in the layout.
 
 Possible values:
 
-* `stretch` (default, alias: `expand`): the widget is stretched to take all available space in its box,
+* `stretch` (default, alias: `expand`): the widget is stretched to use all the available space in its box,
 
 * `start` (alias: `top`, `left`): the widget is placed at the top or on the left of its box depending on the layout orientation,
 

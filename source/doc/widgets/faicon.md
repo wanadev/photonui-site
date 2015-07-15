@@ -3,7 +3,7 @@ layout: page-width-demo
 demo_script: doc/widgets/faicon.js
 ---
 
-This widget display icons using [Font Awesome](http://fontawesome.io).
+This widget displays icons using [Font Awesome](http://fontawesome.io).
 
 
 ### Class Reference
@@ -23,7 +23,7 @@ This widget display icons using [Font Awesome](http://fontawesome.io).
 
 ### Short declaration
 
-`photonui.FAIcon` can be insancied in a shorter way:
+`photonui.FAIcon` can be instantiated in a shorter way:
 
 ```javascript
 var icon = new photonui.FAIcon("fa-camera");
