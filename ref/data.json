@@ -1512,7 +1512,7 @@
             "namespace": "photonui",
             "file": "src/nonvisual/translation.js",
             "line": 42,
-            "description": "A wrapper around Stone.js to fire locale events to widgets.\n\nDocumentation: https://github.com/flozz/stone.js/blob/master/README.md\n\nwEvents:\n\n  * locale-changed:\n     - description: The locale changed.\n     - callback:    function(widget, locale)",
+            "description": "A wrapper around Stone.js to fire locale events to widgets.\n\nDocumentation: https://github.com/flozz/stone.js/blob/master/README.md\n\nNOTE: When you instantiate the translation widget, you can pass to it\nthe `noGlobal` option to avoid the creation of the global `window._` function.\n\nwEvents:\n\n  * locale-changed:\n     - description: The locale changed.\n     - callback:    function(widget, locale)",
             "is_constructor": 1,
             "extends": "photonui.Base",
             "params": [
@@ -6580,7 +6580,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 77,
+            "line": 83,
             "description": "The current locale (e.g. \"fr\", \"en\", \"it\",...).",
             "itemtype": "property",
             "name": "locale",
@@ -6593,7 +6593,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 96,
+            "line": 102,
             "description": "Add one or more Stone.js catalog (a catalog contain all translated strings for a specific locale).",
             "itemtype": "method",
             "name": "addCatalogs",
@@ -6611,7 +6611,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 104,
+            "line": 110,
             "description": "Guess the user language.",
             "itemtype": "method",
             "name": "guessUserLanguage",
@@ -6626,7 +6626,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 112,
+            "line": 118,
             "description": "Make a string translatable.",
             "itemtype": "method",
             "name": "gettext",
@@ -6653,7 +6653,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 122,
+            "line": 128,
             "description": "Make a string translatable.\n\nTthe main difference between this method and the `gettext` method is\nthat this method does not return a translated sting but an object that\nwill translate the sting when it will be displayed (.toString() method\ncalled).",
             "itemtype": "method",
             "name": "lazyGettext",
@@ -6680,7 +6680,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 137,
+            "line": 143,
             "description": "Enable/disable Stone.js translating elements with the \"stonejs\" attribute in the DOM.",
             "itemtype": "method",
             "name": "enableDomScan",
@@ -6698,7 +6698,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 145,
+            "line": 151,
             "description": "Re-translate elements with the \"stonejs\" attribute in the DOM.",
             "itemtype": "method",
             "name": "updateDomTranslation",
@@ -6709,7 +6709,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 158,
+            "line": 164,
             "itemtype": "method",
             "name": "__onStonejsLocaleChanged",
             "access": "private",
