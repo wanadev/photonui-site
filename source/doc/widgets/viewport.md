@@ -3,7 +3,7 @@ layout: page-width-demo
 demo_script: doc/widgets/viewport.js
 ---
 
-`photonui.Viewport` allows you to define scollable zone in your UI.
+`photonui.Viewport` allows you to define scrollable zones in your UI.
 
 
 ### Class Reference

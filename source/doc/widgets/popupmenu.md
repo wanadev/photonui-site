@@ -8,11 +8,11 @@ demo_script: doc/widgets/popupmenu.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 #### Contextual menu
 
-Contextual menus on PhotonUI widgets are automaticaly managed:
+Contextual menus on PhotonUI widgets are automatically managed:
 
 ```javascript
 var popup = new photonui.PopupMenu({

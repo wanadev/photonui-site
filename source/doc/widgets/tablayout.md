@@ -3,7 +3,7 @@ layout: page-width-demo
 demo_script: doc/widgets/tablayout.js
 ---
 
-`photonui.TabLayout` is a layout widget that should only contain [`photonui.TabItem`][tabitemdoc] Widget.
+`photonui.TabLayout` is a layout widget that should only contain [`photonui.TabItem`][tabitemdoc] widgets.
 
 [tabitemdoc]: tabitem.html
 

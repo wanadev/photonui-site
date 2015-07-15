@@ -5,7 +5,7 @@ demo_script: doc/widgets/translation.js
 
 `photonui.Translation` adds internationalization functionalities to your application.
 
-**NOTE:** When you instantiate the translation widget, you can pass to it the `noGlobal` option to avoid the creation of the global `window._` function. If you do so, you will have to use the `lazyGettext()` method of `photonui.Translation` instead of the `_()` global function.
+**NOTE:** When you instantiate the translation widget, you can pass the `noGlobal` option to avoid the creation of the global `window._` function. If you do so, you will have to use the `lazyGettext()` method of `photonui.Translation` instead of the `_()` global function.
 
 
 ### Class Reference
@@ -20,7 +20,7 @@ demo_script: doc/widgets/translation.js
 * https://github.com/flozz/stone.js
 
 
-### More example
+### More examples
 
 ```javascript
 // Translation

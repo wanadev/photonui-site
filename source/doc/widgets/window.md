@@ -8,11 +8,11 @@ demo_script: doc/widgets/window.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 // Get the position of the #demo area to display windows
-// at the right place
+// in the right place
 var pos = photonui.Helpers.getAbsolutePosition("demo");
 
 // Create a window with a button to center it (x axis) on the page

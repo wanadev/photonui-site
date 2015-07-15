@@ -3,7 +3,7 @@ layout: page-width-demo
 demo_script: doc/widgets/menu.js
 ---
 
-`photonui.Menu` is a basic layout that is only made to contain [`photonui.MenuItem`][menuitem-doc], [`photonui.SubMenuItem`][submenuitem-doc] and other `photonui.Menu` widgets.
+`photonui.Menu` is a basic layout that is only meant to contain [`photonui.MenuItem`][menuitem-doc], [`photonui.SubMenuItem`][submenuitem-doc] and other `photonui.Menu` widgets.
 
 [menuitem-doc]: menuitem.html
 [submenuitem-doc]: submenuitem.html
@@ -13,7 +13,7 @@ demo_script: doc/widgets/menu.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 #### With a submenu
 

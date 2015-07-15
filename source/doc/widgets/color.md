@@ -18,7 +18,7 @@ To see it in action, please look at the [`photonui.ColorPickerDiaog`][colorpicke
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 var color = new photonui.Color("red");

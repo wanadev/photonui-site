@@ -3,14 +3,14 @@ layout: page-width-demo
 demo_script: doc/widgets/accelmanager.js
 ---
 
-This component allows you to easily implement keyboard accelerators (aka shortcut) in your application. It is based on [KeyboardJS][kbjs].
+This component allows you to easily implement keyboard accelerators (aka shortcuts) in your application. It is based on [KeyboardJS][kbjs].
 
-Please read the KeyboardJS documentation for more informations about the keyboard combo composition and syntax:
+Please read the KeyboardJS documentation for more information about the keyboard combo composition and syntax:
 
 * http://robertwhurst.github.io/KeyboardJS/
 
 
-**NOTE:** By default, accelerators are disabled if a field is focused (this behaviour can be changed like in the  `Ctrl + R` example above).
+**NOTE:** By default, accelerators are disabled if a field is focused (this behavior can be changed, as shown in the  `Ctrl + R` example above).
 
 [kbjs]: https://github.com/RobertWHurst/KeyboardJS
 

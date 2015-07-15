@@ -15,7 +15,7 @@ demo_script: doc/widgets/menuitem.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 #### Inside a photonui.Select
 
