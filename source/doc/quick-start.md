@@ -8,7 +8,9 @@ Welcome to the PhotonUI quick start guide. If you want to learn how to build a U
 
 ### Get PhotonUI
 
-To start using PhotonUI in your projects, you first need to download it:
+#### Standalone Version
+
+To start using the PhotonUI's standalone version in your projects, you first need to download it:
 
 * [Download the latest zipped version on GitHub][zip]
 
@@ -45,6 +47,25 @@ in your page:
 
 [zip]: https://github.com/wanadev/PhotonUI/archive/master.zip
 [gh]: https://github.com/wanadev/PhotonUI
+
+
+#### NPM and Browserify
+
+If you are using [Browserify][browserify] in your project, a [NPM package][npm] is available. To install it, juste type:
+
+```
+npm install --save photonui
+```
+
+then, to use it in your procjet you just have to import PhotonUI:
+
+```js
+var photonui = require("photonui");
+```
+
+
+[browserify]: http://browserify.org/
+[npm]: https://www.npmjs.com/package/photonui
 
 
 ### Using Your First Widgets
@@ -208,13 +229,12 @@ You are now ready to start using PhotonUI on your own project. :)
 [doc-button]: widgets/button.html
 [doc-translation]: widgets/translation.html
 [doc-faicon]: widgets/faicon.html
-[doc-boxlayout]: ../ref/classes/photonui.BoxLayout.html
-[doc-gridlayout]: ../ref/classes/photonui.GridLayout.html
+[doc-boxlayout]: widgets/boxlayout.html
+[doc-gridlayout]: widgets/gridlayout.html
 [doc-separator]: widgets/separator.html
 [doc-label]: widgets/label.html
 [doc-textfield]: widgets/textfield.html
-[doc-menuitem]: ../ref/classes/photonui.MenuItem.html
+[doc-menuitem]: widgets/menuitem.html
 [doc-filemanager]: widgets/filemanager.html
-[doc-mousemanager]: ../ref/classes/photonui.MouseManager.html
-
+[doc-mousemanager]: widgets/mousemanager.html
 
