@@ -27,14 +27,20 @@ demo_script: doc/widgets/translation.js
 var tr = new photonui.Translation();
 tr.addCatalogs({
     "fr": {
-        "Hello World": "Bonjour le monde",
-        'Browser language is "{lang}".': "La langue du navigateur est « {lang} ».",
-        "Close": "Fermer"
+        "plural-forms": "nplurals=2; plural=(n > 1);",
+        "messages": {
+            "Hello World": ["Bonjour le monde"],
+            'Browser language is "{lang}".': ["La langue du navigateur est « {lang} »."],
+            "Close": ["Fermer"]
+        }
     },
     "it": {
-        "Hello World": "Buongiorno il mondo",
-        'Browser language is "{lang}".': 'La lingua del browser è "{lang}".',
-        "Close": "Chiudere"
+        "plural-forms": "nplurals=2; plural=(n != 1);",
+        "messages": {
+            "Hello World": ["Buongiorno il mondo"],
+            'Browser language is "{lang}".': ['La lingua del browser è "{lang}".'],
+            "Close": ["Chiudere"]
+        }
     }
 });
 tr.locale = tr.guessUserLanguage();  // Browser language

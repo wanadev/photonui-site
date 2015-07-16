@@ -2,7 +2,9 @@ var translation = new photonui.Translation();
 
 translation.addCatalogs({
     "fr": {
-        "Hello World": "Bonjour le monde"
+        "messages": {
+            "Hello World": ["Bonjour le monde"]
+        }
     }
 });
 
