@@ -53,7 +53,7 @@ var MySecondClass = MyClass.$extend({
 });
 ```
 
-Classy provides a lot of interesting functionalities like mixing and class vars... For more information [read the Classy documentation][classy].
+Classy provides a lot of interesting functionalities like "mixin" and class vars... For more information [read the Classy documentation][classy].
 
 __NOTE¹:__ PhotonUI does not expose the `Class` object in the global scope. If you want to use it, use `photonui.lib.Class` instead.
 
