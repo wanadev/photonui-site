@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A work-in-progress MVC/Swing style JavaScript UI library.",
-        "version": "1.0.0-beta.1",
+        "version": "1.0.0",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
