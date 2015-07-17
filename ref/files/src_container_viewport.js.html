@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -172,6 +174,7 @@
  */
 
 var Container = require(&quot;./container.js&quot;);
+var numberToCssSize = require(&quot;../helpers.js&quot;).numberToCssSize;
 
 /**
  * Viewport.
@@ -186,7 +189,9 @@ var Viewport = Container.$extend({
     __init__: function(params) {
         this.$super(params);
         this._updateProperties([
-            &quot;padding&quot;, &quot;verticalScrollbar&quot;, &quot;horizontalScrollbar&quot;
+            &quot;padding&quot;, &quot;verticalScrollbar&quot;, &quot;horizontalScrollbar&quot;,
+            &quot;minWidth&quot;, &quot;maxWidth&quot;, &quot;width&quot;,
+            &quot;minHeight&quot;, &quot;maxHeight&quot;, &quot;height&quot;
         ]);
     },
 
@@ -277,6 +282,138 @@ var Viewport = Container.$extend({
     },
 
     /**
+     * Minimum width.
+     *
+     *     * Number: the size in px
+     *     * Infinity: 100% of the parent width
+     *     * null: no minimum width
+     *
+     * @property minWidth
+     * @type Number
+     * @default null
+     */
+    _minWidth: null,
+
+    getMinWidth: function() {
+        return this._minWidth;
+    },
+
+    setMinWidth: function(minWidth) {
+        this._minWidth = minWidth;
+        this.__html.viewport.style.minWidth = numberToCssSize(minWidth, null, 0);
+    },
+
+    /**
+     * Maximum width.
+     *
+     *     * Number: the size in px
+     *     * Infinity: 100% of the parent width
+     *     * null: no maximum width
+     *
+     * @property maxWidth
+     * @type Number
+     * @default null
+     */
+    _maxWidth: null,
+
+    getMaxWidth: function() {
+        return this._maxWidth;
+    },
+
+    setMaxWidth: function(maxWidth) {
+        this._maxWidth = maxWidth;
+        this.__html.viewport.style.maxWidth = numberToCssSize(maxWidth, null, Infinity);
+    },
+
+    /**
+     * Width.
+     *
+     *     * Number: the size in px
+     *     * Infinity: 100% of the parent width
+     *     * null: auto
+     *
+     * @property width
+     * @type Number
+     * @default Infinity
+     */
+    _width: Infinity,
+
+    getWidth: function() {
+        return this._width;
+    },
+
+    setWidth: function(width) {
+        this._width = width;
+        this.__html.viewport.style.width = numberToCssSize(width, null);
+    },
+
+    /**
+     * Minimum height.
+     *
+     *     * Number: the size in px
+     *     * Infinity: 100% of the parent height
+     *     * null: no minimum height
+     *
+     * @property minHeight
+     * @type Number
+     * @default null
+     */
+    _minHeight: null,
+
+    getMinHeight: function() {
+        return this._minHeight;
+    },
+
+    setMinHeight: function(minHeight) {
+        this._minHeight = minHeight;
+        this.__html.viewport.style.minHeight = numberToCssSize(minHeight, null, 0);
+    },
+
+    /**
+     * Maximum height.
+     *
+     *     * Number: the size in px
+     *     * Infinity: 100% of the parent height
+     *     * null: no maximum height
+     *
+     * @property maxHeight
+     * @type Number
+     * @default null
+     */
+    _maxHeight: null,
+
+    getMaxHeight: function() {
+        return this._maxHeight;
+    },
+
+    setMaxHeight: function(maxHeight) {
+        this._maxHeight = maxHeight;
+        this.__html.viewport.style.maxHeight = numberToCssSize(maxHeight, null, Infinity);
+    },
+
+    /**
+     * Height.
+     *
+     *     * Number: the size in px
+     *     * Infinity: 100% of the parent height
+     *     * null: auto
+     *
+     * @property height
+     * @type Number
+     * @default Infinity
+     */
+    _height: Infinity,
+
+    getHeight: function() {
+        return this._height;
+    },
+
+    setHeight: function(height) {
+        this._height = height;
+        this.__html.viewport.style.height = numberToCssSize(height, null);
+    },
+
+    /**
      * Html outer element of the widget (if any).
      *
      * @property html
@@ -285,6 +422,7 @@ var Viewport = Container.$extend({
      * @readOnly
      */
     getHtml: function() {
+        setTimeout(this._sizingHack.bind(this), 10);
         return this.__html.viewport;
     },
 
@@ -296,7 +434,7 @@ var Viewport = Container.$extend({
      * @readOnly
      */
     getContainerNode: function() {
-        return this.html;
+        return this.__html.viewport;
     },
 
 
@@ -317,6 +455,55 @@ var Viewport = Container.$extend({
     _buildHtml: function() {
         this.__html.viewport = document.createElement(&quot;div&quot;);
         this.__html.viewport.className = &quot;photonui-widget photonui-viewport photonui-container&quot;;
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (visibility) this._sizingHack();
+        this.$super(visibility);
+    },
+
+    /**
+     * HACK: set the right height.
+     *
+     * @method _sizingHack
+     * @private
+     */
+    _sizingHack: function() {
+        if (this.height !== Infinity) {
+            return;
+        }
+        if (this.visible &amp;&amp; this.__html.viewport.parentNode) {
+            var node = this.__html.viewport;
+            var height = 0;
+
+            this.__html.viewport.style.display = &quot;none&quot;;
+
+            while (node = node.parentNode) {  // jshint ignore:line
+                if (!node) break;
+                if (node.offsetHeight &gt; 0) {
+                    height = node.offsetHeight;
+                    var style = getComputedStyle(node);
+                    height -= parseFloat(style.paddingTop);
+                    height -= parseFloat(style.paddingBottom);
+                    height -= parseFloat(style.borderTopWidth);
+                    height -= parseFloat(style.borderBottomWidth);
+                    break;
+                }
+            }
+
+            if (this.maxHeight !== null) height = Math.min(this.maxHeight, height);
+            if (this.minHeight !== null) height = Math.max(this.minHeight, height);
+            this.__html.viewport.style.height = height + &quot;px&quot;;
+            this.__html.viewport.style.display = &quot;&quot;;
+        }
     },
 
 

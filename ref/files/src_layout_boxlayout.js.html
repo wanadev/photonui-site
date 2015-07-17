@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -230,7 +232,6 @@ var BoxLayout = Layout.$extend({
     setOrientation: function(orientation) {
         if (orientation != &quot;vertical&quot; &amp;&amp; orientation != &quot;horizontal&quot;) {
             throw &quot;Error: The orientation should be \&quot;vertical\&quot; or \&quot;horizontal\&quot;.&quot;;
-            return;
         }
         this._orientation = orientation;
         this.removeClass(&quot;photonui-layout-orientation-vertical&quot;);
@@ -423,7 +424,7 @@ var BoxLayout = Layout.$extend({
             maxHeight: null,
             height: null,
             order: null
-        }
+        };
 
         // align
         if ([&quot;stretch&quot;, &quot;expand&quot;].indexOf(woptions.align) &gt; -1) {

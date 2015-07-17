@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -137,7 +139,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_container_window.js.html#l45"><code>src&#x2F;container&#x2F;window.js:45</code></a>
+            Defined in: <a href="../files/src_container_window.js.html#l46"><code>src&#x2F;container&#x2F;window.js:46</code></a>
         </div>
 
             Module: <a href="../modules/Container.html">Container</a><br>
@@ -150,7 +152,8 @@
     <p>Window.</p>
 <p>wEvents:</p>
 <ul>
-<li>close-button-clicked:<ul>
+<li>close-button-clicked:
+<ul>
 <li>description: called when the close button was clicked.</li>
 <li>callback:    function(widget)</li>
 </ul>
@@ -161,36 +164,36 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_photonui.Window" class="method item">
-            <h3 class="name"><code>photonui.Window</code></h3>
+<div id="method_photonui.Window" class="method item">
+    <h3 class="name"><code>photonui.Window</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_window.js.html#l46"><code>src&#x2F;container&#x2F;window.js:46</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
         
-                <span class="paren">()</span>
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="meta">
-                        <p>
-                        Defined in
-                <a href="../files/src_container_window.js.html#l45"><code>src&#x2F;container&#x2F;window.js:45</code></a>
-                </p>
-        
-        
-        
-            </div>
-        
-            <div class="description">
-                
-            </div>
-        
-        
-        
-        
-        </div>
+    </div>
+
+
+
+
+</div>
     </div>
 
 <div id="classdocs" class="tabview">
@@ -259,6 +262,10 @@
                             </li>
                             <li class="index-item method private">
                                 <a href="#method__updateWindowList">_updateWindowList</a>
+
+                            </li>
+                            <li class="index-item method private inherited inherited">
+                                <a href="#method__visibilityChanged">_visibilityChanged</a>
 
                             </li>
                             <li class="index-item method inherited">
@@ -360,6 +367,10 @@
                                 <a href="#property_height">height</a>
 
                             </li>
+                            <li class="index-item property inherited">
+                                <a href="#property_horizontalChildExpansion">horizontalChildExpansion</a>
+
+                            </li>
                             <li class="index-item property inherited inherited">
                                 <a href="#property_html">html</a>
 
@@ -429,6 +440,10 @@
 
                             </li>
                             <li class="index-item property inherited">
+                                <a href="#property_verticalChildExpansion">verticalChildExpansion</a>
+
+                            </li>
+                            <li class="index-item property inherited">
                                 <a href="#property_visible">visible</a>
 
                             </li>
@@ -475,7 +490,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method___onContextMenu">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l445"><code>src&#x2F;widget.js:445</code></a>
+        <a href="../files/src_widget.js.html#l461"><code>src&#x2F;widget.js:461</code></a>
         </p>
 
 
@@ -483,8 +498,7 @@
     </div>
 
     <div class="description">
-        <p>Called when the context menu should be displayed.</p>
-
+        Called when the context menu should be displayed.
     </div>
 
         <div class="params">
@@ -526,7 +540,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_window.js.html#l375"><code>src&#x2F;container&#x2F;window.js:375</code></a>
+        <a href="../files/src_container_window.js.html#l376"><code>src&#x2F;container&#x2F;window.js:376</code></a>
         </p>
 
 
@@ -573,7 +587,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__bindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l230"><code>src&#x2F;base.js:230</code></a>
+        <a href="../files/src_base.js.html#l231"><code>src&#x2F;base.js:231</code></a>
         </p>
 
 
@@ -581,8 +595,7 @@
     </div>
 
     <div class="description">
-        <p>Javascript event binding (for internal use).</p>
-
+        Javascript event binding (for internal use).
     </div>
 
         <div class="params">
@@ -595,8 +608,7 @@
 
 
                     <div class="param-description">
-                        <p>An unique id for the event.</p>
-
+                        An unique id for the event.
                     </div>
 
                 </li>
@@ -606,8 +618,7 @@
 
 
                     <div class="param-description">
-                        <p>The element on which the event will be bind.</p>
-
+                        The element on which the event will be bind.
                     </div>
 
                 </li>
@@ -617,8 +628,7 @@
 
 
                     <div class="param-description">
-                        <p>The event name (e.g. &quot;mousemove&quot;, &quot;click&quot;,...).</p>
-
+                        The event name (e.g. "mousemove", "click",...).
                     </div>
 
                 </li>
@@ -628,8 +638,7 @@
 
 
                     <div class="param-description">
-                        <p>The function that will be called when the event occured.</p>
-
+                        The function that will be called when the event occured.
                     </div>
 
                 </li>
@@ -658,7 +667,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_window.js.html#l256"><code>src&#x2F;container&#x2F;window.js:256</code></a>
+        <a href="../files/src_container_window.js.html#l257"><code>src&#x2F;container&#x2F;window.js:257</code></a>
         </p>
 
 
@@ -699,7 +708,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__callCallbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l285"><code>src&#x2F;base.js:285</code></a>
+        <a href="../files/src_base.js.html#l288"><code>src&#x2F;base.js:288</code></a>
         </p>
 
 
@@ -707,10 +716,10 @@
     </div>
 
     <div class="description">
-        <p>Call all callbacks for the given wEvent.</p>
-<p>NOTE: the first argument passed to the callback is the current widget.
-NOTE²: if the thisArg of the callback is null, this will be binded to the current widget.</p>
+        Call all callbacks for the given wEvent.
 
+NOTE: the first argument passed to the callback is the current widget.
+NOTE²: if the thisArg of the callback is null, this will be binded to the current widget.
     </div>
 
         <div class="params">
@@ -723,8 +732,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The widget event.</p>
-
+                        The widget event.
                     </div>
 
                 </li>
@@ -734,8 +742,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>Parametters that will be sent to the callbacks.</p>
-
+                        Parametters that will be sent to the callbacks.
                     </div>
 
                 </li>
@@ -767,7 +774,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l364"><code>src&#x2F;container&#x2F;window.js:364</code></a>
+        <a href="../files/src_container_window.js.html#l365"><code>src&#x2F;container&#x2F;window.js:365</code></a>
         </p>
 
 
@@ -789,7 +796,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                 </li>
@@ -821,7 +828,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l351"><code>src&#x2F;container&#x2F;window.js:351</code></a>
+        <a href="../files/src_container_window.js.html#l352"><code>src&#x2F;container&#x2F;window.js:352</code></a>
         </p>
 
 
@@ -843,7 +850,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                 </li>
@@ -881,7 +888,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l332"><code>src&#x2F;container&#x2F;window.js:332</code></a>
+        <a href="../files/src_container_window.js.html#l333"><code>src&#x2F;container&#x2F;window.js:333</code></a>
         </p>
 
 
@@ -903,7 +910,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                 </li>
@@ -913,7 +920,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                 </li>
@@ -923,7 +930,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                 </li>
@@ -955,7 +962,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l314"><code>src&#x2F;container&#x2F;window.js:314</code></a>
+        <a href="../files/src_container_window.js.html#l315"><code>src&#x2F;container&#x2F;window.js:315</code></a>
         </p>
 
 
@@ -977,7 +984,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                 </li>
@@ -1009,7 +1016,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__registerWEvents">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l269"><code>src&#x2F;base.js:269</code></a>
+        <a href="../files/src_base.js.html#l272"><code>src&#x2F;base.js:272</code></a>
         </p>
 
 
@@ -1017,8 +1024,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Register available wEvent.</p>
-
+        Register available wEvent.
     </div>
 
         <div class="params">
@@ -1063,7 +1069,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__unbindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l253"><code>src&#x2F;base.js:253</code></a>
+        <a href="../files/src_base.js.html#l255"><code>src&#x2F;base.js:255</code></a>
         </p>
 
 
@@ -1071,8 +1077,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Unbind javascript event.</p>
-
+        Unbind javascript event.
     </div>
 
         <div class="params">
@@ -1085,8 +1090,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The id of the event.</p>
-
+                        The id of the event.
                     </div>
 
                 </li>
@@ -1118,7 +1122,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__updateProperties">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l217"><code>src&#x2F;base.js:217</code></a>
+        <a href="../files/src_base.js.html#l218"><code>src&#x2F;base.js:218</code></a>
         </p>
 
 
@@ -1126,8 +1130,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Force the update of the given properties.</p>
-
+        Force the update of the given properties.
     </div>
 
         <div class="params">
@@ -1140,8 +1143,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The properties to update.</p>
-
+                        The properties to update.
                     </div>
 
                 </li>
@@ -1167,7 +1169,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l286"><code>src&#x2F;container&#x2F;window.js:286</code></a>
+        <a href="../files/src_container_window.js.html#l287"><code>src&#x2F;container&#x2F;window.js:287</code></a>
         </p>
 
 
@@ -1179,6 +1181,64 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
     </div>
 
+
+
+
+</div>
+<div id="method__visibilityChanged" class="method item private inherited">
+    <h3 class="name"><code>_visibilityChanged</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>visibility</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+            <p>Inherited from
+            <a href="../classes/photonui.Widget.html#method__visibilityChanged">
+                photonui.Widget
+            </a>
+            but overwritten in
+        <a href="../files/src_container_container.js.html#l176"><code>src&#x2F;container&#x2F;container.js:176</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Called when the visibility changes.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">visibility</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+                    <div class="param-description">
+                        <p>Current visibility state (otptional, defaut=this.visible)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
 
 
 
@@ -1204,7 +1264,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_addClass">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l390"><code>src&#x2F;widget.js:390</code></a>
+        <a href="../files/src_widget.js.html#l389"><code>src&#x2F;widget.js:389</code></a>
         </p>
 
 
@@ -1212,8 +1272,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Add a class to the outer HTML element of the widget.</p>
-
+        Add a class to the outer HTML element of the widget.
     </div>
 
         <div class="params">
@@ -1226,8 +1285,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The class to add.</p>
-
+                        The class to add.
                     </div>
 
                 </li>
@@ -1286,7 +1344,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 photonui.Base
             </a>
             but overwritten in
-        <a href="../files/src_container_window.js.html#l238"><code>src&#x2F;container&#x2F;window.js:238</code></a>
+        <a href="../files/src_container_window.js.html#l239"><code>src&#x2F;container&#x2F;window.js:239</code></a>
         </p>
 
 
@@ -1317,7 +1375,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_hide">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l356"><code>src&#x2F;widget.js:356</code></a>
+        <a href="../files/src_widget.js.html#l355"><code>src&#x2F;widget.js:355</code></a>
         </p>
 
 
@@ -1325,8 +1383,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>DHide the widget (equivalent to widget.visible = false).</p>
-
+        DHide the widget (equivalent to widget.visible = false).
     </div>
 
 
@@ -1348,7 +1405,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l224"><code>src&#x2F;container&#x2F;window.js:224</code></a>
+        <a href="../files/src_container_window.js.html#l225"><code>src&#x2F;container&#x2F;window.js:225</code></a>
         </p>
 
 
@@ -1379,7 +1436,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_window.js.html#l210"><code>src&#x2F;container&#x2F;window.js:210</code></a>
+        <a href="../files/src_container_window.js.html#l211"><code>src&#x2F;container&#x2F;window.js:211</code></a>
         </p>
 
 
@@ -1425,7 +1482,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method_registerCallback">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l175"><code>src&#x2F;base.js:175</code></a>
+        <a href="../files/src_base.js.html#l176"><code>src&#x2F;base.js:176</code></a>
         </p>
 
 
@@ -1433,10 +1490,11 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Register a callback for any PhotonUI/Widget event (called wEvent).</p>
-<p>Callback signature:</p>
-<pre class="code prettyprint"><code>function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
-</code></pre>
+        Register a callback for any PhotonUI/Widget event (called wEvent).
+
+Callback signature:
+
+    function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
     </div>
 
         <div class="params">
@@ -1449,8 +1507,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>An unique id for the callback.</p>
-
+                        An unique id for the callback.
                     </div>
 
                 </li>
@@ -1460,8 +1517,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>the PhotonUI/Widget event name.</p>
-
+                        the PhotonUI/Widget event name.
                     </div>
 
                 </li>
@@ -1471,8 +1527,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The callback function.</p>
-
+                        The callback function.
                     </div>
 
                 </li>
@@ -1482,8 +1537,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The value of this (optionnal, default = current widget).</p>
-
+                        The value of this (optionnal, default = current widget).
                     </div>
 
                 </li>
@@ -1514,7 +1568,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method_removeCallback">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l199"><code>src&#x2F;base.js:199</code></a>
+        <a href="../files/src_base.js.html#l200"><code>src&#x2F;base.js:200</code></a>
         </p>
 
 
@@ -1522,8 +1576,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Remove a registered callback.</p>
-
+        Remove a registered callback.
     </div>
 
         <div class="params">
@@ -1536,8 +1589,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The id of the callback.</p>
-
+                        The id of the callback.
                     </div>
 
                 </li>
@@ -1568,7 +1620,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Container.html#method_removeChild">photonui.Container</a>:
-        <a href="../files/src_container_container.js.html#l125"><code>src&#x2F;container&#x2F;container.js:125</code></a>
+        <a href="../files/src_container_container.js.html#l199"><code>src&#x2F;container&#x2F;container.js:199</code></a>
         </p>
 
 
@@ -1622,7 +1674,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_removeClass">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l407"><code>src&#x2F;widget.js:407</code></a>
+        <a href="../files/src_widget.js.html#l406"><code>src&#x2F;widget.js:406</code></a>
         </p>
 
 
@@ -1630,8 +1682,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Remove a class from the outer HTML element of the widget.</p>
-
+        Remove a class from the outer HTML element of the widget.
     </div>
 
         <div class="params">
@@ -1644,8 +1695,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
                     <div class="param-description">
-                        <p>The class to remove.</p>
-
+                        The class to remove.
                     </div>
 
                 </li>
@@ -1670,7 +1720,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_show">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l347"><code>src&#x2F;widget.js:347</code></a>
+        <a href="../files/src_widget.js.html#l346"><code>src&#x2F;widget.js:346</code></a>
         </p>
 
 
@@ -1678,8 +1728,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Display the widget (equivalent to widget.visible = true).</p>
-
+        Display the widget (equivalent to widget.visible = true).
     </div>
 
 
@@ -1701,7 +1750,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Widget.html#method_unparent">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l365"><code>src&#x2F;widget.js:365</code></a>
+        <a href="../files/src_widget.js.html#l364"><code>src&#x2F;widget.js:364</code></a>
         </p>
 
 
@@ -1709,8 +1758,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Detache the widget from its parent.</p>
-
+        Detache the widget from its parent.
     </div>
 
 
@@ -1734,15 +1782,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Base.html#property___callbacks">photonui.Base</a>:
-                            <a href="../files/src_base.js.html#l145"><code>src&#x2F;base.js:145</code></a>
+                            <a href="../files/src_base.js.html#l146"><code>src&#x2F;base.js:146</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references to registered callbacks.</p>
-                    
+                            Object containing references to registered callbacks.
                         </div>
                     
                     
@@ -1760,16 +1807,15 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Base.html#property___events">photonui.Base</a>:
-                            <a href="../files/src_base.js.html#l135"><code>src&#x2F;base.js:135</code></a>
+                            <a href="../files/src_base.js.html#l136"><code>src&#x2F;base.js:136</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references javascript events binding (for widget
-                    internal use).</p>
-                    
+                            Object containing references javascript events binding (for widget
+                    internal use).
                         </div>
                     
                     
@@ -1787,15 +1833,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property___html">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l329"><code>src&#x2F;widget.js:329</code></a>
+                            <a href="../files/src_widget.js.html#l328"><code>src&#x2F;widget.js:328</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Object containing references to the widget HTML elements</p>
-                    
+                            Object containing references to the widget HTML elements
                         </div>
                     
                     
@@ -1812,16 +1857,16 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_absolutePosition">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l281"><code>src&#x2F;widget.js:281</code></a>
+                            <a href="../files/src_widget.js.html#l280"><code>src&#x2F;widget.js:280</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Absolute position of the widget on the page.</p>
-                    <p><code>{x: Number, y: Number}</code></p>
+                            Absolute position of the widget on the page.
                     
+                    <code>{x: Number, y: Number}</code>
                         </div>
                     
                     
@@ -1838,7 +1883,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Container.html#property_child">photonui.Container</a>:
-                            <a href="../files/src_container_container.js.html#l86"><code>src&#x2F;container&#x2F;container.js:86</code></a>
+                            <a href="../files/src_container_container.js.html#l146"><code>src&#x2F;container&#x2F;container.js:146</code></a>
                             </p>
                     
                     
@@ -1864,7 +1909,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Container.html#property_childName">photonui.Container</a>:
-                            <a href="../files/src_container_container.js.html#l58"><code>src&#x2F;container&#x2F;container.js:58</code></a>
+                            <a href="../files/src_container_container.js.html#l118"><code>src&#x2F;container&#x2F;container.js:118</code></a>
                             </p>
                     
                     
@@ -1891,7 +1936,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_window.js.html#l120"><code>src&#x2F;container&#x2F;window.js:120</code></a>
+                            <a href="../files/src_container_window.js.html#l121"><code>src&#x2F;container&#x2F;window.js:121</code></a>
                             </p>
                     
                     
@@ -1919,7 +1964,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                                     photonui.Container
                                 </a>
                                 but overwritten in
-                            <a href="../files/src_container_window.js.html#l174"><code>src&#x2F;container&#x2F;window.js:174</code></a>
+                            <a href="../files/src_container_window.js.html#l175"><code>src&#x2F;container&#x2F;window.js:175</code></a>
                             </p>
                     
                     
@@ -1944,15 +1989,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_contextMenu">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l228"><code>src&#x2F;widget.js:228</code></a>
+                            <a href="../files/src_widget.js.html#l227"><code>src&#x2F;widget.js:227</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>The managed contextual menu.</p>
-                    
+                            The managed contextual menu.
                         </div>
                     
                             <p><strong>Default:</strong> null (= no context menu)</p>
@@ -1970,15 +2014,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_contextMenuName">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l211"><code>src&#x2F;widget.js:211</code></a>
+                            <a href="../files/src_widget.js.html#l210"><code>src&#x2F;widget.js:210</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>The name of the managed contextual menu (<code>photonui.PopupWindow().name</code>).</p>
-                    
+                            The name of the managed contextual menu (<code>photonui.PopupWindow().name</code>).
                         </div>
                     
                             <p><strong>Default:</strong> null (= no context menu)</p>
@@ -2008,6 +2051,32 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                             <p><strong>Default:</strong> : null (auto)</p>
+                    
+                    
+                    </div>
+                    <div id="property_horizontalChildExpansion" class="property item inherited">
+                        <h3 class="name"><code>horizontalChildExpansion</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/photonui.Container.html#property_horizontalChildExpansion">photonui.Container</a>:
+                            <a href="../files/src_container_container.js.html#l70"><code>src&#x2F;container&#x2F;container.js:70</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Horizontaly expand the container's child widget.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
                     
                     
                     </div>
@@ -2051,15 +2120,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_layoutOptions">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l249"><code>src&#x2F;widget.js:249</code></a>
+                            <a href="../files/src_widget.js.html#l248"><code>src&#x2F;widget.js:248</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Layout options.</p>
-                    
+                            Layout options.
                         </div>
                     
                             <p><strong>Default:</strong> {}</p>
@@ -2181,7 +2249,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_window.js.html#l146"><code>src&#x2F;container&#x2F;window.js:146</code></a>
+                            <a href="../files/src_container_window.js.html#l147"><code>src&#x2F;container&#x2F;window.js:147</code></a>
                             </p>
                     
                     
@@ -2207,7 +2275,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_window.js.html#l103"><code>src&#x2F;container&#x2F;window.js:103</code></a>
+                            <a href="../files/src_container_window.js.html#l104"><code>src&#x2F;container&#x2F;window.js:104</code></a>
                             </p>
                     
                     
@@ -2240,8 +2308,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The unique name of the widget.</p>
-                    
+                            The unique name of the widget.
                         </div>
                     
                             <p><strong>Default:</strong> &quot;widget-&quot; + photonui.Helpers.uuid4()</p>
@@ -2259,15 +2326,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_offsetHeight">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l311"><code>src&#x2F;widget.js:311</code></a>
+                            <a href="../files/src_widget.js.html#l310"><code>src&#x2F;widget.js:310</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Widget height (outer HTML element).</p>
-                    
+                            Widget height (outer HTML element).
                         </div>
                     
                     
@@ -2284,15 +2350,14 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_offsetWidth">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l297"><code>src&#x2F;widget.js:297</code></a>
+                            <a href="../files/src_widget.js.html#l296"><code>src&#x2F;widget.js:296</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Widget width (outer HTML element).</p>
-                    
+                            Widget width (outer HTML element).
                         </div>
                     
                     
@@ -2342,8 +2407,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The parent widget.</p>
-                    
+                            The parent widget.
                         </div>
                     
                             <p><strong>Default:</strong> null (no parent)</p>
@@ -2368,8 +2432,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>The parent widget name.</p>
-                    
+                            The parent widget name.
                         </div>
                     
                             <p><strong>Default:</strong> null (no parent)</p>
@@ -2394,9 +2457,9 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p><p>Window position.</p></p>
-                    <pre class="code prettyprint"><code>{x: Number, y: Number}
-                    </code></pre>
+                            <p>Window position.</p>
+                    <pre class="code prettyprint"><code>{x: Number, y: Number}</code></pre>
+                    
                         </div>
                     
                             <p><strong>Default:</strong> {x: 0, y: 0}</p>
@@ -2414,7 +2477,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_container_window.js.html#l84"><code>src&#x2F;container&#x2F;window.js:84</code></a>
+                            <a href="../files/src_container_window.js.html#l85"><code>src&#x2F;container&#x2F;window.js:85</code></a>
                             </p>
                     
                     
@@ -2440,18 +2503,43 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         <div class="meta">
                                     <p>Inherited from
                                     <a href="../classes/photonui.Widget.html#property_tooltip">photonui.Widget</a>:
-                            <a href="../files/src_widget.js.html#l188"><code>src&#x2F;widget.js:188</code></a>
+                            <a href="../files/src_widget.js.html#l187"><code>src&#x2F;widget.js:187</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Tooltip.</p>
-                    
+                            Tooltip.
                         </div>
                     
                             <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_verticalChildExpansion" class="property item inherited">
+                        <h3 class="name"><code>verticalChildExpansion</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/photonui.Container.html#property_verticalChildExpansion">photonui.Container</a>:
+                            <a href="../files/src_container_container.js.html#l94"><code>src&#x2F;container&#x2F;container.js:94</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Verticaly expand the container's child widget.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
                     
                     
                     </div>
@@ -2473,8 +2561,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                         </div>
                     
                         <div class="description">
-                            <p>Is the widget visible or hidden.</p>
-                    
+                            Is the widget visible or hidden.
                         </div>
                     
                             <p><strong>Default:</strong> true</p>

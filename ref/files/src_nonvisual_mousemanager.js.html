@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -249,18 +251,24 @@ var Widget = require(&quot;../widget.js&quot;);
  * @extends photonui.Base
  * @param {photonui.Widget} element Any PhotonUI Widget (optional).
  * @param {HTMLElement} element Any HTML element (optional).
+ * @param {Object} params additional params (optional).
  */
 var MouseManager = Base.$extend({
 
     // Constructor
-    __init__: function(element) {
+    __init__: function(element, params) {
         this._registerWEvents([
             &quot;mouse-event&quot;, &quot;mouse-down&quot;, &quot;mouse-up&quot;, &quot;click&quot;, &quot;double-click&quot;,
             &quot;drag-start&quot;, &quot;dragging&quot;, &quot;drag-end&quot;, &quot;mouse-move&quot;, &quot;scroll-up&quot;,
             &quot;scroll-down&quot;
         ]);
-        this.$super();
-        this.element = element;
+        if (element &amp;&amp; (element instanceof Widget || element instanceof HTMLElement)) {
+            this.$super(params);
+            this.element = element;
+        }
+        else {
+            this.$super(element);
+        }
     },
 
 
@@ -410,7 +418,7 @@ var MouseManager = Base.$extend({
     _action: &quot;&quot;,
 
     getAction: function() {
-        return this._action
+        return this._action;
     },
 
     /**
@@ -607,8 +615,8 @@ var MouseManager = Base.$extend({
         }
 
         // Click
-        if (action == &quot;mouse-up&quot; &amp;&amp; (Math.abs(this.pageX - this.__mouseDownEvent.pageX) &lt;= this._threshold
-        &amp;&amp; Math.abs(this.pageY - this.__mouseDownEvent.pageY) &lt;= this._threshold)) {
+        if (action == &quot;mouse-up&quot; &amp;&amp; (Math.abs(this.pageX - this.__mouseDownEvent.pageX) &lt;= this._threshold &amp;&amp;
+            Math.abs(this.pageY - this.__mouseDownEvent.pageY) &lt;= this._threshold)) {
             this._action = &quot;click&quot;;
             this._callCallbacks(&quot;mouse-event&quot;, [this._dump()]);
             this._callCallbacks(&quot;click&quot;, [this._dump()]);
@@ -628,10 +636,10 @@ var MouseManager = Base.$extend({
         }
 
         // Drag Start
-        if (action == &quot;mouse-move&quot; &amp;&amp; this.__prevState.action != &quot;drag-start&quot;
-        &amp;&amp; this.__prevState.action != &quot;dragging&quot; &amp;&amp; (this.btnLeft || this.btnMiddle || this.btnRight)) {
-            if (Math.abs(this.pageX - this.__mouseDownEvent.pageX) &gt; this._threshold
-            || Math.abs(this.pageY - this.__mouseDownEvent.pageY) &gt; this._threshold) {
+        if (action == &quot;mouse-move&quot; &amp;&amp; this.__prevState.action != &quot;drag-start&quot; &amp;&amp;
+            this.__prevState.action != &quot;dragging&quot; &amp;&amp; (this.btnLeft || this.btnMiddle || this.btnRight)) {
+            if (Math.abs(this.pageX - this.__mouseDownEvent.pageX) &gt; this._threshold ||
+                Math.abs(this.pageY - this.__mouseDownEvent.pageY) &gt; this._threshold) {
                 // Drag Start
                 this._action = &quot;drag-start&quot;;
                 this.__event = this.__mouseDownEvent;
@@ -647,16 +655,16 @@ var MouseManager = Base.$extend({
         }
 
         // Dragging
-        else if (action == &quot;dragging&quot; || (action == &quot;mouse-move&quot; &amp;&amp; (this.__prevState.action == &quot;drag-start&quot;
-        || this.__prevState.action == &quot;dragging&quot;) &amp;&amp; (this.btnLeft || this.btnMiddle || this.btnRight))) {
+        else if (action == &quot;dragging&quot; || (action == &quot;mouse-move&quot; &amp;&amp; (this.__prevState.action == &quot;drag-start&quot; ||
+                 this.__prevState.action == &quot;dragging&quot;) &amp;&amp; (this.btnLeft || this.btnMiddle || this.btnRight))) {
             this._action = &quot;dragging&quot;;
             this._callCallbacks(&quot;mouse-event&quot;, [this._dump()]);
             this._callCallbacks(this.action, [this._dump()]);
         }
 
         // Drag End
-        else if (action == &quot;drag-end&quot; || (action == &quot;mouse-up&quot; &amp;&amp; (this.__prevState.action == &quot;dragging&quot;
-        || this.__prevState.action == &quot;drag-start&quot;) &amp;&amp; !(this.btnLeft || this.btnMiddle || this.btnRight))) {
+        else if (action == &quot;drag-end&quot; || (action == &quot;mouse-up&quot; &amp;&amp; (this.__prevState.action == &quot;dragging&quot; ||
+                 this.__prevState.action == &quot;drag-start&quot;) &amp;&amp; !(this.btnLeft || this.btnMiddle || this.btnRight))) {
             this._action = &quot;drag-end&quot;;
             this._callCallbacks(&quot;mouse-event&quot;, [this._dump()]);
             this._callCallbacks(this.action, [this._dump()]);
@@ -746,21 +754,21 @@ var MouseManager = Base.$extend({
         var wheelDelta = null;
 
         // Webkit
-        if (event.wheelDeltaY != undefined) {
+        if (event.wheelDeltaY !== undefined) {
             wheelDelta = event.wheelDeltaY;
         }
         // MSIE
-        if (event.wheelDelta != undefined) {
+        if (event.wheelDelta !== undefined) {
             wheelDelta = event.wheelDelta;
         }
         // Firefox
-        if (event.axis != undefined &amp;&amp; event.detail != undefined) {
+        if (event.axis !== undefined &amp;&amp; event.detail !== undefined) {
             if (event.axis == 2) { // Y
                 wheelDelta = - event.detail;
             }
         }
 
-        if (wheelDelta != null) {
+        if (wheelDelta !== null) {
             if (wheelDelta &gt;= 0) {
                 this._stateMachine(&quot;scroll-up&quot;, event);
             }

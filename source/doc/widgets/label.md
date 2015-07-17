@@ -10,7 +10,7 @@ demo_script: doc/widgets/label.js
 
 ### Short declaration
 
-`photonui.Label` can be insancied in a shorter way:
+`photonui.Label` can be instantiated in a shorter way:
 
 ```javascript
 var label = new photonui.Label("My Label");
@@ -28,7 +28,7 @@ photonui.domInsert(label, "demo");
 ```
 
 
-### More example
+### More examples
 
 ```javascript
 var grid = new photonui.BoxLayout({

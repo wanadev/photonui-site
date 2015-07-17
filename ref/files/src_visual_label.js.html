@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -229,8 +231,17 @@ var Label = Widget.$extend({
 
     setText: function(text) {
         this._text = text;
-        photonui.Helpers.cleanNode(this.__html.label);
-        this.__html.label.appendChild(document.createTextNode(text));
+        Helpers.cleanNode(this.__html.label);
+
+        var lines = (text+&quot;&quot;).split(&quot;\n&quot;);
+
+        for (var i=0 ; i&lt;lines.length ; i++) {
+            this.__html.label.appendChild(document.createTextNode(lines[i]));
+            if (i&lt;lines.length-1) {
+                this.__html.label.appendChild(document.createElement(&quot;br&quot;));
+            }
+        }
+
     },
 
     /**
@@ -285,6 +296,9 @@ var Label = Widget.$extend({
                 );
             }
         }
+        else {
+            this.__html.label.removeAttribute(&quot;for&quot;);
+        }
     },
 
     /**
@@ -331,7 +345,7 @@ var Label = Widget.$extend({
      */
     _buildHtml: function() {
         this.__html.label = document.createElement(&quot;label&quot;);
-        this.__html.label.className = &quot;photonui-widget photonui-label&quot;;
+        this.__html.label.className = &quot;photonui-widget photonui-label photonui-widget-fixed-height&quot;;
     }
 });
 

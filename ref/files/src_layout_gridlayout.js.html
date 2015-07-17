@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -283,10 +285,11 @@ var GridLayout = Layout.$extend({
 
     setVerticalSpacing: function(verticalSpacing) {
         this._verticalSpacing = verticalSpacing;
-        this._updatingLayout = true;
-        this._updateSpacing();
-        this._updatingLayout = false;
-        this._sizingHack();
+        //this._updatingLayout = true;
+        //this._updateSpacing();
+        //this._updatingLayout = false;
+        //this._sizingHack();
+        this._updateLayout();
     },
 
     /**
@@ -304,10 +307,11 @@ var GridLayout = Layout.$extend({
 
     setHorizontalSpacing: function(horizontalSpacing) {
         this._horizontalSpacing = horizontalSpacing;
-        this._updatingLayout = true;
-        this._updateSpacing();
-        this._updatingLayout = false;
-        this._sizingHack();
+        //this._updatingLayout = true;
+        //this._updateSpacing();
+        //this._updatingLayout = false;
+        //this._sizingHack();
+        this._updateLayout();
     },
 
     /**
@@ -341,6 +345,21 @@ var GridLayout = Layout.$extend({
 
     // ====== Private methods ======
 
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (visibility) {
+            this._sizingHack();
+        }
+        this.$super(visibility);
+    },
 
     /**
      * Build the widget HTML.
@@ -386,6 +405,8 @@ var GridLayout = Layout.$extend({
             minY = Math.min(options.y, minY);
             maxX = Math.max(options.x, maxX);
             maxY = Math.max(options.y, maxY);
+            maxX = Math.max(options.x + options.cols - 1, maxX);
+            maxY = Math.max(options.y + options.rows - 1, maxY);
         }
 
         var gridWidth = maxX - minX + 1;
@@ -393,7 +414,7 @@ var GridLayout = Layout.$extend({
 
         // Clean
         this.__html.grid.removeChild(this.__html.gridBody);
-        photonui.Helpers.cleanNode(this.__html.gridBody);
+        Helpers.cleanNode(this.__html.gridBody);
 
         // Build the layout
         var that = this;
@@ -417,7 +438,7 @@ var GridLayout = Layout.$extend({
         var child;
         var tr, td, div;
         var cellX, cellY;
-        for (var y=0 ; y&lt;gridHeight ; y++) {
+        for (y=0 ; y&lt;gridHeight ; y++) {
             tr = document.createElement(&quot;tr&quot;);
             for (var x=0 ; x&lt;gridWidth ; x++) {
                 if (map[y][x]) {
@@ -435,31 +456,62 @@ var GridLayout = Layout.$extend({
                 if (child) {
                     div.appendChild(child.w.html);
 
+                    // Spacing exceptions
+                    var horizontalSpacing = this.horizontalSpacing;
+                    var verticalSpacing = this.verticalSpacing;
+                    if (x+child.o.cols &gt;= gridWidth) {
+                        td.className += &quot; photonui-gridlayout-lastcol&quot;;
+                        verticalSpacing = 0;
+                    }
+                    if (y+child.o.rows &gt;= gridHeight) {
+                        td.className += &quot; photonui-gridlayout-lastrow&quot;;
+                        horizontalSpacing = 0;
+                    }
+
                     // layout options: vertical/horizontal Align
                     td.className += &quot; photonui-layout-verticalalign-&quot; + child.o.verticalAlign;
                     td.className += &quot; photonui-layout-horizontalalign-&quot; + child.o.horizontalAlign;
 
                     // layout options: *width
-                    if (child.o.minWidth !== null) div.style.minWidth = child.o.minWidth + &quot;px&quot;;
-                    if (child.o.maxWidth !== null) div.style.maxWidth = child.o.maxWidth + &quot;px&quot;;
-                    if (child.o.width !== null) div.style.width = child.o.width + &quot;px&quot;;
+                    if (child.o.minWidth !== null) {
+                        div.style.minWidth = child.o.minWidth + &quot;px&quot;;
+                        td.style.minWidth = (child.o.minWidth + verticalSpacing) + &quot;px&quot;;
+                    }
+                    if (child.o.maxWidth !== null) {
+                        div.style.maxWidth = child.o.maxWidth + &quot;px&quot;;
+                        td.style.maxWidth = (child.o.maxWidth + verticalSpacing) + &quot;px&quot;;
+                    }
+                    if (child.o.width !== null) {
+                        div.style.width = child.o.width + &quot;px&quot;;
+                        td.style.width = (child.o.width + verticalSpacing) + &quot;px&quot;;
+                    }
 
                     // layout options: *height
-                    if (child.o.minHeight !== null) div.style.minHeight = child.o.minHeight + &quot;px&quot;;
-                    if (child.o.maxHeight !== null) div.style.maxHeight = child.o.maxHeight + &quot;px&quot;;
-                    if (child.o.height !== null) div.style.height = child.o.height + &quot;px&quot;;
+                    if (child.o.minHeight !== null) {
+                        div.style.minHeight = child.o.minHeight + &quot;px&quot;;
+                        td.style.minHeight = (child.o.minHeight + horizontalSpacing) + &quot;px&quot;;
+                    }
+                    if (child.o.maxHeight !== null) {
+                        div.style.maxHeight = child.o.maxHeight + &quot;px&quot;;
+                        td.style.maxHeight = (child.o.maxHeight + horizontalSpacing) + &quot;px&quot;;
+                    }
+                    if (child.o.height !== null) {
+                        div.style.height = child.o.height + &quot;px&quot;;
+                        td.style.height = (child.o.height + horizontalSpacing) + &quot;px&quot;;
+                    }
 
                     // rowspan / colspan
                     if (child.o.cols &gt; 1 || child.o.rows &gt; 1) {
                         td.colSpan = child.o.cols;
                         td.rowSpan = child.o.rows;
 
-                        for (var cellY=y ; cellY&lt;y+child.o.rows ; cellY++) {
-                            for (var cellX=x ; cellX&lt;x+child.o.cols ; cellX++) {
+                        for (cellY=y ; cellY&lt;y+child.o.rows ; cellY++) {
+                            for (cellX=x ; cellX&lt;x+child.o.cols ; cellX++) {
                                 map[cellY][cellX] = true;
                             }
                         }
                     }
+
                 }
             }
             this.__html.gridBody.appendChild(tr);
@@ -501,6 +553,15 @@ var GridLayout = Layout.$extend({
             minHeight: null,
             maxHeight: null,
             height: null
+        };
+
+        if (widget.html) {
+            if (widget.html.classList.contains(&quot;photonui-widget-fixed-height&quot;)) {
+                options.verticalAlign = &quot;center&quot;;
+            }
+            if (widget.html.classList.contains(&quot;photonui-widget-fixed-width&quot;)) {
+                options.horizontalAlign = &quot;center&quot;;
+            }
         }
 
         // [Compatibility with old GridLayout] position / place
@@ -667,12 +728,37 @@ var GridLayout = Layout.$extend({
         }
 
         function _hack() {
+            function _size(node) {
+                var tdHeight;
+                if (node.style.minHeight &amp;&amp; node.style.minHeight == node.style.maxHeight) {
+                    tdHeight = parseFloat(node.style.minHeight);
+                }
+                else if (node.classList.contains(&quot;photonui-gridlayout-lastrow&quot;)) {
+                    tdHeight = node.offsetHeight;
+                }
+                else {
+                    tdHeight = node.offsetHeight;
+                }
+                node.style.height = tdHeight + &quot;px&quot;;
+            }
+
             var nodes = this.__html.outerbox.querySelectorAll(&quot;#&quot; + this.name + &quot; &gt; table &gt; tbody &gt; tr &gt; td&quot;);
+
+            // 1st pass -&gt; height: auto
             for (var i=0 ; i&lt;nodes.length ; i++) {
                 nodes[i].style.height = &quot;auto&quot;;
             }
-            for (var i=0 ; i&lt;nodes.length ; i++) {
-                nodes[i].style.height = nodes[i].offsetHeight + &quot;px&quot;;
+
+            // 2nd pass -&gt; fixed height for all td where rowspan = 1
+            for (i=0 ; i&lt;nodes.length ; i++) {
+                if (nodes[i].rowSpan &amp;&amp; nodes[i].rowSpan &gt; 1) continue;
+                _size(nodes[i]);
+            }
+
+            // 3rd pass -&gt; fixed height for all td where rowspan &gt; 1
+            for (i=0 ; i&lt;nodes.length ; i++) {
+                if ((!nodes[i].rowSpan) || nodes[i].rowSpan &lt;= 1) continue;
+                _size(nodes[i]);
             }
 
             this._updatingLayout = false;

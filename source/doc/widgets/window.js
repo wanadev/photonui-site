@@ -4,7 +4,7 @@ new photonui.Window({
     title: "My Window",
     visible: true,
     x: pos.x, y: pos.y,
-    height: 100,
+    width: 300, height: 100,
     callbacks: {
         "close-button-clicked": function(widget) {
             widget.destroy();

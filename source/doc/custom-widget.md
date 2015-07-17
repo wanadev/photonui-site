@@ -5,7 +5,7 @@ demo_script: doc/empty-demo.js
 
 Creating a PhotonUI widget is not difficult, but you will need to learn a few things about how PhotonUI is built and works behind the scene, especially the Class system, the widgets hierarchy and the automagical functionality of the Base PhotonUI class ([`photonui.Base`][ref-base]).
 
-Also, I recommend you to look at the [class reference documentation][ref] and at the existing widgets to have a better understanding of how widgets work.
+Also, I recommend you take a look at the [class reference documentation][ref] and the existing widgets to have a better understanding of how widgets work.
 
 
 ### Class System
@@ -53,9 +53,9 @@ var MySecondClass = MyClass.$extend({
 });
 ```
 
-Classy provides a lot of interesting functionalities like mixin and class vars... For more information [read the Classy documentation][classy].
+Classy provides a lot of interesting functionalities like "mixin" and class vars... For more information [read the Classy documentation][classy].
 
-__NOTE¹:__ PhotonUI does not exposes the `Class` object in the global scope. If you want to use it, use `photonui.lib.Class` instead.
+__NOTE¹:__ PhotonUI does not expose the `Class` object in the global scope. If you want to use it, use `photonui.lib.Class` instead.
 
 
 #### The "Base" Class
@@ -122,9 +122,9 @@ var MyWidget = photonui.Widget.$extend({
 
 ### Choosing The Right Base Class
 
-When you create a PhotonUI widget, you will extend different classes depending of what kind of widget you want to create.
+When you create a PhotonUI widget, you will extend different classes depending on what kind of widget you want to create.
 
-There are mostly 5 types of widgets in PhotonUI:
+There are 5 main types of widgets in PhotonUI:
 
 * For **Interactive widgets** (like [`photonui.Button`][doc-button], [`photonui.TextField`][doc-textfield],...) or **Visual-Only widgets:** (like [`photonui.FAIcon`][doc-faicon], [`photonui.Label`][doc-label] or [`photonui.Separator`][doc-separator]), you will generally extend the [`photonui.Widget`][ref-widget] class,
 
@@ -145,7 +145,7 @@ Depending on what kind of widget you want to create, you will inherit from diffe
 
 #### Template for "Non-Visual" Widgets
 
-Non-visual widgets have no specific method to overwrite to make things work:
+Non-visual widgets have no specific method to override to make things work:
 
 ```javascript
 var MyWidget = photonui.Base.$extend({
@@ -229,7 +229,7 @@ var MyWidget = photonui.Container.$extend({
 
 The layout widgets are the most difficult to build: in addition to `getHtml` and `_buildHtml` methods, you have to implement the `_updateLayout` method which will have to build the HTML that glues children widgets together in the layout.
 
-You can look at the [`photonui.BoxLayout`][code-boxlayout] code if you want a simple example of layout widget. 
+You can look at the [`photonui.BoxLayout`][code-boxlayout] code if you want a simple example of a layout widget. 
 
 ```javascript
 var MyWidget = photonui.Layout.$extend({
@@ -263,7 +263,7 @@ No more theory, let's build a real widget: a simple button with a `text` propert
 
 #### HTML and Basic Code
 
-Here we just apply everything we saw before to create the visual part of the button. You can also add a bit of CSS to make it looks better, but that's not the topic.
+Here we just apply everything we saw before to create the visual part of the button. You can also add a bit of CSS to make it look better, but that's not the topic.
 
 ```js
 var SimpleButton = photonui.Widget.$extend({
@@ -333,7 +333,7 @@ __init__: function(params) {
 }
 ```
 
-Then, we have to bind the native javascript `click` event to the button. For binding native js events, PhotonUI provides an event manager that will automatically unbind the events when the widget is destroyed; you can use it through two methods: `_bindEvent` and `_unbindEvent`.
+Then, we have to bind the native javascript `click` event to the button. To bind native js events, PhotonUI provides an event manager that will automatically unbind the events when the widget is destroyed; you can use it through two methods: `_bindEvent` and `_unbindEvent`.
 
 ```js
 __init__: function(params) {
@@ -451,14 +451,12 @@ Voilà, you created your first PhotonUI widget. Not too difficult right ? ;)
 [doc-button]: widgets/button.html
 [doc-translation]: widgets/translation.html
 [doc-faicon]: widgets/faicon.html
-[doc-boxlayout]: ../ref/classes/photonui.BoxLayout.html
-[doc-gridlayout]: ../ref/classes/photonui.GridLayout.html
+[doc-boxlayout]: widgets/boxlayout.html
+[doc-gridlayout]: widgets/gridlayout.html
 [doc-separator]: widgets/separator.html
 [doc-label]: widgets/label.html
 [doc-textfield]: widgets/textfield.html
-[doc-menuitem]: ../ref/classes/photonui.MenuItem.html
+[doc-menuitem]: widgets/menuitem.html
 [doc-filemanager]: widgets/filemanager.html
-[doc-mousemanager]: ../ref/classes/photonui.MouseManager.html
-
-
+[doc-mousemanager]: widgets/mousemanager.html
 

@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -187,6 +189,12 @@ var Layout = Container.$extend({
     __init__: function(params) {
         this._childrenNames = [];  // new instance
         this.$super(params);
+
+        // Force to update the parent of the children
+        var children = this.children;
+        for (var i=0 ; i&lt;children.length ; i++) {
+            children[i]._parentName = this.name;
+        }
     },
 
 
@@ -212,16 +220,17 @@ var Layout = Container.$extend({
     },
 
     setChildrenNames: function(childrenNames) {
-        for (var i=0 ; i&lt;this._childrenNames.length ; i++) {
-            var widget = photonui.getWidget(this._childrenNames[i]);
+        var i, widget;
+        for (i=0 ; i&lt;this._childrenNames.length ; i++) {
+            widget = Widget.getWidget(this._childrenNames[i]);
             var index = this._childrenNames.indexOf(widget.name);
             if (index &gt;= 0) {
                 widget._parentName = null;
             }
         }
         this._childrenNames = [];
-        for (var i=0 ; i&lt;childrenNames.length ; i++) {
-            var widget = photonui.getWidget(childrenNames[i]);
+        for (i=0 ; i&lt;childrenNames.length ; i++) {
+            widget = Widget.getWidget(childrenNames[i]);
             if (widget) {
                 if (widget.parent) {
                     widget.unparent();
@@ -242,8 +251,10 @@ var Layout = Container.$extend({
      */
     getChildren: function() {
         var children = [];
+        var widget;
         for (var i=0 ; i&lt;this._childrenNames.length ; i++) {
-            children.push(Widget.getWidget(this._childrenNames[i]));
+            widget = Widget.getWidget(this._childrenNames[i]);
+            if (widget instanceof Widget) children.push(widget);
         }
         return children;
     },
@@ -261,7 +272,6 @@ var Layout = Container.$extend({
     // Override getChildName / setChildName / getChild / setChild
 
     getChildName: function() {
-        console.warn(&quot;Warning: You cannot use getChild() on layout widgets, please use getChildren() instead.&quot;);
         return null;
     },
 
@@ -270,7 +280,6 @@ var Layout = Container.$extend({
     },
 
     getChild: function() {
-        console.warn(&quot;Warning: You cannot use getChild() on layout widgets, please use getChildren() instead.&quot;);
         return null;
     },
 
@@ -357,6 +366,23 @@ var Layout = Container.$extend({
      */
     _updateLayout: function() {
         throw &quot;Error: you should define the _updateLayout() method when you extend a layout widget.&quot;;
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        visibility = (visibility !== undefined) ? visibility : this.visible;
+        var children = this.children;
+        for (var i=0 ; i&lt;children.length ; i++) {
+            if (!(this.child instanceof Widget)) continue;
+            children[i]._visibilityChanged(visibility);
+        }
+        this.$super(visibility);
     },
 
 

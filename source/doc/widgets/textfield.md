@@ -8,7 +8,7 @@ demo_script: doc/widgets/textfield.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 var grid = new photonui.GridLayout({

@@ -8,7 +8,9 @@ Welcome to the PhotonUI quick start guide. If you want to learn how to build a U
 
 ### Get PhotonUI
 
-To start using PhotonUI in your projects, you first need to download it:
+#### Standalone Version
+
+To start using the standalone version of PhotonUI in your projects, you first need to download it:
 
 * [Download the latest zipped version on GitHub][zip]
 
@@ -45,6 +47,32 @@ in your page:
 
 [zip]: https://github.com/wanadev/PhotonUI/archive/master.zip
 [gh]: https://github.com/wanadev/PhotonUI
+
+
+#### NPM and Browserify
+
+If you are using [Browserify][browserify] in your project, a [NPM package][npm] is available. To install it, juste type:
+
+```
+npm install --save photonui
+```
+
+then, to use it in your project you just have to import PhotonUI:
+
+```js
+var photonui = require("photonui");
+```
+
+**NOTE:** do not forget to import CSS files in yout HTML page:
+
+```html
+<link rel="stylesheet" href="./node_modules/photonui/dist/photonui-base.css" />
+<link rel="stylesheet" href="./node_modules/photonui/dist/photonui-theme-particle.css" />
+```
+
+
+[browserify]: http://browserify.org/
+[npm]: https://www.npmjs.com/package/photonui
 
 
 ### Using Your First Widgets
@@ -118,9 +146,9 @@ photonui.domInsert(btn, "demo");
 
 ### Building More Complex UI Using Layouts
 
-There are mostly 5 types of widgets in PhotonUI:
+There are 5 main types of widgets in PhotonUI:
 
-* **Interactive widgets:** widgets used to get feedbacks from the user (e.g. [`photonui.Button`][doc-button], [`photonui.TextField`][doc-textfield],...),
+* **Interactive widgets:** widgets used to get feedback from the user (e.g. [`photonui.Button`][doc-button], [`photonui.TextField`][doc-textfield],...),
 
 * **Visual-Only widgets:** only intended to be displayed, no interaction with the user (e.g. [`photonui.FAIcon`][doc-faicon], [`photonui.Label`][doc-label], [`photonui.Separator`][doc-separator],...),
 
@@ -131,7 +159,7 @@ There are mostly 5 types of widgets in PhotonUI:
 * and **Layout widgets:** widgets used to arrange other widgets in order to create a UI (e.g. [`photonui.BoxLayout`][doc-boxlayout], [`photonui.GridLayout`][doc-gridlayout],...).
 
 
-So if we want to create a window with two buttons inside, we will need to use a layout. The most basic and simple layout widget is [`photonui.BoxLayout`][doc-boxlayout], let's use it to build our UI:
+So if we want to create a window with two buttons inside, we will need to use a layout. The most basic and simple layout widget is [`photonui.BoxLayout`][doc-boxlayout]. Let's use it to build our UI:
 
 
 ```javascript
@@ -169,7 +197,7 @@ btn1.registerCallback("foobar", "click", function(widget, event) {
 
 ### One more thing
 
-In the examples above, we "manually" built the UI by declaring many variables to store widgets and then assembling things all together. There is a more efficient way to build your UI (called "declarative way") that is used in most of the example of the PhotonUI documentation.
+In the examples above, we "manually" built the UI by declaring several variables to store widgets and then assembling everything. There is a more efficient way to build your UI (called "declarative way") that is used in most of the example of the PhotonUI documentation.
 
 Let's rewrite our last example (the window with two buttons) in the declarative way:
 
@@ -208,13 +236,12 @@ You are now ready to start using PhotonUI on your own project. :)
 [doc-button]: widgets/button.html
 [doc-translation]: widgets/translation.html
 [doc-faicon]: widgets/faicon.html
-[doc-boxlayout]: ../ref/classes/photonui.BoxLayout.html
-[doc-gridlayout]: ../ref/classes/photonui.GridLayout.html
+[doc-boxlayout]: widgets/boxlayout.html
+[doc-gridlayout]: widgets/gridlayout.html
 [doc-separator]: widgets/separator.html
 [doc-label]: widgets/label.html
 [doc-textfield]: widgets/textfield.html
-[doc-menuitem]: ../ref/classes/photonui.MenuItem.html
+[doc-menuitem]: widgets/menuitem.html
 [doc-filemanager]: widgets/filemanager.html
-[doc-mousemanager]: ../ref/classes/photonui.MouseManager.html
-
+[doc-mousemanager]: widgets/mousemanager.html
 

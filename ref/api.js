@@ -40,6 +40,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.SpriteSheet",
         "photonui.SubMenuItem",
         "photonui.Switch",
+        "photonui.TabItem",
+        "photonui.TabLayout",
         "photonui.Text",
         "photonui.TextAreaField",
         "photonui.TextField",

@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -257,7 +259,7 @@ var ColorPalette = Widget.$extend({
         this._palette = palette;
 
         if (!palette) {
-            var palette = ColorPalette.palette;
+            palette = ColorPalette.palette;
         }
 
         // Update
@@ -266,9 +268,9 @@ var ColorPalette = Widget.$extend({
 
         var e_tr, e_td, x, y;
         for (y=0 ; y&lt;palette.length ; y++) {
-            var e_tr = document.createElement(&quot;tr&quot;);
+            e_tr = document.createElement(&quot;tr&quot;);
             for (x=0 ; x&lt;palette[y].length ; x++) {
-                var e_td = document.createElement(&quot;td&quot;);
+                e_td = document.createElement(&quot;td&quot;);
                 e_td.style.backgroundColor = palette[y][x];
                 e_td.onclick = this.__onColorClicked.bind(this, palette[y][x]);
                 e_tr.appendChild(e_td);
@@ -309,7 +311,7 @@ var ColorPalette = Widget.$extend({
         this.__html.palette = document.createElement(&quot;table&quot;);
         this.__html.palette.className = &quot;photonui-widget photonui-colorpalette&quot;;
         this.__html.tbody = document.createElement(&quot;tbody&quot;);
-        this.__html.palette.appendChild(this.__html.tbody)
+        this.__html.palette.appendChild(this.__html.tbody);
     },
 
 

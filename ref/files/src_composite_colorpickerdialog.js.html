@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -171,7 +173,7 @@
  * @namespace photonui
  */
 
-var _ = require(&quot;../../lib/stone.js&quot;).gettext;
+var _ = require(&quot;stonejs&quot;).gettext;
 var Dialog = require(&quot;../container/dialog.js&quot;);
 var BoxLayout = require(&quot;../layout/boxlayout.js&quot;);
 var GridLayout = require(&quot;../layout/gridlayout.js&quot;);
@@ -204,8 +206,8 @@ var ColorPickerDialog = Dialog.$extend({
         this.__widgets = {};
         this._color = new Color();
 
-        var params = params || {};
-        if (params.title == undefined) params.title = _(&quot;Select a color...&quot;);
+        params = params || {};
+        if (params.title === undefined) params.title = _(&quot;Select a color...&quot;);
 
         this._registerWEvents([&quot;value-changed&quot;]);
 
@@ -222,6 +224,8 @@ var ColorPickerDialog = Dialog.$extend({
 
 
     // ====== Public properties ======
+
+    _padding: 10,
 
 
     /**
@@ -282,8 +286,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // == Main UI ==
         this.__widgets.hbox = new BoxLayout({
-            orientation: &quot;horizontal&quot;,
-            verticalPadding: 5
+            orientation: &quot;horizontal&quot;
         });
         this.child = this.__widgets.hbox;
 
@@ -446,7 +449,7 @@ var ColorPickerDialog = Dialog.$extend({
      * @private
      */
     _updateUi: function(color) {
-        var color = color || this.color;
+        color = color || this.color;
         this.__widgets.fieldRed.value = color.red;
         this.__widgets.fieldGreen.value = color.green;
         this.__widgets.fieldBlue.value = color.blue;

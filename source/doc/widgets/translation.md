@@ -3,6 +3,11 @@ layout: page-width-demo
 demo_script: doc/widgets/translation.js
 ---
 
+`photonui.Translation` adds internationalization functionalities to your application.
+
+**NOTE:** When you instantiate the translation widget, you can pass the `noGlobal` option to avoid the creation of the global `window._` function. If you do so, you will have to use the `lazyGettext()` method of `photonui.Translation` instead of the `_()` global function.
+
+
 ### Class Reference
 
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
@@ -15,21 +20,27 @@ demo_script: doc/widgets/translation.js
 * https://github.com/flozz/stone.js
 
 
-### More example
+### More examples
 
 ```javascript
 // Translation
 var tr = new photonui.Translation();
 tr.addCatalogs({
     "fr": {
-        "Hello World": "Bonjour le monde",
-        'Browser language is "{lang}".': "La langue du navigateur est « {lang} ».",
-        "Close": "Fermer"
+        "plural-forms": "nplurals=2; plural=(n > 1);",
+        "messages": {
+            "Hello World": ["Bonjour le monde"],
+            'Browser language is "{lang}".': ["La langue du navigateur est « {lang} »."],
+            "Close": ["Fermer"]
+        }
     },
     "it": {
-        "Hello World": "Buongiorno il mondo",
-        'Browser language is "{lang}".': 'La lingua del browser è "{lang}".',
-        "Close": "Chiudere"
+        "plural-forms": "nplurals=2; plural=(n != 1);",
+        "messages": {
+            "Hello World": ["Buongiorno il mondo"],
+            'Browser language is "{lang}".': ['La lingua del browser è "{lang}".'],
+            "Close": ["Chiudere"]
+        }
     }
 });
 tr.locale = tr.guessUserLanguage();  // Browser language
@@ -68,6 +79,7 @@ var win = new photonui.Window({
     visible: true,
     title: _("Hello World"),
     x: pos.x, y: pos.y + 100,
+    width: 250,
     padding: 20,
     child: new photonui.Button({
         text: _("Close"),

@@ -8,7 +8,7 @@ demo_script: doc/widgets/image.js
 * [{{ title }} class reference](../../ref/classes/photonui.{{ title }}.html)
 
 
-### More example
+### More examples
 
 ```javascript
 var img = new photonui.Image({

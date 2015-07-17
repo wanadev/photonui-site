@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -174,16 +176,26 @@
 
 var photonui = {};
 
+// Include libraries in module.
+photonui.lib = {};
+photonui.lib.Class = require(&quot;classyjs&quot;);
+photonui.lib.KeyboardJS = require(&quot;keyboardjs&quot;);
+photonui.lib.Stone = require(&quot;stonejs&quot;);
+
+// Base
 photonui.Helpers = require(&quot;./helpers.js&quot;);
 photonui.Base = require(&quot;./base.js&quot;);
 photonui.Widget = require(&quot;./widget.js&quot;);
 
+// Methods
+photonui.domInsert = photonui.Widget.domInsert;
+photonui.getWidget = photonui.Widget.getWidget;
+
+// Widgets
 photonui.FileManager = require(&quot;./nonvisual/filemanager.js&quot;);
 photonui.Translation = require(&quot;./nonvisual/translation.js&quot;);
-
 photonui.AccelManager = require(&quot;./nonvisual/accelmanager.js&quot;);
 photonui.MouseManager = require(&quot;./nonvisual/mousemanager.js&quot;);
-
 photonui.BaseIcon = require(&quot;./visual/baseicon.js&quot;);
 photonui.FAIcon = require(&quot;./visual/faicon.js&quot;);
 photonui.Image = require(&quot;./visual/image.js&quot;);
@@ -194,56 +206,40 @@ photonui.Label = require(&quot;./visual/label.js&quot;);
 photonui.Text = require(&quot;./visual/text.js&quot;);
 photonui.ProgressBar = require(&quot;./visual/progressbar.js&quot;);
 photonui.Separator = require(&quot;./visual/separator.js&quot;);
-
 photonui.Button = require(&quot;./interactive/button.js&quot;);
 photonui.ColorButton = require(&quot;./composite/colorbutton.js&quot;);
-
 photonui.CheckBox = require(&quot;./interactive/checkbox.js&quot;);
 photonui.Switch = require(&quot;./interactive/switch.js&quot;);
 photonui.ToggleButton = require(&quot;./interactive/togglebutton.js&quot;);
-
 photonui.Color = require(&quot;./nonvisual/color.js&quot;);
 photonui.ColorPalette = require(&quot;./interactive/colorpalette.js&quot;);
 photonui.ColorPicker = require(&quot;./interactive/colorpicker.js&quot;);
-
 photonui.Field = require(&quot;./interactive/field.js&quot;);
 photonui.NumericField = require(&quot;./interactive/numericfield.js&quot;);
 photonui.TextAreaField = require(&quot;./interactive/textareafield.js&quot;);
 photonui.TextField = require(&quot;./interactive/textfield.js&quot;);
-
 photonui.Select = require(&quot;./composite/select.js&quot;);
 photonui.FontSelect = require(&quot;./composite/fontselect.js&quot;);
-
 photonui.Slider = require(&quot;./interactive/slider.js&quot;);
-
 photonui.Container = require(&quot;./container/container.js&quot;);
 photonui.Layout = require(&quot;./layout/layout.js&quot;);
 photonui.BoxLayout = require(&quot;./layout/boxlayout.js&quot;);
 photonui.FluidLayout = require(&quot;./layout/fluidlayout.js&quot;);
 photonui.GridLayout = require(&quot;./layout/gridlayout.js&quot;);
-
 photonui.Menu = require(&quot;./layout/menu.js&quot;);
 photonui.MenuItem = require(&quot;./container/menuitem.js&quot;);
 photonui.SubMenuItem = require(&quot;./container/submenuitem.js&quot;);
-
 photonui.Viewport = require(&quot;./container/viewport.js&quot;);
-
 photonui.BaseWindow = require(&quot;./container/basewindow.js&quot;);
 photonui.Window = require(&quot;./container/window.js&quot;);
 photonui.PopupWindow = require(&quot;./container/popupwindow.js&quot;);
 photonui.Dialog = require(&quot;./container/dialog.js&quot;);
-
 photonui.ColorPickerDialog = require(&quot;./composite/colorpickerdialog.js&quot;);
 photonui.PopupMenu = require(&quot;./composite/popupmenu.js&quot;);
-
-photonui.domInsert = photonui.Widget.domInsert;
-photonui.getWidget = photonui.Widget.getWidget;
-
-// Include libraries in module.
-photonui.lib = {};
-photonui.lib.Class = require(&quot;classyjs&quot;);
-photonui.lib.KeyboardJS = require(&quot;keyboardjs&quot;);
-photonui.lib.Stone = require(&quot;../lib/stone&quot;);
+photonui.TabItem = require(&quot;./container/tabitem.js&quot;);
+photonui.TabLayout = require(&quot;./layout/tablayout.js&quot;);
+// [generator]
+// DO NOT MODIFY/REMOVE THE PREVIOUS COMMENT, IT IS USED BY THE WIDGET GENERATOR!
 
 module.exports = photonui;
 

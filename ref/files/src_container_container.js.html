@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -182,6 +184,18 @@ var Widget = require(&quot;../widget.js&quot;);
  */
 var Container = Widget.$extend({
 
+    // Constructor
+    __init__: function(params) {
+        this.$super(params);
+
+        this._updateProperties([&quot;horizontalChildExpansion&quot;, &quot;verticalChildExpansion&quot;]);
+
+        // Force to update the parent of the child
+        if (this._childName) {
+            this.child._parentName = this.name;
+        }
+    },
+
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
@@ -189,6 +203,54 @@ var Container = Widget.$extend({
 
     // ====== Public properties ======
 
+
+    /**
+     * Horizontaly expand the container&#x27;s child widget.
+     *
+     * @property horizontalChildExpansion
+     * @type Boolean
+     * @default true
+     */
+    _horizontalChildExpansion: true,
+
+    getHorizontalChildExpansion: function() {
+        return this._horizontalChildExpansion;
+    },
+
+    setHorizontalChildExpansion: function(expansion) {
+        this._horizontalChildExpansion = !!expansion;
+        if (!this.containerNode) return;
+        if (expansion) {
+            this.containerNode.classList.add(&quot;photonui-container-expand-child-horizontal&quot;);
+        }
+        else {
+            this.containerNode.classList.remove(&quot;photonui-container-expand-child-horizontal&quot;);
+        }
+    },
+
+    /**
+     * Verticaly expand the container&#x27;s child widget.
+     *
+     * @property verticalChildExpansion
+     * @type Boolean
+     * @default false
+     */
+    _verticalChildExpansion: false,
+
+    getVerticalChildExpansion: function() {
+        return this._verticalChildExpansion;
+    },
+
+    setVerticalChildExpansion: function(expansion) {
+        this._verticalChildExpansion = !!expansion;
+        if (!this.containerNode) return;
+        if (expansion) {
+            this.containerNode.classList.add(&quot;photonui-container-expand-child-vertical&quot;);
+        }
+        else {
+            this.containerNode.classList.remove(&quot;photonui-container-expand-child-vertical&quot;);
+        }
+    },
 
     /**
      * The child widget name.
@@ -230,7 +292,7 @@ var Container = Widget.$extend({
     },
 
     setChild: function(child) {
-        if ((!child) || (!child instanceof Widget)) {
+        if ((!child) || (!(child instanceof Widget))) {
             this.childName = null;
             return;
         }
@@ -245,8 +307,22 @@ var Container = Widget.$extend({
      * @readOnly
      */
     getContainerNode: function() {
-        console.warn(&quot;getContainerNode() method not implemented for this widget.&quot;);
         return null;
+    },
+
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (this.child instanceof Widget) {
+            this.child._visibilityChanged(visibility);
+        }
+        this.$super(visibility);
     },
 
 

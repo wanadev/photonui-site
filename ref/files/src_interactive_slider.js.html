@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -253,20 +255,9 @@ var Slider = NumericField.$extend({
         // Hack: force grip position after insertion into the DOM...
         setTimeout(function() {
             this.value = this.value;
-        }.bind(this), .01);
+        }.bind(this), 10);
 
         return this.__html.outer;
-    },
-
-    // Update the slider when setting the value...
-    setValue: function(value) {
-        this.$super(value);
-
-        var v = value - this.min;
-        var m = this.max - this.min;
-        var p = Math.min(Math.max(v/m, 0), 1);
-        var w = this.__html.slider.offsetWidth - this.__html.grip.offsetWidth - 4;
-        this.__html.grip.style.left = Math.floor(p*w) + 2 + &quot;px&quot;;
     },
 
 
@@ -279,6 +270,20 @@ var Slider = NumericField.$extend({
 
 
     /**
+     * Update the value in the html field.
+     *
+     * @method _updateFieldValue
+     * @private
+     */
+    _updateFieldValue: function() {
+        this.$super();
+        var v = this.value - this.min;
+        var m = this.max - this.min;
+        var p = Math.min(Math.max(v/m, 0), 1);
+        this.__html.grip.style.left = &quot;calc(&quot; + Math.floor(p*100) + &quot;% - &quot; + Math.floor(this.__html.grip.offsetWidth*p) + &quot;px)&quot;;
+    },
+
+    /**
      * Build the widget HTML.
      *
      * @method _buildHtml
@@ -288,7 +293,7 @@ var Slider = NumericField.$extend({
         this.$super();
 
         this.__html.outer = document.createElement(&quot;div&quot;);
-        this.__html.outer.className = &quot;photonui-widget photonui-slider&quot;;
+        this.__html.outer.className = &quot;photonui-widget photonui-slider photonui-widget-fixed-height&quot;;
 
         this.__html.slider = document.createElement(&quot;div&quot;);
         this.__html.slider.className = &quot;photonui-slider-slider&quot;;
@@ -299,7 +304,7 @@ var Slider = NumericField.$extend({
         this.__html.grip.className = &quot;photonui-slider-grip&quot;;
         this.__html.slider.appendChild(this.__html.grip);
 
-        this.__html.outer.appendChild(this.__html.field)
+        this.__html.outer.appendChild(this.__html.field);
     },
 
     /**
@@ -381,21 +386,21 @@ var Slider = NumericField.$extend({
         var wheelDelta = null;
 
         // Webkit
-        if (event.wheelDeltaY != undefined) {
+        if (event.wheelDeltaY !== undefined) {
             wheelDelta = event.wheelDeltaY;
         }
         // MSIE
-        if (event.wheelDelta != undefined) {
+        if (event.wheelDelta !== undefined) {
             wheelDelta = event.wheelDelta;
         }
         // Firefox
-        if (event.axis != undefined &amp;&amp; event.detail != undefined) {
+        if (event.axis !== undefined &amp;&amp; event.detail !== undefined) {
             if (event.axis == 2) { // Y
                 wheelDelta = - event.detail;
             }
         }
 
-        if (wheelDelta != null) {
+        if (wheelDelta !== null) {
             if (wheelDelta &gt;= 0) {
                 this.value += this.step;
             }

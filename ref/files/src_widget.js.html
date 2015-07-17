@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.1.1</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -77,6 +77,8 @@
                                 <li><a href="../classes/photonui.SpriteSheet.html">photonui.SpriteSheet</a></li>
                                 <li><a href="../classes/photonui.SubMenuItem.html">photonui.SubMenuItem</a></li>
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
+                                <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
+                                <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -134,7 +136,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -170,7 +172,7 @@
  * @namespace photonui
  */
 
-var Stone = require(&quot;../lib/stone.js&quot;);
+var Stone = require(&quot;stonejs&quot;);
 var Base = require(&quot;./base.js&quot;);
 var Helpers = require(&quot;./helpers.js&quot;);
 
@@ -183,11 +185,11 @@ var _widgets = {};
  * wEvents:
  *
  *   * show:
- *      - description: called when the widget is displayed.
+ *      - description: called when the widget is displayed (a change in the parent&#x27;s visibility can also trigger this event).
  *      - callback:    function(widget)
  *
- *   * hidden:
- *      - description: called when the widget is hidden.
+ *   * hide:
+ *      - description: called when the widget is hidden (a change in the parent&#x27;s visibility can also trigger this event).
  *      - callback:    function(widget)
  *
  * @class Widget
@@ -306,18 +308,17 @@ var Widget = Base.$extend({
     },
 
     setVisible: function(visible) {
-        this._visible = visible;
+        this._visible = !!visible;
         if (!this.html) {
             return;
         }
-        if (this.visible) {
+        if (visible) {
             this.html.style.display = &quot;&quot;;
-            this._callCallbacks(&quot;show&quot;);
         }
         else {
             this.html.style.display = &quot;none&quot;;
-            this._callCallbacks(&quot;hide&quot;);
         }
+        this._visibilityChanged();
     },
 
     /**
@@ -339,7 +340,7 @@ var Widget = Base.$extend({
             this.html.title = tooltip;
         }
         else {
-            delete this.html.removeAttribute(&quot;title&quot;);
+            this.html.removeAttribute(&quot;title&quot;);
         }
     },
 
@@ -374,7 +375,7 @@ var Widget = Base.$extend({
     setContextMenu: function(contextMenu) {
         var PopupWindow = require(&quot;./container/popupwindow.js&quot;);
         if (contextMenu instanceof PopupWindow) {
-            this.contextMenuName = contextMenu.name
+            this.contextMenuName = contextMenu.name;
         }
         else {
             this.contextMenuName = null;
@@ -395,7 +396,7 @@ var Widget = Base.$extend({
     },
 
     setLayoutOptions: function(layoutOptions) {
-        for (option in layoutOptions) {
+        for (var option in layoutOptions) {
             this._layoutOptions[option] = layoutOptions[option];
         }
     },
@@ -571,6 +572,23 @@ var Widget = Base.$extend({
         console.warn(&quot;_buildHtml() method not implemented for this widget.&quot;);
     },
 
+    /**
+     * Called when the visibility changes.
+     *
+     * @method _visibilityChanged
+     * @private
+     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     */
+    _visibilityChanged: function(visibility) {
+        visibility = (visibility !== undefined) ? visibility : this.visible;
+        if (visibility &amp;&amp; this.visible) {
+            this._callCallbacks(&quot;show&quot;);
+        }
+        else {
+            this._callCallbacks(&quot;hide&quot;);
+        }
+    },
+
 
     //////////////////////////////////////////
     // Internal Events Callbacks            //
@@ -621,7 +639,7 @@ Widget.getWidget = function(name) {
         return _widgets[name];
     }
     return null;
-}
+};
 
 Widget.e_parent = null;
 
@@ -633,12 +651,12 @@ Widget.e_parent = null;
  * @param {HTMLElement} element The DOM node or its id (optional, default=Widget.e_parent)
  */
 Widget.domInsert = function(widget, element) {
-    var element = element || Widget.e_parent || document.getElementsByTagName(&quot;body&quot;)[0];
+    element = element || Widget.e_parent || document.getElementsByTagName(&quot;body&quot;)[0];
     if (typeof(element) == &quot;string&quot;) {
         element = document.getElementById(element);
     }
     element.appendChild(widget.html);
-}
+};
 
 module.exports = Widget;
 

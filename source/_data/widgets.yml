@@ -1,5 +1,6 @@
 - name: AccelManager
-  url: /PhotonUI/ref/classes/photonui.AccelManager.html
+  image: doc/widgets/accelmanager.png
+  url: doc/widgets/accelmanager.html
 
 - name: BoxLayout
   image: doc/widgets/boxlayout.png
@@ -10,29 +11,36 @@
   url: doc/widgets/button.html
 
 - name: Canvas
-  url: /PhotonUI/ref/classes/photonui.Canvas.html
+  image: doc/widgets/canvas.png
+  url: doc/widgets/canvas.html
 
 - name: CheckBox
   image: doc/widgets/checkbox.png
   url: doc/widgets/checkbox.html
 
 - name: Color
-  url: /PhotonUI/ref/classes/photonui.Color.html
+  image: doc/widgets/color.png
+  url: doc/widgets/color.html
 
 - name: ColorButton
-  url: /PhotonUI/ref/classes/photonui.ColorButton.html
+  image: doc/widgets/colorbutton.png
+  url: doc/widgets/colorbutton.html
 
 - name: ColorPalette
-  url: /PhotonUI/ref/classes/photonui.ColorPalette.html
+  image: doc/widgets/colorpalette.png
+  url: doc/widgets/colorpalette.html
 
 - name: ColorPicker
-  url: /PhotonUI/ref/classes/photonui.ColorPicker.html
+  image: doc/widgets/colorpicker.png
+  url: doc/widgets/colorpicker.html
 
 - name: ColorPickerDialog
-  url: /PhotonUI/ref/classes/photonui.ColorPickerDialog.html
+  image: doc/widgets/colorpickerdialog.png
+  url: doc/widgets/colorpickerdialog.html
 
 - name: Dialog
-  url: /PhotonUI/ref/classes/photonui.Dialog.html
+  image: doc/widgets/dialog.png
+  url: doc/widgets/dialog.html
 
 - name: FAIcon
   image: doc/widgets/faicon.png
@@ -43,13 +51,16 @@
   url: doc/widgets/filemanager.html
 
 - name: FluidLayout
-  url: /PhotonUI/ref/classes/photonui.FluidLayout.html
+  image: doc/widgets/fluidlayout.png
+  url: doc/widgets/fluidlayout.html
 
 - name: FontSelect
-  url: /PhotonUI/ref/classes/photonui.FontSelect.html
+  image: doc/widgets/fontselect.png
+  url: doc/widgets/fontselect.html
 
 - name: GridLayout
-  url: /PhotonUI/ref/classes/photonui.GridLayout.html
+  image: doc/widgets/gridlayout.png
+  url: doc/widgets/gridlayout.html
 
 - name: Image
   image: doc/widgets/image.png
@@ -60,23 +71,28 @@
   url: doc/widgets/label.html
 
 - name: Menu
-  url: /PhotonUI/ref/classes/photonui.Menu.html
+  image: doc/widgets/menu.png
+  url: doc/widgets/menu.html
 
 - name: MenuItem
-  url: /PhotonUI/ref/classes/photonui.MenuItem.html
+  image: doc/widgets/menuitem.png
+  url: doc/widgets/menuitem.html
 
 - name: MouseManager
-  url: /PhotonUI/ref/classes/photonui.MouseManager.html
+  image: doc/widgets/mousemanager.png
+  url: doc/widgets/mousemanager.html
 
 - name: NumericField
   image: doc/widgets/numericfield.png
   url: doc/widgets/numericfield.html
 
 - name: PopupMenu
-  url: /PhotonUI/ref/classes/photonui.PopupMenu.html
+  image: doc/widgets/popupmenu.png
+  url: doc/widgets/popupmenu.html
 
 - name: PopupWindow
-  url: /PhotonUI/ref/classes/photonui.PopupWindow.html
+  image: doc/widgets/popupwindow.png
+  url: doc/widgets/popupwindow.html
 
 - name: ProgressBar
   image: doc/widgets/progressbar.png
@@ -98,16 +114,29 @@
   image: doc/widgets/spriteicon.png
   url: doc/widgets/spriteicon.html
 
+- name: SubMenuItem
+  image: doc/widgets/submenuitem.png
+  url: doc/widgets/submenuitem.html
+
 - name: Switch
   image: doc/widgets/switch.png
   url: doc/widgets/switch.html
+
+- name: TabItem
+  image: doc/widgets/tabitem.png
+  url: doc/widgets/tabitem.html
+
+- name: TabLayout
+  image: doc/widgets/tablayout.png
+  url: doc/widgets/tablayout.html
 
 - name: Text
   image: doc/widgets/text.png
   url: doc/widgets/text.html
 
 - name: TextAreaField
-  url: /PhotonUI/ref/classes/photonui.TextAreaField.html
+  image: doc/widgets/textareafield.png
+  url: doc/widgets/textareafield.html
 
 - name: TextField
   image: doc/widgets/textfield.png
@@ -118,10 +147,12 @@
   url: doc/widgets/translation.html
 
 - name: ToggleButton
-  url: /PhotonUI/ref/classes/photonui.ToggleButton.html
+  image: doc/widgets/togglebutton.png
+  url: doc/widgets/togglebutton.html
 
 - name: Viewport
-  url: /PhotonUI/ref/classes/photonui.Viewport.html
+  image: doc/widgets/viewport.png
+  url: doc/widgets/viewport.html
 
 - name: Window
   image: doc/widgets/window.png
