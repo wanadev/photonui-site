@@ -8,17 +8,16 @@ Creating a PhotonUI widget is not difficult, but you will need to learn a few th
 Also, I recommend you take a look at the [class reference documentation][ref] and the existing widgets to have a better understanding of how widgets work.
 
 
-### Class System
+### Abitbol: The Heart of The PhotonUI Class System
 
-The heart of the PhotonUI class system is based on a tiny javascript library called [Classy][classy].
-
+[Abitbol][abitbol] is a tiny javascript library that provides an handful (es5) class système.
 
 #### Dealing With Classes
 
-Declaring a class using Classy is very simple:
+Declaring a class using Abitbol is very simple:
 
 ```js
-var MyClass = Class.$extend({
+var MyClass = photonui.lib.Class.$extend({
 
     __init__: function(param1, param2) {
         // Constructor code here...
@@ -53,21 +52,13 @@ var MySecondClass = MyClass.$extend({
 });
 ```
 
-Classy provides a lot of interesting functionalities like "mixin" and class vars... For more information [read the Classy documentation][classy].
 
-__NOTE¹:__ PhotonUI does not expose the `Class` object in the global scope. If you want to use it, use `photonui.lib.Class` instead.
+#### Automagical Properties
 
-
-#### The "Base" Class
-
-In PhotonUI, no widget directly extends the `Class` class from Classy. All widgets extend at least the [`photonui.Base`][ref-base] class, and most often, the [`photonui.Widget`][ref-widget] class.
-
-##### Automagical Properties
-
-The [`photonui.Base`][ref-base] automatically creates properties from available getters and setters. To understand the principle, let's study a simple example:
+Abitbol automatically creates properties from available getters and setters. To understand the principle, let's study a simple example:
 
 ```js
-var Person = photonui.Base.$extend({
+var Person = photonui.lib.Class.$extend({
 
     _firstName: "",          //  !!!!!!  NOTE¹
     
@@ -100,9 +91,17 @@ var name = p.firstName;
 
 __NOTE¹:__ Pay attention to the underscore when we defined the `_firstName` attribute. Since the `firstName` property will be automatically created by the [`photonui.Base`][ref-base] class, you will create an infinite loop if you name your private property the same way.
 
+#### Going Deeper With Abitbol
+
+Abitbol provides a lot of other interesting functionalities like annotations, "mixin" and class vars... For more information [read the Abitbol documentation][abitbol].
 
 
-##### The Constructor
+### The "photonui.Base" Class
+
+In PhotonUI, no widget directly extends the Abitbol's `Class`. All widgets extend at least the [`photonui.Base`][ref-base] class, and most often, the [`photonui.Widget`][ref-widget] class.
+
+
+#### About The Constructor Method
 
 The constructor method of all PhotonUI widgets **always** calls the constructor method of the [`photonui.Base`][ref-base] class, generally using the `this.$super(params)`. The constructor method of each widgets also **always** takes one argument: a parameter object that should be passed to the [`photonui.Base`][ref-base] class constructor.
 
@@ -437,7 +436,7 @@ Voilà, you created your first PhotonUI widget. Not too difficult right ? ;)
 
 
 
-[classy]: http://web.archive.org/web/20140331110526/http://classy.pocoo.org/
+[abitbol]: https://github.com/wanadev/abitbol
 
 [ref]: ../ref/
 [ref-base]: ../ref/classes/photonui.Base.html
