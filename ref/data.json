@@ -1,8 +1,8 @@
 {
     "project": {
         "name": "photonui",
-        "description": "A work-in-progress MVC/Swing style JavaScript UI library.",
-        "version": "1.0.0",
+        "description": "A javascript framework to create user interfaces",
+        "version": "1.1.0",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
@@ -640,7 +640,7 @@
             },
             "tag": "main",
             "file": "src/widget.js",
-            "line": 45,
+            "line": 46,
             "description": "PhotonUI - Javascript Web User Interface.",
             "itemtype": "main"
         },
@@ -736,7 +736,7 @@
             "module": "PhotonUI",
             "namespace": "",
             "file": "src/layout/tablayout.js",
-            "line": 46,
+            "line": 44,
             "description": "PhotonUI - Javascript Web User Interface."
         },
         "NonVisual": {
@@ -800,7 +800,7 @@
             "module": "PhotonUI",
             "namespace": "",
             "file": "src/helpers.js",
-            "line": 44,
+            "line": 42,
             "description": "PhotonUI - Javascript Web User Interface.",
             "tag": "main",
             "itemtype": "main"
@@ -1010,8 +1010,8 @@
             "submodule": "Container",
             "namespace": "photonui",
             "file": "src/container/tabitem.js",
-            "line": 44,
-            "description": "Tab Item.",
+            "line": 42,
+            "description": "Tab Item.\n\n wEvents:\n\n  * click:\n    - description: called when the tab was clicked.\n    - callback:    function(widget, event)",
             "is_constructor": 1,
             "extends": "photonui.Container",
             "params": [
@@ -1315,7 +1315,7 @@
             "submodule": "Layout",
             "namespace": "photonui",
             "file": "src/layout/gridlayout.js",
-            "line": 42,
+            "line": 44,
             "description": "Grid layout.\n\nLayout Options:\n\n    {\n         x: <Number, default: 0>,\n         y: <Number, default: 0>,\n         cols: <Number, default: 1>,\n         rows: <Number, default: 1>,\n\n         horizontalAlign: <String (stretch|expand, start|left, center, end|right), default: stretch>,\n         verticalAlign: <String (stretch|expand, start|top, center|middle, end|bottom), default: stretch>,\n\n         minWidth: <Number, default: null>,\n         maxWidth: <Number, default: null>,\n         width: <Number, default: null>,\n\n         minHeight: <Number, default: null>,\n         maxHeight: <Number, default: null>,\n         height: <Number, default: null>,\n    }",
             "is_constructor": 1,
             "extends": "photonui.Layout"
@@ -1370,7 +1370,7 @@
             "submodule": "Layout",
             "namespace": "photonui",
             "file": "src/layout/tablayout.js",
-            "line": 46,
+            "line": 44,
             "description": "Tab Layout",
             "is_constructor": 1,
             "extends": "photonui.Layout",
@@ -1461,7 +1461,7 @@
             "namespace": "photonui",
             "file": "src/nonvisual/mousemanager.js",
             "line": 43,
-            "description": "Manage advanced mouse events on Widgets or HTMLElements.\n\nwEvents:\n\n  * mouse-event:\n     - description: Called for *ALL* mouse events.\n     - callback:    function(manager, mstate)\n\n  * mouse-down:\n     - description: Mouse button pressed.\n     - callback:    function(manager, mstate)\n\n  * mouse-up:\n     - description: Mouse button released.\n     - callback:    function(manager, mstate)\n\n  * click:\n     - description: Click...\n     - callback:    function(manager, mstate)\n\n  * double-click:\n     - description: Double click...\n     - callback:    function(manager, mstate)\n\n  * drag-start:\n     - description: Start dragging.\n     - callback:    function(manager, mstate)\n\n  * dragging:\n     - description: dragging.\n     - callback:    function(manager, mstate)\n\n  * drag-end:\n     - description: Stop dragging.\n     - callback:    function(manager, mstate)\n\n  * mouse-move:\n     - description: Mouse move on the element.\n     - callback:    function(manager, mstate)\n\n  * scroll-up:\n     - description: Scroll up.\n     - callback:    function(manager, mstate)\n\n  * scroll-down:\n     - description: Scroll down.\n     - callback:    function(manager, mstate)\n\n\nmstate:\n\n  A snapshot of the mouse state ath the moment when the event occured.\n\n    {\n        event: <Object>,       // The original js event\n        action: <String>,      // The event name (mouse-down/up/move, click, double-click, drag-start/end, dragging, scroll-up/down)\n        pageX: <Number>,       // X position, relative to page top-left corner.\n        pageY: <Number>,       // Y position, relative to page top-left corner.\n        x: <Number>,           // X position, relative to the HTML element.\n        y: <Number>,           // Y position, relative to the HTML element.\n        deltaX: <Number>,      // Delta X (current_x - previous_x)\n        deltaY: <Number>,      // Delta Y (current_y - previous_y)\n        btnLeft: <Boolean>,    // Current state of the mouse left button.\n        btnMiddle: <Boolean>,  // Current state of the mouse middle button.\n        btnRight: <Boolean>,   // Current state of the mouse right button.\n        button: <String>       // The button that triggered the last event (none, \"left\", \"middle\", \"right\").\n    }",
+            "description": "Manage advanced mouse events on Widgets or HTMLElements.\n\nwEvents:\n\n  * mouse-event:\n     - description: Called for *ALL* mouse events.\n     - callback:    function(manager, mstate)\n\n  * mouse-down:\n     - description: Mouse button pressed.\n     - callback:    function(manager, mstate)\n\n  * mouse-up:\n     - description: Mouse button released.\n     - callback:    function(manager, mstate)\n\n  * click:\n     - description: Click...\n     - callback:    function(manager, mstate)\n\n  * double-click:\n     - description: Double click...\n     - callback:    function(manager, mstate)\n\n  * drag-start:\n     - description: Start dragging.\n     - callback:    function(manager, mstate)\n\n  * dragging:\n     - description: dragging.\n     - callback:    function(manager, mstate)\n\n  * drag-end:\n     - description: Stop dragging.\n     - callback:    function(manager, mstate)\n\n  * mouse-move:\n     - description: Mouse move on the element.\n     - callback:    function(manager, mstate)\n\n  * scroll-up:\n     - description: Scroll up.\n     - callback:    function(manager, mstate)\n\n  * scroll-down:\n     - description: Scroll down.\n     - callback:    function(manager, mstate)\n\n\nmstate:\n\n  A snapshot of the mouse state ath the moment when the event occured.\n\n    {\n        event: <Object>,       // The original js event\n        action: <String>,      // The event name (mouse-down/up/move, click, double-click,\n                               //    drag-start/end, dragging, scroll-up/down)\n        pageX: <Number>,       // X position, relative to page top-left corner.\n        pageY: <Number>,       // Y position, relative to page top-left corner.\n        x: <Number>,           // X position, relative to the HTML element.\n        y: <Number>,           // Y position, relative to the HTML element.\n        deltaX: <Number>,      // Delta X (current_x - previous_x)\n        deltaY: <Number>,      // Delta Y (current_y - previous_y)\n        btnLeft: <Boolean>,    // Current state of the mouse left button.\n        btnMiddle: <Boolean>,  // Current state of the mouse middle button.\n        btnRight: <Boolean>,   // Current state of the mouse right button.\n        button: <String>       // The button that triggered the last event (none, \"left\", \"middle\", \"right\").\n    }",
             "is_constructor": 1,
             "extends": "photonui.Base",
             "params": [
@@ -1494,7 +1494,7 @@
             "submodule": "NonVisual",
             "namespace": "photonui",
             "file": "src/nonvisual/spritesheet.js",
-            "line": 44,
+            "line": 43,
             "description": "Sprite sheet (to use with SpriteIcon).",
             "is_constructor": 1,
             "extends": "photonui.Base"
@@ -1535,7 +1535,7 @@
             "submodule": "Visual",
             "namespace": "photonui",
             "file": "src/visual/baseicon.js",
-            "line": 42,
+            "line": 41,
             "description": "Base class for icons.",
             "is_constructor": 1,
             "extends": "photonui.Widget"
@@ -1576,7 +1576,7 @@
             "submodule": "Visual",
             "namespace": "photonui",
             "file": "src/visual/faicon.js",
-            "line": 42,
+            "line": 41,
             "description": "Font Awesome Icon.\n\nSpecial contructor params:\n\n     new photonui.FAIcon( {optional params...} )\n     new photonui.FAIcon( \"iconName\", {optional params...} )",
             "is_constructor": 1,
             "extends": "photonui.BaseIcon"
@@ -1668,7 +1668,7 @@
             "submodule": "Visual",
             "namespace": "photonui",
             "file": "src/visual/spriteicon.js",
-            "line": 43,
+            "line": 42,
             "description": "Sprite sheet based icons.\n\nSpecial contructor params:\n\n     new photonui.SpriteIcon( {optional params...} )\n     new photonui.SpriteIcon( \"spriteSheetName/iconName\", {optional params...} )",
             "is_constructor": 1,
             "extends": "photonui.BaseIcon"
@@ -1724,7 +1724,7 @@
             "submodule": "Helpers",
             "namespace": "photonui",
             "file": "src/helpers.js",
-            "line": 44,
+            "line": 42,
             "description": "Helpers.",
             "is_constructor": 1
         },
@@ -1739,8 +1739,8 @@
             "module": "PhotonUI",
             "namespace": "photonui",
             "file": "src/widget.js",
-            "line": 45,
-            "description": "Base class for all PhotonUI widgets.\n\nwEvents:\n\n  * show:\n     - description: called when the widget is displayed (a change in the parent's visibility can also trigger this event).\n     - callback:    function(widget)\n\n  * hide:\n     - description: called when the widget is hidden (a change in the parent's visibility can also trigger this event).\n     - callback:    function(widget)",
+            "line": 46,
+            "description": "Base class for all PhotonUI widgets.\n\nwEvents:\n\n  * show:\n     - description: called when the widget is displayed (a change in the parent's\n                    visibility can also trigger this event).\n     - callback:    function(widget)\n\n  * hide:\n     - description: called when the widget is hidden (a change in the parent's visibility\n                    can also trigger this event).\n     - callback:    function(widget)",
             "is_constructor": 1,
             "extends": "photonui.Base",
             "params": [
@@ -1755,7 +1755,7 @@
     "classitems": [
         {
             "file": "src/composite/colorbutton.js",
-            "line": 80,
+            "line": 78,
             "description": "The value (color in rgb hexadecimal format (e.g. \"#ff0000\")).",
             "itemtype": "property",
             "name": "value",
@@ -1767,7 +1767,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 94,
+            "line": 92,
             "description": "The color.",
             "itemtype": "property",
             "name": "color",
@@ -1779,7 +1779,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 121,
+            "line": 119,
             "description": "Display only the color picker dialog instead of showing the palette first.",
             "itemtype": "property",
             "name": "dialogOnly",
@@ -1792,7 +1792,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 156,
+            "line": 149,
             "description": "Update the button content",
             "itemtype": "method",
             "name": "_update",
@@ -1805,7 +1805,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 166,
+            "line": 159,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -1818,7 +1818,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 183,
+            "line": 176,
             "description": "Make the UI.",
             "itemtype": "method",
             "name": "_buildUi",
@@ -1831,7 +1831,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 220,
+            "line": 212,
             "description": "Called when the button is clicked.",
             "itemtype": "method",
             "name": "__onButtonClicked",
@@ -1850,7 +1850,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 238,
+            "line": 229,
             "description": "Called when the palette color change.",
             "itemtype": "method",
             "name": "__onPaletteValueChanged",
@@ -1875,7 +1875,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 250,
+            "line": 241,
             "itemtype": "method",
             "name": "__onColorChanged",
             "access": "private",
@@ -1887,7 +1887,7 @@
         },
         {
             "file": "src/composite/colorbutton.js",
-            "line": 259,
+            "line": 250,
             "itemtype": "method",
             "name": "__onCustomButtonClicked",
             "access": "private",
@@ -1899,7 +1899,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 94,
+            "line": 93,
             "description": "The color.",
             "itemtype": "property",
             "name": "color",
@@ -1911,7 +1911,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 142,
+            "line": 139,
             "description": "Make the UI.",
             "itemtype": "method",
             "name": "_buildUi",
@@ -1924,7 +1924,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 308,
+            "line": 324,
             "description": "Update the fields of the UI.",
             "itemtype": "method",
             "name": "_updateUi",
@@ -1937,7 +1937,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 330,
+            "line": 344,
             "itemtype": "method",
             "name": "__onCancel",
             "access": "private",
@@ -1949,7 +1949,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 343,
+            "line": 357,
             "itemtype": "method",
             "name": "__onValidate",
             "access": "private",
@@ -1961,7 +1961,7 @@
         },
         {
             "file": "src/composite/colorpickerdialog.js",
-            "line": 357,
+            "line": 371,
             "itemtype": "method",
             "name": "__onColorChanged",
             "access": "private",
@@ -1973,7 +1973,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 72,
+            "line": 71,
             "description": "The font list",
             "itemtype": "property",
             "name": "fonts",
@@ -1986,7 +1986,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 92,
+            "line": 91,
             "description": "The placeholder displayed if nothing is selected.",
             "itemtype": "property",
             "name": "Placeholder",
@@ -1999,7 +1999,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 110,
+            "line": 106,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -2017,7 +2017,7 @@
         },
         {
             "file": "src/composite/fontselect.js",
-            "line": 127,
+            "line": 121,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2030,7 +2030,7 @@
         },
         {
             "file": "src/composite/popupmenu.js",
-            "line": 88,
+            "line": 86,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2043,7 +2043,7 @@
         },
         {
             "file": "src/composite/popupmenu.js",
-            "line": 109,
+            "line": 105,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -2056,7 +2056,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 89,
+            "line": 86,
             "description": "The field value.",
             "itemtype": "property",
             "name": "value",
@@ -2069,7 +2069,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 122,
+            "line": 121,
             "description": "The placeholder displayed if nothing is selected.",
             "itemtype": "property",
             "name": "Placeholder",
@@ -2082,7 +2082,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 139,
+            "line": 138,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -2095,7 +2095,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 152,
+            "line": 151,
             "description": "Layout children widgets name.",
             "itemtype": "property",
             "name": "childrenNames",
@@ -2108,7 +2108,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 165,
+            "line": 164,
             "description": "Width of the container node.",
             "itemtype": "property",
             "name": "popupWidth",
@@ -2121,7 +2121,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 175,
+            "line": 174,
             "description": "Height of the popup container node.",
             "itemtype": "property",
             "name": "popupHeight",
@@ -2134,7 +2134,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 185,
+            "line": 184,
             "description": "Maximum width of the popup container node.",
             "itemtype": "property",
             "name": "popupMaxWidth",
@@ -2147,7 +2147,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 195,
+            "line": 194,
             "description": "Minimum width of the popup container node.",
             "itemtype": "property",
             "name": "popupMinWidth",
@@ -2160,7 +2160,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 206,
+            "line": 205,
             "description": "Maximum height of the popup container node.",
             "itemtype": "property",
             "name": "popupMaxHeight",
@@ -2173,7 +2173,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 216,
+            "line": 215,
             "description": "Minimum height of the popup container node.",
             "itemtype": "property",
             "name": "popupMinHeight",
@@ -2186,7 +2186,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 226,
+            "line": 225,
             "description": "Popup width (outer HTML element).",
             "itemtype": "property",
             "name": "popupOffsetWidth",
@@ -2199,7 +2199,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 235,
+            "line": 234,
             "description": "Popup height (outer HTML element).",
             "itemtype": "property",
             "name": "popupOffsetHeight",
@@ -2212,7 +2212,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 244,
+            "line": 243,
             "description": "Window container node padding.",
             "itemtype": "property",
             "name": "popupPadding",
@@ -2225,7 +2225,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 254,
+            "line": 253,
             "description": "Define if icon on menu items are visible.",
             "itemtype": "property",
             "name": "iconVisible",
@@ -2238,7 +2238,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 272,
+            "line": 270,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -2252,7 +2252,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 284,
+            "line": 282,
             "description": "The popupMenu.",
             "itemtype": "property",
             "name": "__popupMenu",
@@ -2266,7 +2266,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 302,
+            "line": 297,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -2289,7 +2289,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 314,
+            "line": 309,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2300,7 +2300,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 328,
+            "line": 321,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2313,7 +2313,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 340,
+            "line": 333,
             "description": "Update the popup items binding.",
             "itemtype": "method",
             "name": "_updateItemsBinding",
@@ -2326,7 +2326,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 363,
+            "line": 354,
             "itemtype": "method",
             "name": "__onClick",
             "access": "private",
@@ -2344,7 +2344,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 375,
+            "line": 366,
             "itemtype": "method",
             "name": "__onItemClicked",
             "access": "private",
@@ -2363,7 +2363,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 87,
+            "line": 84,
             "description": "Window position.\n\n    {x: Number, y: Number}",
             "itemtype": "property",
             "name": "position",
@@ -2376,7 +2376,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 123,
+            "line": 119,
             "description": "The X position of the Window.",
             "itemtype": "property",
             "name": "x",
@@ -2389,7 +2389,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 140,
+            "line": 136,
             "description": "The Y position of the Window.",
             "itemtype": "property",
             "name": "y",
@@ -2402,7 +2402,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 157,
+            "line": 153,
             "description": "Width of the container node.",
             "itemtype": "property",
             "name": "width",
@@ -2415,7 +2415,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 183,
+            "line": 178,
             "description": "Height of the container node.",
             "itemtype": "property",
             "name": "height",
@@ -2428,7 +2428,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 209,
+            "line": 203,
             "description": "Minimum width of the container node.",
             "itemtype": "property",
             "name": "minWidth",
@@ -2441,7 +2441,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 232,
+            "line": 225,
             "description": "Minimum height of the container node.",
             "itemtype": "property",
             "name": "minHeight",
@@ -2454,7 +2454,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 255,
+            "line": 247,
             "description": "Maximum width of the container node.",
             "itemtype": "property",
             "name": "maxWidth",
@@ -2467,7 +2467,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 278,
+            "line": 269,
             "description": "Maximum height of the container node.",
             "itemtype": "property",
             "name": "maxHeight",
@@ -2480,7 +2480,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 301,
+            "line": 291,
             "description": "Window container node padding.",
             "itemtype": "property",
             "name": "padding",
@@ -2493,7 +2493,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 319,
+            "line": 309,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -2507,7 +2507,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 331,
+            "line": 321,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -2520,7 +2520,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 351,
+            "line": 338,
             "description": "Center the window.",
             "itemtype": "method",
             "name": "center",
@@ -2531,7 +2531,7 @@
         },
         {
             "file": "src/container/basewindow.js",
-            "line": 369,
+            "line": 356,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2544,7 +2544,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 70,
+            "line": 68,
             "description": "Horizontaly expand the container's child widget.",
             "itemtype": "property",
             "name": "horizontalChildExpansion",
@@ -2557,7 +2557,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 94,
+            "line": 93,
             "description": "Verticaly expand the container's child widget.",
             "itemtype": "property",
             "name": "verticalChildExpansion",
@@ -2629,7 +2629,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 199,
+            "line": 197,
             "description": "Remove the given child.",
             "itemtype": "method",
             "name": "removeChild",
@@ -2647,7 +2647,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 211,
+            "line": 209,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2658,7 +2658,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 75,
+            "line": 72,
             "description": "Dialog button widgets name.",
             "itemtype": "property",
             "name": "buttonsNames",
@@ -2671,7 +2671,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 111,
+            "line": 109,
             "description": "Dialog buttons widgets.",
             "itemtype": "property",
             "name": "buttons",
@@ -2684,7 +2684,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 147,
+            "line": 144,
             "description": "Add a button to the dialog.",
             "itemtype": "method",
             "name": "addButton",
@@ -2702,7 +2702,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 165,
+            "line": 162,
             "description": "Remove a button from the dialog.",
             "itemtype": "method",
             "name": "removeButton",
@@ -2720,7 +2720,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 186,
+            "line": 183,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2731,7 +2731,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 205,
+            "line": 200,
             "description": "Update dialog buttons.",
             "itemtype": "method",
             "name": "_updateButtons",
@@ -2744,7 +2744,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 219,
+            "line": 214,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2757,7 +2757,7 @@
         },
         {
             "file": "src/container/dialog.js",
-            "line": 234,
+            "line": 229,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -2777,7 +2777,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 73,
+            "line": 70,
             "description": "An optional value for the item (can be used in select).",
             "itemtype": "property",
             "name": "value",
@@ -2790,7 +2790,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 90,
+            "line": 87,
             "description": "The item text.",
             "itemtype": "property",
             "name": "text",
@@ -2803,7 +2803,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 109,
+            "line": 106,
             "description": "Right icon widget name.",
             "itemtype": "property",
             "name": "iconName",
@@ -2816,7 +2816,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 130,
+            "line": 127,
             "description": "Right icon widget.",
             "itemtype": "property",
             "name": "icon",
@@ -2829,7 +2829,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 149,
+            "line": 146,
             "description": "Determine if the item is active (highlighted).",
             "itemtype": "property",
             "name": "active",
@@ -2842,7 +2842,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 173,
+            "line": 169,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -2856,7 +2856,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 185,
+            "line": 181,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -2869,7 +2869,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 205,
+            "line": 198,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2882,7 +2882,7 @@
         },
         {
             "file": "src/container/popupwindow.js",
-            "line": 61,
+            "line": 60,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -2895,7 +2895,7 @@
         },
         {
             "file": "src/container/popupwindow.js",
-            "line": 81,
+            "line": 77,
             "description": "Pop the window at the given position.",
             "itemtype": "method",
             "name": "popupXY",
@@ -2918,7 +2918,7 @@
         },
         {
             "file": "src/container/popupwindow.js",
-            "line": 115,
+            "line": 111,
             "description": "Pop the window at the best position for the given widget.",
             "itemtype": "method",
             "name": "popupWidget",
@@ -2936,7 +2936,7 @@
         },
         {
             "file": "src/container/popupwindow.js",
-            "line": 165,
+            "line": 156,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2949,7 +2949,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 69,
+            "line": 66,
             "description": "The submenu widget name.",
             "itemtype": "property",
             "name": "menuName",
@@ -2962,7 +2962,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 109,
+            "line": 107,
             "description": "The submenu widget.",
             "itemtype": "property",
             "name": "menu",
@@ -2975,7 +2975,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 135,
+            "line": 130,
             "itemtype": "method",
             "name": "__onToggleFold",
             "access": "private",
@@ -2987,7 +2987,7 @@
         },
         {
             "file": "src/container/submenuitem.js",
-            "line": 143,
+            "line": 138,
             "itemtype": "method",
             "name": "__onItemClicked",
             "access": "private",
@@ -2999,7 +2999,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 71,
+            "line": 73,
             "description": "Tab title.",
             "itemtype": "property",
             "name": "title",
@@ -3012,7 +3012,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 90,
+            "line": 92,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3026,7 +3026,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 102,
+            "line": 104,
             "description": "Tab Html element.",
             "itemtype": "property",
             "name": "tabHtml",
@@ -3040,7 +3040,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 114,
+            "line": 116,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3053,7 +3053,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 125,
+            "line": 127,
             "description": "Is the widget visible or hidden.",
             "itemtype": "property",
             "name": "visible",
@@ -3066,7 +3066,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 169,
+            "line": 173,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3078,8 +3078,27 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/container/tabitem.js",
+            "line": 190,
+            "description": "Called when the tab is clicked.",
+            "itemtype": "method",
+            "name": "__onClick",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/container/viewport.js",
-            "line": 69,
+            "line": 67,
             "description": "Window container node padding.",
             "itemtype": "property",
             "name": "padding",
@@ -3092,7 +3111,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 87,
+            "line": 85,
             "description": "Visibility of the vertical scrollbar.\n\n  * `true`: displayed,\n  * `false`: hidden,\n  * `null`: auto.",
             "itemtype": "property",
             "name": "verticalScrollbar",
@@ -3105,7 +3124,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 117,
+            "line": 113,
             "description": "Visibility of the horizontal scrollbar.\n\n  * `true`: displayed,\n  * `false`: hidden,\n  * `null`: auto.",
             "itemtype": "property",
             "name": "horizontalScrollbar",
@@ -3118,7 +3137,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 147,
+            "line": 141,
             "description": "Minimum width.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent width\n    * null: no minimum width",
             "itemtype": "property",
             "name": "minWidth",
@@ -3131,7 +3150,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 169,
+            "line": 163,
             "description": "Maximum width.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent width\n    * null: no maximum width",
             "itemtype": "property",
             "name": "maxWidth",
@@ -3144,7 +3163,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 191,
+            "line": 185,
             "description": "Width.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent width\n    * null: auto",
             "itemtype": "property",
             "name": "width",
@@ -3157,7 +3176,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 213,
+            "line": 207,
             "description": "Minimum height.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent height\n    * null: no minimum height",
             "itemtype": "property",
             "name": "minHeight",
@@ -3170,7 +3189,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 235,
+            "line": 229,
             "description": "Maximum height.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent height\n    * null: no maximum height",
             "itemtype": "property",
             "name": "maxHeight",
@@ -3183,7 +3202,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 257,
+            "line": 251,
             "description": "Height.\n\n    * Number: the size in px\n    * Infinity: 100% of the parent height\n    * null: auto",
             "itemtype": "property",
             "name": "height",
@@ -3196,7 +3215,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 279,
+            "line": 273,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3210,7 +3229,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 292,
+            "line": 286,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3223,7 +3242,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 312,
+            "line": 303,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3236,7 +3255,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 323,
+            "line": 314,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -3256,7 +3275,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 336,
+            "line": 329,
             "description": "HACK: set the right height.",
             "itemtype": "method",
             "name": "_sizingHack",
@@ -3269,7 +3288,7 @@
         },
         {
             "file": "src/container/viewport.js",
-            "line": 378,
+            "line": 375,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -3320,7 +3339,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 147,
+            "line": 146,
             "description": "Modal window?",
             "itemtype": "property",
             "name": "modal",
@@ -3333,7 +3352,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 175,
+            "line": 173,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3346,7 +3365,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 211,
+            "line": 205,
             "description": "Bring the window to front.",
             "itemtype": "method",
             "name": "moveToFront",
@@ -3357,7 +3376,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 225,
+            "line": 219,
             "description": "Bring the window to the back.",
             "itemtype": "method",
             "name": "moveToBack",
@@ -3368,7 +3387,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 239,
+            "line": 233,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -3379,7 +3398,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 257,
+            "line": 249,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3392,7 +3411,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 287,
+            "line": 279,
             "description": "Update all the windows.",
             "itemtype": "method",
             "name": "_updateWindowList",
@@ -3405,7 +3424,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 315,
+            "line": 304,
             "description": "Start moving the window.",
             "itemtype": "method",
             "name": "_moveDragStart",
@@ -3425,7 +3444,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 333,
+            "line": 322,
             "description": "Move the window.",
             "itemtype": "method",
             "name": "_moveDragging",
@@ -3455,7 +3474,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 352,
+            "line": 341,
             "description": "Stop moving the window.",
             "itemtype": "method",
             "name": "_moveDragEnd",
@@ -3475,7 +3494,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 365,
+            "line": 354,
             "description": "Close button clicked.",
             "itemtype": "method",
             "name": "_closeButtonClicked",
@@ -3495,7 +3514,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 376,
+            "line": 365,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -3508,7 +3527,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 80,
+            "line": 77,
             "description": "The button text.",
             "itemtype": "property",
             "name": "text",
@@ -3521,7 +3540,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 99,
+            "line": 96,
             "description": "Define if the button text is displayed or hidden.",
             "itemtype": "property",
             "name": "textVisible",
@@ -3534,7 +3553,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 117,
+            "line": 114,
             "description": "Left icon widget name.",
             "itemtype": "property",
             "name": "leftIconName",
@@ -3547,7 +3566,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 139,
+            "line": 136,
             "description": "Left icon widget.",
             "itemtype": "property",
             "name": "leftIcon",
@@ -3560,7 +3579,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 158,
+            "line": 155,
             "description": "Define if the left icon is displayed or hidden.",
             "itemtype": "property",
             "name": "leftIconVisible",
@@ -3573,7 +3592,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 176,
+            "line": 173,
             "description": "Right icon widget name.",
             "itemtype": "property",
             "name": "rightIconName",
@@ -3586,7 +3605,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 198,
+            "line": 195,
             "description": "Right icon widget.",
             "itemtype": "property",
             "name": "rightIcon",
@@ -3599,7 +3618,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 217,
+            "line": 214,
             "description": "Define if the right icon is displayed or hidden.",
             "itemtype": "property",
             "name": "rightIconVisible",
@@ -3612,7 +3631,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 235,
+            "line": 232,
             "description": "Define the button appearance.\n\n  * `normal`\n  * `flat`",
             "itemtype": "property",
             "name": "appearance",
@@ -3625,7 +3644,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 262,
+            "line": 258,
             "description": "Button's color.\n\nThe available colors depends on the theme. Particle, the\ndefault PhotonUI theme provides the following colors:\n\n  * `blue`\n  * `red`\n  * `yellow`\n  * `green`\n  * null (default)",
             "itemtype": "property",
             "name": "buttonColor",
@@ -3638,7 +3657,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 294,
+            "line": 290,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3652,7 +3671,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 315,
+            "line": 308,
             "description": "Update the button content",
             "itemtype": "method",
             "name": "_update",
@@ -3665,7 +3684,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 345,
+            "line": 338,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3678,7 +3697,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 374,
+            "line": 365,
             "description": "Called when the button is clicked.",
             "itemtype": "method",
             "name": "__onButtonClicked",
@@ -3697,7 +3716,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 78,
+            "line": 75,
             "description": "The input value.",
             "itemtype": "property",
             "name": "value",
@@ -3710,7 +3729,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 93,
+            "line": 90,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3724,7 +3743,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 114,
+            "line": 108,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3737,7 +3756,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 139,
+            "line": 134,
             "itemtype": "method",
             "name": "__onChange",
             "access": "private",
@@ -3755,7 +3774,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 152,
+            "line": 147,
             "itemtype": "method",
             "name": "__onSpanClick",
             "access": "private",
@@ -3773,7 +3792,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 163,
+            "line": 158,
             "itemtype": "method",
             "name": "__onCheckboxClick",
             "access": "private",
@@ -3791,7 +3810,7 @@
         },
         {
             "file": "src/interactive/checkbox.js",
-            "line": 172,
+            "line": 167,
             "itemtype": "method",
             "name": "__onSpanKeyPress",
             "access": "private",
@@ -3809,7 +3828,7 @@
         },
         {
             "file": "src/interactive/colorpalette.js",
-            "line": 76,
+            "line": 73,
             "description": "The value (color in rgb hexadecimal format (e.g. \"#ff0000\")).",
             "itemtype": "property",
             "name": "value",
@@ -3821,7 +3840,7 @@
         },
         {
             "file": "src/interactive/colorpalette.js",
-            "line": 90,
+            "line": 87,
             "description": "The color.",
             "itemtype": "property",
             "name": "color",
@@ -3833,7 +3852,7 @@
         },
         {
             "file": "src/interactive/colorpalette.js",
-            "line": 108,
+            "line": 105,
             "description": "The color palette.",
             "itemtype": "property",
             "name": "palette",
@@ -3860,7 +3879,7 @@
         },
         {
             "file": "src/interactive/colorpalette.js",
-            "line": 167,
+            "line": 165,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3873,7 +3892,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 98,
+            "line": 96,
             "description": "The value (color in rgb hexadecimal format (e.g. \"#ff0000\")).",
             "itemtype": "property",
             "name": "value",
@@ -3885,7 +3904,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 114,
+            "line": 112,
             "description": "The color.",
             "itemtype": "property",
             "name": "color",
@@ -3897,7 +3916,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 141,
+            "line": 140,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3911,7 +3930,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 155,
+            "line": 154,
             "description": "Buffer canvas for hue circle.",
             "itemtype": "property",
             "name": "__buffH",
@@ -3925,7 +3944,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 164,
+            "line": 163,
             "description": "Buffer canvas for saturation/brightness square.",
             "itemtype": "property",
             "name": "__buffSB",
@@ -3939,7 +3958,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 173,
+            "line": 172,
             "description": "Mouse manager.",
             "itemtype": "property",
             "name": "__mouseManager",
@@ -3953,7 +3972,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 182,
+            "line": 181,
             "description": "FLAG: Disable SB square update.",
             "itemtype": "property",
             "name": "__disableSBUpdate",
@@ -3968,7 +3987,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 204,
+            "line": 201,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3981,7 +4000,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 231,
+            "line": 227,
             "description": "Update hue circle",
             "itemtype": "method",
             "name": "_updateH",
@@ -3994,7 +4013,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 260,
+            "line": 256,
             "description": "Update saturation/brightness square mask",
             "itemtype": "method",
             "name": "_updateSBmask",
@@ -4007,7 +4026,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 294,
+            "line": 290,
             "description": "Update saturation/brightness square",
             "itemtype": "method",
             "name": "_updateSB",
@@ -4020,7 +4039,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 327,
+            "line": 325,
             "description": "Update the canvas",
             "itemtype": "method",
             "name": "_updateCanvas",
@@ -4033,7 +4052,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 367,
+            "line": 365,
             "description": "Is the pointer on the SB Square?",
             "itemtype": "method",
             "name": "_pointerOnSquare",
@@ -4056,7 +4075,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 379,
+            "line": 377,
             "description": "Is the pointer on the hue circle?",
             "itemtype": "method",
             "name": "_pointerOnCircle",
@@ -4079,7 +4098,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 394,
+            "line": 392,
             "description": "the angle of the pointer with the horizontal line that pass by the center of the hue circle.",
             "itemtype": "method",
             "name": "_pointerAngle",
@@ -4126,7 +4145,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 435,
+            "line": 434,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -4150,7 +4169,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 455,
+            "line": 453,
             "itemtype": "method",
             "name": "__onDragStart",
             "access": "private",
@@ -4174,7 +4193,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 473,
+            "line": 470,
             "itemtype": "method",
             "name": "__onDraggingSquare",
             "access": "private",
@@ -4198,7 +4217,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 485,
+            "line": 482,
             "itemtype": "method",
             "name": "__onDraggingCircle",
             "access": "private",
@@ -4222,7 +4241,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 496,
+            "line": 493,
             "itemtype": "method",
             "name": "__onDragEnd",
             "access": "private",
@@ -4246,7 +4265,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 508,
+            "line": 505,
             "itemtype": "method",
             "name": "__onValueChanged",
             "access": "private",
@@ -4258,7 +4277,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 92,
+            "line": 89,
             "description": "The field value.",
             "itemtype": "property",
             "name": "value",
@@ -4271,7 +4290,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 107,
+            "line": 104,
             "description": "The placeholder displayed if the field is empty.",
             "itemtype": "property",
             "name": "Placeholder",
@@ -4284,7 +4303,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 125,
+            "line": 122,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4298,7 +4317,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 146,
+            "line": 140,
             "description": "Bind Field events.",
             "itemtype": "method",
             "name": "_bindFieldEvents",
@@ -4311,7 +4330,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 184,
+            "line": 176,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -4330,7 +4349,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 73,
+            "line": 70,
             "description": "The minimum value of the field.",
             "itemtype": "property",
             "name": "min",
@@ -4342,7 +4361,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 90,
+            "line": 87,
             "description": "The maximum value of the field.",
             "itemtype": "property",
             "name": "max",
@@ -4354,7 +4373,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 107,
+            "line": 104,
             "description": "The incrementation step of the field.",
             "itemtype": "property",
             "name": "step",
@@ -4366,7 +4385,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 124,
+            "line": 121,
             "description": "The number of digit after the decimal dot.",
             "itemtype": "property",
             "name": "decimalDigits",
@@ -4379,7 +4398,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 141,
+            "line": 138,
             "description": "The decimal symbol (\".\" or \",\").",
             "itemtype": "property",
             "name": "decimalSymbol",
@@ -4392,7 +4411,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 158,
+            "line": 155,
             "description": "The field value.",
             "itemtype": "property",
             "name": "value",
@@ -4405,7 +4424,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 185,
+            "line": 179,
             "description": "Update the value (in the widget).",
             "itemtype": "method",
             "name": "_updateValue",
@@ -4425,7 +4444,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 215,
+            "line": 209,
             "description": "Update the value in the html field.",
             "itemtype": "method",
             "name": "_updateFieldValue",
@@ -4438,7 +4457,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 225,
+            "line": 219,
             "description": "Validate the user inputs.",
             "itemtype": "method",
             "name": "_validateInput",
@@ -4462,7 +4481,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 248,
+            "line": 242,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4475,7 +4494,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 266,
+            "line": 258,
             "itemtype": "method",
             "name": "__onKeypress",
             "access": "private",
@@ -4493,7 +4512,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 290,
+            "line": 285,
             "itemtype": "method",
             "name": "__onKeyup",
             "access": "private",
@@ -4511,7 +4530,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 303,
+            "line": 298,
             "itemtype": "method",
             "name": "__onChange",
             "access": "private",
@@ -4529,7 +4548,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 313,
+            "line": 308,
             "itemtype": "method",
             "name": "__onMouseWheel",
             "access": "private",
@@ -4547,7 +4566,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 352,
+            "line": 346,
             "itemtype": "method",
             "name": "__onKeydown",
             "access": "private",
@@ -4565,7 +4584,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 83,
+            "line": 80,
             "description": "Define if the numeric field should be displayed.",
             "itemtype": "property",
             "name": "fieldVisible",
@@ -4578,7 +4597,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 109,
+            "line": 105,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4592,7 +4611,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 135,
+            "line": 128,
             "description": "Update the value in the html field.",
             "itemtype": "method",
             "name": "_updateFieldValue",
@@ -4605,7 +4624,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 149,
+            "line": 143,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4618,7 +4637,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 173,
+            "line": 167,
             "description": "Update the value form a mouse event occured on the slider.",
             "itemtype": "method",
             "name": "_updateFromMouseEvent",
@@ -4637,7 +4656,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 196,
+            "line": 188,
             "itemtype": "method",
             "name": "__onSliderMouseDown",
             "access": "private",
@@ -4655,7 +4674,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 207,
+            "line": 199,
             "itemtype": "method",
             "name": "__onSliderMouseMove",
             "access": "private",
@@ -4673,7 +4692,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 216,
+            "line": 208,
             "itemtype": "method",
             "name": "__onSliderMouseUp",
             "access": "private",
@@ -4691,7 +4710,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 243,
+            "line": 234,
             "itemtype": "method",
             "name": "__onSliderMouseWheel",
             "access": "private",
@@ -4709,7 +4728,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 279,
+            "line": 269,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -4728,7 +4747,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 294,
+            "line": 284,
             "itemtype": "method",
             "name": "__onFieldContextMenu",
             "access": "private",
@@ -4746,7 +4765,7 @@
         },
         {
             "file": "src/interactive/textareafield.js",
-            "line": 65,
+            "line": 62,
             "description": "Number of columns.",
             "itemtype": "property",
             "name": "cols",
@@ -4759,7 +4778,7 @@
         },
         {
             "file": "src/interactive/textareafield.js",
-            "line": 80,
+            "line": 77,
             "description": "Number of rows.",
             "itemtype": "property",
             "name": "rows",
@@ -4772,7 +4791,7 @@
         },
         {
             "file": "src/interactive/textareafield.js",
-            "line": 104,
+            "line": 98,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4785,7 +4804,7 @@
         },
         {
             "file": "src/interactive/textfield.js",
-            "line": 65,
+            "line": 62,
             "description": "Type of the field.\n\n  * text\n  * password\n  * email\n  * search\n  * tel\n  * url",
             "itemtype": "property",
             "name": "type",
@@ -4811,7 +4830,7 @@
         },
         {
             "file": "src/interactive/togglebutton.js",
-            "line": 85,
+            "line": 82,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4824,7 +4843,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 82,
+            "line": 79,
             "description": "The layout orientation (\"vertical\" or \"horizontal\").",
             "itemtype": "property",
             "name": "orientation",
@@ -4837,7 +4856,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 106,
+            "line": 103,
             "description": "Vertical padding (px).",
             "itemtype": "property",
             "name": "verticalPadding",
@@ -4850,7 +4869,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 125,
+            "line": 122,
             "description": "Horizontal padding (px).",
             "itemtype": "property",
             "name": "horizontalPadding",
@@ -4863,7 +4882,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 144,
+            "line": 141,
             "description": "Spacing between children widgets.",
             "itemtype": "property",
             "name": "spacing",
@@ -4876,7 +4895,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 194,
+            "line": 191,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4890,7 +4909,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 215,
+            "line": 209,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4903,7 +4922,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 226,
+            "line": 220,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -4916,7 +4935,7 @@
         },
         {
             "file": "src/layout/boxlayout.js",
-            "line": 270,
+            "line": 278,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -4940,7 +4959,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 59,
+            "line": 57,
             "description": "The vertical spacing between children widgets.",
             "itemtype": "property",
             "name": "verticalSpacing",
@@ -4953,7 +4972,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 77,
+            "line": 75,
             "description": "The horizontal spacing between children widgets.",
             "itemtype": "property",
             "name": "horizontalSpacing",
@@ -4966,7 +4985,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 95,
+            "line": 93,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4980,7 +4999,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 116,
+            "line": 111,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4993,7 +5012,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 127,
+            "line": 122,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5087,7 +5106,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 212,
+            "line": 210,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -5107,7 +5126,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 227,
+            "line": 225,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5120,7 +5139,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 244,
+            "line": 242,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5133,7 +5152,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 395,
+            "line": 396,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -5157,7 +5176,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 533,
+            "line": 526,
             "description": "Update the spacing between widgets",
             "itemtype": "method",
             "name": "_updateSpacing",
@@ -5170,7 +5189,7 @@
         },
         {
             "file": "src/layout/gridlayout.js",
-            "line": 547,
+            "line": 540,
             "description": "Hack to get thing working with Gecko and Trident.\n\nMSIE 11:\n\n  * The hack fixes all the issues,\n\nMSIE 10:\n\n  * There is issues with rowspan\n  * The dynamic resizing does not works\n\nFirefox:\n\n  * There is some minor issues with rowspan",
             "itemtype": "method",
             "name": "_sizingHack",
@@ -5183,7 +5202,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 72,
+            "line": 69,
             "description": "Layout children widgets name.",
             "itemtype": "property",
             "name": "childrenNames",
@@ -5196,7 +5215,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 108,
+            "line": 106,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -5209,7 +5228,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 162,
+            "line": 159,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -5232,7 +5251,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 181,
+            "line": 178,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -5250,7 +5269,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 196,
+            "line": 193,
             "description": "Destroy all children of the layout",
             "itemtype": "method",
             "name": "empty",
@@ -5261,7 +5280,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 210,
+            "line": 211,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -5272,7 +5291,20 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 224,
+            "line": 223,
+            "description": "Lock the update of the layout.",
+            "itemtype": "method",
+            "name": "_lockUpdate",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.Layout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/layout.js",
+            "line": 240,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5285,7 +5317,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 234,
+            "line": 250,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -5305,7 +5337,7 @@
         },
         {
             "file": "src/layout/layout.js",
-            "line": 257,
+            "line": 273,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -5318,7 +5350,7 @@
         },
         {
             "file": "src/layout/menu.js",
-            "line": 66,
+            "line": 63,
             "description": "Define if icon on menu items are visible.",
             "itemtype": "property",
             "name": "iconVisible",
@@ -5331,7 +5363,7 @@
         },
         {
             "file": "src/layout/menu.js",
-            "line": 89,
+            "line": 85,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -5345,7 +5377,7 @@
         },
         {
             "file": "src/layout/menu.js",
-            "line": 110,
+            "line": 103,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5358,7 +5390,7 @@
         },
         {
             "file": "src/layout/menu.js",
-            "line": 121,
+            "line": 114,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5371,7 +5403,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 71,
+            "line": 67,
             "description": "Define the tabs position.\n\n  * top\n  * bottom\n  * left\n  * right",
             "itemtype": "property",
             "name": "tabsPosition",
@@ -5384,7 +5416,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 101,
+            "line": 97,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -5398,7 +5430,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 113,
+            "line": 109,
             "description": "Define the active tab name.",
             "itemtype": "property",
             "name": "activeTabName",
@@ -5411,7 +5443,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 145,
+            "line": 141,
             "description": "Container node padding.",
             "itemtype": "property",
             "name": "padding",
@@ -5424,7 +5456,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 163,
+            "line": 159,
             "description": "Define the active tab.",
             "itemtype": "property",
             "name": "activeTab",
@@ -5437,7 +5469,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 207,
+            "line": 199,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -5455,7 +5487,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 224,
+            "line": 214,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5468,7 +5500,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 247,
+            "line": 237,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -5481,7 +5513,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 284,
+            "line": 273,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -5505,7 +5537,7 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 67,
+            "line": 64,
             "description": "Keyboard bindings.\n\n    {\n        \"id\": {\n            safe: Boolean,\n            callback: Function,\n            binding: Object\n        },\n        ...\n    }",
             "itemtype": "property",
             "name": "__kbd",
@@ -5517,7 +5549,7 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 93,
+            "line": 87,
             "description": "Add an accelerator.",
             "itemtype": "method",
             "name": "addAccel",
@@ -5550,7 +5582,7 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 113,
+            "line": 107,
             "description": "Remove an accelerator.",
             "itemtype": "method",
             "name": "removeAccel",
@@ -5568,7 +5600,7 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 138,
+            "line": 132,
             "itemtype": "method",
             "name": "__onAccell",
             "access": "private",
@@ -5594,7 +5626,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 85,
+            "line": 80,
             "description": "The color in HTML RGB hexadecimal format (e.g. \"#FF0000\").",
             "itemtype": "property",
             "name": "hexString",
@@ -5606,7 +5638,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 144,
+            "line": 145,
             "description": "The color in HTML RGB format (e.g. \"rgb(255, 0, 0)\").",
             "itemtype": "property",
             "name": "rgbString",
@@ -5619,7 +5651,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 155,
+            "line": 156,
             "description": "The color in HTML RGBA format (e.g. \"rgba(255, 0, 0, 1.0)\").",
             "itemtype": "property",
             "name": "rgbaString",
@@ -5632,7 +5664,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 166,
+            "line": 167,
             "description": "Red (0-255).",
             "itemtype": "property",
             "name": "red",
@@ -5644,7 +5676,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 183,
+            "line": 184,
             "description": "Green (0-255).",
             "itemtype": "property",
             "name": "green",
@@ -5656,7 +5688,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 200,
+            "line": 201,
             "description": "Blue (0-255).",
             "itemtype": "property",
             "name": "blue",
@@ -5668,7 +5700,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 217,
+            "line": 218,
             "description": "Alpha channel (0-255)",
             "itemtype": "property",
             "name": "alpha",
@@ -5680,7 +5712,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 234,
+            "line": 235,
             "description": "Hue (0-360).",
             "itemtype": "property",
             "name": "hue",
@@ -5692,7 +5724,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 251,
+            "line": 252,
             "description": "Saturation (0-100).",
             "itemtype": "property",
             "name": "saturation",
@@ -5704,7 +5736,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 268,
+            "line": 269,
             "description": "Brightness (0-100).",
             "itemtype": "property",
             "name": "brightness",
@@ -5716,7 +5748,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 293,
+            "line": 292,
             "description": "Set RGB(A) color (alias for setRGBA).\n\nThe params can also be replaced by an array.",
             "itemtype": "method",
             "name": "setRGB",
@@ -5744,7 +5776,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 307,
+            "line": 306,
             "description": "Set RGBA color.\n\nThe params can also be replaced by an array.",
             "itemtype": "method",
             "name": "setRGBA",
@@ -5777,7 +5809,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 331,
+            "line": 336,
             "description": "Get RGB.",
             "itemtype": "method",
             "name": "getRGB",
@@ -5792,7 +5824,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 341,
+            "line": 346,
             "description": "Get RGBA.",
             "itemtype": "method",
             "name": "getRGBA",
@@ -5807,7 +5839,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 351,
+            "line": 356,
             "description": "Set HSB color\n\nThe params can also be replaced by an array.",
             "itemtype": "method",
             "name": "setHSB",
@@ -5835,7 +5867,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 379,
+            "line": 388,
             "description": "Update HSB from RGB.",
             "itemtype": "method",
             "name": "_updateHSB",
@@ -5848,7 +5880,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 424,
+            "line": 429,
             "description": "Update RGB from HSB.",
             "itemtype": "method",
             "name": "_updateRGB",
@@ -5861,7 +5893,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 83,
+            "line": 80,
             "description": "List of the accepted mime types.",
             "itemtype": "property",
             "name": "acceptedMimes",
@@ -5874,7 +5906,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 101,
+            "line": 98,
             "description": "List of the accepted file extentions.",
             "itemtype": "property",
             "name": "acceptedExts",
@@ -5887,7 +5919,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 119,
+            "line": 116,
             "description": "Element that accepts file drop (`null` disable d&d support).",
             "itemtype": "property",
             "name": "dropZone",
@@ -5900,7 +5932,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 156,
+            "line": 153,
             "description": "Allow multiselect in FileOpen dialog.",
             "itemtype": "property",
             "name": "multiselect",
@@ -5913,7 +5945,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 184,
+            "line": 178,
             "description": "The file field for opening the file dialog.",
             "itemtype": "property",
             "name": "__fileField",
@@ -5927,7 +5959,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 202,
+            "line": 193,
             "description": "Open the FileOpen dialog to allow user to browse its HDD for a file.",
             "itemtype": "method",
             "name": "open",
@@ -5938,7 +5970,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 214,
+            "line": 205,
             "description": "Destroy the class.",
             "itemtype": "method",
             "name": "destroy",
@@ -5949,7 +5981,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 228,
+            "line": 217,
             "description": "Update accepted mimes/extentions.",
             "itemtype": "method",
             "name": "_updateAccepted",
@@ -5962,7 +5994,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 246,
+            "line": 235,
             "description": "Check file and call callbacks.",
             "itemtype": "method",
             "name": "_openFile",
@@ -5992,7 +6024,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 288,
+            "line": 275,
             "itemtype": "method",
             "name": "__onFileDropped",
             "access": "private",
@@ -6010,7 +6042,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 302,
+            "line": 289,
             "itemtype": "method",
             "name": "__onFileSelected",
             "access": "private",
@@ -6028,7 +6060,7 @@
         },
         {
             "file": "src/nonvisual/filemanager.js",
-            "line": 316,
+            "line": 303,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -6041,7 +6073,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 146,
+            "line": 143,
             "description": "The HTML Element on which the events are binded.\n\nNOTE: If a photonui.Widget object is assigned to this property,\n      its HTML Element will be automatically assigned to the property instead.",
             "itemtype": "property",
             "name": "element",
@@ -6054,7 +6086,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 175,
+            "line": 170,
             "description": "Minimum distance for triggering a drag-start, and maximum distance\nto consider a mouse down/up as a click.",
             "itemtype": "property",
             "name": "threshold",
@@ -6067,7 +6099,33 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 193,
+            "line": 188,
+            "description": "Scale all position events by a factor. Use it when the canvas is scaled.",
+            "itemtype": "property",
+            "name": "scaleX",
+            "type": "Number",
+            "default": "1",
+            "class": "photonui.MouseManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/mousemanager.js",
+            "line": 205,
+            "description": "Scale all position events by a factor. Use it when the canvas is scaled.",
+            "itemtype": "property",
+            "name": "scaleY",
+            "type": "Number",
+            "default": "1",
+            "class": "photonui.MouseManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/mousemanager.js",
+            "line": 222,
             "description": "X position, relative to page top-left corner.",
             "itemtype": "property",
             "name": "pageX",
@@ -6081,7 +6139,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 205,
+            "line": 234,
             "description": "Y position, relative to page top-left corner.",
             "itemtype": "property",
             "name": "pageY",
@@ -6095,7 +6153,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 217,
+            "line": 246,
             "description": "X position, relative to the HTML element.",
             "itemtype": "property",
             "name": "x",
@@ -6108,7 +6166,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 229,
+            "line": 258,
             "description": "Y position, relative to the HTML element.",
             "itemtype": "property",
             "name": "y",
@@ -6121,7 +6179,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 241,
+            "line": 270,
             "description": "Delta X (current_x - previous_x).",
             "itemtype": "property",
             "name": "deltaX",
@@ -6134,7 +6192,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 252,
+            "line": 282,
             "description": "Delta Y (current_y - previous_y).",
             "itemtype": "property",
             "name": "deltaY",
@@ -6147,7 +6205,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 263,
+            "line": 294,
             "description": "The action:\n\n  * \"mouse-down\"\n  * \"moues-up\"\n  * \"click\"\n  * \"double-click\"\n  * \"drag-start\"\n  * \"dragging\"\n  * \"drag-end\"\n  * \"scroll-down\"\n  * \"scroll-up\"\n  * \"mouse-move\"",
             "itemtype": "property",
             "name": "action",
@@ -6160,7 +6218,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 287,
+            "line": 318,
             "description": "Current state of the mouse left button.",
             "itemtype": "property",
             "name": "btnLeft",
@@ -6173,7 +6231,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 300,
+            "line": 331,
             "description": "Current state of the mouse middle button.",
             "itemtype": "property",
             "name": "btnMiddle",
@@ -6186,7 +6244,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 313,
+            "line": 344,
             "description": "Current state of the mouse right button.",
             "itemtype": "property",
             "name": "btnRight",
@@ -6199,7 +6257,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 326,
+            "line": 357,
             "description": "The button that triggered the last event.\n\n  * none\n  * \"left\"\n  * \"middle\"\n  * \"right\"",
             "itemtype": "property",
             "name": "button",
@@ -6212,7 +6270,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 348,
+            "line": 377,
             "description": "Previous state.",
             "itemtype": "property",
             "name": "__prevState",
@@ -6226,7 +6284,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 357,
+            "line": 386,
             "description": "Js event on mouse down.",
             "itemtype": "property",
             "name": "__mouseDownEvent",
@@ -6240,7 +6298,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 366,
+            "line": 395,
             "description": "Last event object.",
             "itemtype": "property",
             "name": "__event",
@@ -6255,7 +6313,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 382,
+            "line": 409,
             "description": "Bind events on the HTML Element.",
             "itemtype": "method",
             "name": "_updateEvents",
@@ -6268,7 +6326,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 409,
+            "line": 436,
             "description": "Take a snapshot of the MouseManager",
             "itemtype": "method",
             "name": "_dump",
@@ -6285,7 +6343,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 433,
+            "line": 460,
             "description": "Analyze and dispatche wEvents.",
             "itemtype": "method",
             "name": "_stateMachine",
@@ -6310,7 +6368,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 549,
+            "line": 594,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -6328,7 +6386,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 558,
+            "line": 603,
             "itemtype": "method",
             "name": "__onMouseUp",
             "access": "private",
@@ -6346,7 +6404,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 567,
+            "line": 612,
             "itemtype": "method",
             "name": "__onDoubleClick",
             "access": "private",
@@ -6364,7 +6422,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 576,
+            "line": 621,
             "itemtype": "method",
             "name": "__onMouseMove",
             "access": "private",
@@ -6382,7 +6440,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 585,
+            "line": 630,
             "description": "Used to detect drag-end outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseUp",
@@ -6401,7 +6459,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 598,
+            "line": 643,
             "description": "Used to detect dragging outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseMove",
@@ -6420,7 +6478,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 611,
+            "line": 656,
             "itemtype": "method",
             "name": "__onMouseWheel",
             "access": "private",
@@ -6438,7 +6496,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 68,
+            "line": 65,
             "description": "The sprit sheet name.",
             "itemtype": "property",
             "name": "name",
@@ -6451,7 +6509,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 89,
+            "line": 86,
             "description": "The spritesheet image URL.",
             "itemtype": "property",
             "name": "imageUrl",
@@ -6464,7 +6522,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 115,
+            "line": 112,
             "description": "Icon size (width = height).",
             "itemtype": "property",
             "name": "size",
@@ -6477,7 +6535,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 132,
+            "line": 129,
             "description": "Icons.\n\n    {\n         \"iconName\": [x, y],\n         \"icon2\": [x2, y2],\n         ...\n    }",
             "itemtype": "property",
             "name": "icons",
@@ -6490,7 +6548,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 166,
+            "line": 160,
             "description": "Get icon position.",
             "itemtype": "method",
             "name": "getIconPosition",
@@ -6512,7 +6570,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 177,
+            "line": 171,
             "description": "Get the right CSS for the given icon.",
             "itemtype": "method",
             "name": "getIconCss",
@@ -6534,7 +6592,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 192,
+            "line": 186,
             "description": "Add an icon (set its position).",
             "itemtype": "method",
             "name": "addIcon",
@@ -6562,7 +6620,7 @@
         },
         {
             "file": "src/nonvisual/spritesheet.js",
-            "line": 204,
+            "line": 198,
             "description": "Remove an icon.",
             "itemtype": "method",
             "name": "removeIcon",
@@ -6580,7 +6638,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 83,
+            "line": 80,
             "description": "The current locale (e.g. \"fr\", \"en\", \"it\",...).",
             "itemtype": "property",
             "name": "locale",
@@ -6593,7 +6651,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 102,
+            "line": 96,
             "description": "Add one or more Stone.js catalog (a catalog contain all translated strings for a specific locale).",
             "itemtype": "method",
             "name": "addCatalogs",
@@ -6611,7 +6669,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 110,
+            "line": 104,
             "description": "Guess the user language.",
             "itemtype": "method",
             "name": "guessUserLanguage",
@@ -6626,7 +6684,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 118,
+            "line": 112,
             "description": "Make a string translatable.",
             "itemtype": "method",
             "name": "gettext",
@@ -6653,7 +6711,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 128,
+            "line": 122,
             "description": "Make a string translatable.\n\nTthe main difference between this method and the `gettext` method is\nthat this method does not return a translated sting but an object that\nwill translate the sting when it will be displayed (.toString() method\ncalled).",
             "itemtype": "method",
             "name": "lazyGettext",
@@ -6680,7 +6738,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 143,
+            "line": 137,
             "description": "Enable/disable Stone.js translating elements with the \"stonejs\" attribute in the DOM.",
             "itemtype": "method",
             "name": "enableDomScan",
@@ -6698,7 +6756,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 151,
+            "line": 145,
             "description": "Re-translate elements with the \"stonejs\" attribute in the DOM.",
             "itemtype": "method",
             "name": "updateDomTranslation",
@@ -6709,7 +6767,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 164,
+            "line": 156,
             "itemtype": "method",
             "name": "__onStonejsLocaleChanged",
             "access": "private",
@@ -6721,7 +6779,7 @@
         },
         {
             "file": "src/visual/baseicon.js",
-            "line": 56,
+            "line": 54,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -6873,7 +6931,7 @@
         {
             "file": "src/visual/canvas.js",
             "line": 156,
-            "description": "Returns a Blob object representing the image contained in the canvas (at the native resolution of the canvas).\n\nProxy of the native canvas method if exists. For more informations see:\n\n  * https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement",
+            "description": "Returns a Blob object representing the image contained in the canvas (at the native\nresolution of the canvas).\n\nProxy of the native canvas method if exists. For more informations see:\n\n  * https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement",
             "itemtype": "method",
             "name": "toBlobHD",
             "params": [
@@ -6894,7 +6952,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 181,
+            "line": 179,
             "description": "Canvas width.",
             "itemtype": "property",
             "name": "width",
@@ -6906,7 +6964,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 196,
+            "line": 194,
             "description": "Canvas height.",
             "itemtype": "property",
             "name": "height",
@@ -6918,7 +6976,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 211,
+            "line": 209,
             "description": "The Canvas HTML Element.",
             "itemtype": "property",
             "name": "canvas",
@@ -6931,7 +6989,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 222,
+            "line": 220,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -6945,7 +7003,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 234,
+            "line": 232,
             "description": "The interactive HTML element (for event managers).",
             "itemtype": "property",
             "name": "interactiveNode",
@@ -6958,7 +7016,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 254,
+            "line": 249,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -6971,7 +7029,7 @@
         },
         {
             "file": "src/visual/canvas.js",
-            "line": 274,
+            "line": 267,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -6984,7 +7042,7 @@
         },
         {
             "file": "src/visual/faicon.js",
-            "line": 83,
+            "line": 78,
             "description": "The Font Awesome icon name (e.g. \"fa-cog\").\n\nIcon list: http://fontawesome.io/icons/",
             "itemtype": "property",
             "name": "iconName",
@@ -6997,7 +7055,7 @@
         },
         {
             "file": "src/visual/faicon.js",
-            "line": 103,
+            "line": 98,
             "description": "Font Awesome icon size (e.g. \"fa-2x\").\n\nIcon sizes list: http://fontawesome.io/examples/#larger",
             "itemtype": "property",
             "name": "size",
@@ -7010,7 +7068,7 @@
         },
         {
             "file": "src/visual/faicon.js",
-            "line": 123,
+            "line": 118,
             "description": "The icon color.",
             "itemtype": "property",
             "name": "color",
@@ -7022,7 +7080,7 @@
         },
         {
             "file": "src/visual/faicon.js",
-            "line": 141,
+            "line": 136,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7036,7 +7094,7 @@
         },
         {
             "file": "src/visual/faicon.js",
-            "line": 162,
+            "line": 154,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7049,7 +7107,7 @@
         },
         {
             "file": "src/visual/image.js",
-            "line": 58,
+            "line": 57,
             "description": "The image URL.",
             "itemtype": "property",
             "name": "url",
@@ -7062,7 +7120,7 @@
         },
         {
             "file": "src/visual/image.js",
-            "line": 76,
+            "line": 75,
             "description": "The image width (null = auto).",
             "itemtype": "property",
             "name": "width",
@@ -7075,7 +7133,7 @@
         },
         {
             "file": "src/visual/image.js",
-            "line": 98,
+            "line": 97,
             "description": "The image height (null = auto).",
             "itemtype": "property",
             "name": "height",
@@ -7088,7 +7146,7 @@
         },
         {
             "file": "src/visual/image.js",
-            "line": 120,
+            "line": 119,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7102,7 +7160,7 @@
         },
         {
             "file": "src/visual/image.js",
-            "line": 141,
+            "line": 137,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7115,7 +7173,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 82,
+            "line": 78,
             "description": "The label text.",
             "itemtype": "property",
             "name": "text",
@@ -7128,7 +7186,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 110,
+            "line": 106,
             "description": "The text horizontal alignement.\n\n  * \"left\",\n  * \"center\",\n  * \"right\".",
             "itemtype": "property",
             "name": "textAlign",
@@ -7141,7 +7199,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 135,
+            "line": 131,
             "description": "Link the label with the given input (Field, CheckBox,...) widget.",
             "itemtype": "property",
             "name": "forInputName",
@@ -7154,7 +7212,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 167,
+            "line": 161,
             "description": "Link the label with the given input (Field, CheckBox,...) widget.",
             "itemtype": "property",
             "name": "forInput",
@@ -7167,7 +7225,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 182,
+            "line": 176,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7181,7 +7239,7 @@
         },
         {
             "file": "src/visual/label.js",
-            "line": 203,
+            "line": 194,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7194,7 +7252,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 65,
+            "line": 62,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7208,7 +7266,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 86,
+            "line": 80,
             "description": "The progression (form 0.00 to 1.00).",
             "itemtype": "property",
             "name": "value",
@@ -7221,7 +7279,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 112,
+            "line": 105,
             "description": "The progressbar orientation (\"vertical\" or \"horizontal\").",
             "itemtype": "property",
             "name": "orientation",
@@ -7234,7 +7292,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 138,
+            "line": 131,
             "description": "Enable or disable the progressbar pulsate mode.",
             "itemtype": "property",
             "name": "pulsate",
@@ -7247,7 +7305,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 168,
+            "line": 159,
             "description": "Display/hide the progression text.",
             "itemtype": "property",
             "name": "textVisible",
@@ -7260,7 +7318,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 191,
+            "line": 181,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7273,7 +7331,7 @@
         },
         {
             "file": "src/visual/progressbar.js",
-            "line": 227,
+            "line": 215,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -7286,7 +7344,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 65,
+            "line": 62,
             "description": "The separator orientation (\"vertical\" or \"horizontal\").",
             "itemtype": "property",
             "name": "orientation",
@@ -7299,7 +7357,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 97,
+            "line": 93,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7313,7 +7371,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 118,
+            "line": 111,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7326,7 +7384,7 @@
         },
         {
             "file": "src/visual/separator.js",
-            "line": 137,
+            "line": 128,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -7339,7 +7397,7 @@
         },
         {
             "file": "src/visual/spriteicon.js",
-            "line": 83,
+            "line": 78,
             "description": "The sprite sheet name.",
             "itemtype": "property",
             "name": "spriteSheetName",
@@ -7352,7 +7410,7 @@
         },
         {
             "file": "src/visual/spriteicon.js",
-            "line": 101,
+            "line": 96,
             "description": "The icon name.",
             "itemtype": "property",
             "name": "iconName",
@@ -7365,7 +7423,7 @@
         },
         {
             "file": "src/visual/spriteicon.js",
-            "line": 119,
+            "line": 114,
             "description": "The icon id.\n\n    \"spriteSheetName/iconName\"",
             "itemtype": "property",
             "name": "icon",
@@ -7378,7 +7436,7 @@
         },
         {
             "file": "src/visual/spriteicon.js",
-            "line": 138,
+            "line": 133,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7392,7 +7450,7 @@
         },
         {
             "file": "src/visual/spriteicon.js",
-            "line": 158,
+            "line": 151,
             "description": "Update the icon.",
             "itemtype": "method",
             "name": "_update",
@@ -7405,7 +7463,7 @@
         },
         {
             "file": "src/visual/spriteicon.js",
-            "line": 172,
+            "line": 165,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7418,7 +7476,7 @@
         },
         {
             "file": "src/visual/text.js",
-            "line": 64,
+            "line": 62,
             "description": "Text",
             "itemtype": "property",
             "name": "text",
@@ -7431,7 +7489,7 @@
         },
         {
             "file": "src/visual/text.js",
-            "line": 82,
+            "line": 80,
             "description": "Raw HTML.",
             "itemtype": "property",
             "name": "rawHtml",
@@ -7444,7 +7502,7 @@
         },
         {
             "file": "src/visual/text.js",
-            "line": 99,
+            "line": 97,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7458,7 +7516,7 @@
         },
         {
             "file": "src/visual/text.js",
-            "line": 120,
+            "line": 115,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -7471,7 +7529,7 @@
         },
         {
             "file": "src/visual/text.js",
-            "line": 137,
+            "line": 130,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -7484,7 +7542,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 136,
+            "line": 102,
             "description": "Object containing references javascript events binding (for widget\ninternal use).",
             "itemtype": "property",
             "name": "__events",
@@ -7497,7 +7555,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 146,
+            "line": 112,
             "description": "Object containing references to registered callbacks.",
             "itemtype": "property",
             "name": "__callbacks",
@@ -7510,7 +7568,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 164,
+            "line": 127,
             "description": "Destroy the class.",
             "itemtype": "method",
             "name": "destroy",
@@ -7520,7 +7578,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 176,
+            "line": 139,
             "description": "Register a callback for any PhotonUI/Widget event (called wEvent).\n\nCallback signature:\n\n    function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])",
             "itemtype": "method",
             "name": "registerCallback",
@@ -7552,7 +7610,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 200,
+            "line": 163,
             "description": "Remove a registered callback.",
             "itemtype": "method",
             "name": "removeCallback",
@@ -7569,7 +7627,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 218,
+            "line": 179,
             "description": "Force the update of the given properties.",
             "itemtype": "method",
             "name": "_updateProperties",
@@ -7588,7 +7646,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 231,
+            "line": 192,
             "description": "Javascript event binding (for internal use).",
             "itemtype": "method",
             "name": "_bindEvent",
@@ -7622,7 +7680,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 255,
+            "line": 216,
             "description": "Unbind javascript event.",
             "itemtype": "method",
             "name": "_unbindEvent",
@@ -7641,7 +7699,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 272,
+            "line": 235,
             "description": "Register available wEvent.",
             "itemtype": "method",
             "name": "_registerWEvents",
@@ -7660,7 +7718,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 288,
+            "line": 251,
             "description": "Call all callbacks for the given wEvent.\n\nNOTE: the first argument passed to the callback is the current widget.\nNOTE²: if the thisArg of the callback is null, this will be binded to the current widget.",
             "itemtype": "method",
             "name": "_callCallbacks",
@@ -7684,7 +7742,7 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 53,
+            "line": 51,
             "description": "Escape HTML.",
             "itemtype": "method",
             "name": "escapeHtml",
@@ -7707,11 +7765,12 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 68,
-            "description": "Generate an UUID version 4 (RFC 4122)\n\nFrom:\nhttp://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript",
+            "line": 66,
+            "description": "Generate an UUID version 4 (RFC 4122).\n\nThis method is deprecated, please use `photonui.lib.uuid.v4()` instead.",
             "itemtype": "method",
             "name": "uuid4",
             "static": 1,
+            "deprecated": true,
             "return": {
                 "description": "The generated UUID",
                 "type": "String"
@@ -7723,7 +7782,7 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 85,
+            "line": 81,
             "description": "Clean node (remove all children of the node).",
             "itemtype": "method",
             "name": "cleanNode",
@@ -7742,7 +7801,7 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 98,
+            "line": 94,
             "description": "Get the absolute position of an HTML Element.",
             "itemtype": "method",
             "name": "getAbsolutePosition",
@@ -7765,10 +7824,11 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 136,
+            "line": 137,
             "description": "Check and compute size to valid CSS size\n\nValid values and transformations:\n    undefined  -> defaultValue\n    null       -> \"auto\" (if \"auto\" is alowed, \"0px\" else)\n    +Infinity  -> \"100%\"\n    Number     -> \"<Number>px\"",
             "itemtype": "method",
             "name": "numberToCssSize",
+            "static": 1,
             "params": [
                 {
                     "name": "value",
@@ -7796,13 +7856,37 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/helpers.js",
+            "line": 169,
+            "description": "Write log into the terminal.",
+            "itemtype": "method",
+            "name": "log",
+            "static": 1,
+            "params": [
+                {
+                    "name": "level",
+                    "description": "The log level (\"info\", \"warn\", \"error\", ...)",
+                    "type": "String"
+                },
+                {
+                    "name": "message",
+                    "description": "The message to log",
+                    "type": "String"
+                }
+            ],
+            "class": "photonui.Helpers",
+            "module": "PhotonUI",
+            "submodule": "Helpers",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/widget.js",
             "line": 112,
             "description": "The unique name of the widget.",
             "itemtype": "property",
             "name": "name",
             "type": "String",
-            "default": "\"widget-\" + photonui.Helpers.uuid4()",
+            "default": "\"widget-\" + uuid.v4()",
             "class": "photonui.Widget",
             "module": "PhotonUI",
             "namespace": "photonui"
@@ -7847,7 +7931,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 187,
+            "line": 186,
             "description": "Tooltip.",
             "itemtype": "property",
             "name": "tooltip",
@@ -7859,7 +7943,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 210,
+            "line": 208,
             "description": "The name of the managed contextual menu (`photonui.PopupWindow().name`).",
             "itemtype": "property",
             "name": "contextMenuName",
@@ -7871,7 +7955,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 227,
+            "line": 225,
             "description": "The managed contextual menu.",
             "itemtype": "property",
             "name": "contextMenu",
@@ -7883,7 +7967,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 248,
+            "line": 245,
             "description": "Layout options.",
             "itemtype": "property",
             "name": "layoutOptions",
@@ -7895,7 +7979,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 267,
+            "line": 264,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -7908,7 +7992,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 280,
+            "line": 277,
             "description": "Absolute position of the widget on the page.\n\n`{x: Number, y: Number}`",
             "itemtype": "property",
             "name": "absolutePosition",
@@ -7920,7 +8004,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 296,
+            "line": 293,
             "description": "Widget width (outer HTML element).",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -7932,7 +8016,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 310,
+            "line": 307,
             "description": "Widget height (outer HTML element).",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -7944,7 +8028,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 328,
+            "line": 323,
             "description": "Object containing references to the widget HTML elements",
             "itemtype": "property",
             "name": "__html",
@@ -7957,7 +8041,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 346,
+            "line": 338,
             "description": "Display the widget (equivalent to widget.visible = true).",
             "itemtype": "method",
             "name": "show",
@@ -7967,7 +8051,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 355,
+            "line": 347,
             "description": "DHide the widget (equivalent to widget.visible = false).",
             "itemtype": "method",
             "name": "hide",
@@ -7977,7 +8061,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 364,
+            "line": 356,
             "description": "Detache the widget from its parent.",
             "itemtype": "method",
             "name": "unparent",
@@ -7987,7 +8071,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 378,
+            "line": 369,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -7997,7 +8081,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 389,
+            "line": 380,
             "description": "Add a class to the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "addClass",
@@ -8014,7 +8098,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 406,
+            "line": 397,
             "description": "Remove a class from the outer HTML element of the widget.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8031,7 +8115,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 428,
+            "line": 417,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -8043,7 +8127,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 438,
+            "line": 427,
             "description": "Called when the visibility changes.",
             "itemtype": "method",
             "name": "_visibilityChanged",
@@ -8062,7 +8146,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 461,
+            "line": 447,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -8080,7 +8164,7 @@
         },
         {
             "file": "src/widget.js",
-            "line": 476,
+            "line": 462,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",

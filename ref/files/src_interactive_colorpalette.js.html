@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -194,21 +194,18 @@ var Color = require(&quot;../nonvisual/color.js&quot;);
 var ColorPalette = Widget.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._color = new Color(ColorPalette.palette[0][0]);
         this._registerWEvents([&quot;value-changed&quot;]);
         this.$super(params);
         this._updateProperties([&quot;palette&quot;, &quot;value&quot;]);
     },
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The value (color in rgb hexadecimal format (e.g. &quot;#ff0000&quot;)).
@@ -216,11 +213,11 @@ var ColorPalette = Widget.$extend({
      * @property value
      * @type String
      */
-    getValue: function() {
+    getValue: function () {
         return this.color.hexString;
     },
 
-    setValue: function(value) {
+    setValue: function (value) {
         this.color.hexString = value;
     },
 
@@ -232,11 +229,11 @@ var ColorPalette = Widget.$extend({
      */
     _color: null,
 
-    getColor: function() {
+    getColor: function () {
         return this._color;
     },
 
-    setColor: function(color) {
+    setColor: function (color) {
         if (color instanceof Color) {
             this._color = color;
         }
@@ -251,11 +248,11 @@ var ColorPalette = Widget.$extend({
      */
     _palette: null,
 
-    getPalette: function() {
+    getPalette: function () {
         return this._palette || ColorPalette.palette;
     },
 
-    setPalette: function(palette) {
+    setPalette: function (palette) {
         this._palette = palette;
 
         if (!palette) {
@@ -266,10 +263,13 @@ var ColorPalette = Widget.$extend({
         this.__html.palette.removeChild(this.__html.tbody);
         Helpers.cleanNode(this.__html.tbody);
 
-        var e_tr, e_td, x, y;
-        for (y=0 ; y&lt;palette.length ; y++) {
+        var e_tr;
+        var e_td;
+        var x;
+        var y;
+        for (y = 0 ; y &lt; palette.length ; y++) {
             e_tr = document.createElement(&quot;tr&quot;);
-            for (x=0 ; x&lt;palette[y].length ; x++) {
+            for (x = 0 ; x &lt; palette[y].length ; x++) {
                 e_td = document.createElement(&quot;td&quot;);
                 e_td.style.backgroundColor = palette[y][x];
                 e_td.onclick = this.__onColorClicked.bind(this, palette[y][x]);
@@ -289,15 +289,13 @@ var ColorPalette = Widget.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.palette;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
-
 
     // ====== Private methods ======
 
@@ -307,20 +305,18 @@ var ColorPalette = Widget.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.palette = document.createElement(&quot;table&quot;);
         this.__html.palette.className = &quot;photonui-widget photonui-colorpalette&quot;;
         this.__html.tbody = document.createElement(&quot;tbody&quot;);
         this.__html.palette.appendChild(this.__html.tbody);
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
 
-
-    __onColorClicked: function(color, event) {
+    __onColorClicked: function (color, event) {
         this.value = color;
         this._callCallbacks(&quot;value-changed&quot;, [this.color]);
     }

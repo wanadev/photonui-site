@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -207,7 +207,7 @@ var Widget = require(&quot;../widget.js&quot;);
 var Field = Widget.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._registerWEvents([
             &quot;value-changed&quot;, &quot;keydown&quot;, &quot;keyup&quot;, &quot;keypress&quot;,
             &quot;selection-changed&quot;
@@ -217,14 +217,11 @@ var Field = Widget.$extend({
         this.__html.field.name = this.name;
     },
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The field value.
@@ -233,11 +230,11 @@ var Field = Widget.$extend({
      * @type String (maybe)
      * @default &quot;&quot;
      */
-    getValue: function() {
+    getValue: function () {
         return this.__html.field.value;
     },
 
-    setValue: function(value) {
+    setValue: function (value) {
         this.__html.field.value = value;
     },
 
@@ -250,11 +247,11 @@ var Field = Widget.$extend({
      */
     _placeholder: &quot;&quot;,
 
-    getPlaceholder: function() {
+    getPlaceholder: function () {
         return this._placeholder;
     },
 
-    setPlaceholder: function(placeholder) {
+    setPlaceholder: function (placeholder) {
         this._placeholder = placeholder;
         this.__html.field.placeholder = placeholder;
     },
@@ -267,18 +264,15 @@ var Field = Widget.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.field;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Bind Field events.
@@ -286,37 +280,35 @@ var Field = Widget.$extend({
      * @method _bindFieldEvents
      * @private
      */
-    _bindFieldEvents: function() {
-        this._bindEvent(&quot;value-changed&quot;, this.__html.field, &quot;change&quot;, function(event) {
+    _bindFieldEvents: function () {
+        this._bindEvent(&quot;value-changed&quot;, this.__html.field, &quot;change&quot;, function (event) {
             this._callCallbacks(&quot;value-changed&quot;, [this.getValue()]);
         }.bind(this));
 
-        this._bindEvent(&quot;keydown&quot;, this.__html.field, &quot;keydown&quot;, function(event) {
+        this._bindEvent(&quot;keydown&quot;, this.__html.field, &quot;keydown&quot;, function (event) {
             this._callCallbacks(&quot;keydown&quot;, [event]);
         }.bind(this));
 
-        this._bindEvent(&quot;keyup&quot;, this.__html.field, &quot;keyup&quot;, function(event) {
+        this._bindEvent(&quot;keyup&quot;, this.__html.field, &quot;keyup&quot;, function (event) {
             this._callCallbacks(&quot;keyup&quot;, [event]);
         }.bind(this));
 
-        this._bindEvent(&quot;keypress&quot;, this.__html.field, &quot;keypress&quot;, function(event) {
+        this._bindEvent(&quot;keypress&quot;, this.__html.field, &quot;keypress&quot;, function (event) {
             this._callCallbacks(&quot;keypress&quot;, [event]);
         }.bind(this));
 
-        this._bindEvent(&quot;selection-changed&quot;, this.__html.field, &quot;select&quot;, function(event) {
+        this._bindEvent(&quot;selection-changed&quot;, this.__html.field, &quot;select&quot;, function (event) {
             this._callCallbacks(&quot;selection-changed&quot;, [
                 this.__html.field.selectionStart,
                 this.__html.field.selectionEnd,
-                (&quot;&quot; + this.getValue()).substring(this.__html.field.selectionStart, this.__html.field.selectionEnd),
+                String(this.getValue()).substring(this.__html.field.selectionStart, this.__html.field.selectionEnd),
                 event]);
         }.bind(this));
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
-
 
     /**
      * Called when the context menu should be displayed.
@@ -325,7 +317,7 @@ var Field = Widget.$extend({
      * @private
      * @param event
      */
-    __onContextMenu: function(event) {
+    __onContextMenu: function (event) {
         event.stopPropagation();  // Enable context menu on fields
     }
 });

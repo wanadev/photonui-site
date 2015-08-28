@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -176,6 +176,8 @@
 var Helpers = require(&quot;../helpers.js&quot;);
 var Layout = require(&quot;./layout.js&quot;);
 
+var _sizingHackEnabled = null;
+
 /**
  * Grid layout.
  *
@@ -206,7 +208,7 @@ var Layout = require(&quot;./layout.js&quot;);
 var GridLayout = Layout.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this.$super(params);
         this._updateProperties([&quot;verticalSpacing&quot;]);
 
@@ -218,11 +220,9 @@ var GridLayout = Layout.$extend({
         }
     },
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
-
 
     // ====== Public properties ======
 
@@ -235,12 +235,12 @@ var GridLayout = Layout.$extend({
      */
     _verticalPadding: 0,
 
-    getVerticalPadding: function() {
+    getVerticalPadding: function () {
         return this._verticalPadding;
     },
 
-    setVerticalPadding: function(padding) {
-        this._verticalPadding = padding|0;
+    setVerticalPadding: function (padding) {
+        this._verticalPadding = padding | 0;
         this._updatingLayout = true;
         this.__html.outerbox.style.paddingLeft = this._verticalPadding + &quot;px&quot;;
         this.__html.outerbox.style.paddingRight = this._verticalPadding + &quot;px&quot;;
@@ -257,12 +257,12 @@ var GridLayout = Layout.$extend({
      */
     _horizontalPadding: 0,
 
-    getHorizontalPadding: function() {
+    getHorizontalPadding: function () {
         return this._horizontalPadding;
     },
 
-    setHorizontalPadding: function(padding) {
-        this._horizontalPadding = padding|0;
+    setHorizontalPadding: function (padding) {
+        this._horizontalPadding = padding | 0;
         this._updatingLayout = true;
         this.__html.outerbox.style.paddingTop = this._horizontalPadding + &quot;px&quot;;
         this.__html.outerbox.style.paddingBottom = this._horizontalPadding + &quot;px&quot;;
@@ -279,11 +279,11 @@ var GridLayout = Layout.$extend({
      */
     _verticalSpacing: 5,
 
-    getVerticalSpacing: function() {
+    getVerticalSpacing: function () {
         return this._verticalSpacing;
     },
 
-    setVerticalSpacing: function(verticalSpacing) {
+    setVerticalSpacing: function (verticalSpacing) {
         this._verticalSpacing = verticalSpacing;
         //this._updatingLayout = true;
         //this._updateSpacing();
@@ -301,11 +301,11 @@ var GridLayout = Layout.$extend({
      */
     _horizontalSpacing: 5,
 
-    getHorizontalSpacing: function() {
+    getHorizontalSpacing: function () {
         return this._horizontalSpacing;
     },
 
-    setHorizontalSpacing: function(horizontalSpacing) {
+    setHorizontalSpacing: function (horizontalSpacing) {
         this._horizontalSpacing = horizontalSpacing;
         //this._updatingLayout = true;
         //this._updateSpacing();
@@ -322,7 +322,7 @@ var GridLayout = Layout.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outerbox;
     },
 
@@ -342,9 +342,7 @@ var GridLayout = Layout.$extend({
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Called when the visibility changes.
@@ -353,7 +351,7 @@ var GridLayout = Layout.$extend({
      * @private
      * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
      */
-    _visibilityChanged: function(visibility) {
+    _visibilityChanged: function (visibility) {
         visibility = (visibility !== undefined) ? visibility : this.visible;
         if (visibility) {
             this._sizingHack();
@@ -367,7 +365,7 @@ var GridLayout = Layout.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outerbox = document.createElement(&quot;div&quot;);
         this.__html.outerbox.className = &quot;photonui-widget photonui-gridlayout&quot;;
 
@@ -384,7 +382,7 @@ var GridLayout = Layout.$extend({
      * @method _updateLayout
      * @private
      */
-    _updateLayout: function() {
+    _updateLayout: function () {
         this._updatingLayout = true;
         if (this.__sizinghack_observer) {  // XXX
             this.__sizinghack_observer.disconnect();
@@ -393,13 +391,13 @@ var GridLayout = Layout.$extend({
         var children = this.children;
 
         // Determine the grid geometry (min x, min y, max x, max y)
-        var minX = + Infinity;
-        var minY = + Infinity;
-        var maxX = - Infinity;
-        var maxY = - Infinity;
+        var minX = Infinity;
+        var minY = Infinity;
+        var maxX = -Infinity;
+        var maxY = -Infinity;
 
         var options;
-        for (var i=0 ; i&lt;children.length ; i++) {
+        for (var i = 0 ; i &lt; children.length ; i++) {
             options = this._computeLayoutOptions(children[i]);
             minX = Math.min(options.x, minX);
             minY = Math.min(options.y, minY);
@@ -420,7 +418,7 @@ var GridLayout = Layout.$extend({
         var that = this;
         function _findWidgetAt(x, y) {
             var options;
-            for (var i=0 ; i&lt;children.length ; i++) {
+            for (var i = 0 ; i &lt; children.length ; i++) {
                 options = that._computeLayoutOptions(children[i]);
                 if (options.x == x &amp;&amp; options.y == y) {
                     return {w: children[i], o: options};
@@ -430,17 +428,20 @@ var GridLayout = Layout.$extend({
         }
 
         var map = [];
-        for (var y=0 ; y&lt;gridHeight ; y++) {
+        for (var y = 0 ; y &lt; gridHeight ; y++) {
             map[y] = [];
             map[y].length = gridWidth;
         }
 
         var child;
-        var tr, td, div;
-        var cellX, cellY;
-        for (y=0 ; y&lt;gridHeight ; y++) {
+        var tr;
+        var td;
+        var div;
+        var cellX;
+        var cellY;
+        for (y = 0 ; y &lt; gridHeight ; y++) {
             tr = document.createElement(&quot;tr&quot;);
-            for (var x=0 ; x&lt;gridWidth ; x++) {
+            for (var x = 0 ; x &lt; gridWidth ; x++) {
                 if (map[y][x]) {
                     continue;
                 }
@@ -459,11 +460,11 @@ var GridLayout = Layout.$extend({
                     // Spacing exceptions
                     var horizontalSpacing = this.horizontalSpacing;
                     var verticalSpacing = this.verticalSpacing;
-                    if (x+child.o.cols &gt;= gridWidth) {
+                    if (x + child.o.cols &gt;= gridWidth) {
                         td.className += &quot; photonui-gridlayout-lastcol&quot;;
                         verticalSpacing = 0;
                     }
-                    if (y+child.o.rows &gt;= gridHeight) {
+                    if (y + child.o.rows &gt;= gridHeight) {
                         td.className += &quot; photonui-gridlayout-lastrow&quot;;
                         horizontalSpacing = 0;
                     }
@@ -505,8 +506,8 @@ var GridLayout = Layout.$extend({
                         td.colSpan = child.o.cols;
                         td.rowSpan = child.o.rows;
 
-                        for (cellY=y ; cellY&lt;y+child.o.rows ; cellY++) {
-                            for (cellX=x ; cellX&lt;x+child.o.cols ; cellX++) {
+                        for (cellY = y ; cellY &lt; y + child.o.rows ; cellY++) {
+                            for (cellX = x ; cellX &lt; x + child.o.cols ; cellX++) {
                                 map[cellY][cellX] = true;
                             }
                         }
@@ -537,7 +538,7 @@ var GridLayout = Layout.$extend({
      * @param {photonui.Widget} widget
      * @return {Object} the layout options
      */
-    _computeLayoutOptions: function(widget) {
+    _computeLayoutOptions: function (widget) {
         var woptions = widget.layoutOptions || {};
 
         var options = {
@@ -566,73 +567,65 @@ var GridLayout = Layout.$extend({
 
         // [Compatibility with old GridLayout] position / place
         if (woptions.gridX !== undefined &amp;&amp; woptions.gridX !== null) {
-            options.x = woptions.gridX|0;
+            options.x = woptions.gridX | 0;
         }
         if (woptions.gridY !== undefined &amp;&amp; woptions.gridY !== null) {
-            options.y = woptions.gridY|0;
+            options.y = woptions.gridY | 0;
         }
         if (woptions.gridWidth !== undefined &amp;&amp; woptions.gridWidth !== null) {
-            options.cols = woptions.gridWidth|0;
+            options.cols = woptions.gridWidth | 0;
         }
         if (woptions.gridHeight !== undefined &amp;&amp; woptions.gridHeight !== null) {
-            options.rows = woptions.gridHeight|0;
+            options.rows = woptions.gridHeight | 0;
         }
 
         // position / place
         if (woptions.x !== undefined &amp;&amp; woptions.x !== null) {
-            options.x = woptions.x|0;
+            options.x = woptions.x | 0;
         }
         if (woptions.y !== undefined &amp;&amp; woptions.y !== null) {
-            options.y = woptions.y|0;
+            options.y = woptions.y | 0;
         }
         if (woptions.cols !== undefined &amp;&amp; woptions.cols !== null) {
-            options.cols = woptions.cols|0;
+            options.cols = woptions.cols | 0;
         }
         if (woptions.rows !== undefined &amp;&amp; woptions.rows !== null) {
-            options.rows = woptions.rows|0;
+            options.rows = woptions.rows | 0;
         }
 
         // verticalAlign
         if ([&quot;stretch&quot;, &quot;expand&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
             options.verticalAlign = &quot;stretch&quot;;
-        }
-        else if ([&quot;center&quot;, &quot;middle&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
+        } else if ([&quot;center&quot;, &quot;middle&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
             options.verticalAlign = &quot;center&quot;;
-        }
-        else if ([&quot;start&quot;, &quot;begin&quot;, &quot;top&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
+        } else if ([&quot;start&quot;, &quot;begin&quot;, &quot;top&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
             options.verticalAlign = &quot;start&quot;;
-        }
-        else if ([&quot;end&quot;, &quot;bottom&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
+        } else if ([&quot;end&quot;, &quot;bottom&quot;].indexOf(woptions.verticalAlign) &gt; -1) {
             options.verticalAlign = &quot;end&quot;;
         }
 
         // horizontalAlign
         if ([&quot;stretch&quot;, &quot;expand&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
             options.horizontalAlign = &quot;stretch&quot;;
-        }
-        else if ([&quot;center&quot;, &quot;middle&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
+        } else if ([&quot;center&quot;, &quot;middle&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
             options.horizontalAlign = &quot;center&quot;;
-        }
-        else if ([&quot;start&quot;, &quot;begin&quot;, &quot;left&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
+        } else if ([&quot;start&quot;, &quot;begin&quot;, &quot;left&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
             options.horizontalAlign = &quot;start&quot;;
-        }
-        else if ([&quot;end&quot;, &quot;right&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
+        } else if ([&quot;end&quot;, &quot;right&quot;].indexOf(woptions.horizontalAlign) &gt; -1) {
             options.horizontalAlign = &quot;end&quot;;
         }
 
         // [Compatibility with old GridLayout] horizontalAlign / verticalAlign
         if (woptions.verticalExpansion === true) {
             options.verticalAlign = &quot;stretch&quot;;
-        }
-        else if (woptions.verticalExpansion === false) {
+        } else if (woptions.verticalExpansion === false) {
             if (woptions.verticalAlign === undefined) {
                 options.verticalAlign = &quot;center&quot;;
             }
         }
         if (woptions.horizontalExpansion === true) {
             options.horizontalAlign = &quot;stretch&quot;;
-        }
-        else if (woptions.horizontalExpansion === false) {
+        } else if (woptions.horizontalExpansion === false) {
             if (woptions.horizontalAlign === undefined) {
                 options.horizontalAlign = &quot;center&quot;;
             }
@@ -640,28 +633,28 @@ var GridLayout = Layout.$extend({
 
         // *width
         if (woptions.minWidth !== undefined &amp;&amp; woptions.minWidth !== null) {
-            options.minWidth = woptions.minWidth|0;
+            options.minWidth = woptions.minWidth | 0;
         }
         if (woptions.maxWidth !== undefined &amp;&amp; woptions.maxWidth !== null) {
-            options.maxWidth = woptions.maxWidth|0;
+            options.maxWidth = woptions.maxWidth | 0;
         }
         if (woptions.width !== undefined &amp;&amp; woptions.width !== null) {
-            options.width = woptions.width|0;
-            options.minWidth = woptions.width|0;
-            options.maxWidth = woptions.width|0;
+            options.width = woptions.width | 0;
+            options.minWidth = woptions.width | 0;
+            options.maxWidth = woptions.width | 0;
         }
 
         // *height
         if (woptions.minHeight !== undefined &amp;&amp; woptions.minHeight !== null) {
-            options.minHeight = woptions.minHeight|0;
+            options.minHeight = woptions.minHeight | 0;
         }
         if (woptions.maxHeight !== undefined &amp;&amp; woptions.maxHeight !== null) {
-            options.maxHeight = woptions.maxHeight|0;
+            options.maxHeight = woptions.maxHeight | 0;
         }
         if (woptions.height !== undefined &amp;&amp; woptions.height !== null) {
-            options.height = woptions.height|0;
-            options.minHeight = woptions.height|0;
-            options.maxHeight = woptions.height|0;
+            options.height = woptions.height | 0;
+            options.minHeight = woptions.height | 0;
+            options.maxHeight = woptions.height | 0;
         }
 
         return options;
@@ -673,9 +666,9 @@ var GridLayout = Layout.$extend({
      * @method _updateSpacing
      * @private
      */
-    _updateSpacing: function() {
+    _updateSpacing: function () {
         var nodes = this.__html.outerbox.querySelectorAll(&quot;#&quot; + this.name + &quot; &gt; table &gt; tbody &gt; tr &gt; td&quot;);
-        for (var i=0 ; i&lt;nodes.length ; i++) {
+        for (var i = 0 ; i &lt; nodes.length ; i++) {
             nodes[i].style.paddingRight = this._verticalSpacing + &quot;px&quot;;
             nodes[i].style.paddingBottom = this._horizontalSpacing + &quot;px&quot;;
         }
@@ -700,25 +693,27 @@ var GridLayout = Layout.$extend({
      * @method _sizingHack
      * @private
      */
-    _sizingHack: function() {
+    _sizingHack: function () {
         if (this._updatingLayout) {
             return;
         }
 
         // Automatically disable the hack for webkit browsers
-        if (localStorage._photonui_gridlayout_sizinghack == &quot;disabled&quot;) {
+        if (_sizingHackEnabled === false) {
             return;
-        }
-        else if (localStorage._photonui_gridlayout_sizinghack === undefined) {
+        } else if (_sizingHackEnabled === null) {
             var isWebkit = false;
-            if (&quot;WebkitAppearance&quot; in document.documentElement.style) isWebkit = true;
-            if (&quot;WebKitCSSMatrix&quot; in window) isWebkit = true;
-            if (isWebkit) {
-                localStorage._photonui_gridlayout_sizinghack = &quot;disabled&quot;;
-                return;
+            if (&quot;WebkitAppearance&quot; in document.documentElement.style) {
+                isWebkit = true;
             }
-            else {
-                localStorage._photonui_gridlayout_sizinghack = &quot;enabled&quot;;
+            if (&quot;WebKitCSSMatrix&quot; in window) {
+                isWebkit = true;
+            }
+            if (isWebkit) {
+                _sizingHackEnabled = false;
+                return;
+            } else {
+                _sizingHackEnabled = true;
             }
         }
 
@@ -732,11 +727,9 @@ var GridLayout = Layout.$extend({
                 var tdHeight;
                 if (node.style.minHeight &amp;&amp; node.style.minHeight == node.style.maxHeight) {
                     tdHeight = parseFloat(node.style.minHeight);
-                }
-                else if (node.classList.contains(&quot;photonui-gridlayout-lastrow&quot;)) {
+                } else if (node.classList.contains(&quot;photonui-gridlayout-lastrow&quot;)) {
                     tdHeight = node.offsetHeight;
-                }
-                else {
+                } else {
                     tdHeight = node.offsetHeight;
                 }
                 node.style.height = tdHeight + &quot;px&quot;;
@@ -745,19 +738,23 @@ var GridLayout = Layout.$extend({
             var nodes = this.__html.outerbox.querySelectorAll(&quot;#&quot; + this.name + &quot; &gt; table &gt; tbody &gt; tr &gt; td&quot;);
 
             // 1st pass -&gt; height: auto
-            for (var i=0 ; i&lt;nodes.length ; i++) {
+            for (var i = 0 ; i &lt; nodes.length ; i++) {
                 nodes[i].style.height = &quot;auto&quot;;
             }
 
             // 2nd pass -&gt; fixed height for all td where rowspan = 1
-            for (i=0 ; i&lt;nodes.length ; i++) {
-                if (nodes[i].rowSpan &amp;&amp; nodes[i].rowSpan &gt; 1) continue;
+            for (i = 0 ; i &lt; nodes.length ; i++) {
+                if (nodes[i].rowSpan &amp;&amp; nodes[i].rowSpan &gt; 1) {
+                    continue;
+                }
                 _size(nodes[i]);
             }
 
             // 3rd pass -&gt; fixed height for all td where rowspan &gt; 1
-            for (i=0 ; i&lt;nodes.length ; i++) {
-                if ((!nodes[i].rowSpan) || nodes[i].rowSpan &lt;= 1) continue;
+            for (i = 0 ; i &lt; nodes.length ; i++) {
+                if ((!nodes[i].rowSpan) || nodes[i].rowSpan &lt;= 1) {
+                    continue;
+                }
                 _size(nodes[i]);
             }
 

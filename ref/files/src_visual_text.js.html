@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -186,11 +186,9 @@ var Helpers = require(&quot;../helpers.js&quot;);
  */
 var Text_ = Widget.$extend({
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
-
 
     // ====== Public properties ======
 
@@ -205,11 +203,11 @@ var Text_ = Widget.$extend({
      * @type String
      * @default &quot;&quot;
      */
-    getText: function() {
+    getText: function () {
         return this.__html.outer.textContent;
     },
 
-    setText: function(text) {
+    setText: function (text) {
         this._lastSet = &quot;text&quot;;
         this._raw = text;
         Helpers.cleanNode(this.__html.outer);
@@ -223,11 +221,11 @@ var Text_ = Widget.$extend({
      * @type String
      * @default &quot;&quot;
      */
-    getRawHtml: function() {
+    getRawHtml: function () {
         return this.__html.outer.innerHTML;
     },
 
-    setRawHtml: function(html) {
+    setRawHtml: function (html) {
         this._lastSet = &quot;rawHtml&quot;;
         this._raw = html;
         this.__html.outer.innerHTML = html;
@@ -241,18 +239,15 @@ var Text_ = Widget.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outer;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -260,16 +255,14 @@ var Text_ = Widget.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;div&quot;);
         this.__html.outer.className = &quot;photonui-widget photonui-text&quot;;
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
-
 
     /**
      * Called when the locale is changed.
@@ -277,7 +270,7 @@ var Text_ = Widget.$extend({
      * @method __onLocaleChanged
      * @private
      */
-    __onLocaleChanged: function() {
+    __onLocaleChanged: function () {
         this.$super();
         if (this._raw instanceof Stone.LazyString) {
             this[this._lastSet] = this._raw;

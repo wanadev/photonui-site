@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -185,19 +185,16 @@ var Field = require(&quot;./field.js&quot;);
 var TextAreaField = Field.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this.$super(params);
         this._bindFieldEvents();
     },
-
 
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * Number of columns.
@@ -206,11 +203,11 @@ var TextAreaField = Field.$extend({
      * @type Number
      * @default 20
      */
-    getCols: function() {
+    getCols: function () {
         return parseInt(this.__html.field.cols);
     },
 
-    setCols: function(cols) {
+    setCols: function (cols) {
         this.__html.field.cols = cols;
     },
 
@@ -221,22 +218,19 @@ var TextAreaField = Field.$extend({
      * @type Number
      * @default 3
      */
-    getRows: function() {
+    getRows: function () {
         return parseInt(this.__html.field.rows);
     },
 
-    setRows: function(rows) {
+    setRows: function (rows) {
         this.__html.field.rows = rows;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -244,9 +238,9 @@ var TextAreaField = Field.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.field = document.createElement(&quot;textarea&quot;);
-        this.__html.field.className = &quot;photonui-widget photonui-field photonui-field-textarea&quot;;
+        this.__html.field.className = &quot;photonui-widget photonui-field photonui-textareafield&quot;;
         this.__html.field.cols = 20;
         this.__html.field.rows = 3;
     }

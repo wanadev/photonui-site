@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -165,7 +165,6 @@
  * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
  */
 
-
 /**
  * PhotonUI - Javascript Web User Interface.
  *
@@ -188,7 +187,7 @@ var _spritesheets = {};
 var SpriteSheet = Base.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._icons = {};
         this.$super(params);
         this._updateProperties([&quot;name&quot;]);
@@ -198,9 +197,7 @@ var SpriteSheet = Base.$extend({
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The sprit sheet name.
@@ -211,11 +208,11 @@ var SpriteSheet = Base.$extend({
      */
     _name: &quot;default&quot;,
 
-    getName: function() {
+    getName: function () {
         return this._name;
     },
 
-    setName: function(name) {
+    setName: function (name) {
         if (_spritesheets[this.name] == this) {
             delete _spritesheets[this.name];
         }
@@ -232,11 +229,11 @@ var SpriteSheet = Base.$extend({
      */
     _imageUrl: null,
 
-    getImageUrl: function() {
+    getImageUrl: function () {
         return this._imageUrl;
     },
 
-    setImageUrl: function(url) {
+    setImageUrl: function (url) {
         if (!url) {
             this._imageUrl = null;
             return;
@@ -258,11 +255,11 @@ var SpriteSheet = Base.$extend({
      */
     _size: 16,
 
-    getSize: function() {
+    getSize: function () {
         return this._size;
     },
 
-    setSize: function(size) {
+    setSize: function (size) {
         this._size = size;
     },
 
@@ -281,24 +278,21 @@ var SpriteSheet = Base.$extend({
      */
     _icons: {},
 
-    getIcons: function() {
+    getIcons: function () {
         return this._icons;
     },
 
-    setIcons: function(icons) {
+    setIcons: function (icons) {
         for (var icon in icons) {
             this._icons[icon] = icons[icon];
         }
     },
 
-
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Public methods ======
-
 
     /**
      * Get icon position.
@@ -307,7 +301,7 @@ var SpriteSheet = Base.$extend({
      * @param {String} iconName
      * @return {Object} &#x60;{x: Number, y: Number}&#x60;
      */
-    getIconPosition: function(iconName) {
+    getIconPosition: function (iconName) {
         return {x: this.icons[iconName][0], y: this.icons[iconName][1]};
     },
 
@@ -318,7 +312,7 @@ var SpriteSheet = Base.$extend({
      * @param {String} iconName
      * @return {String} the CSS.
      */
-    getIconCss: function(iconName) {
+    getIconCss: function (iconName) {
         return &quot;width: &quot;      + this.size + &quot;px; &quot; +
                &quot;height: &quot;     + this.size + &quot;px; &quot; +
                &quot;background: &quot; + &quot;url(&quot; + this.imageUrl + &quot;) &quot; +
@@ -334,7 +328,7 @@ var SpriteSheet = Base.$extend({
      * @param {Number} x
      * @param {Number} y
      */
-    addIcon: function(iconName, x ,y) {
+    addIcon: function (iconName, x, y) {
         this.icons = {iconName: [x, y]};
     },
 
@@ -344,7 +338,7 @@ var SpriteSheet = Base.$extend({
      * @method removeIcon
      * @param {String} iconName
      */
-    removeIcon: function(iconName) {
+    removeIcon: function (iconName) {
         delete this._icons[iconName];
     }
 });
@@ -357,7 +351,7 @@ var SpriteSheet = Base.$extend({
  *
  * @return {photonui.SpriteSheet} The sprite sheet or null.
  */
-SpriteSheet.getSpriteSheet = function(name) {
+SpriteSheet.getSpriteSheet = function (name) {
     if (_spritesheets[name] !== undefined) {
         return _spritesheets[name];
     }

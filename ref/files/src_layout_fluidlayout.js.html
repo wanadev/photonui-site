@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -172,7 +172,7 @@
  * @submodule Layout
  * @namespace photonui
  */
- 
+
 var Helpers = require(&quot;../helpers.js&quot;);
 var Layout = require(&quot;./layout.js&quot;);
 
@@ -189,9 +189,7 @@ var FluidLayout = Layout.$extend({
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The vertical spacing between children widgets.
@@ -202,11 +200,11 @@ var FluidLayout = Layout.$extend({
      */
     _verticalSpacing: 0,
 
-    getVerticalSpacing: function() {
+    getVerticalSpacing: function () {
         return this._verticalSpacing;
     },
 
-    setVerticalSpacing: function(verticalSpacing) {
+    setVerticalSpacing: function (verticalSpacing) {
         this._verticalSpacing = verticalSpacing;
         this._updateLayout();
     },
@@ -220,11 +218,11 @@ var FluidLayout = Layout.$extend({
      */
     _horizontalSpacing: 2,
 
-    getHorizontalSpacing: function() {
+    getHorizontalSpacing: function () {
         return this._horizontalSpacing;
     },
 
-    setHorizontalSpacing: function(horizontalSpacing) {
+    setHorizontalSpacing: function (horizontalSpacing) {
         this._horizontalSpacing = horizontalSpacing;
         this._updateLayout();
     },
@@ -237,18 +235,15 @@ var FluidLayout = Layout.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outerbox;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -256,7 +251,7 @@ var FluidLayout = Layout.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outerbox = document.createElement(&quot;div&quot;);
         this.__html.outerbox.className = &quot;photonui-widget photonui-fluidlayout&quot;;
     },
@@ -267,12 +262,12 @@ var FluidLayout = Layout.$extend({
      * @method _updateLayout
      * @private
      */
-    _updateLayout: function() {
+    _updateLayout: function () {
         var children = this.children;
         var fragment = document.createDocumentFragment();
 
         var div = null;
-        for (var i=0 ; i&lt;children.length ; i++) {
+        for (var i = 0 ; i &lt; children.length ; i++) {
             div = document.createElement(&quot;div&quot;);
             div.className = &quot;photonui-container&quot;;
             div.style.padding = &quot;0 &quot; + this.horizontalSpacing + &quot;px &quot; + this.verticalSpacing + &quot;px 0&quot;;
