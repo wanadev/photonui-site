@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -188,7 +188,7 @@ var Menu = require(&quot;../layout/menu.js&quot;);
 var PopupMenu = PopupWindow.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._childrenNames = [];  // new instance
         this.$super(params);
     },
@@ -210,17 +210,15 @@ var PopupMenu = PopupWindow.$extend({
         removeChild:      Menu.prototype.removeChild,
         empty:            Menu.prototype.empty,
         destroy:          Menu.prototype.destroy,
-        _updateLayout:    Menu.prototype._updateLayout
+        _updateLayout:    Menu.prototype._updateLayout,
+        _lockUpdate:      Menu.prototype._lockUpdate
     }],
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -228,7 +226,7 @@ var PopupMenu = PopupWindow.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.$super();
         Menu.prototype._buildHtml.call(this);
 
@@ -237,11 +235,9 @@ var PopupMenu = PopupWindow.$extend({
         this.__html.outer.className = &quot;photonui-widget photonui-menu photonui-menu-style-popupmenu&quot;;
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
-
 
     /**
      * Called when the locale is changed.
@@ -249,7 +245,7 @@ var PopupMenu = PopupWindow.$extend({
      * @method __onLocaleChanged
      * @private
      */
-    __onLocaleChanged: function() {
+    __onLocaleChanged: function () {
         // pass
     }
 });

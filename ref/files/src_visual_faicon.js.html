@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -165,7 +165,6 @@
  * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
  */
 
-
 /**
  * PhotonUI - Javascript Web User Interface.
  *
@@ -191,7 +190,7 @@ var BaseIcon = require(&quot;./baseicon.js&quot;);
 var FAIcon = BaseIcon.$extend({
 
     // Constructor
-    __init__: function(params1, params2) {
+    __init__: function (params1, params2) {
         var params = {};
         if (params1 &amp;&amp; typeof(params1) == &quot;string&quot;) {
             params.iconName = params1;
@@ -200,22 +199,18 @@ var FAIcon = BaseIcon.$extend({
                     params[i] = params2[i];
                 }
             }
-        }
-        else if (params1) {
+        } else if (params1) {
             params = params1;
         }
         this.$super(params);
         this._updateProperties([&quot;iconName&quot;, &quot;size&quot;, &quot;color&quot;]);
     },
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The Font Awesome icon name (e.g. &quot;fa-cog&quot;).
@@ -228,11 +223,11 @@ var FAIcon = BaseIcon.$extend({
      */
     _iconName: &quot;&quot;,
 
-    getIconName: function() {
+    getIconName: function () {
         return this._iconName;
     },
 
-    setIconName: function(iconName) {
+    setIconName: function (iconName) {
         this._iconName = iconName || &quot;&quot;;
         this.__html.icon.className = &quot;fa &quot; + this.iconName + &quot; &quot; + this.size;
     },
@@ -248,11 +243,11 @@ var FAIcon = BaseIcon.$extend({
      */
     _size: &quot;&quot;,
 
-    getSize: function() {
+    getSize: function () {
         return this._size;
     },
 
-    setSize: function(size) {
+    setSize: function (size) {
         this._size = size || &quot;&quot;;
         this.__html.icon.className = &quot;fa &quot; + this.iconName + &quot; &quot; + this.size;
     },
@@ -266,11 +261,11 @@ var FAIcon = BaseIcon.$extend({
      */
     _color: &quot;inherit&quot;,
 
-    getColor: function() {
+    getColor: function () {
         return this._color;
     },
 
-    setColor: function(color) {
+    setColor: function (color) {
         this._color = color || &quot;inherit&quot;;
         this.__html.icon.style.color = this.color;
     },
@@ -283,18 +278,15 @@ var FAIcon = BaseIcon.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outer;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -302,7 +294,7 @@ var FAIcon = BaseIcon.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;span&quot;);
         this.__html.outer.className = &quot;photonui-widget photonui-icon photonui-faicon&quot;;
 

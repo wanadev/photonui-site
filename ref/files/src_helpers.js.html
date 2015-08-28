@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -174,9 +174,7 @@
  * @namespace photonui
  */
 
-
-var photonui = require(&quot;./photonui.js&quot;);
-
+var uuid = require(&quot;uuid&quot;);
 
 /**
  * Helpers.
@@ -184,7 +182,7 @@ var photonui = require(&quot;./photonui.js&quot;);
  * @class Helpers
  * @constructor
  */
-var Helpers = function() {
+var Helpers = function () {
 };
 
 /**
@@ -195,7 +193,7 @@ var Helpers = function() {
  * @param {String} string
  * @return {String}
  */
-Helpers.escapeHtml = function(string) {
+Helpers.escapeHtml = function (string) {
     return string
         .replace(/&amp;/g, &quot;&amp;amp;&quot;)
         .replace(/&lt;/g, &quot;&amp;lt;&quot;)
@@ -203,20 +201,18 @@ Helpers.escapeHtml = function(string) {
 };
 
 /**
- * Generate an UUID version 4 (RFC 4122)
+ * Generate an UUID version 4 (RFC 4122).
  *
- * From:
- * http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+ * This method is deprecated, please use &#x60;photonui.lib.uuid.v4()&#x60; instead.
  *
  * @method uuid4
  * @static
+ * @deprecated
  * @return {String} The generated UUID
  */
-Helpers.uuid4 = function() {
-    return &quot;xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx&quot;.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == &quot;x&quot; ? r : (r&amp;0x3|0x8);
-        return v.toString(16);
-    });
+Helpers.uuid4 = function () {
+    Helpers.log(&quot;warn&quot;, &quot;&#x27;photonui.Helpers.uuid4()&#x27; is deprecated. Use &#x27;photonui.lib.uuid.v4()&#x27; instead.&quot;);
+    return uuid.v4();
 };
 
 /**
@@ -226,7 +222,7 @@ Helpers.uuid4 = function() {
  * @static
  * @param {HTMLElement} node
  */
-Helpers.cleanNode = function(node) {
+Helpers.cleanNode = function (node) {
     while (node.hasChildNodes()) {
         node.removeChild(node.lastChild);
     }
@@ -240,20 +236,25 @@ Helpers.cleanNode = function(node) {
  * @param {HTMLElement} element The HTML element (or its id)
  * @return {Object} &#x60;{x: &lt;Number&gt;, y: &lt;Number&gt;}
  */
-Helpers.getAbsolutePosition = function(element) {
-    if (typeof(element) == &quot;string&quot;) element = document.getElementById(element);
-    if (!(element instanceof Element)) return {x: 0, y: 0};
+Helpers.getAbsolutePosition = function (element) {
+    if (typeof(element) == &quot;string&quot;) {
+        element = document.getElementById(element);
+    }
+    if (!(element instanceof Element)) {
+        return {x: 0, y: 0};
+    }
     var css;
     try {
         css = getComputedStyle(element);
-    }
-    catch (e) {
+    } catch (e) {
         return {x: 0, y: 0};
     }
-    if (!css) return {x: 0, y: 0};
+    if (!css) {
+        return {x: 0, y: 0};
+    }
 
-    var x = - parseInt(css.borderLeftWidth);
-    var y = - parseInt(css.borderTopWidth);
+    var x = -parseInt(css.borderLeftWidth);
+    var y = -parseInt(css.borderTopWidth);
 
     while (element.offsetParent) {
         css = getComputedStyle(element);
@@ -280,27 +281,49 @@ Helpers.getAbsolutePosition = function(element) {
  *     Number     -&gt; &quot;&lt;Number&gt;px&quot;
  *
  * @method numberToCssSize
+ * @static
  * @param {Number} value
  * @param {Number} defaultValue (opt, default=nullValue)
  * @param {String} nullValue (opt, default=&quot;auto&quot;)
  * @return {String} sanitized version of the size.
  */
-Helpers.numberToCssSize = function(value, defaultValue, nullValue) {
+Helpers.numberToCssSize = function (value, defaultValue, nullValue) {
     nullValue = (nullValue === undefined) ? &quot;auto&quot; : nullValue;
     defaultValue = (nullValue === undefined) ? null : defaultValue;
     value = (value === undefined) ? defaultValue : value;
 
     if (value === Infinity) {
         return &quot;100%&quot;;
-    }
-    else if (!isNaN(parseFloat(value))) {
-        return Math.max(0, parseFloat(value)|0) + &quot;px&quot;;
-    }
-    else if (value !== defaultValue) {
+    } else if (!isNaN(parseFloat(value))) {
+        return Math.max(0, parseFloat(value) | 0) + &quot;px&quot;;
+    } else if (value !== defaultValue) {
         return Helpers.numberToCssSize(defaultValue, defaultValue, nullValue);
-    }
-    else {
+    } else {
         return nullValue;
+    }
+};
+
+/**
+ * Write log into the terminal.
+ *
+ * @method log
+ * @static
+ * @param {String} level The log level (&quot;info&quot;, &quot;warn&quot;, &quot;error&quot;, ...)
+ * @param {String} message The message to log
+ */
+Helpers.log = function (level, message) {
+    try {
+        if (!window.console) {
+            return;
+        }
+        if (!window.console.log) {
+            return;
+        }
+        if (!window.console[level]) {
+            level = &quot;log&quot;;
+        }
+        window.console[level](&quot;PhotonUI: &quot; + message);
+    } catch (e) {
     }
 };
 

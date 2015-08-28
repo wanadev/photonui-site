@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -196,15 +196,17 @@ var _windowList = [];
 var Window = BaseWindow.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._registerWEvents([&quot;close-button-clicked&quot;]);
         this.$super(params);
 
         // Bind js events
         this._bindEvent(&quot;move.dragstart&quot;, this.__html.windowTitle, &quot;mousedown&quot;, this.__moveDragStart.bind(this));
-        this._bindEvent(&quot;closeButton.click&quot;, this.__html.windowTitleCloseButton, &quot;click&quot;, this.__closeButtonClicked.bind(this));
+        this._bindEvent(&quot;closeButton.click&quot;, this.__html.windowTitleCloseButton, &quot;click&quot;,
+                        this.__closeButtonClicked.bind(this));
         this._bindEvent(&quot;totop&quot;, this.__html.window, &quot;mousedown&quot;, this.moveToFront.bind(this));
-        this._bindEvent(&quot;closeButton.mousedown&quot;, this.__html.windowTitleCloseButton, &quot;mousedown&quot;, function (event) { event.stopPropagation(); });
+        this._bindEvent(&quot;closeButton.mousedown&quot;, this.__html.windowTitleCloseButton, &quot;mousedown&quot;,
+                        function (event) { event.stopPropagation(); });
 
         // Update Properties
         this._updateProperties([&quot;title&quot;, &quot;closeButtonVisible&quot;]);
@@ -215,9 +217,7 @@ var Window = BaseWindow.$extend({
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The window title.
@@ -228,11 +228,11 @@ var Window = BaseWindow.$extend({
      */
     _title: &quot;Window&quot;,
 
-    getTitle: function() {
+    getTitle: function () {
         return this._title;
     },
 
-    setTitle: function(title) {
+    setTitle: function (title) {
         this._title = title;
         Helpers.cleanNode(this.__html.windowTitleText);
         this.__html.windowTitleText.appendChild(document.createTextNode(title));
@@ -247,11 +247,11 @@ var Window = BaseWindow.$extend({
      */
     _movable: true,
 
-    isMovable: function() {
+    isMovable: function () {
         return this._movable;
     },
 
-    setMovable: function(movable) {
+    setMovable: function (movable) {
         this._movable = movable;
     },
 
@@ -264,18 +264,17 @@ var Window = BaseWindow.$extend({
      */
     _closeButtonVisible: true,
 
-    getCloseButtonVisible: function() {
+    getCloseButtonVisible: function () {
         return this._closeButtonVisible;
     },
 
-    setCloseButtonVisible: function(closeButtonVisible) {
+    setCloseButtonVisible: function (closeButtonVisible) {
         this._closeButtonVisible = closeButtonVisible;
 
         if (closeButtonVisible) {
             this.addClass(&quot;photonui-window-have-button&quot;);
             this.__html.windowTitleCloseButton.style.display = &quot;block&quot;;
-        }
-        else {
+        } else {
             this.removeClass(&quot;photonui-window-have-button&quot;);
             this.__html.windowTitleCloseButton.style.display = &quot;none&quot;;
         }
@@ -290,11 +289,11 @@ var Window = BaseWindow.$extend({
      */
     _modal: false,
 
-    isModal: function() {
+    isModal: function () {
         return this._modal;
     },
 
-    setModal: function(modal) {
+    setModal: function (modal) {
         this._modal = modal;
         if (modal) {
             this.__html.modalBox = document.createElement(&quot;div&quot;);
@@ -302,8 +301,7 @@ var Window = BaseWindow.$extend({
             var parentNode = Widget.e_parent || document.getElementsByTagName(&quot;body&quot;)[0];
             parentNode.appendChild(this.__html.modalBox);
             this.visible = this.visible; // Force update
-        }
-        else if (this.__html.modalBox) {
+        } else if (this.__html.modalBox) {
             this.__html.modalBox.parentNode.removeChild(this.__html.modalBox);
             delete this.__html.modalBox;
         }
@@ -316,19 +314,18 @@ var Window = BaseWindow.$extend({
      * @type HTMLElement
      * @readOnly
      */
-    getContainerNode: function() {
+    getContainerNode: function () {
         return this.__html.windowContent;
     },
 
-    setVisible: function(visible) {
+    setVisible: function (visible) {
         this.$super(visible);
         if (this.visible) {
             this.moveToFront();
             if (this.modal) {
                 this.__html.modalBox.style.display = &quot;block&quot;;
             }
-        }
-        else {
+        } else {
             this.moveToBack();
             if (this.modal) {
                 this.__html.modalBox.style.display = &quot;none&quot;;
@@ -336,21 +333,18 @@ var Window = BaseWindow.$extend({
         }
     },
 
-
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Public methods ======
-
 
     /**
      * Bring the window to front.
      *
      * @method moveToFront
      */
-    moveToFront: function() {
+    moveToFront: function () {
         var index = _windowList.indexOf(this);
         if (index &gt;= 0) {
             _windowList.splice(index, 1);
@@ -364,7 +358,7 @@ var Window = BaseWindow.$extend({
      *
      * @method moveToBack
      */
-    moveToBack: function() {
+    moveToBack: function () {
         var index = _windowList.indexOf(this);
         if (index &gt;= 0) {
             _windowList.splice(index, 1);
@@ -378,7 +372,7 @@ var Window = BaseWindow.$extend({
      *
      * @method destroy
      */
-    destroy: function() {
+    destroy: function () {
         this.modal = false;
         var index = _windowList.indexOf(this);
         if (index &gt;= 0) {
@@ -387,9 +381,7 @@ var Window = BaseWindow.$extend({
         this.$super();
     },
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -397,7 +389,7 @@ var Window = BaseWindow.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         var _ = Stone.lazyGettext;
 
         this.$super();
@@ -427,14 +419,13 @@ var Window = BaseWindow.$extend({
      * @method _updateWindowList
      * @private
      */
-    _updateWindowList: function() {
-        for (var i=_windowList.length-1, z=0 ; i&gt;=0 ; i--, z++) {   // jshint ignore:line
+    _updateWindowList: function () {
+        for (var i = _windowList.length - 1, z = 0 ; i &gt;= 0 ; i--, z++) {   // jshint ignore:line
             if (i === 0) {
                 _windowList[i].html.style.zIndex = 2001;
                 _windowList[i].addClass(&quot;photonui-active&quot;);
-            }
-            else {
-                _windowList[i].html.style.zIndex = 1000+z;
+            } else {
+                _windowList[i].html.style.zIndex = 1000 + z;
                 _windowList[i].removeClass(&quot;photonui-active&quot;);
             }
             if (_windowList[i].modal) {
@@ -443,11 +434,9 @@ var Window = BaseWindow.$extend({
         }
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
-
 
     /**
      * Start moving the window.
@@ -456,7 +445,7 @@ var Window = BaseWindow.$extend({
      * @private
      * @param {Object} event
      */
-    __moveDragStart: function(event) {
+    __moveDragStart: function (event) {
         if (!this.movable || event.button &gt; 0) {
             return;
         }
@@ -476,7 +465,7 @@ var Window = BaseWindow.$extend({
      * @param {Number} offsetY
      * @param {Object} event
      */
-    __moveDragging: function(offsetX, offsetY, event) {
+    __moveDragging: function (offsetX, offsetY, event) {
         var e_body = document.getElementsByTagName(&quot;body&quot;)[0];
         var x = Math.min(Math.max(event.pageX - offsetX, 40 - this.offsetWidth), e_body.offsetWidth - 40);
         var y = Math.max(event.pageY - offsetY, 0);
@@ -493,7 +482,7 @@ var Window = BaseWindow.$extend({
      * @private
      * @param {Object} event
      */
-    __moveDragEnd: function(event) {
+    __moveDragEnd: function (event) {
         this.__html.windowTitle.style.cursor = &quot;default&quot;;
         this._unbindEvent(&quot;move.dragging&quot;);
         this._unbindEvent(&quot;move.dragend&quot;);
@@ -506,7 +495,7 @@ var Window = BaseWindow.$extend({
      * @private
      * @param {Object} event
      */
-    __closeButtonClicked: function(event) {
+    __closeButtonClicked: function (event) {
         this._callCallbacks(&quot;close-button-clicked&quot;);
     },
 
@@ -516,7 +505,7 @@ var Window = BaseWindow.$extend({
      * @method __onLocaleChanged
      * @private
      */
-    __onLocaleChanged: function() {
+    __onLocaleChanged: function () {
         this.$super();
         this.__html.windowTitleCloseButton.title = Stone.lazyGettext(&quot;Close&quot;);
     }

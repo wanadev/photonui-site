@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -185,19 +185,16 @@ var Widget = require(&quot;../widget.js&quot;);
 var Separator = Widget.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this.$super(params);
         this._updateProperties([&quot;orientation&quot;]);
     },
-
 
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The separator orientation (&quot;vertical&quot; or &quot;horizontal&quot;).
@@ -208,13 +205,13 @@ var Separator = Widget.$extend({
      */
     _orientation: &quot;horizontal&quot;,
 
-    getOrientation: function() {
+    getOrientation: function () {
         return this._orientation;
     },
 
-    setOrientation: function(orientation) {
+    setOrientation: function (orientation) {
         if (orientation != &quot;vertical&quot; &amp;&amp; orientation != &quot;horizontal&quot;) {
-            throw &quot;Error: The orientation should be \&quot;vertical\&quot; or \&quot;horizontal\&quot;.&quot;;
+            throw new Error(&quot;The orientation should be \&quot;vertical\&quot; or \&quot;horizontal\&quot;.&quot;);
         }
         this._orientation = orientation;
         this.removeClass(&quot;photonui-separator-vertical&quot;);
@@ -225,8 +222,7 @@ var Separator = Widget.$extend({
         this.removeClass(&quot;photonui-widget-fixed-width&quot;);
         if (this._orientation == &quot;horizontal&quot;) {
             this.addClass(&quot;photonui-widget-fixed-height&quot;);
-        }
-        else {
+        } else {
             this.addClass(&quot;photonui-widget-fixed-width&quot;);
         }
     },
@@ -239,18 +235,15 @@ var Separator = Widget.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outer;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -258,18 +251,16 @@ var Separator = Widget.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;div&quot;);
         this.__html.outer.className = &quot;photonui-widget photonui-separator&quot;;
         this.__html.hr = document.createElement(&quot;hr&quot;);
         this.__html.outer.appendChild(this.__html.hr);
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
-
 
     /**
      * Called when the locale is changed.
@@ -277,7 +268,7 @@ var Separator = Widget.$extend({
      * @method __onLocaleChanged
      * @private
      */
-    __onLocaleChanged: function() {
+    __onLocaleChanged: function () {
         // pass
     }
 });

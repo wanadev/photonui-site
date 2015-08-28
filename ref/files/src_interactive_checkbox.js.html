@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -191,7 +191,7 @@ var Widget = require(&quot;../widget.js&quot;);
 var CheckBox = Widget.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._registerWEvents([&quot;value-changed&quot;, &quot;click&quot;]);
         this.$super(params);
         this.inputId = this.name + &quot;-input&quot;;
@@ -203,14 +203,11 @@ var CheckBox = Widget.$extend({
         this.__html.checkbox.id = this.inputId;
     },
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The input value.
@@ -219,11 +216,11 @@ var CheckBox = Widget.$extend({
      * @type Boolean
      * @default false
      */
-    getValue: function() {
+    getValue: function () {
         return this.__html.checkbox.checked;
     },
 
-    setValue: function(value) {
+    setValue: function (value) {
         this.__html.checkbox.checked = value;
     },
 
@@ -235,18 +232,15 @@ var CheckBox = Widget.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outer;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -254,9 +248,12 @@ var CheckBox = Widget.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;div&quot;);
-        this.__html.outer.className = &quot;photonui-widget photonui-checkbox photonui-widget-fixed-width photonui-widget-fixed-height&quot;;
+        this.__html.outer.className = &quot;photonui-widget&quot;;
+        this.__html.outer.className += &quot; photonui-checkbox&quot;;
+        this.__html.outer.className += &quot; photonui-widget-fixed-width&quot;;
+        this.__html.outer.className += &quot; photonui-widget-fixed-height&quot;;
 
         this.__html.checkbox = document.createElement(&quot;input&quot;);
         this.__html.checkbox.type = &quot;checkbox&quot;;
@@ -267,18 +264,16 @@ var CheckBox = Widget.$extend({
         this.__html.outer.appendChild(this.__html.span);
     },
 
-
     //////////////////////////////////////////
     // Internal Events Callbacks            //
     //////////////////////////////////////////
-
 
     /**
      * @method __onChange
      * @private
      * @param event
      */
-    __onChange: function(event) {
+    __onChange: function (event) {
         this._callCallbacks(&quot;value-changed&quot;, [this.value]);
         // Focus the span if the real checkbox is hidden (happen when a label is clicked).
         if (window.getComputedStyle(this.__html.checkbox).display == &quot;none&quot;) {
@@ -291,7 +286,7 @@ var CheckBox = Widget.$extend({
      * @private
      * @param event
      */
-    __onSpanClick: function(event) {
+    __onSpanClick: function (event) {
         this.value = !this.value;
         this._callCallbacks(&quot;value-changed&quot;, [this.value]);
         this._callCallbacks(&quot;click&quot;, [event]);
@@ -302,7 +297,7 @@ var CheckBox = Widget.$extend({
      * @private
      * @param event
      */
-    __onCheckboxClick: function(event) {
+    __onCheckboxClick: function (event) {
         this._callCallbacks(&quot;click&quot;, [event]);
     },
 
@@ -311,7 +306,7 @@ var CheckBox = Widget.$extend({
      * @private
      * @param event
      */
-    __onSpanKeypress: function(event) {
+    __onSpanKeypress: function (event) {
         if (event.charCode == 32 || event.keyCode == 13) {
             this.value = !this.value;
             this._callCallbacks(&quot;value-changed&quot;, [this.value]);

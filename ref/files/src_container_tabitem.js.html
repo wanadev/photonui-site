@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -173,13 +173,17 @@
  * @namespace photonui
  */
 
-
 var Helpers = require(&quot;../helpers.js&quot;);
 var Container = require(&quot;./container.js&quot;);
 
-
 /**
  * Tab Item.
+ *
+ *  wEvents:
+ *
+ *   * click:
+ *     - description: called when the tab was clicked.
+ *     - callback:    function(widget, event)
  *
  * @class TabItem
  * @constructor
@@ -189,21 +193,19 @@ var Container = require(&quot;./container.js&quot;);
 var TabItem = Container.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
+        this._registerWEvents([&quot;click&quot;]);
         this.$super(params);
         this._updateProperties([&quot;title&quot;]);
 
-        this._bindEvent(&quot;tab-click&quot;, this.__html.tab, &quot;click&quot;, this.show.bind(this));
+        this._bindEvent(&quot;tab-click&quot;, this.__html.tab, &quot;click&quot;, this.__onClick.bind(this));
     },
-
 
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * Tab title.
@@ -214,11 +216,11 @@ var TabItem = Container.$extend({
      */
     _title: &quot;Tab&quot;,
 
-    getTitle: function() {
+    getTitle: function () {
         return this._title;
     },
 
-    setTitle: function(title) {
+    setTitle: function (title) {
         this._title = title;
         Helpers.cleanNode(this.__html.tab);
         this.__html.tab.appendChild(document.createTextNode(title));
@@ -232,7 +234,7 @@ var TabItem = Container.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.div;
     },
 
@@ -244,7 +246,7 @@ var TabItem = Container.$extend({
      * @default null
      * @readOnly
      */
-    getTabHtml: function() {
+    getTabHtml: function () {
         return this.__html.tab;
     },
 
@@ -255,7 +257,7 @@ var TabItem = Container.$extend({
      * @type HTMLElement
      * @readOnly
      */
-    getContainerNode: function() {
+    getContainerNode: function () {
         return this.__html.div;
     },
 
@@ -268,24 +270,29 @@ var TabItem = Container.$extend({
      */
     _visible: false,
 
-    setVisible: function(visible, noParent) {
+    setVisible: function (visible, noParent) {
         this.$super(visible);
 
         if (visible) {
             if (this.parent) {
                 var children = this.parent.children;
-                for (var i=0 ; i&lt;children.length ; i++) {
-                    if (!(children[i] instanceof TabItem)) continue;
-                    if (children[i] === this) continue;
-                    if (children[i].visible) children[i].setVisible(false, true);
+                for (var i = 0 ; i &lt; children.length ; i++) {
+                    if (!(children[i] instanceof TabItem)) {
+                        continue;
+                    }
+                    if (children[i] === this) {
+                        continue;
+                    }
+                    if (children[i].visible) {
+                        children[i].setVisible(false, true);
+                    }
                 }
                 this.parent._activeTabName = this.name;
             }
 
             this.addClass(&quot;photonui-tabitem-active&quot;);
             this.__html.tab.className = &quot;photonui-tabitem-tab photonui-tabitem-active&quot;;
-        }
-        else {
+        } else {
             if (this.parent &amp;&amp; !noParent) {
                 this.parent.activeTab = null;
             }
@@ -294,14 +301,11 @@ var TabItem = Container.$extend({
         }
     },
 
-
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -309,15 +313,30 @@ var TabItem = Container.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.div = document.createElement(&quot;div&quot;);
         this.__html.div.className = &quot;photonui-widget photonui-tabitem photonui-container&quot;;
         this.__html.tab = document.createElement(&quot;div&quot;);
         this.__html.tab.className = &quot;photonui-tabitem-tab&quot;;
+    },
+
+    //////////////////////////////////////////
+    // Internal Events Callbacks            //
+    //////////////////////////////////////////
+
+    /**
+     * Called when the tab is clicked.
+     *
+     * @method __onClick
+     * @private
+     * @param event
+     */
+    __onClick: function (event) {
+        this.show();
+        this._callCallbacks(&quot;click&quot;, [event]);
     }
 
 });
-
 
 module.exports = TabItem;
 

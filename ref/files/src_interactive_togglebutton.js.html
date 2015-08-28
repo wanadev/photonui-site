@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -187,7 +187,7 @@ var Button = require(&quot;./button.js&quot;);
 var ToggleButton = CheckBox.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this._registerWEvents([&quot;click&quot;]);
         this.$super(params);
         this.__buttonInit();
@@ -198,7 +198,7 @@ var ToggleButton = CheckBox.$extend({
     },
 
     // photonui.Button constructor (without the call to $super)
-    __buttonInit: function() {
+    __buttonInit: function () {
         // Bind js events
         this._bindEvent(&quot;click&quot;, this.__html.button, &quot;click&quot;, this.__onButtonClicked.bind(this));
 
@@ -210,14 +210,11 @@ var ToggleButton = CheckBox.$extend({
     // Mixin
     __include__: [Button._buttonMixin],
 
-
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -225,7 +222,7 @@ var ToggleButton = CheckBox.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.$super();
         this._buildButtonHtml();
         this.__html.outer.appendChild(this.__html.button);

@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -186,19 +186,16 @@ var Layout = require(&quot;./layout.js&quot;);
 var Menu = Layout.$extend({
 
     // Constructor
-    __init__: function(params) {
+    __init__: function (params) {
         this.$super(params);
         this._updateProperties([&quot;iconVisible&quot;]);
     },
-
 
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * Define if icon on menu items are visible.
@@ -209,16 +206,15 @@ var Menu = Layout.$extend({
      */
     _iconVisible: true,
 
-    isIconVisible: function() {
+    isIconVisible: function () {
         return this._iconVisible;
     },
 
-    setIconVisible: function(iconVisible) {
+    setIconVisible: function (iconVisible) {
         this._iconVisible = iconVisible;
         if (iconVisible) {
             this.__html.outer.classList.remove(&quot;photonui-menu-noicon&quot;);
-        }
-        else {
+        } else {
             this.__html.outer.classList.add(&quot;photonui-menu-noicon&quot;);
         }
     },
@@ -231,18 +227,15 @@ var Menu = Layout.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outer;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
-
     // ====== Private methods ======
-
 
     /**
      * Build the widget HTML.
@@ -250,7 +243,7 @@ var Menu = Layout.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;div&quot;);
         this.__html.outer.className = &quot;photonui-widget photonui-menu photonui-menu-style-default&quot;;
     },
@@ -261,7 +254,7 @@ var Menu = Layout.$extend({
      * @method _updateLayout
      * @private
      */
-    _updateLayout: function() {
+    _updateLayout: function () {
         // Detache the outer element from the document tree
         //TODO
 
@@ -270,7 +263,7 @@ var Menu = Layout.$extend({
 
         // Append children
         var children = this.children;
-        for (var i=0 ; i&lt;children.length ; i++) {
+        for (var i = 0 ; i &lt; children.length ; i++) {
             this.__html.outer.appendChild(children[i].html);
         }
 

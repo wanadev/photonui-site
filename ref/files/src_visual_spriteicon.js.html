@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -165,7 +165,6 @@
  * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
  */
 
-
 /**
  * PhotonUI - Javascript Web User Interface.
  *
@@ -192,7 +191,7 @@ var SpriteSheet = require(&quot;../nonvisual/spritesheet.js&quot;);
 var SpriteIcon = BaseIcon.$extend({
 
     // Constructor
-    __init__: function(params1, params2) {
+    __init__: function (params1, params2) {
         var params = {};
         if (params1 &amp;&amp; typeof(params1) == &quot;string&quot;) {
             params.icon = params1;
@@ -201,21 +200,17 @@ var SpriteIcon = BaseIcon.$extend({
                     params[i] = params2[i];
                 }
             }
-        }
-        else if (params1) {
+        } else if (params1) {
             params = params1;
         }
         this.$super(params);
     },
 
-
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
 
-
     // ====== Public properties ======
-
 
     /**
      * The sprite sheet name.
@@ -226,11 +221,11 @@ var SpriteIcon = BaseIcon.$extend({
      */
     _spriteSheetName: &quot;&quot;,
 
-    getSpriteSheetName: function() {
+    getSpriteSheetName: function () {
         return this._spriteSheetName;
     },
 
-    setSpriteSheetName: function(spriteSheetName) {
+    setSpriteSheetName: function (spriteSheetName) {
         this._spriteSheetName = spriteSheetName || &quot;&quot;;
         this._update();
     },
@@ -244,11 +239,11 @@ var SpriteIcon = BaseIcon.$extend({
      */
     _iconName: &quot;&quot;,
 
-    getIconName: function() {
+    getIconName: function () {
         return this._iconName;
     },
 
-    setIconName: function(iconName) {
+    setIconName: function (iconName) {
         this._iconName = iconName || &quot;&quot;;
         this._update();
     },
@@ -262,11 +257,11 @@ var SpriteIcon = BaseIcon.$extend({
      * @type String
      * @default &quot;/&quot;
      */
-    getIcon: function() {
+    getIcon: function () {
         return this.spriteSheetName + &quot;/&quot; + this.iconName;
     },
 
-    setIcon: function(icon) {
+    setIcon: function (icon) {
         var names = icon.split(&quot;/&quot;);
         this.spriteSheetName = names[0];
         this.iconName = names[1];
@@ -280,15 +275,13 @@ var SpriteIcon = BaseIcon.$extend({
      * @default null
      * @readOnly
      */
-    getHtml: function() {
+    getHtml: function () {
         return this.__html.outer;
     },
-
 
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
-
 
     // ====== Private methods ======
 
@@ -298,7 +291,7 @@ var SpriteIcon = BaseIcon.$extend({
      * @method _update
      * @private
      */
-    _update: function() {
+    _update: function () {
         var style = &quot;&quot;;
         if (this.spriteSheetName &amp;&amp; this.iconName) {
             style = SpriteSheet.getSpriteSheet(this.spriteSheetName).getIconCss(this.iconName);
@@ -312,7 +305,7 @@ var SpriteIcon = BaseIcon.$extend({
      * @method _buildHtml
      * @private
      */
-    _buildHtml: function() {
+    _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;span&quot;);
         this.__html.outer.className = &quot;photonui-widget photonui-icon photonui-spriteicon&quot;;
 
