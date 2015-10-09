@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 1.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -357,6 +357,40 @@ var MouseManager = Base.$extend({
     },
 
     /**
+     * Translate all position events by a scalar. Use it when the canvas is translated.
+     *
+     * @property translateX
+     * @type Number
+     * @default 0
+     */
+    _translateX: 0,
+
+    getTranslateX: function () {
+        return this._translateX;
+    },
+
+    setTranslateX: function (translateX) {
+        this._translateX = translateX;
+    },
+
+    /**
+     * translate all position events by a scalar. Use it when the canvas is translated.
+     *
+     * @property translateY
+     * @type Number
+     * @default 0
+     */
+    _translateY: 0,
+
+    getTranslateY: function () {
+        return this._translateY;
+    },
+
+    setTranslateY: function (translateY) {
+        this._translateY = translateY;
+    },
+
+    /**
      * X position, relative to page top-left corner.
      *
      * @property pageX
@@ -389,7 +423,7 @@ var MouseManager = Base.$extend({
      */
     getX: function () {
         var ex = Helpers.getAbsolutePosition(this.element).x;
-        return (this.pageX - ex) * this.scaleX;
+        return (this.pageX - ex) * this.scaleX + this.translateX;
     },
 
     /**
@@ -401,7 +435,7 @@ var MouseManager = Base.$extend({
      */
     getY: function () {
         var ey = Helpers.getAbsolutePosition(this.element).y;
-        return (this.pageY - ey) * this.scaleY;
+        return (this.pageY - ey) * this.scaleY + this.translateY;
     },
 
     /**

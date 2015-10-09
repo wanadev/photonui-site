@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 1.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -150,6 +150,20 @@
 
 <div class="box intro">
     <p>Fluid Layout.</p>
+<p>Layout Options:</p>
+<pre class="code prettyprint"><code>{
+    align: &lt;String (stretch|expand, start|left|top, center|middle, end|right|bottom), default=center&gt;,
+
+    order: &lt;Number default=null (auto)&gt;
+
+    minWidth: &lt;Number (null=auto), default=null&gt;,
+    maxWidth: &lt;Number (null=auto), default=null&gt;,
+    width: &lt;Number (null=auto), default=null&gt;,
+
+    minHeight: &lt;Number (null=auto), default=null&gt;,
+    maxHeight: &lt;Number (null=auto), default=null&gt;,
+    height: &lt;Number (null=auto), default=null&gt;
+}</code></pre>
 
 </div>
 
@@ -221,6 +235,10 @@
                             </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__callCallbacks">_callCallbacks</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__computeLayoutOptions">_computeLayoutOptions</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -342,8 +360,16 @@
                                 <a href="#property_contextMenuName">contextMenuName</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_horizontalAlign">horizontalAlign</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_horizontalChildExpansion">horizontalChildExpansion</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_horizontalPadding">horizontalPadding</a>
 
                             </li>
                             <li class="index-item property">
@@ -382,8 +408,16 @@
                                 <a href="#property_tooltip">tooltip</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_verticalAlign">verticalAlign</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_verticalChildExpansion">verticalChildExpansion</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_verticalPadding">verticalPadding</a>
 
                             </li>
                             <li class="index-item property">
@@ -601,7 +635,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_layout_fluidlayout.js.html#l111"><code>src&#x2F;layout&#x2F;fluidlayout.js:111</code></a>
+        <a href="../files/src_layout_fluidlayout.js.html#l229"><code>src&#x2F;layout&#x2F;fluidlayout.js:229</code></a>
         </p>
 
 
@@ -683,6 +717,72 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
             </ul>
         </div>
 
+
+
+</div>
+<div id="method__computeLayoutOptions" class="method item private">
+    <h3 class="name"><code>_computeLayoutOptions</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>widget</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_layout_fluidlayout.js.html#l305"><code>src&#x2F;layout&#x2F;fluidlayout.js:305</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns a normalized layoutOption for a given widget.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">widget</code>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    <p>the layout options</p>
+
+            </div>
+        </div>
 
 
 </div>
@@ -842,7 +942,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 photonui.Layout
             </a>
             but overwritten in
-        <a href="../files/src_layout_fluidlayout.js.html#l122"><code>src&#x2F;layout&#x2F;fluidlayout.js:122</code></a>
+        <a href="../files/src_layout_fluidlayout.js.html#l243"><code>src&#x2F;layout&#x2F;fluidlayout.js:243</code></a>
         </p>
 
 
@@ -1775,6 +1875,36 @@ Callback signature:
                     
                     
                     </div>
+                    <div id="property_horizontalAlign" class="property item">
+                        <h3 class="name"><code>horizontalAlign</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_fluidlayout.js.html#l179"><code>src&#x2F;layout&#x2F;fluidlayout.js:179</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Horizontal alignment of children widgets.</p>
+                    <p>Values:</p>
+                    <pre class="code prettyprint"><code>* start|left|begin (default)
+                    * center|middle
+                    * end|right</code></pre>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &quot;start&quot;</p>
+                    
+                    
+                    </div>
                     <div id="property_horizontalChildExpansion" class="property item inherited">
                         <h3 class="name"><code>horizontalChildExpansion</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
@@ -1801,6 +1931,32 @@ Callback signature:
                     
                     
                     </div>
+                    <div id="property_horizontalPadding" class="property item">
+                        <h3 class="name"><code>horizontalPadding</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_fluidlayout.js.html#l128"><code>src&#x2F;layout&#x2F;fluidlayout.js:128</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Horizontal padding (px).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 0</p>
+                    
+                    
+                    </div>
                     <div id="property_horizontalSpacing" class="property item">
                         <h3 class="name"><code>horizontalSpacing</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -1812,7 +1968,7 @@ Callback signature:
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_layout_fluidlayout.js.html#l75"><code>src&#x2F;layout&#x2F;fluidlayout.js:75</code></a>
+                            <a href="../files/src_layout_fluidlayout.js.html#l91"><code>src&#x2F;layout&#x2F;fluidlayout.js:91</code></a>
                             </p>
                     
                     
@@ -1823,7 +1979,7 @@ Callback signature:
                     
                         </div>
                     
-                            <p><strong>Default:</strong> 2</p>
+                            <p><strong>Default:</strong> 0</p>
                     
                     
                     </div>
@@ -1841,7 +1997,7 @@ Callback signature:
                                     photonui.Widget
                                 </a>
                                 but overwritten in
-                            <a href="../files/src_layout_fluidlayout.js.html#l93"><code>src&#x2F;layout&#x2F;fluidlayout.js:93</code></a>
+                            <a href="../files/src_layout_fluidlayout.js.html#l211"><code>src&#x2F;layout&#x2F;fluidlayout.js:211</code></a>
                             </p>
                     
                     
@@ -2029,6 +2185,36 @@ Callback signature:
                     
                     
                     </div>
+                    <div id="property_verticalAlign" class="property item">
+                        <h3 class="name"><code>verticalAlign</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_fluidlayout.js.html#l147"><code>src&#x2F;layout&#x2F;fluidlayout.js:147</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Vertical alignment of children widgets.</p>
+                    <p>Values:</p>
+                    <pre class="code prettyprint"><code>* start|top|begin (default)
+                    * center|middle
+                    * end|bottom</code></pre>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &quot;start&quot;</p>
+                    
+                    
+                    </div>
                     <div id="property_verticalChildExpansion" class="property item inherited">
                         <h3 class="name"><code>verticalChildExpansion</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
@@ -2055,6 +2241,32 @@ Callback signature:
                     
                     
                     </div>
+                    <div id="property_verticalPadding" class="property item">
+                        <h3 class="name"><code>verticalPadding</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_layout_fluidlayout.js.html#l109"><code>src&#x2F;layout&#x2F;fluidlayout.js:109</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Vertical padding (px).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 0</p>
+                    
+                    
+                    </div>
                     <div id="property_verticalSpacing" class="property item">
                         <h3 class="name"><code>verticalSpacing</code></h3>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
@@ -2066,7 +2278,7 @@ Callback signature:
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_layout_fluidlayout.js.html#l57"><code>src&#x2F;layout&#x2F;fluidlayout.js:57</code></a>
+                            <a href="../files/src_layout_fluidlayout.js.html#l73"><code>src&#x2F;layout&#x2F;fluidlayout.js:73</code></a>
                             </p>
                     
                     
