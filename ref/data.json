@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A javascript framework to create user interfaces",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
@@ -1010,7 +1010,7 @@
             "submodule": "Container",
             "namespace": "photonui",
             "file": "src/container/tabitem.js",
-            "line": 42,
+            "line": 44,
             "description": "Tab Item.\n\n wEvents:\n\n  * click:\n    - description: called when the tab was clicked.\n    - callback:    function(widget, event)",
             "is_constructor": 1,
             "extends": "photonui.Container",
@@ -1299,7 +1299,7 @@
             "namespace": "photonui",
             "file": "src/layout/fluidlayout.js",
             "line": 42,
-            "description": "Fluid Layout.",
+            "description": "Fluid Layout.\n\nLayout Options:\n\n    {\n        align: <String (stretch|expand, start|left|top, center|middle, end|right|bottom), default=center>,\n\n        order: <Number default=null (auto)>\n\n        minWidth: <Number (null=auto), default=null>,\n        maxWidth: <Number (null=auto), default=null>,\n        width: <Number (null=auto), default=null>,\n\n        minHeight: <Number (null=auto), default=null>,\n        maxHeight: <Number (null=auto), default=null>,\n        height: <Number (null=auto), default=null>\n    }",
             "is_constructor": 1,
             "extends": "photonui.Layout"
         },
@@ -2999,7 +2999,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 73,
+            "line": 76,
             "description": "Tab title.",
             "itemtype": "property",
             "name": "title",
@@ -3012,7 +3012,20 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 92,
+            "line": 95,
+            "description": "Definie if the tabItem title is displayed or hidden.",
+            "itemtype": "property",
+            "name": "titleVisible",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 113,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3026,7 +3039,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 104,
+            "line": 125,
             "description": "Tab Html element.",
             "itemtype": "property",
             "name": "tabHtml",
@@ -3040,7 +3053,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 116,
+            "line": 137,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3053,7 +3066,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 127,
+            "line": 148,
             "description": "Is the widget visible or hidden.",
             "itemtype": "property",
             "name": "visible",
@@ -3066,7 +3079,77 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 173,
+            "line": 188,
+            "description": "Left icon widget name",
+            "itemtype": "property",
+            "name": "leftIconName",
+            "type": "String",
+            "default": ": null",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 210,
+            "description": "Left icon widget",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 225,
+            "description": "Define if the left icon is displayed or hidden.",
+            "itemtype": "property",
+            "name": "leftIconVisible",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 243,
+            "description": "Right icon widget name",
+            "itemtype": "property",
+            "name": "rigthIconName",
+            "type": "String",
+            "default": ": null",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 266,
+            "description": "Right icon widget",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 281,
+            "description": "Define if the right icon is displayed or hidden.",
+            "itemtype": "property",
+            "name": "rightIconVisible",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 329,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3079,7 +3162,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 190,
+            "line": 360,
             "description": "Called when the tab is clicked.",
             "itemtype": "method",
             "name": "__onClick",
@@ -3301,7 +3384,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 85,
+            "line": 88,
             "description": "The window title.",
             "itemtype": "property",
             "name": "title",
@@ -3314,7 +3397,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 104,
+            "line": 107,
             "description": "Determine if the window can be moved (drag & drop) by the user.",
             "itemtype": "property",
             "name": "movable",
@@ -3327,7 +3410,20 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 121,
+            "line": 124,
+            "description": "Fullscreen Window",
+            "itemtype": "property",
+            "name": "fullscreen",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.Window",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/window.js",
+            "line": 146,
             "description": "Determine if the close button in the title bar is displayed or not.",
             "itemtype": "property",
             "name": "closeButtonVisible",
@@ -3339,7 +3435,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 146,
+            "line": 171,
             "description": "Modal window?",
             "itemtype": "property",
             "name": "modal",
@@ -3352,7 +3448,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 173,
+            "line": 198,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3365,7 +3461,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 205,
+            "line": 230,
             "description": "Bring the window to front.",
             "itemtype": "method",
             "name": "moveToFront",
@@ -3376,7 +3472,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 219,
+            "line": 244,
             "description": "Bring the window to the back.",
             "itemtype": "method",
             "name": "moveToBack",
@@ -3387,7 +3483,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 233,
+            "line": 258,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -3398,7 +3494,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 249,
+            "line": 274,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3411,7 +3507,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 279,
+            "line": 304,
             "description": "Update all the windows.",
             "itemtype": "method",
             "name": "_updateWindowList",
@@ -3424,7 +3520,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 304,
+            "line": 329,
             "description": "Start moving the window.",
             "itemtype": "method",
             "name": "_moveDragStart",
@@ -3444,7 +3540,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 322,
+            "line": 347,
             "description": "Move the window.",
             "itemtype": "method",
             "name": "_moveDragging",
@@ -3474,7 +3570,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 341,
+            "line": 360,
             "description": "Stop moving the window.",
             "itemtype": "method",
             "name": "_moveDragEnd",
@@ -3494,7 +3590,132 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 354,
+            "line": 373,
+            "description": "Move the window.",
+            "itemtype": "method",
+            "name": "__internalDragging",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "offsetX",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "offsetY",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "pageX",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "pageY",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "photonui.Window",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/window.js",
+            "line": 393,
+            "description": "Start moving the window.",
+            "itemtype": "method",
+            "name": "_moveTouchStart",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.Window",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/window.js",
+            "line": 416,
+            "description": "Move the window.",
+            "itemtype": "method",
+            "name": "_moveTouchMove",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "offsetX",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "offsetY",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.Window",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/window.js",
+            "line": 430,
+            "description": "Stop moving the window.",
+            "itemtype": "method",
+            "name": "_moveTouchEnd",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.Window",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/window.js",
+            "line": 444,
+            "description": "Gets the first touch event and normalizes pageX/Y and offsetX/Y properties.",
+            "itemtype": "method",
+            "name": "_moveTouchEnd",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.Window",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/window.js",
+            "line": 467,
             "description": "Close button clicked.",
             "itemtype": "method",
             "name": "_closeButtonClicked",
@@ -3514,7 +3735,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 365,
+            "line": 478,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -4584,7 +4805,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 80,
+            "line": 82,
             "description": "Define if the numeric field should be displayed.",
             "itemtype": "property",
             "name": "fieldVisible",
@@ -4597,7 +4818,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 105,
+            "line": 107,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4611,7 +4832,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 128,
+            "line": 130,
             "description": "Update the value in the html field.",
             "itemtype": "method",
             "name": "_updateFieldValue",
@@ -4624,7 +4845,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 143,
+            "line": 145,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4637,7 +4858,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 167,
+            "line": 169,
             "description": "Update the value form a mouse event occured on the slider.",
             "itemtype": "method",
             "name": "_updateFromMouseEvent",
@@ -4656,7 +4877,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 188,
+            "line": 195,
             "itemtype": "method",
             "name": "__onSliderMouseDown",
             "access": "private",
@@ -4674,7 +4895,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 199,
+            "line": 206,
             "itemtype": "method",
             "name": "__onSliderMouseMove",
             "access": "private",
@@ -4692,7 +4913,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 208,
+            "line": 215,
             "itemtype": "method",
             "name": "__onSliderMouseUp",
             "access": "private",
@@ -4710,7 +4931,81 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 234,
+            "line": 226,
+            "itemtype": "method",
+            "name": "__onSliderTouchStart",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.Slider",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/slider.js",
+            "line": 238,
+            "itemtype": "method",
+            "name": "__onSliderTouchMove",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.Slider",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/slider.js",
+            "line": 247,
+            "itemtype": "method",
+            "name": "__onSliderTouchEnd",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.Slider",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/slider.js",
+            "line": 258,
+            "description": "Gets the first touch event and normalizes pageX/Y and offsetX/Y properties.",
+            "itemtype": "method",
+            "name": "_moveTouchEnd",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.Slider",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/slider.js",
+            "line": 296,
             "itemtype": "method",
             "name": "__onSliderMouseWheel",
             "access": "private",
@@ -4728,7 +5023,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 269,
+            "line": 331,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -4747,7 +5042,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 284,
+            "line": 346,
             "itemtype": "method",
             "name": "__onFieldContextMenu",
             "access": "private",
@@ -4830,7 +5125,7 @@
         },
         {
             "file": "src/interactive/togglebutton.js",
-            "line": 82,
+            "line": 78,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4959,7 +5254,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 57,
+            "line": 73,
             "description": "The vertical spacing between children widgets.",
             "itemtype": "property",
             "name": "verticalSpacing",
@@ -4972,12 +5267,12 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 75,
+            "line": 91,
             "description": "The horizontal spacing between children widgets.",
             "itemtype": "property",
             "name": "horizontalSpacing",
             "type": "Number",
-            "default": "2",
+            "default": "0",
             "class": "photonui.FluidLayout",
             "module": "PhotonUI",
             "submodule": "Layout",
@@ -4985,7 +5280,59 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 93,
+            "line": 109,
+            "description": "Vertical padding (px).",
+            "itemtype": "property",
+            "name": "verticalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/fluidlayout.js",
+            "line": 128,
+            "description": "Horizontal padding (px).",
+            "itemtype": "property",
+            "name": "horizontalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/fluidlayout.js",
+            "line": 147,
+            "description": "Vertical alignment of children widgets.\n\nValues:\n\n    * start|top|begin (default)\n    * center|middle\n    * end|bottom",
+            "itemtype": "property",
+            "name": "verticalAlign",
+            "type": "String",
+            "default": "\"start\"",
+            "class": "photonui.FluidLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/fluidlayout.js",
+            "line": 179,
+            "description": "Horizontal alignment of children widgets.\n\nValues:\n\n    * start|left|begin (default)\n    * center|middle\n    * end|right",
+            "itemtype": "property",
+            "name": "horizontalAlign",
+            "type": "String",
+            "default": "\"start\"",
+            "class": "photonui.FluidLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/fluidlayout.js",
+            "line": 211,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4999,7 +5346,7 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 111,
+            "line": 229,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5012,12 +5359,36 @@
         },
         {
             "file": "src/layout/fluidlayout.js",
-            "line": 122,
+            "line": 243,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
             "access": "private",
             "tagname": "",
+            "class": "photonui.FluidLayout",
+            "module": "PhotonUI",
+            "submodule": "Layout",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/layout/fluidlayout.js",
+            "line": 305,
+            "description": "Returns a normalized layoutOption for a given widget.",
+            "itemtype": "method",
+            "name": "_computeLayoutOptions",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "",
+                    "type": "photonui.Widget"
+                }
+            ],
+            "return": {
+                "description": "the layout options",
+                "type": "Object"
+            },
             "class": "photonui.FluidLayout",
             "module": "PhotonUI",
             "submodule": "Layout",
@@ -6126,6 +6497,32 @@
         {
             "file": "src/nonvisual/mousemanager.js",
             "line": 222,
+            "description": "Translate all position events by a scalar. Use it when the canvas is translated.",
+            "itemtype": "property",
+            "name": "translateX",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.MouseManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/mousemanager.js",
+            "line": 239,
+            "description": "translate all position events by a scalar. Use it when the canvas is translated.",
+            "itemtype": "property",
+            "name": "translateY",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.MouseManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/mousemanager.js",
+            "line": 256,
             "description": "X position, relative to page top-left corner.",
             "itemtype": "property",
             "name": "pageX",
@@ -6139,7 +6536,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 234,
+            "line": 268,
             "description": "Y position, relative to page top-left corner.",
             "itemtype": "property",
             "name": "pageY",
@@ -6153,7 +6550,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 246,
+            "line": 280,
             "description": "X position, relative to the HTML element.",
             "itemtype": "property",
             "name": "x",
@@ -6166,7 +6563,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 258,
+            "line": 292,
             "description": "Y position, relative to the HTML element.",
             "itemtype": "property",
             "name": "y",
@@ -6179,7 +6576,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 270,
+            "line": 304,
             "description": "Delta X (current_x - previous_x).",
             "itemtype": "property",
             "name": "deltaX",
@@ -6192,7 +6589,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 282,
+            "line": 316,
             "description": "Delta Y (current_y - previous_y).",
             "itemtype": "property",
             "name": "deltaY",
@@ -6205,7 +6602,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 294,
+            "line": 328,
             "description": "The action:\n\n  * \"mouse-down\"\n  * \"moues-up\"\n  * \"click\"\n  * \"double-click\"\n  * \"drag-start\"\n  * \"dragging\"\n  * \"drag-end\"\n  * \"scroll-down\"\n  * \"scroll-up\"\n  * \"mouse-move\"",
             "itemtype": "property",
             "name": "action",
@@ -6218,7 +6615,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 318,
+            "line": 352,
             "description": "Current state of the mouse left button.",
             "itemtype": "property",
             "name": "btnLeft",
@@ -6231,7 +6628,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 331,
+            "line": 365,
             "description": "Current state of the mouse middle button.",
             "itemtype": "property",
             "name": "btnMiddle",
@@ -6244,7 +6641,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 344,
+            "line": 378,
             "description": "Current state of the mouse right button.",
             "itemtype": "property",
             "name": "btnRight",
@@ -6257,7 +6654,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 357,
+            "line": 391,
             "description": "The button that triggered the last event.\n\n  * none\n  * \"left\"\n  * \"middle\"\n  * \"right\"",
             "itemtype": "property",
             "name": "button",
@@ -6270,7 +6667,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 377,
+            "line": 411,
             "description": "Previous state.",
             "itemtype": "property",
             "name": "__prevState",
@@ -6284,7 +6681,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 386,
+            "line": 420,
             "description": "Js event on mouse down.",
             "itemtype": "property",
             "name": "__mouseDownEvent",
@@ -6298,7 +6695,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 395,
+            "line": 429,
             "description": "Last event object.",
             "itemtype": "property",
             "name": "__event",
@@ -6313,7 +6710,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 409,
+            "line": 443,
             "description": "Bind events on the HTML Element.",
             "itemtype": "method",
             "name": "_updateEvents",
@@ -6326,7 +6723,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 436,
+            "line": 470,
             "description": "Take a snapshot of the MouseManager",
             "itemtype": "method",
             "name": "_dump",
@@ -6343,7 +6740,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 460,
+            "line": 494,
             "description": "Analyze and dispatche wEvents.",
             "itemtype": "method",
             "name": "_stateMachine",
@@ -6368,7 +6765,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 594,
+            "line": 628,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -6386,7 +6783,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 603,
+            "line": 637,
             "itemtype": "method",
             "name": "__onMouseUp",
             "access": "private",
@@ -6404,7 +6801,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 612,
+            "line": 646,
             "itemtype": "method",
             "name": "__onDoubleClick",
             "access": "private",
@@ -6422,7 +6819,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 621,
+            "line": 655,
             "itemtype": "method",
             "name": "__onMouseMove",
             "access": "private",
@@ -6440,7 +6837,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 630,
+            "line": 664,
             "description": "Used to detect drag-end outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseUp",
@@ -6459,7 +6856,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 643,
+            "line": 677,
             "description": "Used to detect dragging outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseMove",
@@ -6478,7 +6875,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 656,
+            "line": 690,
             "itemtype": "method",
             "name": "__onMouseWheel",
             "access": "private",
@@ -6652,6 +7049,24 @@
         {
             "file": "src/nonvisual/translation.js",
             "line": 96,
+            "description": "Find and set the best language for the user (depending on available catalogs and given language list).",
+            "itemtype": "method",
+            "name": "setBestMatchingLocale",
+            "params": [
+                {
+                    "name": "locales",
+                    "description": "Language list (optional, e.g. `\"fr\"`, `[\"fr\", \"fr_FR\", \"en_US\"]`).",
+                    "type": "Array|String"
+                }
+            ],
+            "class": "photonui.Translation",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/translation.js",
+            "line": 104,
             "description": "Add one or more Stone.js catalog (a catalog contain all translated strings for a specific locale).",
             "itemtype": "method",
             "name": "addCatalogs",
@@ -6669,7 +7084,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 104,
+            "line": 112,
             "description": "Guess the user language.",
             "itemtype": "method",
             "name": "guessUserLanguage",
@@ -6684,7 +7099,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 112,
+            "line": 120,
             "description": "Make a string translatable.",
             "itemtype": "method",
             "name": "gettext",
@@ -6711,7 +7126,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 122,
+            "line": 130,
             "description": "Make a string translatable.\n\nTthe main difference between this method and the `gettext` method is\nthat this method does not return a translated sting but an object that\nwill translate the sting when it will be displayed (.toString() method\ncalled).",
             "itemtype": "method",
             "name": "lazyGettext",
@@ -6738,7 +7153,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 137,
+            "line": 145,
             "description": "Enable/disable Stone.js translating elements with the \"stonejs\" attribute in the DOM.",
             "itemtype": "method",
             "name": "enableDomScan",
@@ -6756,7 +7171,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 145,
+            "line": 153,
             "description": "Re-translate elements with the \"stonejs\" attribute in the DOM.",
             "itemtype": "method",
             "name": "updateDomTranslation",
@@ -6767,7 +7182,7 @@
         },
         {
             "file": "src/nonvisual/translation.js",
-            "line": 156,
+            "line": 164,
             "itemtype": "method",
             "name": "__onStonejsLocaleChanged",
             "access": "private",
@@ -8175,5 +8590,14 @@
             "namespace": "photonui"
         }
     ],
-    "warnings": []
+    "warnings": [
+        {
+            "message": "Missing item type\nLeft icon widget",
+            "line": " src/container/tabitem.js:210"
+        },
+        {
+            "message": "Missing item type\nRight icon widget",
+            "line": " src/container/tabitem.js:266"
+        }
+    ]
 }

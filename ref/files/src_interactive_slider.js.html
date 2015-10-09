@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 1.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -196,6 +196,8 @@ var Slider = NumericField.$extend({
         this._updateProperties([&quot;fieldVisible&quot;]);
 
         this._bindEvent(&quot;slider-mousedown&quot;, this.__html.slider, &quot;mousedown&quot;, this.__onSliderMouseDown.bind(this));
+        this._bindEvent(&quot;slider-touchstart&quot;, this.__html.slider, &quot;touchstart&quot;, this.__onSliderTouchStart.bind(this));
+
         this._bindEvent(&quot;slider-keydown&quot;, this.__html.slider, &quot;keydown&quot;, this.__onSliderKeyDown.bind(this));
         this._bindEvent(&quot;slider-mousewheel&quot;, this.__html.slider, &quot;mousewheel&quot;, this.__onSliderMouseWheel.bind(this));
         this._bindEvent(&quot;slider-mousewheel-firefox&quot;, this.__html.slider,
@@ -309,6 +311,11 @@ var Slider = NumericField.$extend({
      * @param event
      */
     _updateFromMouseEvent: function (event) {
+        // Prevent reset on touchend.
+        if (typeof(event.pageX) === &quot;undefined&quot;) {
+            return;
+        }
+
         var wx = Helpers.getAbsolutePosition(this.__html.slider).x;
         var gw = this.__html.grip.offsetWidth;
         var x = Math.round(event.pageX - wx - gw / 2);
@@ -351,6 +358,61 @@ var Slider = NumericField.$extend({
         this._unbindEvent(&quot;slider-mousemove&quot;);
         this._unbindEvent(&quot;slider-mouseup&quot;);
         this._updateFromMouseEvent(event);
+    },
+
+    /**
+     * @method __onSliderTouchStart
+     * @private
+     * @param event
+     */
+    __onSliderTouchStart: function (event) {
+        this._updateFromMouseEvent(this.__getTouchEvent(event));
+        this._bindEvent(&quot;slider-touchmove&quot;, document, &quot;touchmove&quot;, this.__onSliderTouchMove.bind(this));
+        this._bindEvent(&quot;slider-touchend&quot;, document, &quot;touchend&quot;, this.__onSliderTouchEnd.bind(this));
+        this._bindEvent(&quot;slider-touchcancel&quot;, document, &quot;touchcancel&quot;, this.__onSliderTouchEnd.bind(this));
+    },
+
+    /**
+     * @method __onSliderTouchMove
+     * @private
+     * @param event
+     */
+    __onSliderTouchMove: function (event) {
+        this._updateFromMouseEvent(this.__getTouchEvent(event));
+    },
+
+    /**
+     * @method __onSliderTouchEnd
+     * @private
+     * @param event
+     */
+    __onSliderTouchEnd: function (event) {
+        this._unbindEvent(&quot;slider-touchmove&quot;);
+        this._unbindEvent(&quot;slider-touchend&quot;);
+        this._unbindEvent(&quot;slider-touchcancel&quot;);
+    },
+
+    /**
+     * Gets the first touch event and normalizes pageX/Y and offsetX/Y properties.
+     *
+     * @method _moveTouchEnd
+     * @private
+     * @param {Object} event
+     */
+    __getTouchEvent: function (event) {
+        if (event.touches &amp;&amp; event.touches.length) {
+            event.preventDefault();
+            var evt = event.touches[0];
+            evt.pageX = evt.pageX || evt.clientX;
+            evt.pageY = evt.pageX || evt.clientY;
+
+            var position = Helpers.getAbsolutePosition(event.target);
+            evt.offsetX = evt.offsetX || evt.pageX - position.x;
+            evt.offsetY = evt.offsetY || evt.pageY - position.y;
+            return evt;
+        }
+
+        return event;
     },
 
     /*

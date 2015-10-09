@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 1.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -174,6 +174,8 @@
  */
 
 var Helpers = require(&quot;../helpers.js&quot;);
+var Widget = require(&quot;../widget.js&quot;);
+var BaseIcon = require(&quot;../visual/baseicon.js&quot;);
 var Container = require(&quot;./container.js&quot;);
 
 /**
@@ -196,9 +198,10 @@ var TabItem = Container.$extend({
     __init__: function (params) {
         this._registerWEvents([&quot;click&quot;]);
         this.$super(params);
-        this._updateProperties([&quot;title&quot;]);
+        this._updateProperties([&quot;title&quot;, &quot;leftIconName&quot;, &quot;rightIconName&quot;]);
 
         this._bindEvent(&quot;tab-click&quot;, this.__html.tab, &quot;click&quot;, this.__onClick.bind(this));
+        this._update();
     },
 
     //////////////////////////////////////////
@@ -222,8 +225,26 @@ var TabItem = Container.$extend({
 
     setTitle: function (title) {
         this._title = title;
-        Helpers.cleanNode(this.__html.tab);
-        this.__html.tab.appendChild(document.createTextNode(title));
+        Helpers.cleanNode(this.__html.title);
+        this.__html.title.appendChild(document.createTextNode(title));
+    },
+
+    /**
+     * Definie if the tabItem title is displayed or hidden.
+     *
+     * @property titleVisible
+     * @type Boolean
+     * @default true
+     */
+    _titleVisible: true,
+
+    isTitleVisible: function () {
+        return this._titleVisible;
+    },
+
+    setTitleVisible: function (titleVisible) {
+        this._titleVisible = titleVisible;
+        this._update();
     },
 
     /**
@@ -301,11 +322,146 @@ var TabItem = Container.$extend({
         }
     },
 
+    /**
+        * Left icon widget name
+        *
+        * @property leftIconName
+        * @type String
+        * @default: null
+        */
+    _leftIconName: null,
+
+    getLeftIconName: function () {
+        return this._leftIconName;
+    },
+
+    setLeftIconName: function (leftIconName) {
+        this._leftIconName = leftIconName;
+        Helpers.cleanNode(this.__html.leftIcon);
+        if (this._leftIconName) {
+            this.__html.leftIcon.appendChild(this.leftIcon.html);
+            this.leftIconVisible = true;
+        }
+    },
+
+    /**
+    * Left icon widget
+    */
+    getLeftIcon: function () {
+        return Widget.getWidget(this._leftIconName);
+    },
+
+    setLeftIcon: function (leftIcon) {
+        if (leftIcon instanceof BaseIcon) {
+            this.leftIconName = leftIcon.name;
+        } else {
+            this.leftIconName = null;
+        }
+    },
+
+    /**
+     * Define if the left icon is displayed or hidden.
+     *
+     * @property leftIconVisible
+     * @type Boolean
+     * @default true
+     */
+    _leftIconVisible: true,
+
+    isLeftIconVisible: function () {
+        return this._leftIconVisible;
+    },
+
+    setLeftIconVisible: function (leftIconVisible) {
+        this._leftIconVisible = leftIconVisible;
+        this._update();
+    },
+
+    /**
+     * Right icon widget name
+     *
+     * @property rigthIconName
+     * @type String
+     * @default: null
+     */
+
+    _rightIconName: null,
+
+    getRightIconName: function () {
+        return this._rightIconName;
+    },
+
+    setRightIconName: function (rightIconName) {
+        this._rightIconName = rightIconName;
+        Helpers.cleanNode(this.__html.rightIcon);
+        if (this._rightIconName) {
+            this.__html.rightIcon.appendChild(this.rightIcon.html);
+            this.rightIconVisible = true;
+        }
+    },
+
+    /**
+     * Right icon widget
+     */
+    getRightIcon: function () {
+        return Widget.getWidget(this._rightIconName);
+    },
+
+    setRightIcon: function (rightIcon) {
+        if (rightIcon instanceof BaseIcon) {
+            this.rightIconName = rightIcon.name;
+        } else {
+            this.rightIconName = null;
+        }
+    },
+
+    /**
+     * Define if the right icon is displayed or hidden.
+     *
+     * @property rightIconVisible
+     * @type Boolean
+     * @default true
+     */
+    _rightIconVisible: true,
+
+    isRightIconVisible: function () {
+        return this._rightIconVisible;
+    },
+
+    setRightIconVisible: function (rightIconVisible) {
+        this._rightIconVisible = rightIconVisible;
+        this._update();
+    },
+
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
 
     // ====== Private methods ======
+
+    _update: function () {
+        if (this.__html.leftIcon.parentNode == this.__html.tab) {
+            this.__html.tab.removeChild(this.__html.leftIcon);
+        }
+        if (this.__html.title.parentNode == this.__html.tab) {
+            this.__html.tab.removeChild(this.__html.title);
+        }
+        if (this.__html.rightIcon.parentNode == this.__html.tab) {
+            this.__html.tab.removeChild(this.__html.rightIcon);
+        }
+
+        if (this.leftIconName &amp;&amp; this.leftIconVisible) {
+            this.__html.tab.appendChild(this.__html.leftIcon);
+        }
+
+        if (this.title &amp;&amp; this.titleVisible) {
+            this.__html.tab.appendChild(this.__html.title);
+        }
+
+        if (this.rightIconName &amp;&amp; this.rightIconVisible) {
+            this.__html.tab.appendChild(this.__html.rightIcon);
+        }
+    },
 
     /**
      * Build the widget HTML.
@@ -316,8 +472,22 @@ var TabItem = Container.$extend({
     _buildHtml: function () {
         this.__html.div = document.createElement(&quot;div&quot;);
         this.__html.div.className = &quot;photonui-widget photonui-tabitem photonui-container&quot;;
+
         this.__html.tab = document.createElement(&quot;div&quot;);
         this.__html.tab.className = &quot;photonui-tabitem-tab&quot;;
+
+        this.__html.leftIcon = document.createElement(&quot;span&quot;);
+        this.__html.leftIcon.className = &quot;photonui-tab-icon&quot;;
+        this.__html.tab.appendChild(this.__html.leftIcon);
+
+        this.__html.title = document.createElement(&quot;span&quot;);
+        this.__html.title.className = &quot;photonui-tabitem-title&quot;;
+        this.__html.tab.appendChild(this.__html.title);
+
+        this.__html.rightIcon = document.createElement(&quot;span&quot;);
+        this.__html.rightIcon.className = &quot;photon-ui-icon&quot;;
+        this.__html.tab.appendChild(this.__html.rightIcon);
+
     },
 
     //////////////////////////////////////////
