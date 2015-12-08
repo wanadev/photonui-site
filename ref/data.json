@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A javascript framework to create user interfaces",
-        "version": "1.2.0",
+        "version": "1.2.1",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
