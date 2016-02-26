@@ -62,6 +62,10 @@
   image: doc/widgets/gridlayout.png
   url: doc/widgets/gridlayout.html
 
+- name: IconButton
+  image: doc/widgets/iconbutton.png
+  url: doc/widgets/iconbutton.html
+
 - name: Image
   image: doc/widgets/image.png
   url: doc/widgets/image.html
