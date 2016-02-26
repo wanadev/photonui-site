@@ -43,6 +43,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.Switch",
         "photonui.TabItem",
         "photonui.TabLayout",
+        "photonui.Template",
         "photonui.Text",
         "photonui.TextAreaField",
         "photonui.TextField",

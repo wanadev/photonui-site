@@ -134,6 +134,10 @@
   image: doc/widgets/tablayout.png
   url: doc/widgets/tablayout.html
 
+- name: Template
+  image: doc/widgets/template.png
+  url: doc/widgets/template.html
+
 - name: Text
   image: doc/widgets/text.png
   url: doc/widgets/text.html

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Layout - photonui</title>
+    <title>src/visual/template.js - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -134,64 +134,167 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Layout Module</h1>
-<div class="box clearfix meta">
+<h1 class="file-heading">File: src/visual/template.js</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*
+ * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *   * Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *   * Neither the name of Wanadev nor the names of its contributors may be used
+ *     to endorse or promote products derived from this software without specific
+ *     prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authored by: Fabien LOISON &lt;https://github.com/flozz&gt;
+ */
 
-        <div class="foundat">
-            Defined in: <a href="../files/src_layout_tablayout.js.html#l44"><code>src&#x2F;layout&#x2F;tablayout.js:44</code></a>
-        </div>
+/**
+ * PhotonUI - Javascript Web User Interface.
+ *
+ * @module PhotonUI
+ * @submodule Visual
+ * @namespace photonui
+ */
 
-</div>
+var lodash = require(&quot;lodash&quot;);
+var Widget = require(&quot;../widget.js&quot;);
+var Helpers = require(&quot;../helpers.js&quot;);
 
+/**
+ * Widget that displays template-generated HTML (uses lodash.template).
+ *
+ * @class Template
+ * @constructor
+ * @extends photonui.Widget
+ * @param {Object} params An object that can contain any property of the widget (optional).
+ */
+var Template = Widget.$extend({
 
-<div class="box intro">
-    <p>PhotonUI - Javascript Web User Interface.</p>
+    // Constructor
+    __init__: function (params) {
+        this.$data.compiledTemplate = function () {
+            return document.createElement(&quot;div&quot;);
+        };
+        this.$super(params);
+        this.update = lodash.debounce(this.update, 50);
+    },
 
-</div>
+    //////////////////////////////////////////
+    // Properties and Accessors             //
+    //////////////////////////////////////////
 
+    // ====== Public properties ======
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-            <p>This module provides the following classes:</p>
+    /**
+     * The template.
+     *
+     * @property template
+     * @type String
+     * @default &quot;&quot;
+     */
+    _template: &quot;&quot;,
 
-            <ul class="module-classes">
-                <li class="module-class">
-                    <a href="../classes/photonui.BoxLayout.html">
-                        photonui.BoxLayout
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/photonui.FluidLayout.html">
-                        photonui.FluidLayout
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/photonui.GridLayout.html">
-                        photonui.GridLayout
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/photonui.Layout.html">
-                        photonui.Layout
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/photonui.Menu.html">
-                        photonui.Menu
-                    </a>
-                </li>
-                <li class="module-class">
-                    <a href="../classes/photonui.TabLayout.html">
-                        photonui.TabLayout
-                    </a>
-                </li>
-            </ul>
-    </div>
+    getTemplate: function () {
+        return this._template;
+    },
 
+    setTemplate: function (tpl) {
+        this._template = tpl;
+        this.$data.compiledTemplate = lodash.template(this._template);
+        lodash.defer(this.update);
+    },
 
-    <div class="yui3-u-1-2">
-    </div>
+    getData: function () {
+        lodash.defer(this.update);
+        return this.$super();
+    },
+
+    setData: function (data) {
+        this.$super(data);
+        this.update();
+    },
+
+    /**
+     * Html outer element of the widget (if any).
+     *
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getHtml: function () {
+        return this.__html.div;
+    },
+
+    //////////////////////////////////////////
+    // Methods                              //
+    //////////////////////////////////////////
+
+    // ====== Public methods ======
+
+    /**
+     * Update the template (NOTE: the template is automatically updated when you change data)
+     *
+     * @method update
+     */
+    update: function () {
+        Helpers.cleanNode(this.html);
+        if (!this.$data.compiledTemplate) {
+            return;
+        }
+        try {
+            this.html.innerHTML = this.$data.compiledTemplate(this._data);
+        } catch (error) {
+            Helpers.log(&quot;error&quot;, &quot;An error occured when rendering the template: &quot; + error);
+        }
+    },
+
+    // ====== Private methods ======
+
+    /**
+     * Build the widget HTML.
+     *
+     * @method _buildHtml
+     * @private
+     */
+    _buildHtml: function () {
+        this.__html.div = document.createElement(&quot;div&quot;);
+        this.__html.div.className = &quot;photonui-widget photonui-template&quot;;
+    },
+
+    //////////////////////////////////////////
+    // Internal Events Callbacks            //
+    //////////////////////////////////////////
+
+    __onLocaleChanged: function () {
+        this.update();
+    }
+
+});
+
+module.exports = Template;
+
+    </pre>
 </div>
                     </div>
                 </div>
