@@ -23,6 +23,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.FontSelect",
         "photonui.GridLayout",
         "photonui.Helpers",
+        "photonui.IconButton",
         "photonui.Image",
         "photonui.Label",
         "photonui.Layout",
@@ -42,6 +43,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.Switch",
         "photonui.TabItem",
         "photonui.TabLayout",
+        "photonui.Template",
         "photonui.Text",
         "photonui.TextAreaField",
         "photonui.TextField",
@@ -102,6 +104,7 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "Visual",
             "description": "PhotonUI - Javascript Web User Interface."
         }
-    ]
+    ],
+    "elements": []
 } };
 });

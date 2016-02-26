@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A javascript framework to create user interfaces",
-        "version": "1.2.1",
+        "version": "1.3.0",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
@@ -215,6 +215,17 @@
             "modules": {},
             "classes": {
                 "photonui.Field": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/interactive/iconbutton.js": {
+            "name": "src/interactive/iconbutton.js",
+            "modules": {},
+            "classes": {
+                "photonui.IconButton": 1
             },
             "fors": {},
             "namespaces": {
@@ -513,6 +524,17 @@
                 "photonui": 1
             }
         },
+        "src/visual/template.js": {
+            "name": "src/visual/template.js",
+            "modules": {},
+            "classes": {
+                "photonui.Template": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
         "src/visual/text.js": {
             "name": "src/visual/text.js",
             "modules": {},
@@ -583,6 +605,7 @@
                 "Visual": 1,
                 "Helpers": 1
             },
+            "elements": {},
             "classes": {
                 "photonui.ColorButton": 1,
                 "photonui.ColorPickerDialog": 1,
@@ -603,6 +626,7 @@
                 "photonui.ColorPalette": 1,
                 "photonui.ColorPicker": 1,
                 "photonui.Field": 1,
+                "photonui.IconButton": 1,
                 "photonui.NumericField": 1,
                 "photonui.Slider": 1,
                 "photonui.Switch": 1,
@@ -629,6 +653,7 @@
                 "photonui.ProgressBar": 1,
                 "photonui.Separator": 1,
                 "photonui.SpriteIcon": 1,
+                "photonui.Template": 1,
                 "photonui.Text": 1,
                 "photonui.Base": 1,
                 "photonui.Helpers": 1,
@@ -647,6 +672,7 @@
         "Composite": {
             "name": "Composite",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.ColorButton": 1,
                 "photonui.ColorPickerDialog": 1,
@@ -668,6 +694,7 @@
         "Container": {
             "name": "Container",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.BaseWindow": 1,
                 "photonui.Container": 1,
@@ -693,12 +720,14 @@
         "Interactive": {
             "name": "Interactive",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.Button": 1,
                 "photonui.CheckBox": 1,
                 "photonui.ColorPalette": 1,
                 "photonui.ColorPicker": 1,
                 "photonui.Field": 1,
+                "photonui.IconButton": 1,
                 "photonui.NumericField": 1,
                 "photonui.Slider": 1,
                 "photonui.Switch": 1,
@@ -720,6 +749,7 @@
         "Layout": {
             "name": "Layout",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.BoxLayout": 1,
                 "photonui.FluidLayout": 1,
@@ -742,6 +772,7 @@
         "NonVisual": {
             "name": "NonVisual",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.AccelManager": 1,
                 "photonui.Color": 1,
@@ -764,6 +795,7 @@
         "Visual": {
             "name": "Visual",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.BaseIcon": 1,
                 "photonui.Canvas": 1,
@@ -773,6 +805,7 @@
                 "photonui.ProgressBar": 1,
                 "photonui.Separator": 1,
                 "photonui.SpriteIcon": 1,
+                "photonui.Template": 1,
                 "photonui.Text": 1
             },
             "fors": {},
@@ -789,6 +822,7 @@
         "Helpers": {
             "name": "Helpers",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "photonui.Helpers": 1
             },
@@ -1156,6 +1190,30 @@
             "description": "Base class for fields.\n\nwEvents:\n\n  * value-changed:\n    - description: called when the value was modified.\n    - callback:    function(widget, value)\n\n  * keydown:\n    - description: called when a key is pressed.\n    - callback:    function(widget, event)\n\n  * keyup:\n    - description: called when a key is released.\n    - callback:    function(widget, event)\n\n  * keypress:\n    - description: called just before the insertion of a char.\n    - callback:    function(widget, event)\n\n  * selection-changed:\n    - description: called when the selection was changed.\n    - callback:    function(widget, selectionStart, selectionEnd, selectedText, event)",
             "is_constructor": 1,
             "extends": "photonui.Widget"
+        },
+        "photonui.IconButton": {
+            "name": "photonui.IconButton",
+            "shortname": "IconButton",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui",
+            "file": "src/interactive/iconbutton.js",
+            "line": 43,
+            "description": "A simple flat button that only contains an icon\n\nwEvents:\n\n  * click:\n    - description: called when the button was clicked.\n    - callback:    function(widget, event)",
+            "is_constructor": 1,
+            "extends": "photonui.Widget",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object that can contain any property of the widget (optional).",
+                    "type": "Object"
+                }
+            ]
         },
         "photonui.NumericField": {
             "name": "photonui.NumericField",
@@ -1673,6 +1731,30 @@
             "is_constructor": 1,
             "extends": "photonui.BaseIcon"
         },
+        "photonui.Template": {
+            "name": "photonui.Template",
+            "shortname": "Template",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "Visual",
+            "namespace": "photonui",
+            "file": "src/visual/template.js",
+            "line": 43,
+            "description": "Widget that displays template-generated HTML (uses lodash.template).",
+            "is_constructor": 1,
+            "extends": "photonui.Widget",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object that can contain any property of the widget (optional).",
+                    "type": "Object"
+                }
+            ]
+        },
         "photonui.Text": {
             "name": "photonui.Text",
             "shortname": "Text",
@@ -1702,7 +1784,7 @@
             "namespace": "photonui",
             "file": "src/base.js",
             "line": 43,
-            "description": "Base class for all PhotonUI Classes.\n\nwEvents:\n\n  * destroy:\n     - description: called before the widget was destroyed.\n     - callback:    function(widget)",
+            "description": "Base class for all PhotonUI Classes.\n\nwEvents:\n\n  * destroy:\n     - description: called before the widget was destroyed.\n     - callback:    function (widget)",
             "is_constructor": 1,
             "params": [
                 {
@@ -1752,6 +1834,7 @@
             ]
         }
     },
+    "elements": {},
     "classitems": [
         {
             "file": "src/composite/colorbutton.js",
@@ -2609,27 +2692,7 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 176,
-            "description": "Called when the visibility changes.",
-            "itemtype": "method",
-            "name": "_visibilityChanged",
-            "access": "private",
-            "tagname": "",
-            "params": [
-                {
-                    "name": "visibility",
-                    "description": "Current visibility state (otptional, defaut=this.visible)",
-                    "type": "Boolean"
-                }
-            ],
-            "class": "photonui.Container",
-            "module": "PhotonUI",
-            "submodule": "Container",
-            "namespace": "photonui"
-        },
-        {
-            "file": "src/container/container.js",
-            "line": 197,
+            "line": 182,
             "description": "Remove the given child.",
             "itemtype": "method",
             "name": "removeChild",
@@ -2647,10 +2710,30 @@
         },
         {
             "file": "src/container/container.js",
-            "line": 209,
+            "line": 194,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
+            "class": "photonui.Container",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/container.js",
+            "line": 208,
+            "description": "Called when the visibility changes.",
+            "itemtype": "method",
+            "name": "_visibilityChanged",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "visibility",
+                    "description": "Current visibility state (otptional, defaut=this.visible)",
+                    "type": "Boolean"
+                }
+            ],
             "class": "photonui.Container",
             "module": "PhotonUI",
             "submodule": "Container",
@@ -4564,6 +4647,104 @@
                 }
             ],
             "class": "photonui.Field",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 74,
+            "description": "Button width",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "default": "16",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 94,
+            "description": "Button height",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "default": "16",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 115,
+            "description": "Icon widget name.",
+            "itemtype": "property",
+            "name": "iconName",
+            "type": "String",
+            "default": ": null",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 137,
+            "description": "Icon widget.",
+            "itemtype": "property",
+            "name": "icon",
+            "type": "BaseIcon",
+            "default": ": null",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 156,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 174,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 191,
+            "description": "Called when the button is clicked.",
+            "itemtype": "method",
+            "name": "__onButtonClicked",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.IconButton",
             "module": "PhotonUI",
             "submodule": "Interactive",
             "namespace": "photonui"
@@ -7890,6 +8071,57 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/visual/template.js",
+            "line": 68,
+            "description": "The template.",
+            "itemtype": "property",
+            "name": "template",
+            "type": "String",
+            "default": "\"\"",
+            "class": "photonui.Template",
+            "module": "PhotonUI",
+            "submodule": "Visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/template.js",
+            "line": 97,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.Template",
+            "module": "PhotonUI",
+            "submodule": "Visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/template.js",
+            "line": 115,
+            "description": "Update the template (NOTE: the template is automatically updated when you change data)",
+            "itemtype": "method",
+            "name": "update",
+            "class": "photonui.Template",
+            "module": "PhotonUI",
+            "submodule": "Visual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/visual/template.js",
+            "line": 134,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.Template",
+            "module": "PhotonUI",
+            "submodule": "Visual",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/visual/text.js",
             "line": 62,
             "description": "Text",
@@ -7957,7 +8189,19 @@
         },
         {
             "file": "src/base.js",
-            "line": 102,
+            "line": 103,
+            "description": "Arbitrary data",
+            "itemtype": "property",
+            "name": "data",
+            "type": "object",
+            "default": "{}",
+            "class": "photonui.Base",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/base.js",
+            "line": 122,
             "description": "Object containing references javascript events binding (for widget\ninternal use).",
             "itemtype": "property",
             "name": "__events",
@@ -7970,7 +8214,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 112,
+            "line": 132,
             "description": "Object containing references to registered callbacks.",
             "itemtype": "property",
             "name": "__callbacks",
@@ -7983,7 +8227,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 127,
+            "line": 147,
             "description": "Destroy the class.",
             "itemtype": "method",
             "name": "destroy",
@@ -7993,8 +8237,8 @@
         },
         {
             "file": "src/base.js",
-            "line": 139,
-            "description": "Register a callback for any PhotonUI/Widget event (called wEvent).\n\nCallback signature:\n\n    function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])",
+            "line": 159,
+            "description": "Register a callback for any PhotonUI/Widget event (called wEvent).\n\nCallback signature:\n\n    function (Object(Base/Widget) [, arg1 [, arg2 [, ...]]])",
             "itemtype": "method",
             "name": "registerCallback",
             "params": [
@@ -8025,7 +8269,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 163,
+            "line": 183,
             "description": "Remove a registered callback.",
             "itemtype": "method",
             "name": "removeCallback",
@@ -8042,7 +8286,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 179,
+            "line": 199,
             "description": "Force the update of the given properties.",
             "itemtype": "method",
             "name": "_updateProperties",
@@ -8061,7 +8305,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 192,
+            "line": 212,
             "description": "Javascript event binding (for internal use).",
             "itemtype": "method",
             "name": "_bindEvent",
@@ -8095,7 +8339,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 216,
+            "line": 236,
             "description": "Unbind javascript event.",
             "itemtype": "method",
             "name": "_unbindEvent",
@@ -8114,7 +8358,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 235,
+            "line": 255,
             "description": "Register available wEvent.",
             "itemtype": "method",
             "name": "_registerWEvents",
@@ -8133,7 +8377,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 251,
+            "line": 271,
             "description": "Call all callbacks for the given wEvent.\n\nNOTE: the first argument passed to the callback is the current widget.\nNOTE²: if the thisArg of the callback is null, this will be binded to the current widget.",
             "itemtype": "method",
             "name": "_callCallbacks",
@@ -8588,6 +8832,61 @@
             "class": "photonui.Widget",
             "module": "PhotonUI",
             "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 479,
+            "itemtype": "property",
+            "name": "e_parent",
+            "static": 1,
+            "type": "HTMLElement",
+            "default": "null",
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 487,
+            "description": "Get a widget.",
+            "itemtype": "method",
+            "name": "getWidget",
+            "static": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The widget name.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The widget or null.",
+                "type": "Widget"
+            },
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/widget.js",
+            "line": 503,
+            "description": "Insert a widget in the DOM.\n\nmethod domInsert",
+            "static": 1,
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "The widget to insert.",
+                    "type": "photonui.Widget"
+                },
+                {
+                    "name": "element",
+                    "description": "The DOM node or its id (optional, default=Widget.e_parent)",
+                    "type": "HTMLElement"
+                }
+            ],
+            "class": "photonui.Widget",
+            "module": "PhotonUI",
+            "namespace": "photonui"
         }
     ],
     "warnings": [
@@ -8598,6 +8897,10 @@
         {
             "message": "Missing item type\nRight icon widget",
             "line": " src/container/tabitem.js:266"
+        },
+        {
+            "message": "Missing item type\nInsert a widget in the DOM.\n\nmethod domInsert",
+            "line": " src/widget.js:503"
         }
     ]
 }

@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.2.1</em>
+            <em>API Docs for: 1.3.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -60,6 +60,7 @@
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
+                                <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
@@ -79,6 +80,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -88,6 +90,7 @@
                                 <li><a href="../classes/photonui.Widget.html">photonui.Widget</a></li>
                                 <li><a href="../classes/photonui.Window.html">photonui.Window</a></li>
                             </ul>
+                
                 
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
@@ -272,7 +275,7 @@ var Container = Widget.$extend({
         }
         this._childName = childName;
         if (this.child &amp;&amp; this.child._parentName) {
-            this.child.parent.child = null;
+            this.child.parent.removeChild(this.child);
         }
         if (this.childName &amp;&amp; this.containerNode &amp;&amp; this.child &amp;&amp; this.child.html) {
             this.containerNode.appendChild(this.child.html);
@@ -310,6 +313,38 @@ var Container = Widget.$extend({
         return null;
     },
 
+    //////////////////////////////////////////
+    // Methods                              //
+    //////////////////////////////////////////
+
+    // ====== Public methods ======
+
+    /**
+     * Remove the given child.
+     *
+     * @method removeChild
+     * @param {photonui.Widget} widget The widget to remove/
+     */
+    removeChild: function (widget) {
+        if (this.child === widget) {
+            this.child = null;
+        }
+    },
+
+    /**
+     * Destroy the widget.
+     *
+     * @method destroy
+     */
+    destroy: function () {
+        if (this.childName &amp;&amp; this.child) {
+            this.child.destroy();
+        }
+        this.$super();
+    },
+
+    // ====== Private methods ======
+
     /**
      * Called when the visibility changes.
      *
@@ -325,35 +360,6 @@ var Container = Widget.$extend({
         this.$super(visibility);
     },
 
-    //////////////////////////////////////////
-    // Methods                              //
-    //////////////////////////////////////////
-
-    // ====== Public methods ======
-
-    /**
-     * Remove the given child.
-     *
-     * @method removeChild
-     * @param {photonui.Widget} widget The widget to remove/
-     */
-    removeChild: function (widget) {
-        if (this.child == widget) {
-            this.child = null;
-        }
-    },
-
-    /**
-     * Destroy the widget.
-     *
-     * @method destroy
-     */
-    destroy: function () {
-        if (this.childName &amp;&amp; this.child) {
-            this.child.destroy();
-        }
-        this.$super();
-    }
 });
 
 module.exports = Container;

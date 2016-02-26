@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.2.1</em>
+            <em>API Docs for: 1.3.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -60,6 +60,7 @@
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
+                                <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
@@ -79,6 +80,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
                                 <li><a href="../classes/photonui.TextField.html">photonui.TextField</a></li>
@@ -88,6 +90,7 @@
                                 <li><a href="../classes/photonui.Widget.html">photonui.Widget</a></li>
                                 <li><a href="../classes/photonui.Window.html">photonui.Window</a></li>
                             </ul>
+                
                 
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
@@ -184,7 +187,7 @@ var Helpers = require(&quot;./helpers.js&quot;);
  *
  *   * destroy:
  *      - description: called before the widget was destroyed.
- *      - callback:    function(widget)
+ *      - callback:    function (widget)
  *
  * @class Base
  * @constructor
@@ -196,6 +199,7 @@ var Base = Class.$extend({
     __init__: function (params) {
         // New instances for object properties
         this.__events = {};
+        this._data = {};
 
         // wEvents
         this._registerWEvents([&quot;destroy&quot;]);
@@ -203,7 +207,7 @@ var Base = Class.$extend({
         // Apply params
         params = params || {};
         for (var param in params) {
-            if (this[param] !== undefined) {
+            if (this.$map.computedProperties[param]) {
                 this[param] = params[param];
             }
         }
@@ -233,6 +237,25 @@ var Base = Class.$extend({
     //////////////////////////////////////////
     // Properties and Accessors             //
     //////////////////////////////////////////
+
+    // ====== Public properties ======
+
+    /**
+     * Arbitrary data
+     *
+     * @property data
+     * @type object
+     * @default {}
+     */
+    _data: null,
+
+    getData: function () {
+        return this._data;
+    },
+
+    setData: function (data) {
+        this._data = data;
+    },
 
     // ====== Private properties ======
 
@@ -278,7 +301,7 @@ var Base = Class.$extend({
      *
      * Callback signature:
      *
-     *     function(Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
+     *     function (Object(Base/Widget) [, arg1 [, arg2 [, ...]]])
      *
      * @method registerCallback
      * @param {String} id An unique id for the callback.
