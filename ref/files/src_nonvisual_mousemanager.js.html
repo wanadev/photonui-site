@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.3.0</em>
+            <em>API Docs for: 1.4.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -377,7 +377,7 @@ var MouseManager = Base.$extend({
     },
 
     /**
-     * translate all position events by a scalar. Use it when the canvas is translated.
+     * Translate all position events by a scalar. Use it when the canvas is translated.
      *
      * @property translateY
      * @type Number
@@ -771,6 +771,7 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onMouseDown: function (event) {
+        event.stopPropagation();
         this._stateMachine(&quot;mouse-down&quot;, event);
     },
 
@@ -780,6 +781,7 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onMouseUp: function (event) {
+        event.stopPropagation();
         this._stateMachine(&quot;mouse-up&quot;, event);
     },
 
@@ -798,6 +800,7 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onMouseMove: function (event) {
+        event.stopPropagation();
         this._stateMachine(&quot;mouse-move&quot;, event);
     },
 
