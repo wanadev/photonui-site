@@ -8,6 +8,10 @@ hexo.extend.helper.register("getFileContent", function(fileName) {
     return result;
 });
 
+hexo.extend.helper.register("getFileContentRaw", function(fileName) {
+    return fs.readFileSync("source/" + fileName);
+});
+
 hexo.extend.helper.register("fileExists", function(fileName) {
     return fs.existsSync("source/" + fileName);
 });
