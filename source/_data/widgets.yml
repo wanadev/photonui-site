@@ -70,6 +70,10 @@
   image: doc/widgets/image.png
   url: doc/widgets/image.html
 
+- name: KeyboardManager
+  image: doc/widgets/keyboardmanager.png
+  url: doc/widgets/keyboardmanager.html
+
 - name: Label
   image: doc/widgets/label.png
   url: doc/widgets/label.html
