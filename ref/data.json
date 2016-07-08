@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A javascript framework to create user interfaces",
-        "version": "1.4.0",
+        "version": "1.4.1",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
@@ -401,6 +401,17 @@
                 "photonui": 1
             }
         },
+        "src/nonvisual/keyboardmanager.js": {
+            "name": "src/nonvisual/keyboardmanager.js",
+            "modules": {},
+            "classes": {
+                "photonui.KeyboardManager": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
         "src/nonvisual/mousemanager.js": {
             "name": "src/nonvisual/mousemanager.js",
             "modules": {},
@@ -642,6 +653,7 @@
                 "photonui.AccelManager": 1,
                 "photonui.Color": 1,
                 "photonui.FileManager": 1,
+                "photonui.KeyboardManager": 1,
                 "photonui.MouseManager": 1,
                 "photonui.SpriteSheet": 1,
                 "photonui.Translation": 1,
@@ -777,6 +789,7 @@
                 "photonui.AccelManager": 1,
                 "photonui.Color": 1,
                 "photonui.FileManager": 1,
+                "photonui.KeyboardManager": 1,
                 "photonui.MouseManager": 1,
                 "photonui.SpriteSheet": 1,
                 "photonui.Translation": 1
@@ -1499,6 +1512,40 @@
             "is_constructor": 1,
             "extends": "photonui.Base",
             "params": [
+                {
+                    "name": "params",
+                    "description": "An object that can contain any property of the widget (optional).",
+                    "type": "Object"
+                }
+            ]
+        },
+        "photonui.KeyboardManager": {
+            "name": "photonui.KeyboardManager",
+            "shortname": "KeyboardManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui",
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 43,
+            "description": "Manage document-wide keyboard events.\n\nwEvents:\n\n  * key-down:\n     - description: When a key is pushed (event launched just once until key is released).\n     - callback:    function(manager, kstate)\n\n  * key-up:\n     - description: When a key is released.\n     - callback:    function(manager, kstate)\n\n  * key-hold:\n     - description: When the last key pressed is held down.\n     - callback:    function(manager, kstate)\n\n\nkstate:\n\n  A snapshot of the keyboard state when the event occured.\n\n    {\n        event: <Object>,       // The original js event\n        action: <String>,      // The event name (key-down/up, key-hold)\n        keys: <String>,        // The object of active keys\n        key: <String>,         // User-friendly key name\n    }",
+            "is_constructor": 1,
+            "extends": "photonui.Base",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Any PhotonUI Widget (optional).",
+                    "type": "photonui.Widget"
+                },
+                {
+                    "name": "element",
+                    "description": "Any HTML element (optional).",
+                    "type": "HTMLElement"
+                },
                 {
                     "name": "params",
                     "description": "An object that can contain any property of the widget (optional).",
@@ -6639,6 +6686,334 @@
             "access": "private",
             "tagname": "",
             "class": "photonui.FileManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 106,
+            "description": "Disable the keyboard manager callbacks when focusing a input field-like element.",
+            "itemtype": "property",
+            "name": "safe",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 123,
+            "description": "Disable concerned events default actions.",
+            "itemtype": "property",
+            "name": "noPreventDefault",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 140,
+            "description": "The HTML Element on which the events are binded.\n\nNOTE: If a photonui.Widget object is assigned to this property,\n      its HTML Element will be automatically assigned to the property instead.",
+            "itemtype": "property",
+            "name": "element",
+            "type": "HTMLElement",
+            "default": "null",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 167,
+            "description": "The action:\n\n  * \"key-down\"\n  * \"key-up\"\n  * \"key-hold\"",
+            "itemtype": "property",
+            "name": "action",
+            "readonly": "",
+            "type": "String",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 186,
+            "description": "Last event object.",
+            "itemtype": "property",
+            "name": "__event",
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "default": "{}",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 196,
+            "description": "The currently active keys.",
+            "itemtype": "property",
+            "name": "keys",
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "default": "{}",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 206,
+            "description": "Last key concerned.",
+            "itemtype": "property",
+            "name": "__key",
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "default": "{}",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 216,
+            "description": "KeyCode correspondance to key name.",
+            "itemtype": "property",
+            "name": "__keyCache",
+            "access": "private",
+            "tagname": "",
+            "type": "Array",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 225,
+            "description": "Key name correspondance to key code.",
+            "itemtype": "property",
+            "name": "__keyCache",
+            "access": "private",
+            "tagname": "",
+            "type": "Array",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 240,
+            "description": "Bind events on the HTML Element.",
+            "itemtype": "method",
+            "name": "_updateEvents",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 264,
+            "description": "Check if a specific key is currently pressed.",
+            "itemtype": "method",
+            "name": "isKeyPressed",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 276,
+            "description": "Check if a specific key is currently released.",
+            "itemtype": "method",
+            "name": "isKeyReleased",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 290,
+            "description": "Take a snapshot of the KeyboardManager",
+            "itemtype": "method",
+            "name": "_dump",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 305,
+            "description": "Check if the user has not focused an input element",
+            "itemtype": "method",
+            "name": "_checkFocus",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 318,
+            "description": "Check the validity of the keyboard event",
+            "itemtype": "method",
+            "name": "_checkEvent",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The keyboard event",
+                    "type": "KeyboardEvent"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 339,
+            "description": "Create the key correspondance cache for basic touches",
+            "itemtype": "method",
+            "name": "_initKeyCache",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 427,
+            "description": "Get the key name from a native keyboard event",
+            "itemtype": "method",
+            "name": "_keyFromEvent",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The keyboard event",
+                    "type": "KeyboardEvent"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 448,
+            "description": "Used to grab all keyboard events",
+            "itemtype": "method",
+            "name": "__onDocumentKeyDown",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 470,
+            "description": "Used to grab all keyboard events",
+            "itemtype": "method",
+            "name": "__onDocumentKeyUp",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": ""
+                }
+            ],
+            "class": "photonui.KeyboardManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/keyboardmanager.js",
+            "line": 492,
+            "description": "Called when the window loose focus",
+            "itemtype": "method",
+            "name": "__onWindowBlur",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.KeyboardManager",
             "module": "PhotonUI",
             "submodule": "NonVisual",
             "namespace": "photonui"
