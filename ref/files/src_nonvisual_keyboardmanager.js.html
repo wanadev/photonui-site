@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/widget.js - photonui</title>
+    <title>src/nonvisual/keyboardmanager.js - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -135,7 +135,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: src/widget.js</h1>
+<h1 class="file-heading">File: src/nonvisual/keyboardmanager.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -166,82 +166,76 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
+ * Authored by: A. Breust &lt;https://github.com/Breush&gt;
  */
 
 /**
  * PhotonUI - Javascript Web User Interface.
  *
  * @module PhotonUI
+ * @submodule NonVisual
  * @namespace photonui
  */
 
-var Stone = require(&quot;stonejs&quot;);
-var uuid = require(&quot;uuid&quot;);
-
-var Base = require(&quot;./base.js&quot;);
-var Helpers = require(&quot;./helpers.js&quot;);
-
-var _widgets = {};
+var Helpers = require(&quot;../helpers.js&quot;);
+var Base = require(&quot;../base.js&quot;);
+var Widget = require(&quot;../widget.js&quot;);
 
 /**
- * Base class for all PhotonUI widgets.
+ * Manage document-wide keyboard events.
  *
  * wEvents:
  *
- *   * show:
- *      - description: called when the widget is displayed (a change in the parent&#x27;s
- *                     visibility can also trigger this event).
- *      - callback:    function(widget)
+ *   * key-down:
+ *      - description: When a key is pushed (event launched just once until key is released).
+ *      - callback:    function(manager, kstate)
  *
- *   * hide:
- *      - description: called when the widget is hidden (a change in the parent&#x27;s visibility
- *                     can also trigger this event).
- *      - callback:    function(widget)
+ *   * key-up:
+ *      - description: When a key is released.
+ *      - callback:    function(manager, kstate)
  *
- * @class Widget
+ *   * key-hold:
+ *      - description: When the last key pressed is held down.
+ *      - callback:    function(manager, kstate)
+ *
+ *
+ * kstate:
+ *
+ *   A snapshot of the keyboard state when the event occured.
+ *
+ *     {
+ *         event: &lt;Object&gt;,       // The original js event
+ *         action: &lt;String&gt;,      // The event name (key-down/up, key-hold)
+ *         keys: &lt;String&gt;,        // The object of active keys
+ *         key: &lt;String&gt;,         // User-friendly key name
+ *     }
+ *
+ * @class KeyboardManager
  * @constructor
  * @extends photonui.Base
+ * @param {photonui.Widget} element Any PhotonUI Widget (optional).
+ * @param {HTMLElement} element Any HTML element (optional).
  * @param {Object} params An object that can contain any property of the widget (optional).
  */
-var Widget = Base.$extend({
+var KeyboardManager = Base.$extend({
 
     // Constructor
-    __init__: function (params) {
-        // New instances for object properties
-        this.__html = {};
-        this._layoutOptions = {};
-
-        // Build the html
-        this._buildHtml();
-
-        // wEvents
-        this._registerWEvents([&quot;show&quot;, &quot;hide&quot;]);
-
-        // Parent constructor
-        this.$super(params);
-
-        // Update properties
-        this._updateProperties([&quot;visible&quot;]);
-
-        // Default name
-        if (!this.name) {
-            this.name = &quot;widget-&quot; + uuid.v4();
+    __init__: function (element, params) {
+        this._registerWEvents([&quot;key-down&quot;, &quot;key-up&quot;, &quot;key-hold&quot;]);
+        if (element &amp;&amp; (element instanceof Widget || element instanceof HTMLElement || element === document)) {
+            this.$super(params);
+            this.element = element;
+        } else {
+            this.$super(element);
         }
+        this._updateProperties([&quot;safe&quot;, &quot;noPreventDefault&quot;]);
 
-        // Additional className
-        if (params &amp;&amp; params.className) {
-            this.addClass(params.className);
-        }
+        this._initKeyCache();
 
-        // Bind some events
-        if (this.html) {
-            this._bindEvent(&quot;pop-contextmenu&quot;, this.html, &quot;contextmenu&quot;, this.__onContextMenu.bind(this));
-        }
-        this._bindEvent(&quot;locale-changed&quot;, document, &quot;stonejs-locale-changed&quot;, this.__onLocaleChanged.bind(this));
-
-        // Register the widget
-        _widgets[this.name] = this;
+        // NOTE Holding event might be broken on old versions of Ubuntu + GTK
+        // for an event &quot;keyup&quot; is fired before the &quot;keydown&quot; repeat.
+        // One work-around would be to send by ourself the events inside an animation loop,
+        // according to the last and the current states of active keys.
     },
 
     //////////////////////////////////////////
@@ -251,224 +245,132 @@ var Widget = Base.$extend({
     // ====== Public properties ======
 
     /**
-     * The unique name of the widget.
+     * Disable the keyboard manager callbacks when focusing a input field-like element.
      *
-     * @property name
-     * @type String
-     * @default &quot;widget-&quot; + uuid.v4()
-     */
-    _name: null,
-
-    getName: function () {
-        return this._name;
-    },
-
-    setName: function (name) {
-        delete _widgets[this.name];
-        this._name = name;
-        _widgets[name] = this;
-        if (this.html) {
-            this.html.id = this.name;
-        }
-    },
-
-    /**
-     * The parent widget name.
-     *
-     * @property parentName
-     * @type String
-     * @readOnly
-     * @default null (no parent)
-     */
-    _parentName: null,
-
-    getParentName: function () {
-        return this._parentName;
-    },
-
-    /**
-     * The parent widget.
-     *
-     * @property parent
-     * @type photonui.Widget
-     * @readOnly
-     * @default null (no parent)
-     */
-    getParent: function () {
-        return Widget.getWidget(this.parentName);
-    },
-
-    /**
-     * Is the widget visible or hidden.
-     *
-     * @property visible
+     * @property safe
      * @type Boolean
      * @default true
      */
-    _visible: true,
+    _safe: true,
 
-    isVisible: function () {
-        return this._visible;
+    getSafe: function () {
+        return this._safe;
     },
 
-    setVisible: function (visible) {
-        this._visible = Boolean(visible);
-        if (!this.html) {
-            return;
-        }
-        if (visible) {
-            this.html.style.display = &quot;&quot;;
-        } else {
-            this.html.style.setProperty(&quot;display&quot;, &quot;none&quot;, &quot;important&quot;);
-        }
-        this._visibilityChanged();
+    setSafe: function (safe) {
+        this._safe = safe;
     },
 
     /**
-     * Tooltip.
+     * Disable concerned events default actions.
      *
-     * @property tooltip
-     * @type String
-     * @default null
+     * @property noPreventDefault
+     * @type Boolean
+     * @default false
      */
-    _tooltip: null,
+    _noPreventDefault: false,
 
-    getTooltip: function () {
-        return this._tooltip;
+    getNoPreventDefault: function () {
+        return this._noPreventDefault;
     },
 
-    setTooltip: function (tooltip) {
-        this._tooltip = tooltip;
-        if (tooltip) {
-            this.html.title = tooltip;
-        } else {
-            this.html.removeAttribute(&quot;title&quot;);
-        }
+    setNoPreventDefault: function (noPreventDefault) {
+        this._noPreventDefault = noPreventDefault;
     },
 
     /**
-     * The name of the managed contextual menu (&#x60;photonui.PopupWindow().name&#x60;).
+     * The HTML Element on which the events are binded.
      *
-     * @property contextMenuName
-     * @type String
-     * @default null (= no context menu)
-     */
-    _contextMenuName: null,
-
-    getContextMenuName: function () {
-        return this._contextMenuName;
-    },
-
-    setContextMenuName: function (contextMenuName) {
-        this._contextMenuName = contextMenuName;
-    },
-
-    /**
-     * The managed contextual menu.
+     * NOTE: If a photonui.Widget object is assigned to this property,
+     *       its HTML Element will be automatically assigned to the property instead.
      *
-     * @property contextMenu
-     * @type photonui.PopupWindow
-     * @default null (= no context menu)
-     */
-    getContextMenu: function () {
-        return Widget.getWidget(this.contextMenuName);
-    },
-
-    setContextMenu: function (contextMenu) {
-        var PopupWindow = require(&quot;./container/popupwindow.js&quot;);
-        if (contextMenu instanceof PopupWindow) {
-            this.contextMenuName = contextMenu.name;
-        } else {
-            this.contextMenuName = null;
-        }
-    },
-
-    /**
-     * Layout options.
-     *
-     * @property layoutOptions
-     * @type Object
-     * @default {}
-     */
-    _layoutOptions: {},
-
-    getLayoutOptions: function () {
-        return this._layoutOptions;
-    },
-
-    setLayoutOptions: function (layoutOptions) {
-        for (var option in layoutOptions) {
-            this._layoutOptions[option] = layoutOptions[option];
-        }
-    },
-
-    /**
-     * Html outer element of the widget (if any).
-     *
-     * @property html
+     * @property element
      * @type HTMLElement
      * @default null
-     * @readOnly
      */
-    getHtml: function () {
-        Helpers.log(&quot;debug&quot;, &quot;getHtml() method is not implemented on this widget.&quot;);
-        return null;
+    _element: null,
+
+    getElement: function () {
+        return this._element || document;
+    },
+
+    setElement: function (element) {
+        if (element instanceof Widget) {
+            this._element = element.interactiveNode || element.html;
+        } else if (element instanceof HTMLElement || element === document) {
+            this._element = element;
+        } else {
+            this._element = null;
+        }
+        this._updateEvents();
     },
 
     /**
-     * Absolute position of the widget on the page.
+     * The action:
      *
-     * &#x60;{x: Number, y: Number}&#x60;
+     *   * &quot;key-down&quot;
+     *   * &quot;key-up&quot;
+     *   * &quot;key-hold&quot;
      *
-     * @property absolutePosition
-     * @type Object
+     * @property action
      * @readOnly
+     * @type String
      */
-    getAbsolutePosition: function () {
-        if (!this.html) {
-            return {x: 0, y: 0};
-        }
-        return Helpers.getAbsolutePosition(this.html);
-    },
+    _action: &quot;&quot;,
 
-    /**
-     * Widget width (outer HTML element).
-     *
-     * @property offsetWidth
-     * @type Number
-     * @readOnly
-     */
-    getOffsetWidth: function () {
-        if (!this.html) {
-            return 0;
-        }
-        return this.html.offsetWidth;
-    },
-
-    /**
-     * Widget height (outer HTML element).
-     *
-     * @property offsetHeight
-     * @type Number
-     * @readOnly
-     */
-    getOffsetHeight: function () {
-        if (!this.html) {
-            return 0;
-        }
-        return this.html.offsetHeight;
+    getAction: function () {
+        return this._action;
     },
 
     // ====== Private properties ======
 
     /**
-     * Object containing references to the widget HTML elements
+     * Last event object.
      *
-     * @property __html
-     * @type Object
+     * @property __event
      * @private
+     * @type Object
+     * @default {}
      */
-    __html: {},      // HTML Elements
+    __event: {},
+
+    /**
+     * The currently active keys.
+     *
+     * @property keys
+     * @private
+     * @type Object
+     * @default {}
+     */
+    __keys: {},
+
+    /**
+     * Last key concerned.
+     *
+     * @property __key
+     * @private
+     * @type Object
+     * @default {}
+     */
+    __key: {},
+
+    /**
+     * KeyCode correspondance to key name.
+     *
+     * @property __keyCache
+     * @private
+     * @type Array
+     */
+    __keyCache: [],
+
+    /**
+     * Key name correspondance to key code.
+     *
+     * @property __keyCache
+     * @private
+     * @type Array
+     */
+    __keyCodeCache: [],
 
     //////////////////////////////////////////
     // Methods                              //
@@ -477,108 +379,207 @@ var Widget = Base.$extend({
     // ====== Public methods ======
 
     /**
-     * Display the widget (equivalent to widget.visible = true).
+     * Bind events on the HTML Element.
      *
-     * @method show
+     * @method _updateEvents
+     * @private
      */
-    show: function () {
-        this.visible = true;
-    },
-
-    /**
-     * Hide the widget (equivalent to widget.visible = false).
-     *
-     * @method hide
-     */
-    hide: function () {
-        this.visible = false;
-    },
-
-    /**
-     * Detache the widget from its parent.
-     *
-     * @method unparent
-     */
-    unparent: function () {
-        if (this.parent) {
-            this.parent.removeChild(this);
-        } else if (this.html &amp;&amp; this.html.parentNode) {
-            this.html.parentNode.removeChild(this.html);
+    _updateEvents: function () {
+        // Unbind all existing events
+        for (var id in this.__events) {
+            this._unbindEvent(id);
         }
-    },
-
-    /**
-     * Destroy the widget.
-     *
-     * @method destroy
-     */
-    destroy: function () {
-        this.$super();
-        this.unparent();
-        delete _widgets[this.name];
-    },
-
-    /**
-     * Add a class to the outer HTML element of the widget.
-     *
-     * @method addClass
-     * @param {String} className The class to add.
-     */
-    addClass: function (className) {
-        if (!this.html) {
+        // Check if we have an html element
+        if (!this.element) {
             return;
         }
-        var classes = this.html.className.split(&quot; &quot;);
-        if (classes.indexOf(className) &lt; 0) {
-            classes.push(className);
-        }
-        this.html.className = classes.join(&quot; &quot;);
+        // Bind new events
+        // We will simulate the standard &quot;keypress&quot; event because some browsers
+        // do not emit one for special keys (alt, ctrl, shift, escape).
+        this._bindEvent(&quot;key-down&quot;, this.getElement(), &quot;keydown&quot;, this.__onDocumentKeyDown.bind(this));
+        this._bindEvent(&quot;key-up&quot;, this.getElement(), &quot;keyup&quot;, this.__onDocumentKeyUp.bind(this));
+
+        this._bindEvent(&quot;lost-focus&quot;, window, &quot;blur&quot;, this.__onWindowBlur.bind(this));
     },
 
     /**
-     * Remove a class from the outer HTML element of the widget.
+     * Check if a specific key is currently pressed.
      *
-     * @method removeClass
-     * @param {String} className The class to remove.
+     * @method isKeyPressed
+     * @param {String} key The key name
+     * @return {Boolean}
      */
-    removeClass: function (className) {
-        if (!this.html) {
-            return;
-        }
-        var classes = this.html.className.split(&quot; &quot;);
-        var index = classes.indexOf(className);
-        if (index &gt;= 0) {
-            classes.splice(index, 1);
-        }
-        this.html.className = classes.join(&quot; &quot;);
+    isKeyPressed: function (key) {
+        var keyState = this.__keys[this.__keyCodeCache[key]];
+        return (keyState) ? true : false;
+    },
+
+    /**
+     * Check if a specific key is currently released.
+     *
+     * @method isKeyReleased
+     * @param {String} key The key name
+     * @return {Boolean}
+     */
+    isKeyReleased: function (key) {
+        var keyState = this.__keys[this.__keyCodeCache[key]];
+        return (keyState) ? false : true;
     },
 
     // ====== Private methods ======
 
     /**
-     * Build the widget HTML.
+     * Take a snapshot of the KeyboardManager
      *
-     * @method _buildHtml
+     * @method _dump
      * @private
+     * @return {Object}
      */
-    _buildHtml: function () {
-        Helpers.log(&quot;debug&quot;, &quot;_buildHtml() method not implemented on this widget.&quot;);
+    _dump: function () {
+        return {
+            event: this.__event,
+            action: this._action,
+            key: this.__key
+        };
     },
 
     /**
-     * Called when the visibility changes.
+     * Check if the user has not focused an input element
      *
-     * @method _visibilityChanged
+     * @method _checkFocus
      * @private
-     * @param {Boolean} visibility Current visibility state (otptional, defaut=this.visible)
+     * @return {Boolean}
      */
-    _visibilityChanged: function (visibility) {
-        visibility = (visibility !== undefined) ? visibility : this.visible;
-        if (visibility &amp;&amp; this.visible) {
-            this._callCallbacks(&quot;show&quot;);
-        } else {
-            this._callCallbacks(&quot;hide&quot;);
+    _checkFocus: function () {
+        return !(this._safe &amp;&amp; (document.activeElement instanceof HTMLInputElement ||
+               document.activeElement instanceof HTMLSelectElement ||
+               document.activeElement instanceof HTMLTextAreaElement));
+    },
+
+    /**
+     * Check the validity of the keyboard event
+     *
+     * @method _checkEvent
+     * @private
+     * @param {KeyboardEvent} event The keyboard event
+     * @return {Boolean}
+     */
+    _checkEvent: function (event) {
+        this.__event = event;
+        this.__key = this._keyFromEvent(event);
+
+        if (!this.__key || this.__key === &quot;Dead&quot;) {
+            return false;
         }
+
+        this.__keyCodeCache[this.__key] = event.keyCode;
+
+        return this._checkFocus();
+    },
+
+    /**
+     * Create the key correspondance cache for basic touches
+     *
+     * @method _initKeyCache
+     * @private
+     */
+    _initKeyCache: function () {
+        // General
+        this.__keyCache[3] = &quot;cancel&quot;;
+        this.__keyCache[8] = &quot;backspace&quot;;
+        this.__keyCache[9] = &quot;tab&quot;;
+        this.__keyCache[12] = &quot;clear&quot;;
+        this.__keyCache[13] = &quot;enter&quot;;
+        this.__keyCache[16] = &quot;shift&quot;;
+        this.__keyCache[17] = &quot;ctrl&quot;;
+        this.__keyCache[18] = &quot;alt&quot;;
+        this.__keyCache[19] = &quot;pause&quot;;
+        this.__keyCache[20] = &quot;capslock&quot;;
+        this.__keyCache[27] = &quot;escape&quot;;
+        this.__keyCache[32] = &quot;space&quot;;
+        this.__keyCache[33] = &quot;pageup&quot;;
+        this.__keyCache[34] = &quot;pagedown&quot;;
+        this.__keyCache[35] = &quot;end&quot;;
+        this.__keyCache[36] = &quot;home&quot;;
+        this.__keyCache[37] = &quot;left&quot;;
+        this.__keyCache[38] = &quot;up&quot;;
+        this.__keyCache[39] = &quot;right&quot;;
+        this.__keyCache[40] = &quot;down&quot;;
+        this.__keyCache[41] = &quot;select&quot;;
+        this.__keyCache[42] = &quot;printscreen&quot;;
+        this.__keyCache[43] = &quot;execute&quot;;
+        this.__keyCache[44] = &quot;snapshot&quot;;
+        this.__keyCache[45] = &quot;insert&quot;;
+        this.__keyCache[46] = &quot;delete&quot;;
+        this.__keyCache[47] = &quot;help&quot;;
+
+        // 0-9
+        this.__keyCache[48] = &quot;0&quot;;
+        this.__keyCache[49] = &quot;1&quot;;
+        this.__keyCache[50] = &quot;2&quot;;
+        this.__keyCache[51] = &quot;3&quot;;
+        this.__keyCache[52] = &quot;4&quot;;
+        this.__keyCache[53] = &quot;5&quot;;
+        this.__keyCache[54] = &quot;6&quot;;
+        this.__keyCache[55] = &quot;7&quot;;
+        this.__keyCache[56] = &quot;8&quot;;
+        this.__keyCache[57] = &quot;9&quot;;
+
+        // A-Z
+        for (var keyCode = 65; keyCode &lt;= 90; ++keyCode) {
+            this.__keyCache[keyCode] = String.fromCharCode(keyCode);
+        }
+
+        // numpad
+        this.__keyCache[96] = &quot;num0&quot;;
+        this.__keyCache[97] = &quot;num1&quot;;
+        this.__keyCache[98] = &quot;num2&quot;;
+        this.__keyCache[99] = &quot;num3&quot;;
+        this.__keyCache[100] = &quot;num4&quot;;
+        this.__keyCache[101] = &quot;num5&quot;;
+        this.__keyCache[102] = &quot;num6&quot;;
+        this.__keyCache[103] = &quot;num7&quot;;
+        this.__keyCache[104] = &quot;num8&quot;;
+        this.__keyCache[105] = &quot;num9&quot;;
+        this.__keyCache[106] = &quot;num*&quot;;
+        this.__keyCache[107] = &quot;num+&quot;;
+        this.__keyCache[108] = &quot;numenter&quot;;
+        this.__keyCache[109] = &quot;num-&quot;;
+        this.__keyCache[110] = &quot;num.&quot;;
+        this.__keyCache[111] = &quot;num/&quot;;
+        this.__keyCache[144] = &quot;numlock&quot;;
+        this.__keyCache[145] = &quot;scrolllock&quot;;
+
+        // function keys
+        this.__keyCache[112] = &quot;f1&quot;;
+        this.__keyCache[113] = &quot;f2&quot;;
+        this.__keyCache[114] = &quot;f3&quot;;
+        this.__keyCache[115] = &quot;f4&quot;;
+        this.__keyCache[116] = &quot;f5&quot;;
+        this.__keyCache[117] = &quot;f6&quot;;
+        this.__keyCache[118] = &quot;f7&quot;;
+        this.__keyCache[119] = &quot;f8&quot;;
+        this.__keyCache[120] = &quot;f9&quot;;
+        this.__keyCache[121] = &quot;f10&quot;;
+        this.__keyCache[122] = &quot;f11&quot;;
+        this.__keyCache[123] = &quot;f12&quot;;
+    },
+
+    /**
+     * Get the key name from a native keyboard event
+     *
+     * @method _keyFromEvent
+     * @private
+     * @param {KeyboardEvent} event The keyboard event
+     * @return {String}
+     */
+    _keyFromEvent: function (keyboardEvent) {
+        var key = this.__keyCache[keyboardEvent.keyCode];
+        if (!key) {
+            key = keyboardEvent.key;
+            this.__keyCache[keyboardEvent.keyCode] = key;
+        }
+        return key;
     },
 
     //////////////////////////////////////////
@@ -586,82 +587,68 @@ var Widget = Base.$extend({
     //////////////////////////////////////////
 
     /**
-     * Called when the context menu should be displayed.
+     * Used to grab all keyboard events
      *
-     * @method __onContextMenu
+     * @method __onDocumentKeyDown
      * @private
      * @param event
      */
-    __onContextMenu: function (event) {
-        event.stopPropagation();
-        event.preventDefault();
-        if (this.contextMenuName) {
-            this.contextMenu.popupXY(event.pageX, event.pageY);
+    __onDocumentKeyDown: function (event) {
+        if (!this._checkEvent(event)) {
+            return;
+        }
+
+        this._action = (this.__keys[event.keyCode]) ? &quot;key-hold&quot; : &quot;key-down&quot;;
+        this.__keys[event.keyCode] = true;
+        this._callCallbacks(this._action, [this._dump()]);
+
+        if (!this._noPreventDefault) {
+            event.stopPropagation();
+            event.preventDefault();
         }
     },
 
     /**
-     * Called when the locale is changed.
+     * Used to grab all keyboard events
      *
-     * @method __onLocaleChanged
+     * @method __onDocumentKeyUp
      * @private
+     * @param event
      */
-    __onLocaleChanged: function () {
-        // Update lazy strings...
-        for (var prop in this.$map.computedProperties) {
-            if (this[prop] instanceof Stone.LazyString) {
-                this[prop] = this[prop];
-            }
+    __onDocumentKeyUp: function (event) {
+        if (!this._checkEvent(event) || !this.__keys[event.keyCode]) {
+            return;
+        }
+
+        this._action = &quot;key-up&quot;;
+        this.__keys[event.keyCode] = undefined;
+        this._callCallbacks(this._action, [this._dump()]);
+
+        if (!this._noPreventDefault) {
+            event.stopPropagation();
+            event.preventDefault();
         }
     },
 
-    __classvars__: {
+    /**
+     * Called when the window loose focus
+     *
+     * @method __onWindowBlur
+     * @private
+     */
+    __onWindowBlur: function () {
+        this._action = &quot;key-up&quot;;
+        this._event = undefined;
 
-        /**
-         * @property e_parent
-         * @static
-         * @type HTMLElement
-         * @default null
-         */
-        e_parent: null,
-
-        /**
-         * Get a widget.
-         *
-         * @method getWidget
-         * @static
-         * @param {String} name The widget name.
-         *
-         * @return {Widget} The widget or null.
-         */
-        getWidget: function (name) {
-            if (_widgets[name] !== undefined) {
-                return _widgets[name];
-            }
-            return null;
-        },
-
-        /**
-         * Insert a widget in the DOM.
-         *
-         * method domInsert
-         * @static
-         * @param {photonui.Widget} widget The widget to insert.
-         * @param {HTMLElement} element The DOM node or its id (optional, default=Widget.e_parent)
-         */
-        domInsert: function (widget, element) {
-            element = element || Widget.e_parent || document.getElementsByTagName(&quot;body&quot;)[0];
-            if (typeof(element) == &quot;string&quot;) {
-                element = document.getElementById(element);
-            }
-            element.appendChild(widget.html);
+        for (var keyCode in this.__keys) {
+            this.__keys[keyCode] = undefined;
+            this.__key = this.__keyCache[keyCode];
+            this._callCallbacks(this._action, [this._dump()]);
         }
-
     }
-
 });
 
-module.exports = Widget;
+module.exports = KeyboardManager;
 
     </pre>
 </div>

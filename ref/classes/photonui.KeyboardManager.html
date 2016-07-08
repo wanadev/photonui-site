@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>photonui.FileManager - photonui</title>
+    <title>photonui.KeyboardManager - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -135,7 +135,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>photonui.FileManager Class</h1>
+<h1>photonui.KeyboardManager Class</h1>
 <div class="box meta">
 
         <div class="extends">
@@ -143,7 +143,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_nonvisual_filemanager.js.html#l41"><code>src&#x2F;nonvisual&#x2F;filemanager.js:41</code></a>
+            Defined in: <a href="../files/src_nonvisual_keyboardmanager.js.html#l43"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:43</code></a>
         </div>
 
             Module: <a href="../modules/NonVisual.html">NonVisual</a><br>
@@ -153,26 +153,55 @@
 
 
 <div class="box intro">
-    <p>Open files from the standard &quot;FileOpen&quot; dialog and drag &amp; drop.</p>
+    <p>Manage document-wide keyboard events.</p>
 <p>wEvents:</p>
 <ul>
-<li>file-open:
+<li>
+<p>key-down:</p>
 <ul>
-<li>description: File selected or dropped.</li>
-<li>callback:    function(widget, fileBlob, x, y)  //(x=y=undefined if using a dialog)</li>
+<li>description: When a key is pushed (event launched just once until key is released).</li>
+<li>callback:    function(manager, kstate)</li>
+</ul>
+</li>
+<li>
+<p>key-up:</p>
+<ul>
+<li>description: When a key is released.</li>
+<li>callback:    function(manager, kstate)</li>
+</ul>
+</li>
+<li>
+<p>key-hold:</p>
+<ul>
+<li>description: When the last key pressed is held down.</li>
+<li>callback:    function(manager, kstate)</li>
 </ul>
 </li>
 </ul>
+<p>kstate:</p>
+<p>A snapshot of the keyboard state when the event occured.</p>
+<pre class="code prettyprint"><code>{
+    event: &lt;Object&gt;,       // The original js event
+    action: &lt;String&gt;,      // The event name (key-down/up, key-hold)
+    keys: &lt;String&gt;,        // The object of active keys
+    key: &lt;String&gt;,         // User-friendly key name
+}</code></pre>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-<div id="method_photonui.FileManager" class="method item">
-    <h3 class="name"><code>photonui.FileManager</code></h3>
+<div id="method_photonui.KeyboardManager" class="method item">
+    <h3 class="name"><code>photonui.KeyboardManager</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>element</code>
+                </li>
+                <li class="arg">
+                        <code>element</code>
+                </li>
                 <li class="arg">
                         <code>params</code>
                 </li>
@@ -189,7 +218,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l41"><code>src&#x2F;nonvisual&#x2F;filemanager.js:41</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l43"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:43</code></a>
         </p>
 
 
@@ -204,6 +233,28 @@
             <h4>Parameters:</h4>
 
             <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+
+
+                    <div class="param-description">
+                        <p>Any PhotonUI Widget (optional).</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+
+
+                    <div class="param-description">
+                        <p>Any HTML element (optional).</p>
+
+                    </div>
+
+                </li>
                 <li class="param">
                         <code class="param-name">params</code>
                         <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
@@ -240,15 +291,15 @@
 
                     <ul class="index-list methods extends">
                             <li class="index-item method private">
-                                <a href="#method___onFileDropped">__onFileDropped</a>
+                                <a href="#method___onDocumentKeyDown">__onDocumentKeyDown</a>
 
                             </li>
                             <li class="index-item method private">
-                                <a href="#method___onFileSelected">__onFileSelected</a>
+                                <a href="#method___onDocumentKeyUp">__onDocumentKeyUp</a>
 
                             </li>
                             <li class="index-item method private">
-                                <a href="#method___onLocaleChanged">__onLocaleChanged</a>
+                                <a href="#method___onWindowBlur">__onWindowBlur</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -260,7 +311,23 @@
 
                             </li>
                             <li class="index-item method private">
-                                <a href="#method__openFile">_openFile</a>
+                                <a href="#method__checkEvent">_checkEvent</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__checkFocus">_checkFocus</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__dump">_dump</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__initKeyCache">_initKeyCache</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__keyFromEvent">_keyFromEvent</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -272,7 +339,7 @@
 
                             </li>
                             <li class="index-item method private">
-                                <a href="#method__updateAccepted">_updateAccepted</a>
+                                <a href="#method__updateEvents">_updateEvents</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -284,7 +351,11 @@
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_open">open</a>
+                                <a href="#method_isKeyPressed">isKeyPressed</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_isKeyReleased">isKeyReleased</a>
 
                             </li>
                             <li class="index-item method inherited">
@@ -306,20 +377,28 @@
                                 <a href="#property___callbacks">__callbacks</a>
 
                             </li>
+                            <li class="index-item property private">
+                                <a href="#property___event">__event</a>
+
+                            </li>
                             <li class="index-item property private inherited">
                                 <a href="#property___events">__events</a>
 
                             </li>
                             <li class="index-item property private">
-                                <a href="#property___fileField">__fileField</a>
+                                <a href="#property___key">__key</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property___keyCache">__keyCache</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property___keyCache">__keyCache</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_acceptedExts">acceptedExts</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_acceptedMimes">acceptedMimes</a>
+                                <a href="#property_action">action</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -327,11 +406,19 @@
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_dropZone">dropZone</a>
+                                <a href="#property_element">element</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_keys">keys</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_multiselect">multiselect</a>
+                                <a href="#property_noPreventDefault">noPreventDefault</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_safe">safe</a>
 
                             </li>
                     </ul>
@@ -343,8 +430,8 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method___onFileDropped" class="method item private">
-    <h3 class="name"><code>__onFileDropped</code></h3>
+<div id="method___onDocumentKeyDown" class="method item private">
+    <h3 class="name"><code>__onDocumentKeyDown</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -365,7 +452,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l275"><code>src&#x2F;nonvisual&#x2F;filemanager.js:275</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l448"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:448</code></a>
         </p>
 
 
@@ -373,7 +460,8 @@
     </div>
 
     <div class="description">
-        
+        <p>Used to grab all keyboard events</p>
+
     </div>
 
         <div class="params">
@@ -396,8 +484,8 @@
 
 
 </div>
-<div id="method___onFileSelected" class="method item private">
-    <h3 class="name"><code>__onFileSelected</code></h3>
+<div id="method___onDocumentKeyUp" class="method item private">
+    <h3 class="name"><code>__onDocumentKeyUp</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -418,7 +506,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l289"><code>src&#x2F;nonvisual&#x2F;filemanager.js:289</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l470"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:470</code></a>
         </p>
 
 
@@ -426,7 +514,8 @@
     </div>
 
     <div class="description">
-        
+        <p>Used to grab all keyboard events</p>
+
     </div>
 
         <div class="params">
@@ -449,8 +538,8 @@
 
 
 </div>
-<div id="method___onLocaleChanged" class="method item private">
-    <h3 class="name"><code>__onLocaleChanged</code></h3>
+<div id="method___onWindowBlur" class="method item private">
+    <h3 class="name"><code>__onWindowBlur</code></h3>
 
         <span class="paren">()</span>
 
@@ -465,7 +554,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l303"><code>src&#x2F;nonvisual&#x2F;filemanager.js:303</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l492"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:492</code></a>
         </p>
 
 
@@ -473,7 +562,7 @@
     </div>
 
     <div class="description">
-        <p>Called when the locale is changed.</p>
+        <p>Called when the window loose focus</p>
 
     </div>
 
@@ -642,22 +731,159 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method__openFile" class="method item private">
-    <h3 class="name"><code>_openFile</code></h3>
+<div id="method__checkEvent" class="method item private">
+    <h3 class="name"><code>_checkEvent</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>file</code>
-                </li>
-                <li class="arg">
-                        <code>x</code>
-                </li>
-                <li class="arg">
-                        <code>y</code>
+                        <code>event</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l318"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:318</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check the validity of the keyboard event</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" class="crosslink external" target="_blank">KeyboardEvent</a></span>
+
+
+                    <div class="param-description">
+                        <p>The keyboard event</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method__checkFocus" class="method item private">
+    <h3 class="name"><code>_checkFocus</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l305"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:305</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check if the user has not focused an input element</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method__dump" class="method item private">
+    <h3 class="name"><code>_dump</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l290"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:290</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Take a snapshot of the KeyboardManager</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method__initKeyCache" class="method item private">
+    <h3 class="name"><code>_initKeyCache</code></h3>
+
+        <span class="paren">()</span>
 
 
 
@@ -670,7 +896,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l235"><code>src&#x2F;nonvisual&#x2F;filemanager.js:235</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l339"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:339</code></a>
         </p>
 
 
@@ -678,7 +904,48 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Check file and call callbacks.</p>
+        <p>Create the key correspondance cache for basic touches</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method__keyFromEvent" class="method item private">
+    <h3 class="name"><code>_keyFromEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l427"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:427</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get the key name from a native keyboard event</p>
 
     </div>
 
@@ -687,33 +954,12 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">file</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/File" class="crosslink external" target="_blank">File</a></span>
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" class="crosslink external" target="_blank">KeyboardEvent</a></span>
 
 
                     <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">x</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                        <p>The x postition of the mouse (d&amp;d only).</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">y</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                        <p>The y postition of the mouse (d&amp;d only).</p>
+                        <p>The keyboard event</p>
 
                     </div>
 
@@ -721,6 +967,13 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
             </ul>
         </div>
 
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
+            </div>
+        </div>
 
 
 </div>
@@ -830,8 +1083,8 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method__updateAccepted" class="method item private">
-    <h3 class="name"><code>_updateAccepted</code></h3>
+<div id="method__updateEvents" class="method item private">
+    <h3 class="name"><code>_updateEvents</code></h3>
 
         <span class="paren">()</span>
 
@@ -846,7 +1099,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l217"><code>src&#x2F;nonvisual&#x2F;filemanager.js:217</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l240"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:240</code></a>
         </p>
 
 
@@ -854,7 +1107,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Update accepted mimes/extentions.</p>
+        <p>Bind events on the HTML Element.</p>
 
     </div>
 
@@ -915,7 +1168,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method_destroy" class="method item">
+<div id="method_destroy" class="method item inherited">
     <h3 class="name"><code>destroy</code></h3>
 
         <span class="paren">()</span>
@@ -928,12 +1181,9 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/photonui.Base.html#method_destroy">
-                photonui.Base
-            </a>
-            but overwritten in
-        <a href="../files/src_nonvisual_filemanager.js.html#l205"><code>src&#x2F;nonvisual&#x2F;filemanager.js:205</code></a>
+                <p>Inherited from
+                <a href="../classes/photonui.Base.html#method_destroy">photonui.Base</a>:
+        <a href="../files/src_base.js.html#l147"><code>src&#x2F;base.js:147</code></a>
         </p>
 
 
@@ -941,19 +1191,27 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Destroy the class.</p>
-
+        Destroy the class.
     </div>
 
 
 
 
 </div>
-<div id="method_open" class="method item">
-    <h3 class="name"><code>open</code></h3>
+<div id="method_isKeyPressed" class="method item">
+    <h3 class="name"><code>isKeyPressed</code></h3>
 
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
 
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
 
 
 
@@ -964,7 +1222,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l193"><code>src&#x2F;nonvisual&#x2F;filemanager.js:193</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l264"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:264</code></a>
         </p>
 
 
@@ -972,11 +1230,99 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        <p>Open the FileOpen dialog to allow user to browse its HDD for a file.</p>
+        <p>Check if a specific key is currently pressed.</p>
 
     </div>
 
+        <div class="params">
+            <h4>Parameters:</h4>
 
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The key name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_isKeyReleased" class="method item">
+    <h3 class="name"><code>isKeyReleased</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l276"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:276</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check if a specific key is currently released.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The key name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
 
 
 </div>
@@ -1157,6 +1503,33 @@ Callback signature:
 
 
 </div>
+<div id="property___event" class="property item private">
+    <h3 class="name"><code>__event</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l186"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:186</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Last event object.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
 <div id="property___events" class="property item private inherited">
     <h3 class="name"><code>__events</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
@@ -1183,9 +1556,9 @@ internal use).
 
 
 </div>
-<div id="property___fileField" class="property item private">
-    <h3 class="name"><code>__fileField</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+<div id="property___key" class="property item private">
+    <h3 class="name"><code>__key</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
         <span class="flag private">private</span>
@@ -1195,23 +1568,76 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l178"><code>src&#x2F;nonvisual&#x2F;filemanager.js:178</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l206"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:206</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>The file field for opening the file dialog.</p>
+        <p>Last key concerned.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
+<div id="property___keyCache" class="property item private">
+    <h3 class="name"><code>__keyCache</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l216"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:216</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>KeyCode correspondance to key name.</p>
 
     </div>
 
 
 
 </div>
-<div id="property_acceptedExts" class="property item">
-    <h3 class="name"><code>acceptedExts</code></h3>
+<div id="property___keyCache" class="property item private">
+    <h3 class="name"><code>__keyCache</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l225"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:225</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Key name correspondance to key code.</p>
+
+    </div>
+
+
+
+</div>
+<div id="property_action" class="property item">
+    <h3 class="name"><code>action</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
 
@@ -1220,44 +1646,22 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l98"><code>src&#x2F;nonvisual&#x2F;filemanager.js:98</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l167"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:167</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>List of the accepted file extentions.</p>
+        <p>The action:</p>
+<ul>
+<li>&quot;key-down&quot;</li>
+<li>&quot;key-up&quot;</li>
+<li>&quot;key-hold&quot;</li>
+</ul>
 
     </div>
 
-        <p><strong>Default:</strong> []</p>
-
-
-</div>
-<div id="property_acceptedMimes" class="property item">
-    <h3 class="name"><code>acceptedMimes</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l80"><code>src&#x2F;nonvisual&#x2F;filemanager.js:80</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>List of the accepted mime types.</p>
-
-    </div>
-
-        <p><strong>Default:</strong> []</p>
 
 
 </div>
@@ -1286,8 +1690,8 @@ internal use).
 
 
 </div>
-<div id="property_dropZone" class="property item">
-    <h3 class="name"><code>dropZone</code></h3>
+<div id="property_element" class="property item">
+    <h3 class="name"><code>element</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
 
 
@@ -1297,14 +1701,16 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l116"><code>src&#x2F;nonvisual&#x2F;filemanager.js:116</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l140"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:140</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Element that accepts file drop (<code>null</code> disable d&amp;d support).</p>
+        <p>The HTML Element on which the events are binded.</p>
+<p>NOTE: If a photonui.Widget object is assigned to this property,
+its HTML Element will be automatically assigned to the property instead.</p>
 
     </div>
 
@@ -1312,8 +1718,35 @@ internal use).
 
 
 </div>
-<div id="property_multiselect" class="property item">
-    <h3 class="name"><code>multiselect</code></h3>
+<div id="property_keys" class="property item private">
+    <h3 class="name"><code>keys</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l196"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:196</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The currently active keys.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
+<div id="property_noPreventDefault" class="property item">
+    <h3 class="name"><code>noPreventDefault</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
@@ -1323,18 +1756,44 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_filemanager.js.html#l153"><code>src&#x2F;nonvisual&#x2F;filemanager.js:153</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l123"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:123</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Allow multiselect in FileOpen dialog.</p>
+        <p>Disable concerned events default actions.</p>
 
     </div>
 
         <p><strong>Default:</strong> false</p>
+
+
+</div>
+<div id="property_safe" class="property item">
+    <h3 class="name"><code>safe</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l106"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:106</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Disable the keyboard manager callbacks when focusing a input field-like element.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> true</p>
 
 
 </div>
