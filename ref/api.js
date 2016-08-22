@@ -25,6 +25,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.Helpers",
         "photonui.IconButton",
         "photonui.Image",
+        "photonui.KeyboardManager",
         "photonui.Label",
         "photonui.Layout",
         "photonui.Menu",

@@ -10,12 +10,14 @@
             </div>
             <div class="right">
                 <div id="demo-error"></div>
-                <pre id="demo-code" contenteditable spellcheck="false"><%- getFileContent(page.demo_script) %></pre>
+                <script type="text/plain" id="demo-code-content"><%- getFileContentRaw(page.demo_script) %></script>
+                <div id="demo-code"></div>
                 <button id="run-script"><i class="fa fa-play"></i> Run (Ctrl+Enter)</button>
             </div>
             <div style="clear: both;"></div>
         </div>
     </div>
+    <%- js("js/codemirror.js") %>
+    <%- js("js/codemirror-mode-javascript.js") %>
     <%- js("js/script-runner.js") %>
-
 <% } %>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>photonui.Switch - photonui</title>
+    <title>photonui.KeyboardManager - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -135,34 +135,78 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>photonui.Switch Class</h1>
+<h1>photonui.KeyboardManager Class</h1>
 <div class="box meta">
 
         <div class="extends">
-            Extends <a href="../classes/photonui.CheckBox.html" class="crosslink">photonui.CheckBox</a>
+            Extends <a href="../classes/photonui.Base.html" class="crosslink">photonui.Base</a>
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_interactive_switch.js.html#l41"><code>src&#x2F;interactive&#x2F;switch.js:41</code></a>
+            Defined in: <a href="../files/src_nonvisual_keyboardmanager.js.html#l43"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:43</code></a>
         </div>
 
-            Module: <a href="../modules/Interactive.html">Interactive</a><br>
+            Module: <a href="../modules/NonVisual.html">NonVisual</a><br>
             Parent Module: <a href="../modules/PhotonUI.html">PhotonUI</a>
 
 </div>
 
 
 <div class="box intro">
-    <p>Switch.</p>
+    <p>Manage document-wide keyboard events.</p>
+<p>wEvents:</p>
+<ul>
+<li>
+<p>key-down:</p>
+<ul>
+<li>description: When a key is pushed (event launched just once until key is released).</li>
+<li>callback:    function(manager, kstate)</li>
+</ul>
+</li>
+<li>
+<p>key-up:</p>
+<ul>
+<li>description: When a key is released.</li>
+<li>callback:    function(manager, kstate)</li>
+</ul>
+</li>
+<li>
+<p>key-hold:</p>
+<ul>
+<li>description: When the last key pressed is held down.</li>
+<li>callback:    function(manager, kstate)</li>
+</ul>
+</li>
+</ul>
+<p>kstate:</p>
+<p>A snapshot of the keyboard state when the event occured.</p>
+<pre class="code prettyprint"><code>{
+    event: &lt;Object&gt;,       // The original js event
+    action: &lt;String&gt;,      // The event name (key-down/up, key-hold)
+    keys: &lt;String&gt;,        // The object of active keys
+    key: &lt;String&gt;,         // User-friendly key name
+}</code></pre>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-<div id="method_photonui.Switch" class="method item">
-    <h3 class="name"><code>photonui.Switch</code></h3>
+<div id="method_photonui.KeyboardManager" class="method item">
+    <h3 class="name"><code>photonui.KeyboardManager</code></h3>
 
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>element</code>
+                </li>
+                <li class="arg">
+                        <code>element</code>
+                </li>
+                <li class="arg">
+                        <code>params</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
 
 
 
@@ -174,7 +218,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_switch.js.html#l41"><code>src&#x2F;interactive&#x2F;switch.js:41</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l43"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:43</code></a>
         </p>
 
 
@@ -185,6 +229,45 @@
         
     </div>
 
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
+
+
+                    <div class="param-description">
+                        <p>Any PhotonUI Widget (optional).</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+
+
+                    <div class="param-description">
+                        <p>Any HTML element (optional).</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">params</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>An object that can contain any property of the widget (optional).</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
 
 
 
@@ -207,40 +290,44 @@
                     <h3>Methods</h3>
 
                     <ul class="index-list methods extends">
-                            <li class="index-item method private inherited">
-                                <a href="#method___onChange">__onChange</a>
+                            <li class="index-item method private">
+                                <a href="#method___onDocumentKeyDown">__onDocumentKeyDown</a>
 
                             </li>
-                            <li class="index-item method private inherited">
-                                <a href="#method___onCheckboxClick">__onCheckboxClick</a>
+                            <li class="index-item method private">
+                                <a href="#method___onDocumentKeyUp">__onDocumentKeyUp</a>
 
                             </li>
-                            <li class="index-item method private inherited">
-                                <a href="#method___onContextMenu">__onContextMenu</a>
-
-                            </li>
-                            <li class="index-item method private inherited">
-                                <a href="#method___onLocaleChanged">__onLocaleChanged</a>
-
-                            </li>
-                            <li class="index-item method private inherited">
-                                <a href="#method___onSpanClick">__onSpanClick</a>
-
-                            </li>
-                            <li class="index-item method private inherited">
-                                <a href="#method___onSpanKeyPress">__onSpanKeyPress</a>
+                            <li class="index-item method private">
+                                <a href="#method___onWindowBlur">__onWindowBlur</a>
 
                             </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__bindEvent">_bindEvent</a>
 
                             </li>
-                            <li class="index-item method private inherited inherited">
-                                <a href="#method__buildHtml">_buildHtml</a>
-
-                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__callCallbacks">_callCallbacks</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__checkEvent">_checkEvent</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__checkFocus">_checkFocus</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__dump">_dump</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__initKeyCache">_initKeyCache</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__keyFromEvent">_keyFromEvent</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -251,24 +338,24 @@
                                 <a href="#method__unbindEvent">_unbindEvent</a>
 
                             </li>
+                            <li class="index-item method private">
+                                <a href="#method__updateEvents">_updateEvents</a>
+
+                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__updateProperties">_updateProperties</a>
 
                             </li>
-                            <li class="index-item method private inherited">
-                                <a href="#method__visibilityChanged">_visibilityChanged</a>
-
-                            </li>
                             <li class="index-item method inherited">
-                                <a href="#method_addClass">addClass</a>
-
-                            </li>
-                            <li class="index-item method inherited inherited">
                                 <a href="#method_destroy">destroy</a>
 
                             </li>
-                            <li class="index-item method inherited">
-                                <a href="#method_hide">hide</a>
+                            <li class="index-item method">
+                                <a href="#method_isKeyPressed">isKeyPressed</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_isKeyReleased">isKeyReleased</a>
 
                             </li>
                             <li class="index-item method inherited">
@@ -277,18 +364,6 @@
                             </li>
                             <li class="index-item method inherited">
                                 <a href="#method_removeCallback">removeCallback</a>
-
-                            </li>
-                            <li class="index-item method inherited">
-                                <a href="#method_removeClass">removeClass</a>
-
-                            </li>
-                            <li class="index-item method inherited">
-                                <a href="#method_show">show</a>
-
-                            </li>
-                            <li class="index-item method inherited">
-                                <a href="#method_unparent">unparent</a>
 
                             </li>
                     </ul>
@@ -302,68 +377,48 @@
                                 <a href="#property___callbacks">__callbacks</a>
 
                             </li>
+                            <li class="index-item property private">
+                                <a href="#property___event">__event</a>
+
+                            </li>
                             <li class="index-item property private inherited">
                                 <a href="#property___events">__events</a>
 
                             </li>
-                            <li class="index-item property private inherited">
-                                <a href="#property___html">__html</a>
+                            <li class="index-item property private">
+                                <a href="#property___key">__key</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_absolutePosition">absolutePosition</a>
+                            <li class="index-item property private">
+                                <a href="#property___keyCache">__keyCache</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_contextMenu">contextMenu</a>
+                            <li class="index-item property private">
+                                <a href="#property___keyCache">__keyCache</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_contextMenuName">contextMenuName</a>
+                            <li class="index-item property">
+                                <a href="#property_action">action</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_data">data</a>
 
                             </li>
-                            <li class="index-item property inherited inherited">
-                                <a href="#property_html">html</a>
+                            <li class="index-item property">
+                                <a href="#property_element">element</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_layoutOptions">layoutOptions</a>
+                            <li class="index-item property private">
+                                <a href="#property_keys">keys</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_name">name</a>
+                            <li class="index-item property">
+                                <a href="#property_noPreventDefault">noPreventDefault</a>
 
                             </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_offsetHeight">offsetHeight</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_offsetWidth">offsetWidth</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_parent">parent</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_parentName">parentName</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_tooltip">tooltip</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_value">value</a>
-
-                            </li>
-                            <li class="index-item property inherited">
-                                <a href="#property_visible">visible</a>
+                            <li class="index-item property">
+                                <a href="#property_safe">safe</a>
 
                             </li>
                     </ul>
@@ -375,8 +430,8 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method___onChange" class="method item private inherited">
-    <h3 class="name"><code>__onChange</code></h3>
+<div id="method___onDocumentKeyDown" class="method item private">
+    <h3 class="name"><code>__onDocumentKeyDown</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -395,9 +450,9 @@
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.CheckBox.html#method___onChange">photonui.CheckBox</a>:
-        <a href="../files/src_interactive_checkbox.js.html#l134"><code>src&#x2F;interactive&#x2F;checkbox.js:134</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l448"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:448</code></a>
         </p>
 
 
@@ -405,7 +460,8 @@
     </div>
 
     <div class="description">
-        
+        <p>Used to grab all keyboard events</p>
+
     </div>
 
         <div class="params">
@@ -428,8 +484,8 @@
 
 
 </div>
-<div id="method___onCheckboxClick" class="method item private inherited">
-    <h3 class="name"><code>__onCheckboxClick</code></h3>
+<div id="method___onDocumentKeyUp" class="method item private">
+    <h3 class="name"><code>__onDocumentKeyUp</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -448,9 +504,9 @@
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.CheckBox.html#method___onCheckboxClick">photonui.CheckBox</a>:
-        <a href="../files/src_interactive_checkbox.js.html#l158"><code>src&#x2F;interactive&#x2F;checkbox.js:158</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l470"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:470</code></a>
         </p>
 
 
@@ -458,7 +514,8 @@
     </div>
 
     <div class="description">
-        
+        <p>Used to grab all keyboard events</p>
+
     </div>
 
         <div class="params">
@@ -481,61 +538,8 @@
 
 
 </div>
-<div id="method___onContextMenu" class="method item private inherited">
-    <h3 class="name"><code>__onContextMenu</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>event</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method___onContextMenu">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l447"><code>src&#x2F;widget.js:447</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        Called when the context menu should be displayed.
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">event</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method___onLocaleChanged" class="method item private inherited">
-    <h3 class="name"><code>__onLocaleChanged</code></h3>
+<div id="method___onWindowBlur" class="method item private">
+    <h3 class="name"><code>__onWindowBlur</code></h3>
 
         <span class="paren">()</span>
 
@@ -548,9 +552,9 @@
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method___onLocaleChanged">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l462"><code>src&#x2F;widget.js:462</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l492"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:492</code></a>
         </p>
 
 
@@ -558,115 +562,10 @@
     </div>
 
     <div class="description">
-        Called when the locale is changed.
-    </div>
-
-
-
-
-</div>
-<div id="method___onSpanClick" class="method item private inherited">
-    <h3 class="name"><code>__onSpanClick</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>event</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.CheckBox.html#method___onSpanClick">photonui.CheckBox</a>:
-        <a href="../files/src_interactive_checkbox.js.html#l147"><code>src&#x2F;interactive&#x2F;checkbox.js:147</code></a>
-        </p>
-
-
+        <p>Called when the window loose focus</p>
 
     </div>
 
-    <div class="description">
-        
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">event</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method___onSpanKeyPress" class="method item private inherited">
-    <h3 class="name"><code>__onSpanKeyPress</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>event</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.CheckBox.html#method___onSpanKeyPress">photonui.CheckBox</a>:
-        <a href="../files/src_interactive_checkbox.js.html#l167"><code>src&#x2F;interactive&#x2F;checkbox.js:167</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">event</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
 
 
 
@@ -763,41 +662,6 @@
 
 
 </div>
-<div id="method__buildHtml" class="method item private inherited">
-    <h3 class="name"><code>_buildHtml</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-            <p>Inherited from
-            <a href="../classes/photonui.Widget.html#method__buildHtml">
-                photonui.Widget
-            </a>
-            but overwritten in
-        <a href="../files/src_interactive_checkbox.js.html#l108"><code>src&#x2F;interactive&#x2F;checkbox.js:108</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Build the widget HTML.</p>
-
-    </div>
-
-
-
-
-</div>
 <div id="method__callCallbacks" class="method item private inherited">
     <h3 class="name"><code>_callCallbacks</code></h3>
 
@@ -864,6 +728,252 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
             </ul>
         </div>
 
+
+
+</div>
+<div id="method__checkEvent" class="method item private">
+    <h3 class="name"><code>_checkEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l318"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:318</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check the validity of the keyboard event</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" class="crosslink external" target="_blank">KeyboardEvent</a></span>
+
+
+                    <div class="param-description">
+                        <p>The keyboard event</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method__checkFocus" class="method item private">
+    <h3 class="name"><code>_checkFocus</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l305"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:305</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check if the user has not focused an input element</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method__dump" class="method item private">
+    <h3 class="name"><code>_dump</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l290"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:290</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Take a snapshot of the KeyboardManager</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method__initKeyCache" class="method item private">
+    <h3 class="name"><code>_initKeyCache</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l339"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:339</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Create the key correspondance cache for basic touches</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method__keyFromEvent" class="method item private">
+    <h3 class="name"><code>_keyFromEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l427"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:427</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get the key name from a native keyboard event</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" class="crosslink external" target="_blank">KeyboardEvent</a></span>
+
+
+                    <div class="param-description">
+                        <p>The keyboard event</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
+            </div>
+        </div>
 
 
 </div>
@@ -973,6 +1083,38 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
+<div id="method__updateEvents" class="method item private">
+    <h3 class="name"><code>_updateEvents</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l240"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:240</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Bind events on the HTML Element.</p>
+
+    </div>
+
+
+
+
+</div>
 <div id="method__updateProperties" class="method item private inherited">
     <h3 class="name"><code>_updateProperties</code></h3>
 
@@ -1026,112 +1168,6 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method__visibilityChanged" class="method item private inherited">
-    <h3 class="name"><code>_visibilityChanged</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>visibility</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method__visibilityChanged">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l427"><code>src&#x2F;widget.js:427</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        Called when the visibility changes.
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">visibility</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-
-
-                    <div class="param-description">
-                        <p>Current visibility state (otptional, defaut=this.visible)</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_addClass" class="method item inherited">
-    <h3 class="name"><code>addClass</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>className</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method_addClass">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l380"><code>src&#x2F;widget.js:380</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        Add a class to the outer HTML element of the widget.
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">className</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        The class to add.
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
 <div id="method_destroy" class="method item inherited">
     <h3 class="name"><code>destroy</code></h3>
 
@@ -1145,12 +1181,9 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/photonui.Base.html#method_destroy">
-                photonui.Base
-            </a>
-            but overwritten in
-        <a href="../files/src_widget.js.html#l369"><code>src&#x2F;widget.js:369</code></a>
+                <p>Inherited from
+                <a href="../classes/photonui.Base.html#method_destroy">photonui.Base</a>:
+        <a href="../files/src_base.js.html#l147"><code>src&#x2F;base.js:147</code></a>
         </p>
 
 
@@ -1158,18 +1191,27 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        Destroy the widget.
+        Destroy the class.
     </div>
 
 
 
 
 </div>
-<div id="method_hide" class="method item inherited">
-    <h3 class="name"><code>hide</code></h3>
+<div id="method_isKeyPressed" class="method item">
+    <h3 class="name"><code>isKeyPressed</code></h3>
 
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
 
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
 
 
 
@@ -1178,9 +1220,9 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method_hide">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l347"><code>src&#x2F;widget.js:347</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l264"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:264</code></a>
         </p>
 
 
@@ -1188,10 +1230,99 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     </div>
 
     <div class="description">
-        Hide the widget (equivalent to widget.visible = false).
+        <p>Check if a specific key is currently pressed.</p>
+
     </div>
 
+        <div class="params">
+            <h4>Parameters:</h4>
 
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The key name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_isKeyReleased" class="method item">
+    <h3 class="name"><code>isKeyReleased</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l276"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:276</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check if a specific key is currently released.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+                    <div class="param-description">
+                        <p>The key name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+            </div>
+        </div>
 
 
 </div>
@@ -1342,118 +1473,6 @@ Callback signature:
 
 
 </div>
-<div id="method_removeClass" class="method item inherited">
-    <h3 class="name"><code>removeClass</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>className</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method_removeClass">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l397"><code>src&#x2F;widget.js:397</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        Remove a class from the outer HTML element of the widget.
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">className</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                        The class to remove.
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_show" class="method item inherited">
-    <h3 class="name"><code>show</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method_show">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l338"><code>src&#x2F;widget.js:338</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        Display the widget (equivalent to widget.visible = true).
-    </div>
-
-
-
-
-</div>
-<div id="method_unparent" class="method item inherited">
-    <h3 class="name"><code>unparent</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method_unparent">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l356"><code>src&#x2F;widget.js:356</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        Detache the widget from its parent.
-    </div>
-
-
-
-
-</div>
             </div>
 
             <div id="properties" class="api-class-tabpanel">
@@ -1484,6 +1503,33 @@ Callback signature:
 
 
 </div>
+<div id="property___event" class="property item private">
+    <h3 class="name"><code>__event</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l186"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:186</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Last event object.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> {}</p>
+
+
+</div>
 <div id="property___events" class="property item private inherited">
     <h3 class="name"><code>__events</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
@@ -1510,8 +1556,8 @@ internal use).
 
 
 </div>
-<div id="property___html" class="property item private inherited">
-    <h3 class="name"><code>__html</code></h3>
+<div id="property___key" class="property item private">
+    <h3 class="name"><code>__key</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
@@ -1520,74 +1566,77 @@ internal use).
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property___html">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l323"><code>src&#x2F;widget.js:323</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l206"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:206</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        Object containing references to the widget HTML elements
+        <p>Last key concerned.</p>
+
     </div>
 
+        <p><strong>Default:</strong> {}</p>
 
 
 </div>
-<div id="property_absolutePosition" class="property item inherited">
-    <h3 class="name"><code>absolutePosition</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+<div id="property___keyCache" class="property item private">
+    <h3 class="name"><code>__keyCache</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_absolutePosition">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l277"><code>src&#x2F;widget.js:277</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l216"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:216</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        Absolute position of the widget on the page.
+        <p>KeyCode correspondance to key name.</p>
 
-<code>{x: Number, y: Number}</code>
     </div>
 
 
 
 </div>
-<div id="property_contextMenu" class="property item inherited">
-    <h3 class="name"><code>contextMenu</code></h3>
-    <span class="type"><a href="../classes/photonui.PopupWindow.html" class="crosslink">photonui.PopupWindow</a></span>
+<div id="property___keyCache" class="property item private">
+    <h3 class="name"><code>__keyCache</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_contextMenu">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l225"><code>src&#x2F;widget.js:225</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l225"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:225</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        The managed contextual menu.
+        <p>Key name correspondance to key code.</p>
+
     </div>
 
-        <p><strong>Default:</strong> null (= no context menu)</p>
 
 
 </div>
-<div id="property_contextMenuName" class="property item inherited">
-    <h3 class="name"><code>contextMenuName</code></h3>
+<div id="property_action" class="property item">
+    <h3 class="name"><code>action</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
@@ -1595,19 +1644,24 @@ internal use).
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_contextMenuName">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l208"><code>src&#x2F;widget.js:208</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l167"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:167</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        The name of the managed contextual menu (<code>photonui.PopupWindow().name</code>).
+        <p>The action:</p>
+<ul>
+<li>&quot;key-down&quot;</li>
+<li>&quot;key-up&quot;</li>
+<li>&quot;key-hold&quot;</li>
+</ul>
+
     </div>
 
-        <p><strong>Default:</strong> null (= no context menu)</p>
 
 
 </div>
@@ -1636,8 +1690,8 @@ internal use).
 
 
 </div>
-<div id="property_html" class="property item inherited">
-    <h3 class="name"><code>html</code></h3>
+<div id="property_element" class="property item">
+    <h3 class="name"><code>element</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
 
 
@@ -1645,19 +1699,18 @@ internal use).
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/photonui.Widget.html#property_html">
-                photonui.Widget
-            </a>
-            but overwritten in
-        <a href="../files/src_interactive_checkbox.js.html#l90"><code>src&#x2F;interactive&#x2F;checkbox.js:90</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l140"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:140</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>Html outer element of the widget (if any).</p>
+        <p>The HTML Element on which the events are binded.</p>
+<p>NOTE: If a photonui.Widget object is assigned to this property,
+its HTML Element will be automatically assigned to the property instead.</p>
 
     </div>
 
@@ -1665,181 +1718,35 @@ internal use).
 
 
 </div>
-<div id="property_layoutOptions" class="property item inherited">
-    <h3 class="name"><code>layoutOptions</code></h3>
+<div id="property_keys" class="property item private">
+    <h3 class="name"><code>keys</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_layoutOptions">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l245"><code>src&#x2F;widget.js:245</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l196"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:196</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        Layout options.
+        <p>The currently active keys.</p>
+
     </div>
 
         <p><strong>Default:</strong> {}</p>
 
 
 </div>
-<div id="property_name" class="property item inherited">
-    <h3 class="name"><code>name</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_name">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l112"><code>src&#x2F;widget.js:112</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        The unique name of the widget.
-    </div>
-
-        <p><strong>Default:</strong> &quot;widget-&quot; + uuid.v4()</p>
-
-
-</div>
-<div id="property_offsetHeight" class="property item inherited">
-    <h3 class="name"><code>offsetHeight</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_offsetHeight">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l307"><code>src&#x2F;widget.js:307</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Widget height (outer HTML element).
-    </div>
-
-
-
-</div>
-<div id="property_offsetWidth" class="property item inherited">
-    <h3 class="name"><code>offsetWidth</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_offsetWidth">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l293"><code>src&#x2F;widget.js:293</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Widget width (outer HTML element).
-    </div>
-
-
-
-</div>
-<div id="property_parent" class="property item inherited">
-    <h3 class="name"><code>parent</code></h3>
-    <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_parent">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l148"><code>src&#x2F;widget.js:148</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        The parent widget.
-    </div>
-
-        <p><strong>Default:</strong> null (no parent)</p>
-
-
-</div>
-<div id="property_parentName" class="property item inherited">
-    <h3 class="name"><code>parentName</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_parentName">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l134"><code>src&#x2F;widget.js:134</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        The parent widget name.
-    </div>
-
-        <p><strong>Default:</strong> null (no parent)</p>
-
-
-</div>
-<div id="property_tooltip" class="property item inherited">
-    <h3 class="name"><code>tooltip</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_tooltip">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l186"><code>src&#x2F;widget.js:186</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        Tooltip.
-    </div>
-
-        <p><strong>Default:</strong> null</p>
-
-
-</div>
-<div id="property_value" class="property item inherited">
-    <h3 class="name"><code>value</code></h3>
+<div id="property_noPreventDefault" class="property item">
+    <h3 class="name"><code>noPreventDefault</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
@@ -1847,16 +1754,16 @@ internal use).
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.CheckBox.html#property_value">photonui.CheckBox</a>:
-        <a href="../files/src_interactive_checkbox.js.html#l75"><code>src&#x2F;interactive&#x2F;checkbox.js:75</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l123"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:123</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        <p>The input value.</p>
+        <p>Disable concerned events default actions.</p>
 
     </div>
 
@@ -1864,8 +1771,8 @@ internal use).
 
 
 </div>
-<div id="property_visible" class="property item inherited">
-    <h3 class="name"><code>visible</code></h3>
+<div id="property_safe" class="property item">
+    <h3 class="name"><code>safe</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
 
@@ -1873,16 +1780,17 @@ internal use).
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_visible">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l160"><code>src&#x2F;widget.js:160</code></a>
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l106"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:106</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        Is the widget visible or hidden.
+        <p>Disable the keyboard manager callbacks when focusing a input field-like element.</p>
+
     </div>
 
         <p><strong>Default:</strong> true</p>
