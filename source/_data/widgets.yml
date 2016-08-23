@@ -42,6 +42,10 @@
   image: doc/widgets/dialog.png
   url: doc/widgets/dialog.html
 
+- name: Expander
+  image: doc/widgets/expander.png
+  url: doc/widgets/expander.html
+
 - name: FAIcon
   image: doc/widgets/faicon.png
   url: doc/widgets/faicon.html
