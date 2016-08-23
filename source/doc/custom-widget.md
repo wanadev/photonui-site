@@ -303,15 +303,16 @@ setText: function(text) {
 
 ```
 
-__NOTE:__ The code as we wrote it here works, but if the user never sets the `text` property, the widget will not display the default text defined in the class (in the `_text` attribute) since the setter is never called. To force properties to be refreshed even when not set, you must use the `_updateProperties` method:
+__NOTE:__ The code as we wrote it here works, but if the user never sets the `text` property, the widget will not display the default text defined in the class (in the `_text` attribute) since the setter is never called. To force properties to be refreshed even when not set, you must use the `@photonui-update` annotation:
 
 ```js
-__init__: function(params) {
-    ...
-    this._updateProperties(["text"]);
+getText: function() {
+    "@photonui-update";
+    return this._text;
 },
 ```
 
+This abitbol's annotation can go either in the getter function or in the setter function. It *must* be at the top of the function code.
 
 #### Adding Interactivity (wEvent)
 
@@ -379,7 +380,6 @@ var SimpleButton = photonui.Widget.$extend({
     
         this.$super(params);
         
-        this._updateProperties(["text"]);
         this._bindEvent(
             "button-click",
             this.__html.button,
@@ -391,6 +391,7 @@ var SimpleButton = photonui.Widget.$extend({
     _text: "Button",
     
     getText: function() {
+        "@photonui-update";
         return this._text;
     },
     
