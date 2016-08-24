@@ -10,6 +10,4 @@ PhotonUI is a javascript framework to create rich web user interfaces without ha
 
 ## Widgets
 
-__NOTE:__ The writing of the widgets' documentation is in progress, if you need information, please [read the class reference built with Yuidoc][ref].
-
 [ref]: ./ref/

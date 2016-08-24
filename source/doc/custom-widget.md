@@ -22,7 +22,7 @@ var MyClass = photonui.lib.Class.$extend({
     __init__: function(param1, param2) {
         // Constructor code here...
     },
-    
+
     myMethod: function(param1, param2) {
         // Code of myMethod here...
     }
@@ -45,7 +45,7 @@ var MySecondClass = MyClass.$extend({
         this.$super(param1, param2);  // Call the myMethod of the parent class
         // Some more stuff...
     },
-    
+
     mySecondMethod: function() {
         // Code for mySecondMethod...
     }
@@ -61,11 +61,11 @@ Abitbol automatically creates properties from available getters and setters. To 
 var Person = photonui.lib.Class.$extend({
 
     _firstName: "",          //  !!!!!!  NOTE¹
-    
+
     getFirstName: function() {
         return this._firstName;
     },
-    
+
     setFirstName: function(firstName) {
         this._firstName = firstName.toLocaleLowerCase();
     }
@@ -89,7 +89,7 @@ var name = p.firstName;
 
 ```
 
-__NOTE¹:__ Pay attention to the underscore when we defined the `_firstName` attribute. Since the `firstName` property will be automatically created by the [`photonui.Base`][ref-base] class, you will create an infinite loop if you name your private property the same way.
+__NOTE¹:__ Pay attention to the underscore when we defined the `_firstName` attribute. Since the `firstName` property will be automatically created by the [`abitbol`][abitbol] class, you will create an infinite loop if you name your private property the same way.
 
 #### Going Deeper With Abitbol
 
@@ -183,10 +183,10 @@ var MyWidget = photonui.Widget.$extend({
 
     _buildHtml: function() {
         // We build the widget's HTML in this method.
-        
+
         // All the HTML nodes go in the "this.__html" object
         this.__html.div = document.createElement("div");
-        
+
         // All PhotonUI Widget have the "photonui-wiget" class on their
         // outer HTML elements
         this.__html.div.className = "photonui-widget photonui-mywidget";
@@ -211,9 +211,9 @@ var MyWidget = photonui.Container.$extend({
     getHtml: function() {
         return null;  // Return the outer HTML element of the widget
     },
-    
+
     getContainerNode: function() {
-        return null;  // Return the HTML node that will contain the child 
+        return null;  // Return the HTML node that will contain the child
     },
 
     _buildHtml: function() {
@@ -228,7 +228,7 @@ var MyWidget = photonui.Container.$extend({
 
 The layout widgets are the most difficult to build: in addition to `getHtml` and `_buildHtml` methods, you have to implement the `_updateLayout` method which will have to build the HTML that glues children widgets together in the layout.
 
-You can look at the [`photonui.BoxLayout`][code-boxlayout] code if you want a simple example of a layout widget. 
+You can look at the [`photonui.BoxLayout`][code-boxlayout] code if you want a simple example of a layout widget.
 
 ```javascript
 var MyWidget = photonui.Layout.$extend({
@@ -245,7 +245,7 @@ var MyWidget = photonui.Layout.$extend({
     _buildHtml: function() {
         // Build the base HTML here
     },
-    
+
     _updateLayout: function() {
         // Build / Update the HTML layout with the widgets listed in
         // this.children
@@ -341,7 +341,7 @@ __init__: function(params) {
     this._bindEvent(
         "button-click",       // id (any string you want, unique in the widget)
         this.__html.button,   // HTML element
-        "click",              // Native event name 
+        "click",              // Native event name
         this.__onButtonClicked.bind(this)  // Internal (private) callback
     );
 }
@@ -377,9 +377,9 @@ var SimpleButton = photonui.Widget.$extend({
         //  the parent constructor, otherwise the declarative syntax will
         //  fail to register the callbacks...
         this._registerWEvents(["click"]);
-    
+
         this.$super(params);
-        
+
         this._bindEvent(
             "button-click",
             this.__html.button,
@@ -387,14 +387,14 @@ var SimpleButton = photonui.Widget.$extend({
             this.__onButtonClicked.bind(this)
         );
     },
-    
+
     _text: "Button",
-    
+
     getText: function() {
         "@photonui-update";
         return this._text;
     },
-    
+
     setText: function(text) {
         this._text = text;
         photonui.Helpers.cleanNode(this.__html.button);
@@ -409,7 +409,7 @@ var SimpleButton = photonui.Widget.$extend({
         this.__html.button = document.createElement("button");
         this.__html.button.className = "photonui-widget photonui-simplebutton";
     },
-    
+
     __onButtonClicked: function(event) {
         this._callCallbacks("click", [event]);
     }

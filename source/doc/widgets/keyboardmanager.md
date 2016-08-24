@@ -18,7 +18,7 @@ One can register to keyboard callbacks:
 ```javascript
 // Add a field to display things
 var field = new photonui.TextAreaField({
-    value: "Start writing here!",
+    placeholder: "Start writing here!",
     rows: 20
 });
 photonui.domInsert(field, "demo");
