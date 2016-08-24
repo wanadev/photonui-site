@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>photonui.Layout - photonui</title>
+    <title>photonui.Expander - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -136,7 +136,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>photonui.Layout Class</h1>
+<h1>photonui.Expander Class</h1>
 <div class="box meta">
 
         <div class="extends">
@@ -144,24 +144,39 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_layout_layout.js.html#l42"><code>src&#x2F;layout&#x2F;layout.js:42</code></a>
+            Defined in: <a href="../files/src_container_expander.js.html#l43"><code>src&#x2F;container&#x2F;expander.js:43</code></a>
         </div>
 
-            Module: <a href="../modules/Layout.html">Layout</a><br>
+            Module: <a href="../modules/Container.html">Container</a><br>
             Parent Module: <a href="../modules/PhotonUI.html">PhotonUI</a>
 
 </div>
 
 
 <div class="box intro">
-    <p>Base class for layout.</p>
+    <p>Expander container.</p>
+<p>wEvents:</p>
+<ul>
+<li>folded:
+<ul>
+<li>description: called when the expander is folded by user.</li>
+<li>callback:    function(widget)</li>
+</ul>
+</li>
+<li>unfolded:
+<ul>
+<li>description: called when the expander is unfolded by user.</li>
+<li>callback:    function(widget)</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-<div id="method_photonui.Layout" class="method item">
-    <h3 class="name"><code>photonui.Layout</code></h3>
+<div id="method_photonui.Expander" class="method item">
+    <h3 class="name"><code>photonui.Expander</code></h3>
 
         <span class="paren">()</span>
 
@@ -175,7 +190,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_layout_layout.js.html#l42"><code>src&#x2F;layout&#x2F;layout.js:42</code></a>
+        <a href="../files/src_container_expander.js.html#l43"><code>src&#x2F;container&#x2F;expander.js:43</code></a>
         </p>
 
 
@@ -216,6 +231,14 @@
                                 <a href="#method___onLocaleChanged">__onLocaleChanged</a>
 
                             </li>
+                            <li class="index-item method private">
+                                <a href="#method___onTitleClicked">__onTitleClicked</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method___onTitleKeyPress">__onTitleKeyPress</a>
+
+                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__bindEvent">_bindEvent</a>
 
@@ -228,10 +251,6 @@
                                 <a href="#method__callCallbacks">_callCallbacks</a>
 
                             </li>
-                            <li class="index-item method private">
-                                <a href="#method__lockUpdate">_lockUpdate</a>
-
-                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method__registerWEvents">_registerWEvents</a>
 
@@ -240,33 +259,21 @@
                                 <a href="#method__unbindEvent">_unbindEvent</a>
 
                             </li>
-                            <li class="index-item method private">
-                                <a href="#method__updateLayout">_updateLayout</a>
-
-                            </li>
                             <li class="index-item method private deprecated inherited">
                                 <a href="#method__updateProperties">_updateProperties</a>
 
                                     <span class="flag deprecated">deprecated</span>
                             </li>
-                            <li class="index-item method private inherited">
+                            <li class="index-item method private inherited inherited">
                                 <a href="#method__visibilityChanged">_visibilityChanged</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_addChild">addChild</a>
 
                             </li>
                             <li class="index-item method inherited">
                                 <a href="#method_addClass">addClass</a>
 
                             </li>
-                            <li class="index-item method inherited">
+                            <li class="index-item method inherited inherited">
                                 <a href="#method_destroy">destroy</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_empty">empty</a>
 
                             </li>
                             <li class="index-item method inherited">
@@ -291,6 +298,10 @@
                             </li>
                             <li class="index-item method inherited">
                                 <a href="#method_show">show</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_toggleFolded">toggleFolded</a>
 
                             </li>
                             <li class="index-item method inherited">
@@ -328,14 +339,6 @@
                                 <a href="#property_childName">childName</a>
 
                             </li>
-                            <li class="index-item property">
-                                <a href="#property_children">children</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_childrenNames">childrenNames</a>
-
-                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_containerNode">containerNode</a>
 
@@ -350,6 +353,10 @@
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_data">data</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_folded">folded</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -376,12 +383,20 @@
                                 <a href="#property_offsetWidth">offsetWidth</a>
 
                             </li>
+                            <li class="index-item property">
+                                <a href="#property_padding">padding</a>
+
+                            </li>
                             <li class="index-item property inherited">
                                 <a href="#property_parent">parent</a>
 
                             </li>
                             <li class="index-item property inherited">
                                 <a href="#property_parentName">parentName</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_title">title</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -458,7 +473,7 @@
 
 
 </div>
-<div id="method___onLocaleChanged" class="method item private">
+<div id="method___onLocaleChanged" class="method item private inherited">
     <h3 class="name"><code>__onLocaleChanged</code></h3>
 
         <span class="paren">()</span>
@@ -472,12 +487,9 @@
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/photonui.Widget.html#method___onLocaleChanged">
-                photonui.Widget
-            </a>
-            but overwritten in
-        <a href="../files/src_layout_layout.js.html#l273"><code>src&#x2F;layout&#x2F;layout.js:273</code></a>
+                <p>Inherited from
+                <a href="../classes/photonui.Widget.html#method___onLocaleChanged">photonui.Widget</a>:
+        <a href="../files/src_widget.js.html#l460"><code>src&#x2F;widget.js:460</code></a>
         </p>
 
 
@@ -485,8 +497,69 @@
     </div>
 
     <div class="description">
-        <p>Called when the locale is changed.</p>
+        Called when the locale is changed.
+    </div>
 
+
+
+
+</div>
+<div id="method___onTitleClicked" class="method item private">
+    <h3 class="name"><code>__onTitleClicked</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_expander.js.html#l208"><code>src&#x2F;container&#x2F;expander.js:208</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+
+
+
+</div>
+<div id="method___onTitleKeyPress" class="method item private">
+    <h3 class="name"><code>__onTitleKeyPress</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_expander.js.html#l216"><code>src&#x2F;container&#x2F;expander.js:216</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
     </div>
 
 
@@ -585,7 +658,7 @@
 
 
 </div>
-<div id="method__buildHtml" class="method item private inherited">
+<div id="method__buildHtml" class="method item private">
     <h3 class="name"><code>_buildHtml</code></h3>
 
         <span class="paren">()</span>
@@ -599,9 +672,12 @@
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#method__buildHtml">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l415"><code>src&#x2F;widget.js:415</code></a>
+            <p>Inherited from
+            <a href="../classes/photonui.Widget.html#method__buildHtml">
+                photonui.Widget
+            </a>
+            but overwritten in
+        <a href="../files/src_container_expander.js.html#l188"><code>src&#x2F;container&#x2F;expander.js:188</code></a>
         </p>
 
 
@@ -609,7 +685,8 @@
     </div>
 
     <div class="description">
-        Build the widget HTML.
+        <p>Build the widget HTML.</p>
+
     </div>
 
 
@@ -681,38 +758,6 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
                 </li>
             </ul>
         </div>
-
-
-
-</div>
-<div id="method__lockUpdate" class="method item private">
-    <h3 class="name"><code>_lockUpdate</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l223"><code>src&#x2F;layout&#x2F;layout.js:223</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Lock the update of the layout.</p>
-
-    </div>
-
 
 
 
@@ -823,38 +868,6 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method__updateLayout" class="method item private">
-    <h3 class="name"><code>_updateLayout</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-        <span class="flag private">private</span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l240"><code>src&#x2F;layout&#x2F;layout.js:240</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Update the layout.</p>
-
-    </div>
-
-
-
-
-</div>
 <div id="method__updateProperties" class="method item private deprecated inherited">
     <h3 class="name"><code>_updateProperties</code></h3>
 
@@ -912,7 +925,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
 
 
 </div>
-<div id="method__visibilityChanged" class="method item private">
+<div id="method__visibilityChanged" class="method item private inherited">
     <h3 class="name"><code>_visibilityChanged</code></h3>
 
         <div class="args">
@@ -937,7 +950,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_layout_layout.js.html#l250"><code>src&#x2F;layout&#x2F;layout.js:250</code></a>
+        <a href="../files/src_container_container.js.html#l208"><code>src&#x2F;container&#x2F;container.js:208</code></a>
         </p>
 
 
@@ -960,74 +973,6 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
 
                     <div class="param-description">
                         <p>Current visibility state (otptional, defaut=this.visible)</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_addChild" class="method item">
-    <h3 class="name"><code>addChild</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>widget</code>
-                </li>
-                <li class="arg">
-                        <code>layoutOption</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l159"><code>src&#x2F;layout&#x2F;layout.js:159</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Add a widget to the layout.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">widget</code>
-                        <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
-
-
-                    <div class="param-description">
-                        <p>The widget to add.</p>
-
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">layoutOption</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                        <p>Specific option for the layout (optional).</p>
 
                     </div>
 
@@ -1090,7 +1035,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
 
 
 </div>
-<div id="method_destroy" class="method item">
+<div id="method_destroy" class="method item inherited">
     <h3 class="name"><code>destroy</code></h3>
 
         <span class="paren">()</span>
@@ -1108,7 +1053,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
                 photonui.Base
             </a>
             but overwritten in
-        <a href="../files/src_layout_layout.js.html#l211"><code>src&#x2F;layout&#x2F;layout.js:211</code></a>
+        <a href="../files/src_container_container.js.html#l194"><code>src&#x2F;container&#x2F;container.js:194</code></a>
         </p>
 
 
@@ -1117,37 +1062,6 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
 
     <div class="description">
         <p>Destroy the widget.</p>
-
-    </div>
-
-
-
-
-</div>
-<div id="method_empty" class="method item">
-    <h3 class="name"><code>empty</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l193"><code>src&#x2F;layout&#x2F;layout.js:193</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Destroy all children of the layout</p>
 
     </div>
 
@@ -1332,7 +1246,7 @@ Callback signature:
 
 
 </div>
-<div id="method_removeChild" class="method item">
+<div id="method_removeChild" class="method item inherited">
     <h3 class="name"><code>removeChild</code></h3>
 
         <div class="args">
@@ -1351,12 +1265,9 @@ Callback signature:
 
 
     <div class="meta">
-            <p>Inherited from
-            <a href="../classes/photonui.Container.html#method_removeChild">
-                photonui.Container
-            </a>
-            but overwritten in
-        <a href="../files/src_layout_layout.js.html#l178"><code>src&#x2F;layout&#x2F;layout.js:178</code></a>
+                <p>Inherited from
+                <a href="../classes/photonui.Container.html#method_removeChild">photonui.Container</a>:
+        <a href="../files/src_container_container.js.html#l182"><code>src&#x2F;container&#x2F;container.js:182</code></a>
         </p>
 
 
@@ -1364,7 +1275,7 @@ Callback signature:
     </div>
 
     <div class="description">
-        <p>Remove a widget from the layout.</p>
+        <p>Remove the given child.</p>
 
     </div>
 
@@ -1378,7 +1289,7 @@ Callback signature:
 
 
                     <div class="param-description">
-                        <p>The widget to remove.</p>
+                        <p>The widget to remove/</p>
 
                     </div>
 
@@ -1467,6 +1378,59 @@ Callback signature:
         Display the widget (equivalent to widget.visible = true).
     </div>
 
+
+
+
+</div>
+<div id="method_toggleFolded" class="method item">
+    <h3 class="name"><code>toggleFolded</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_expander.js.html#l170"><code>src&#x2F;container&#x2F;expander.js:170</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Toggle current folded state and sends and event.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" class="crosslink external" target="_blank">Event</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
 
 
 
@@ -1660,59 +1624,7 @@ internal use).
 
 
 </div>
-<div id="property_children" class="property item">
-    <h3 class="name"><code>children</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l106"><code>src&#x2F;layout&#x2F;layout.js:106</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Layout children widgets.</p>
-
-    </div>
-
-        <p><strong>Default:</strong> []</p>
-
-
-</div>
-<div id="property_childrenNames" class="property item">
-    <h3 class="name"><code>childrenNames</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/src_layout_layout.js.html#l69"><code>src&#x2F;layout&#x2F;layout.js:69</code></a>
-        </p>
-
-
-    </div>
-
-    <div class="description">
-        <p>Layout children widgets name.</p>
-
-    </div>
-
-        <p><strong>Default:</strong> []</p>
-
-
-</div>
-<div id="property_containerNode" class="property item inherited">
+<div id="property_containerNode" class="property item">
     <h3 class="name"><code>containerNode</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
 
@@ -1721,9 +1633,12 @@ internal use).
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Container.html#property_containerNode">photonui.Container</a>:
-        <a href="../files/src_container_container.js.html#l165"><code>src&#x2F;container&#x2F;container.js:165</code></a>
+            <p>Inherited from
+            <a href="../classes/photonui.Container.html#property_containerNode">
+                photonui.Container
+            </a>
+            but overwritten in
+        <a href="../files/src_container_expander.js.html#l153"><code>src&#x2F;container&#x2F;expander.js:153</code></a>
         </p>
 
 
@@ -1812,6 +1727,32 @@ internal use).
 
 
 </div>
+<div id="property_folded" class="property item">
+    <h3 class="name"><code>folded</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_expander.js.html#l96"><code>src&#x2F;container&#x2F;expander.js:96</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Whether the expander is folded.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> false</p>
+
+
+</div>
 <div id="property_horizontalChildExpansion" class="property item inherited">
     <h3 class="name"><code>horizontalChildExpansion</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
@@ -1838,7 +1779,7 @@ internal use).
 
 
 </div>
-<div id="property_html" class="property item inherited">
+<div id="property_html" class="property item">
     <h3 class="name"><code>html</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
 
@@ -1847,16 +1788,20 @@ internal use).
 
 
     <div class="meta">
-                <p>Inherited from
-                <a href="../classes/photonui.Widget.html#property_html">photonui.Widget</a>:
-        <a href="../files/src_widget.js.html#l262"><code>src&#x2F;widget.js:262</code></a>
+            <p>Inherited from
+            <a href="../classes/photonui.Widget.html#property_html">
+                photonui.Widget
+            </a>
+            but overwritten in
+        <a href="../files/src_container_expander.js.html#l141"><code>src&#x2F;container&#x2F;expander.js:141</code></a>
         </p>
 
 
     </div>
 
     <div class="description">
-        Html outer element of the widget (if any).
+        <p>Html outer element of the widget (if any).</p>
+
     </div>
 
         <p><strong>Default:</strong> null</p>
@@ -1961,6 +1906,32 @@ internal use).
 
 
 </div>
+<div id="property_padding" class="property item">
+    <h3 class="name"><code>padding</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_expander.js.html#l122"><code>src&#x2F;container&#x2F;expander.js:122</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Container node padding.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> 0</p>
+
+
+</div>
 <div id="property_parent" class="property item inherited">
     <h3 class="name"><code>parent</code></h3>
     <span class="type"><a href="../classes/photonui.Widget.html" class="crosslink">photonui.Widget</a></span>
@@ -2008,6 +1979,32 @@ internal use).
     </div>
 
         <p><strong>Default:</strong> null (no parent)</p>
+
+
+</div>
+<div id="property_title" class="property item">
+    <h3 class="name"><code>title</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_container_expander.js.html#l76"><code>src&#x2F;container&#x2F;expander.js:76</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>The title.</p>
+
+    </div>
+
+        <p><strong>Default:</strong> &quot;Expander&quot;</p>
 
 
 </div>

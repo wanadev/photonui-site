@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -191,7 +192,6 @@ var ProgressBar = Widget.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties([&quot;orientation&quot;, &quot;value&quot;, &quot;pulsate&quot;]);
     },
 
     //////////////////////////////////////////
@@ -228,6 +228,7 @@ var ProgressBar = Widget.$extend({
     _value: 0,
 
     getValue: function () {
+        &quot;@photonui-update&quot;;
         return this._value;
     },
 
@@ -253,6 +254,7 @@ var ProgressBar = Widget.$extend({
     _orientation: &quot;horizontal&quot;,
 
     getOrientation: function () {
+        &quot;@photonui-update&quot;;
         return this._orientation;
     },
 
@@ -279,6 +281,7 @@ var ProgressBar = Widget.$extend({
     _pulsate: false,
 
     isPulsate: function () {
+        &quot;@photonui-update&quot;;
         return this._pulsate;
     },
 

@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -214,13 +215,13 @@ var GridLayout = Layout.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties([&quot;verticalSpacing&quot;]);
 
         // XXX Sizing Hack
         if (window.MutationObserver) {
             this.__sizinghack_observer = new MutationObserver(this._sizingHack.bind(this));
             this.__sizinghack_observer_params = {attributes: true, childList: true, characterData: true, subtree: true};
             this.__sizinghack_observer.observe(this.__html.gridBody, this.__sizinghack_observer_params);
+            this._updateLayout();
         }
     },
 
@@ -284,15 +285,12 @@ var GridLayout = Layout.$extend({
     _verticalSpacing: 5,
 
     getVerticalSpacing: function () {
+        &quot;@photonui-update&quot;;
         return this._verticalSpacing;
     },
 
     setVerticalSpacing: function (verticalSpacing) {
         this._verticalSpacing = verticalSpacing;
-        //this._updatingLayout = true;
-        //this._updateSpacing();
-        //this._updatingLayout = false;
-        //this._sizingHack();
         this._updateLayout();
     },
 
@@ -311,10 +309,6 @@ var GridLayout = Layout.$extend({
 
     setHorizontalSpacing: function (horizontalSpacing) {
         this._horizontalSpacing = horizontalSpacing;
-        //this._updatingLayout = true;
-        //this._updateSpacing();
-        //this._updatingLayout = false;
-        //this._sizingHack();
         this._updateLayout();
     },
 

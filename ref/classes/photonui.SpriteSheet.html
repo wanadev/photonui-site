@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -223,9 +224,10 @@
                                 <a href="#method__unbindEvent">_unbindEvent</a>
 
                             </li>
-                            <li class="index-item method private inherited">
+                            <li class="index-item method private deprecated inherited">
                                 <a href="#method__updateProperties">_updateProperties</a>
 
+                                    <span class="flag deprecated">deprecated</span>
                             </li>
                             <li class="index-item method">
                                 <a href="#method_addIcon">addIcon</a>
@@ -330,7 +332,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__bindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l212"><code>src&#x2F;base.js:212</code></a>
+        <a href="../files/src_base.js.html#l229"><code>src&#x2F;base.js:229</code></a>
         </p>
 
 
@@ -416,7 +418,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__callCallbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l271"><code>src&#x2F;base.js:271</code></a>
+        <a href="../files/src_base.js.html#l288"><code>src&#x2F;base.js:288</code></a>
         </p>
 
 
@@ -482,7 +484,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__registerWEvents">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l255"><code>src&#x2F;base.js:255</code></a>
+        <a href="../files/src_base.js.html#l272"><code>src&#x2F;base.js:272</code></a>
         </p>
 
 
@@ -535,7 +537,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__unbindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l236"><code>src&#x2F;base.js:236</code></a>
+        <a href="../files/src_base.js.html#l253"><code>src&#x2F;base.js:253</code></a>
         </p>
 
 
@@ -566,7 +568,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
 
 </div>
-<div id="method__updateProperties" class="method item private inherited">
+<div id="method__updateProperties" class="method item private deprecated inherited">
     <h3 class="name"><code>_updateProperties</code></h3>
 
         <div class="args">
@@ -578,6 +580,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
         </div>
 
 
+        <span class="flag deprecated">deprecated</span>
 
         <span class="flag private">private</span>
 
@@ -588,7 +591,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__updateProperties">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l199"><code>src&#x2F;base.js:199</code></a>
+        <a href="../files/src_base.js.html#l209"><code>src&#x2F;base.js:209</code></a>
         </p>
 
 
@@ -597,6 +600,9 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
 
     <div class="description">
         Force the update of the given properties.
+
+This method is deprecated.
+One should use '@photonui-update' abitbol's annotation on concerned properties.
     </div>
 
         <div class="params">
@@ -713,7 +719,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method_destroy">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l147"><code>src&#x2F;base.js:147</code></a>
+        <a href="../files/src_base.js.html#l157"><code>src&#x2F;base.js:157</code></a>
         </p>
 
 
@@ -888,7 +894,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method_registerCallback">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l159"><code>src&#x2F;base.js:159</code></a>
+        <a href="../files/src_base.js.html#l169"><code>src&#x2F;base.js:169</code></a>
         </p>
 
 
@@ -974,7 +980,7 @@ Callback signature:
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method_removeCallback">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l183"><code>src&#x2F;base.js:183</code></a>
+        <a href="../files/src_base.js.html#l193"><code>src&#x2F;base.js:193</code></a>
         </p>
 
 
@@ -1075,7 +1081,7 @@ Callback signature:
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#property___callbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l132"><code>src&#x2F;base.js:132</code></a>
+        <a href="../files/src_base.js.html#l142"><code>src&#x2F;base.js:142</code></a>
         </p>
 
 
@@ -1100,7 +1106,7 @@ Callback signature:
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#property___events">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l122"><code>src&#x2F;base.js:122</code></a>
+        <a href="../files/src_base.js.html#l132"><code>src&#x2F;base.js:132</code></a>
         </p>
 
 
@@ -1125,7 +1131,7 @@ internal use).
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#property_data">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l103"><code>src&#x2F;base.js:103</code></a>
+        <a href="../files/src_base.js.html#l113"><code>src&#x2F;base.js:113</code></a>
         </p>
 
 
@@ -1207,7 +1213,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_spritesheet.js.html#l65"><code>src&#x2F;nonvisual&#x2F;spritesheet.js:65</code></a>
+        <a href="../files/src_nonvisual_spritesheet.js.html#l64"><code>src&#x2F;nonvisual&#x2F;spritesheet.js:64</code></a>
         </p>
 
 

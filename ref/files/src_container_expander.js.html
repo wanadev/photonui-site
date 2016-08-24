@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/visual/separator.js - photonui</title>
+    <title>src/container/expander.js - photonui</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -136,12 +136,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: src/visual/separator.js</h1>
+<h1 class="file-heading">File: src/container/expander.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /*
- * Copyright (c) 2014-2015, Wanadev &lt;http://www.wanadev.fr/&gt;
+ * Copyright (c) 2014-2016, Wanadev &lt;http://www.wanadev.fr/&gt;
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -167,31 +167,46 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authored by: Fabien LOISON &lt;http://flozz.fr/&gt;
+ * Authored by: Alexis BREUST
  */
 
 /**
  * PhotonUI - Javascript Web User Interface.
  *
  * @module PhotonUI
- * @submodule Visual
+ * @submodule Container
  * @namespace photonui
  */
 
+var Helpers = require(&quot;../helpers.js&quot;);
 var Widget = require(&quot;../widget.js&quot;);
+var Container = require(&quot;./container.js&quot;);
 
 /**
- * Separator.
+ * Expander container.
  *
- * @class Separator
+ * wEvents:
+ *
+ *   * folded:
+ *     - description: called when the expander is folded by user.
+ *     - callback:    function(widget)
+ *   * unfolded:
+ *     - description: called when the expander is unfolded by user.
+ *     - callback:    function(widget)
+ *
+ * @class Expander
  * @constructor
- * @extends photonui.Widget
+ * @extends photonui.Container
  */
-var Separator = Widget.$extend({
+var Expander = Container.$extend({
 
     // Constructor
     __init__: function (params) {
+        this._registerWEvents([&quot;folded&quot;, &quot;unfolded&quot;]);
         this.$super(params);
+
+        this._bindEvent(&quot;keypress&quot;, this.__html.title, &quot;keypress&quot;, this.__onTitleKeyPress);
+        this._bindEvent(&quot;click&quot;, this.__html.title, &quot;click&quot;, this.__onTitleClicked);
     },
 
     //////////////////////////////////////////
@@ -201,35 +216,68 @@ var Separator = Widget.$extend({
     // ====== Public properties ======
 
     /**
-     * The separator orientation (&quot;vertical&quot; or &quot;horizontal&quot;).
+     * The title.
      *
-     * @property orientation
+     * @property title
      * @type String
-     * @default &quot;horizontal&quot;
+     * @default &quot;Expander&quot;
      */
-    _orientation: &quot;horizontal&quot;,
+    _title: &quot;Expander&quot;,
 
-    getOrientation: function () {
+    getTitle: function () {
         &quot;@photonui-update&quot;;
-        return this._orientation;
+        return this._title;
     },
 
-    setOrientation: function (orientation) {
-        if (orientation != &quot;vertical&quot; &amp;&amp; orientation != &quot;horizontal&quot;) {
-            throw new Error(&quot;The orientation should be \&quot;vertical\&quot; or \&quot;horizontal\&quot;.&quot;);
-        }
-        this._orientation = orientation;
-        this.removeClass(&quot;photonui-separator-vertical&quot;);
-        this.removeClass(&quot;photonui-separator-horizontal&quot;);
-        this.addClass(&quot;photonui-separator-&quot; + this._orientation);
+    setTitle: function (title) {
+        this._title = title;
+        Helpers.cleanNode(this.__html.title);
+        this.__html.title.appendChild(document.createTextNode(title));
+    },
 
-        this.removeClass(&quot;photonui-widget-fixed-height&quot;);
-        this.removeClass(&quot;photonui-widget-fixed-width&quot;);
-        if (this._orientation == &quot;horizontal&quot;) {
-            this.addClass(&quot;photonui-widget-fixed-height&quot;);
+    /**
+     * Whether the expander is folded.
+     *
+     * @property folded
+     * @type Boolean
+     * @default false
+     */
+    _folded: false,
+
+    getFolded: function () {
+        &quot;@photonui-update&quot;;
+        return this._folded;
+    },
+
+    setFolded: function (folded) {
+        this._folded = folded;
+
+        if (this._folded) {
+            this.__html.content.style.display = &quot;none&quot;;
+            this.addClass(&quot;photonui-expander-folded&quot;);
         } else {
-            this.addClass(&quot;photonui-widget-fixed-width&quot;);
+            this.__html.content.style.display = &quot;block&quot;;
+            this.removeClass(&quot;photonui-expander-folded&quot;);
         }
+    },
+
+    /**
+     * Container node padding.
+     *
+     * @property padding
+     * @type Number
+     * @default 0
+     */
+    _padding: 0,
+
+    getPadding: function () {
+        &quot;@photonui-update&quot;;
+        return this._padding;
+    },
+
+    setPadding: function (padding) {
+        this._padding = padding;
+        this.__html.content.style.padding = padding + &quot;px&quot;;
     },
 
     /**
@@ -244,9 +292,38 @@ var Separator = Widget.$extend({
         return this.__html.outer;
     },
 
+    /**
+     * HTML Element that contain the child widget HTML.
+     *
+     * @property containerNode
+     * @type HTMLElement
+     * @readOnly
+     */
+    getContainerNode: function () {
+        return this.__html.content;
+    },
+
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
+
+    // ====== Public methods ======
+
+    /**
+     * Toggle current folded state and sends and event.
+     *
+     * @method toggleFolded
+     * @param {Event} event
+     */
+    toggleFolded: function () {
+        this.folded = !this._folded;
+
+        if (this._folded) {
+            this._callCallbacks(&quot;folded&quot;, []);
+        } else {
+            this._callCallbacks(&quot;unfolded&quot;, []);
+        }
+    },
 
     // ====== Private methods ======
 
@@ -258,27 +335,39 @@ var Separator = Widget.$extend({
      */
     _buildHtml: function () {
         this.__html.outer = document.createElement(&quot;div&quot;);
-        this.__html.outer.className = &quot;photonui-widget photonui-separator&quot;;
-        this.__html.hr = document.createElement(&quot;hr&quot;);
-        this.__html.outer.appendChild(this.__html.hr);
+        this.__html.outer.className = &quot;photonui-widget photonui-expander&quot;;
+
+        this.__html.title = document.createElement(&quot;div&quot;);
+        this.__html.title.className = &quot;photonui-expander-title&quot;;
+        this.__html.title.tabIndex = &quot;0&quot;;
+        this.__html.outer.appendChild(this.__html.title);
+
+        this.__html.content = document.createElement(&quot;div&quot;);
+        this.__html.content.className = &quot;photonui-container photonui-expander-content&quot;;
+        this.__html.outer.appendChild(this.__html.content);
     },
 
-    //////////////////////////////////////////
-    // Internal Events Callbacks            //
-    //////////////////////////////////////////
-
     /**
-     * Called when the locale is changed.
-     *
-     * @method __onLocaleChanged
+     * @method __onTitleClicked
      * @private
      */
-    __onLocaleChanged: function () {
-        // pass
+    __onTitleClicked: function (widget, event) {
+        this.toggleFolded();
+    },
+
+    /**
+     * @method __onTitleKeyPress
+     * @private
+     */
+    __onTitleKeyPress: function (event) {
+        if (event.charCode == 32 || event.keyCode == 13) {
+            this.toggleFolded();
+        }
     }
+
 });
 
-module.exports = Separator;
+module.exports = Expander;
 
     </pre>
 </div>

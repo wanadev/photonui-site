@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -212,8 +213,8 @@ var Select = Widget.$extend({
         this._registerWEvents([&quot;value-changed&quot;]);
         this.$super(params);
 
-        this._updateProperties([&quot;value&quot;, &quot;iconVisible&quot;]);
         this._bindEvent(&quot;popup&quot;, this.html, &quot;click&quot;, this.__onClick.bind(this));
+        this._bindEvent(&quot;mouse-down&quot;, this.html, &quot;mousedown&quot;, this.__onMouseDown.bind(this));
 
         this.setValue(params.value || this.value, true);
     },
@@ -234,6 +235,7 @@ var Select = Widget.$extend({
     _value: &quot;&quot;,
 
     getValue: function () {
+        &quot;@photonui-update&quot;;
         return this._value;
     },
 
@@ -398,7 +400,10 @@ var Select = Widget.$extend({
      * @type Boolean
      * @default: false
      */
-    isIconVisible: function () { return this.__popupMenu.isIconVisible(); },
+    isIconVisible: function () {
+        &quot;@photonui-update&quot;;
+        return this.__popupMenu.isIconVisible();
+    },
     setIconVisible: function (p) {
         if (!p) {
             this.addClass(&quot;photonui-select-noicon&quot;);
@@ -406,6 +411,13 @@ var Select = Widget.$extend({
             this.removeClass(&quot;photonui-select-noicon&quot;);
         }
         this.__popupMenu.setIconVisible(p);
+    },
+
+    setVisible: function (visible) {
+        this.$super(visible);
+        if (!visible) {
+            this.__popupMenu.hide();
+        }
     },
 
     /**
@@ -419,6 +431,8 @@ var Select = Widget.$extend({
     getHtml: function () {
         return this.__html.select;
     },
+
+    // ====== Private properties ======
 
     /**
      * The popupMenu.
@@ -501,7 +515,22 @@ var Select = Widget.$extend({
         if (!this._minWidthDefined) {
             this.popupMinWidth = this.offsetWidth;
         }
-        this.__popupMenu.popupWidget(this);
+        if (this.__popupMenu.visible) {
+            this.__popupMenu.hide();
+        } else {
+            this.__popupMenu.popupWidget(this);
+        }
+    },
+
+    /**
+     * @method __onMouseDown
+     * @private
+     * @param event
+     */
+    __onMouseDown: function (event) {
+        if (this.__popupMenu.visible) {
+            event.stopPropagation();
+        }
     },
 
     /**
@@ -513,6 +542,7 @@ var Select = Widget.$extend({
         this.value = widget.value;
         this._callCallbacks(&quot;value-changed&quot;, [this.value]);
     }
+
 });
 
 module.exports = Select;

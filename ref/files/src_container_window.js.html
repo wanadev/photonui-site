@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -216,7 +217,6 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
                         function (event) { event.stopPropagation(); });
 
         // Update Properties
-        this._updateProperties([&quot;title&quot;, &quot;closeButtonVisible&quot;]);
         this.moveToFront();
     },
 
@@ -236,6 +236,7 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
     _title: &quot;Window&quot;,
 
     getTitle: function () {
+        &quot;@photonui-update&quot;;
         return this._title;
     },
 
@@ -294,6 +295,7 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
     _closeButtonVisible: true,
 
     getCloseButtonVisible: function () {
+        &quot;@photonui-update&quot;;
         return this._closeButtonVisible;
     },
 

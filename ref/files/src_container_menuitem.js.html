@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -195,7 +196,6 @@ var MenuItem = Container.$extend({
     __init__: function (params) {
         this._registerWEvents([&quot;click&quot;]);
         this.$super(params);
-        this._updateProperties([&quot;text&quot;, &quot;icon&quot;, &quot;active&quot;]);
 
         this._bindEvent(&quot;click&quot;, this.__html.outer, &quot;click&quot;, function (event) {
             this._callCallbacks(&quot;click&quot;, [event]);
@@ -235,6 +235,7 @@ var MenuItem = Container.$extend({
     _text: &quot;Menu Item&quot;,
 
     getText: function () {
+        &quot;@photonui-update&quot;;
         return this._text;
     },
 
@@ -273,6 +274,7 @@ var MenuItem = Container.$extend({
      * @default: null
      */
     getIcon: function () {
+        &quot;@photonui-update&quot;;
         return Widget.getWidget(this._iconName);
     },
 
@@ -294,6 +296,7 @@ var MenuItem = Container.$extend({
     _active: false,
 
     getActive: function () {
+        &quot;@photonui-update&quot;;
         return this._active;
     },
 
@@ -355,7 +358,7 @@ var MenuItem = Container.$extend({
         this.__html.outer.appendChild(this.__html.text);
 
         this.__html.widget = document.createElement(&quot;span&quot;);
-        this.__html.widget.className = &quot;photonui-menuitem-widget&quot;;
+        this.__html.widget.className = &quot;photonui-container photonui-menuitem-widget&quot;;
         this.__html.outer.appendChild(this.__html.widget);
     },
 

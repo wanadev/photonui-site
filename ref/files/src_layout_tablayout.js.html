@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -196,7 +197,7 @@ var TabLayout = Layout.$extend({
     __init__: function (params) {
         this._registerWEvents([]);
         this.$super(params);
-        this._updateProperties([&quot;activeTab&quot;, &quot;tabsPosition&quot;, &quot;padding&quot;]);
+        this.activeTab = this.activeTab;
     },
 
     //////////////////////////////////////////
@@ -220,6 +221,7 @@ var TabLayout = Layout.$extend({
     _tabsPosition: &quot;top&quot;,
 
     getTabsPosition: function () {
+        &quot;@photonui-update&quot;;
         return this._tabsPosition;
     },
 
@@ -289,6 +291,7 @@ var TabLayout = Layout.$extend({
     _padding: 10,
 
     getPadding: function () {
+        &quot;@photonui-update&quot;;
         return this._padding;
     },
 

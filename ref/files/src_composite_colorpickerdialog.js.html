@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -220,7 +221,6 @@ var ColorPickerDialog = Dialog.$extend({
         this.$super(params);
 
         this._buildUi();
-        this._updateProperties([&quot;color&quot;]);
     },
 
     //////////////////////////////////////////
@@ -240,6 +240,7 @@ var ColorPickerDialog = Dialog.$extend({
     _color: null,
 
     getColor: function () {
+        &quot;@photonui-update&quot;;
         return this._color;
     },
 
@@ -251,8 +252,8 @@ var ColorPickerDialog = Dialog.$extend({
             this._color = color;
             this._color.registerCallback(&quot;photonui.colorpickerdialog.value-changed::&quot; + this.name, &quot;value-changed&quot;,
                                          this.__onColorChanged, this);
+            this.__onColorChanged();
         }
-        this.__onColorChanged();
     },
 
     /**
@@ -306,6 +307,13 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Color Picker
         this.__widgets.colorPicker = new ColorPicker();
+        if (this._color !== null) {
+            this.__widgets.colorPicker.color.setHSB(
+                    this._color.hue,
+                    this._color.saturation,
+                    this._color.brightness
+            );
+        }
         this.__widgets.hbox.addChild(this.__widgets.colorPicker);
 
         // Color Palette
@@ -321,6 +329,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Red field + label
         this.__widgets.fieldRed = new Slider({
+            value: (this._color) ? this._color.red : undefined,
             min: 0,
             max: 255,
             decimalDigits: 0
@@ -336,6 +345,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Green field + label
         this.__widgets.fieldGreen = new Slider({
+            value: (this._color) ? this._color.green : undefined,
             min: 0,
             max: 255,
             decimalDigits: 0
@@ -351,6 +361,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Blue field + label
         this.__widgets.fieldBlue = new Slider({
+            value: (this._color) ? this._color.blue : undefined,
             min: 0,
             max: 255,
             decimalDigits: 0
@@ -375,6 +386,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Hue field + label
         this.__widgets.fieldHue = new Slider({
+            value: (this._color) ? this._color.hue : undefined,
             min: 0,
             max: 360,
             decimalDigits: 0
@@ -390,6 +402,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Saturation field + label
         this.__widgets.fieldSaturation = new Slider({
+            value: (this._color) ? this._color.saturation : undefined,
             min: 0,
             max: 100,
             decimalDigits: 0
@@ -405,6 +418,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Brightness field + label
         this.__widgets.fieldBrightness = new Slider({
+            value: (this._color) ? this._color.brightness : undefined,
             min: 0,
             max: 100,
             decimalDigits: 0
@@ -526,6 +540,10 @@ var ColorPickerDialog = Dialog.$extend({
      * @private
      */
     __onColorChanged: function () {
+        if (!this.__widgets.colorPicker) {
+            return;
+        }
+
         this.__widgets.colorPicker.color.setHSB(
                 this._color.hue,
                 this._color.saturation,

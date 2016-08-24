@@ -238,7 +238,21 @@ module.exports = Class;
 
 function cleanJs(js) {
     // remove function fn(param) {
-    js = js.replace(/^function\s*[^(]*\s*\([^)]*\)\s*\{/, "");
+    // or fn(param) {
+    // or (param) => {
+    var c;
+    var p = 0;
+    for (var i = 0 ; i < js.length ; i++) {
+        c = js[i];
+        if (c == "(") {
+            ++p;
+        } else if (c == ")") {
+            --p;
+        } else if (c == "{" && p === 0) {
+            js = js.slice(i + 1);
+            break;
+        }
+    }
 
     // remove comments (not super safe but should work in most cases)
     js = js.replace(/\/\*(.|\r|\n)*?\*\//g, "");
@@ -361,1009 +375,819 @@ function extractAnnotations(func) {
 module.exports = extractAnnotations;
 
 },{}],3:[function(require,module,exports){
-/**
- * Title: KeyboardJS
- * Version: v0.4.1
- * Description: KeyboardJS is a flexible and easy to use keyboard binding
- * library.
- * Author: Robert Hurst.
- *
- * Copyright 2011, Robert William Hurst
- * Licenced under the BSD License.
- * See https://raw.github.com/RobertWHurst/KeyboardJS/master/license.txt
- */
-(function(context, factory) {
-
-	//INDEXOF POLLYFILL
-	[].indexOf||(Array.prototype.indexOf=function(a,b,c){for(c=this.length,b=(c+~~b)%c;b<c&&(!(b in this)||this[b]!==a);b++);return b^c?b:-1;});
-
-	//AMD
-	if(typeof define === 'function' && define.amd) { define(constructAMD); }
-
-	//CommonJS
-	else if(typeof module !== 'undefined') {constructCommonJS()}
-
-	//GLOBAL
-	else { constructGlobal(); }
-
-	/**
-	 * Construct AMD version of the library
-	 */
-	function constructAMD() {
-
-		//create a library instance
-		return init(context);
-
-		//spawns a library instance
-		function init(context) {
-			var library;
-			library = factory(context, 'amd');
-			library.fork = init;
-			return library;
-		}
-	}
-
-	/**
-	 * Construct CommonJS version of the library
-	 */
-	function constructCommonJS() {
-
-		//create a library instance
-		module.exports = init(context);
-
-		return;
-
-		//spawns a library instance
-		function init(context) {
-			var library;
-			library = factory(context, 'CommonJS');
-			library.fork = init;
-			return library;
-
-		}
-
-	}
-
-	/**
-	 * Construct a Global version of the library
-	 */
-	function constructGlobal() {
-		var library;
-
-		//create a library instance
-		library = init(context);
-
-		//spawns a library instance
-		function init(context) {
-			var library, namespaces = [], previousValues = {};
-
-			library = factory(context, 'global');
-			library.fork = init;
-			library.noConflict = noConflict;
-			library.noConflict('KeyboardJS', 'k');
-			return library;
-
-			//sets library namespaces
-			function noConflict(    ) {
-				var args, nI, newNamespaces;
-
-				newNamespaces = Array.prototype.slice.apply(arguments);
-
-				for(nI = 0; nI < namespaces.length; nI += 1) {
-					if(typeof previousValues[namespaces[nI]] === 'undefined') {
-						delete context[namespaces[nI]];
-					} else {
-						context[namespaces[nI]] = previousValues[namespaces[nI]];
-					}
-				}
-
-				previousValues = {};
-
-				for(nI = 0; nI < newNamespaces.length; nI += 1) {
-					if(typeof newNamespaces[nI] !== 'string') {
-						throw new Error('Cannot replace namespaces. All new namespaces must be strings.');
-					}
-					previousValues[newNamespaces[nI]] = context[newNamespaces[nI]];
-					context[newNamespaces[nI]] = library;
-				}
-
-				namespaces = newNamespaces;
-
-				return namespaces;
-			}
-		}
-	}
-
-})(this, function(targetWindow, env) {
-	var KeyboardJS = {}, locales = {}, locale, map, macros, activeKeys = [], bindings = [], activeBindings = [],
-	activeMacros = [], aI, usLocale;
-	targetWindow = (targetWindow && Object.getOwnPropertyNames(targetWindow).length > 0 ) ? targetWindow : window;
-
-	///////////////////////
-	// DEFAULT US LOCALE //
-	///////////////////////
-
-	//define US locale
-	//If you create a new locale please submit it as a pull request or post
-	// it in the issue tracker at
-	// http://github.com/RobertWhurst/KeyboardJS/issues/
-	usLocale = {
-		"map": {
-
-			//general
-			"3": ["cancel"],
-			"8": ["backspace"],
-			"9": ["tab"],
-			"12": ["clear"],
-			"13": ["enter"],
-			"16": ["shift"],
-			"17": ["ctrl"],
-			"18": ["alt", "menu"],
-			"19": ["pause", "break"],
-			"20": ["capslock"],
-			"27": ["escape", "esc"],
-			"32": ["space", "spacebar"],
-			"33": ["pageup"],
-			"34": ["pagedown"],
-			"35": ["end"],
-			"36": ["home"],
-			"37": ["left"],
-			"38": ["up"],
-			"39": ["right"],
-			"40": ["down"],
-			"41": ["select"],
-			"42": ["printscreen"],
-			"43": ["execute"],
-			"44": ["snapshot"],
-			"45": ["insert", "ins"],
-			"46": ["delete", "del"],
-			"47": ["help"],
-			"91": ["command", "windows", "win", "super", "leftcommand", "leftwindows", "leftwin", "leftsuper"],
-			"92": ["command", "windows", "win", "super", "rightcommand", "rightwindows", "rightwin", "rightsuper"],
-			"145": ["scrolllock", "scroll"],
-			"186": ["semicolon", ";"],
-			"187": ["equal", "equalsign", "="],
-			"188": ["comma", ","],
-			"189": ["dash", "-"],
-			"190": ["period", "."],
-			"191": ["slash", "forwardslash", "/"],
-			"192": ["graveaccent", "`"],
-			"219": ["openbracket", "["],
-			"220": ["backslash", "\\"],
-			"221": ["closebracket", "]"],
-			"222": ["apostrophe", "'"],
-
-			//0-9
-			"48": ["zero", "0"],
-			"49": ["one", "1"],
-			"50": ["two", "2"],
-			"51": ["three", "3"],
-			"52": ["four", "4"],
-			"53": ["five", "5"],
-			"54": ["six", "6"],
-			"55": ["seven", "7"],
-			"56": ["eight", "8"],
-			"57": ["nine", "9"],
-
-			//numpad
-			"96": ["numzero", "num0"],
-			"97": ["numone", "num1"],
-			"98": ["numtwo", "num2"],
-			"99": ["numthree", "num3"],
-			"100": ["numfour", "num4"],
-			"101": ["numfive", "num5"],
-			"102": ["numsix", "num6"],
-			"103": ["numseven", "num7"],
-			"104": ["numeight", "num8"],
-			"105": ["numnine", "num9"],
-			"106": ["nummultiply", "num*"],
-			"107": ["numadd", "num+"],
-			"108": ["numenter"],
-			"109": ["numsubtract", "num-"],
-			"110": ["numdecimal", "num."],
-			"111": ["numdivide", "num/"],
-			"144": ["numlock", "num"],
-
-			//function keys
-			"112": ["f1"],
-			"113": ["f2"],
-			"114": ["f3"],
-			"115": ["f4"],
-			"116": ["f5"],
-			"117": ["f6"],
-			"118": ["f7"],
-			"119": ["f8"],
-			"120": ["f9"],
-			"121": ["f10"],
-			"122": ["f11"],
-			"123": ["f12"]
-		},
-		"macros": [
-
-			//secondary key symbols
-			['shift + `', ["tilde", "~"]],
-			['shift + 1', ["exclamation", "exclamationpoint", "!"]],
-			['shift + 2', ["at", "@"]],
-			['shift + 3', ["number", "#"]],
-			['shift + 4', ["dollar", "dollars", "dollarsign", "$"]],
-			['shift + 5', ["percent", "%"]],
-			['shift + 6', ["caret", "^"]],
-			['shift + 7', ["ampersand", "and", "&"]],
-			['shift + 8', ["asterisk", "*"]],
-			['shift + 9', ["openparen", "("]],
-			['shift + 0', ["closeparen", ")"]],
-			['shift + -', ["underscore", "_"]],
-			['shift + =', ["plus", "+"]],
-			['shift + (', ["opencurlybrace", "opencurlybracket", "{"]],
-			['shift + )', ["closecurlybrace", "closecurlybracket", "}"]],
-			['shift + \\', ["verticalbar", "|"]],
-			['shift + ;', ["colon", ":"]],
-			['shift + \'', ["quotationmark", "\""]],
-			['shift + !,', ["openanglebracket", "<"]],
-			['shift + .', ["closeanglebracket", ">"]],
-			['shift + /', ["questionmark", "?"]]
-		]
-	};
-	//a-z and A-Z
-	for (aI = 65; aI <= 90; aI += 1) {
-		usLocale.map[aI] = String.fromCharCode(aI + 32);
-		usLocale.macros.push(['shift + ' + String.fromCharCode(aI + 32) + ', capslock + ' + String.fromCharCode(aI + 32), [String.fromCharCode(aI)]]);
-	}
-
-  // Support command key on Mac.
-	// This is unfortunately browser specific
-	if(/^Mac/.test(navigator.platform)){
-		// Chrome,Safari
-		if(/Chrome/.test(navigator.userAgent) ||
-			 /Safari/.test(navigator.userAgent)){
-				 usLocale.map["93"] = usLocale.map["92"];
-		}
-		// Opera
-		if(/Opera/.test(navigator.userAgent)){
-			usLocale.map["17"] = usLocale.map["91"];
-			delete usLocale.map["91"];
-		}
-		// Firefox
-		if(/Firefox/.test(navigator.userAgent)){
-			usLocale.map["224"] = usLocale.map["91"];
-			delete usLocale.map["91"];
-		}
-		delete usLocale.map["92"];
-	}
-
-	registerLocale('us', usLocale);
-	getSetLocale('us');
-
-
-	//////////
-	// INIT //
-	//////////
-
-	//enable the library
-	enable();
-
-
-	/////////
-	// API //
-	/////////
-
-	//assemble the library and return it
-	KeyboardJS.enable = enable;
-	KeyboardJS.disable = disable;
-	KeyboardJS.activeKeys = getActiveKeys;
-	KeyboardJS.releaseKey = removeActiveKey;
-	KeyboardJS.pressKey = addActiveKey;
-	KeyboardJS.on = createBinding;
-	KeyboardJS.clear = removeBindingByKeyCombo;
-	KeyboardJS.clear.key = removeBindingByKeyName;
-	KeyboardJS.locale = getSetLocale;
-	KeyboardJS.locale.register = registerLocale;
-	KeyboardJS.macro = createMacro;
-	KeyboardJS.macro.remove = removeMacro;
-	KeyboardJS.key = {};
-	KeyboardJS.key.name = getKeyName;
-	KeyboardJS.key.code = getKeyCode;
-	KeyboardJS.combo = {};
-	KeyboardJS.combo.active = isSatisfiedCombo;
-	KeyboardJS.combo.parse = parseKeyCombo;
-	KeyboardJS.combo.stringify = stringifyKeyCombo;
-	return KeyboardJS;
-
-
-	//////////////////////
-	// INSTANCE METHODS //
-	//////////////////////
-
-	/**
-	 * Enables KeyboardJS
-	 */
-	function enable() {
-		if(targetWindow.addEventListener) {
-			targetWindow.document.addEventListener('keydown', keydown, false);
-			targetWindow.document.addEventListener('keyup', keyup, false);
-			targetWindow.addEventListener('blur', reset, false);
-			targetWindow.addEventListener('webkitfullscreenchange', reset, false);
-			targetWindow.addEventListener('mozfullscreenchange', reset, false);
-		} else if(targetWindow.attachEvent) {
-			targetWindow.document.attachEvent('onkeydown', keydown);
-			targetWindow.document.attachEvent('onkeyup', keyup);
-			targetWindow.attachEvent('onblur', reset);
-		}
-	}
-
-	/**
-	 * Exits all active bindings and disables KeyboardJS
-	 */
-	function disable() {
-		reset();
-		if(targetWindow.removeEventListener) {
-			targetWindow.document.removeEventListener('keydown', keydown, false);
-			targetWindow.document.removeEventListener('keyup', keyup, false);
-			targetWindow.removeEventListener('blur', reset, false);
-			targetWindow.removeEventListener('webkitfullscreenchange', reset, false);
-			targetWindow.removeEventListener('mozfullscreenchange', reset, false);
-		} else if(targetWindow.detachEvent) {
-			targetWindow.document.detachEvent('onkeydown', keydown);
-			targetWindow.document.detachEvent('onkeyup', keyup);
-			targetWindow.detachEvent('onblur', reset);
-		}
-	}
-
-
-	////////////////////
-	// EVENT HANDLERS //
-	////////////////////
-
-	/**
-	 * Exits all active bindings. Optionally passes an event to all binding
-	 *  handlers.
-	 * @param  {KeyboardEvent}	event	[Optional]
-	 */
-	function reset(event) {
-		activeKeys = [];
-		pruneMacros();
-		pruneBindings(event);
-	}
-
-	/**
-	 * Key down event handler.
-	 * @param  {KeyboardEvent}	event
-	 */
-	function keydown(event) {
-		var keyNames, keyName, kI;
-		keyNames = getKeyName(event.keyCode);
-		if(keyNames.length < 1) { return; }
-		event.isRepeat = false;
-		for(kI = 0; kI < keyNames.length; kI += 1) {
-		    keyName = keyNames[kI];
-		    if (getActiveKeys().indexOf(keyName) != -1)
-		        event.isRepeat = true;
-			addActiveKey(keyName);
-		}
-		executeMacros();
-		executeBindings(event);
-	}
-
-	/**
-	 * Key up event handler.
-	 * @param  {KeyboardEvent} event
-	 */
-	function keyup(event) {
-		var keyNames, kI;
-		keyNames = getKeyName(event.keyCode);
-		if(keyNames.length < 1) { return; }
-		for(kI = 0; kI < keyNames.length; kI += 1) {
-			removeActiveKey(keyNames[kI]);
-		}
-		pruneMacros();
-		pruneBindings(event);
-	}
-
-	/**
-	 * Accepts a key code and returns the key names defined by the current
-	 *  locale.
-	 * @param  {Number}	keyCode
-	 * @return {Array}	keyNames	An array of key names defined for the key
-	 *  code as defined by the current locale.
-	 */
-	function getKeyName(keyCode) {
-		return map[keyCode] || [];
-	}
-
-	/**
-	 * Accepts a key name and returns the key code defined by the current
-	 *  locale.
-	 * @param  {Number}	keyName
-	 * @return {Number|false}
-	 */
-	function getKeyCode(keyName) {
-		var keyCode;
-		for(keyCode in map) {
-			if(!map.hasOwnProperty(keyCode)) { continue; }
-			if(map[keyCode].indexOf(keyName) > -1) { return keyCode; }
-		}
-		return false;
-	}
-
-
-	////////////
-	// MACROS //
-	////////////
-
-	/**
-	 * Accepts a key combo and an array of key names to inject once the key
-	 *  combo is satisfied.
-	 * @param  {String}	combo
-	 * @param  {Array}	injectedKeys
-	 */
-	function createMacro(combo, injectedKeys) {
-		if(typeof combo !== 'string' && (typeof combo !== 'object' || typeof combo.push !== 'function')) {
-			throw new Error("Cannot create macro. The combo must be a string or array.");
-		}
-		if(typeof injectedKeys !== 'object' || typeof injectedKeys.push !== 'function') {
-			throw new Error("Cannot create macro. The injectedKeys must be an array.");
-		}
-		macros.push([combo, injectedKeys]);
-	}
-
-	/**
-	 * Accepts a key combo and clears any and all macros bound to that key
-	 * combo.
-	 * @param  {String} combo
-	 */
-	function removeMacro(combo) {
-		var macro;
-		if(typeof combo !== 'string' && (typeof combo !== 'object' || typeof combo.push !== 'function')) { throw new Error("Cannot remove macro. The combo must be a string or array."); }
-		for(mI = 0; mI < macros.length; mI += 1) {
-			macro = macros[mI];
-			if(compareCombos(combo, macro[0])) {
-				removeActiveKey(macro[1]);
-				macros.splice(mI, 1);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Executes macros against the active keys. Each macro's key combo is
-	 *  checked and if found to be satisfied, the macro's key names are injected
-	 *  into active keys.
-	 */
-	function executeMacros() {
-		var mI, combo, kI;
-		for(mI = 0; mI < macros.length; mI += 1) {
-			combo = parseKeyCombo(macros[mI][0]);
-			if(activeMacros.indexOf(macros[mI]) === -1 && isSatisfiedCombo(combo)) {
-				activeMacros.push(macros[mI]);
-				for(kI = 0; kI < macros[mI][1].length; kI += 1) {
-					addActiveKey(macros[mI][1][kI]);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Prunes active macros. Checks each active macro's key combo and if found
-	 *  to no longer to be satisfied, each of the macro's key names are removed
-	 *  from active keys.
-	 */
-	function pruneMacros() {
-		var mI, combo, kI;
-		for(mI = 0; mI < activeMacros.length; mI += 1) {
-			combo = parseKeyCombo(activeMacros[mI][0]);
-			if(isSatisfiedCombo(combo) === false) {
-				for(kI = 0; kI < activeMacros[mI][1].length; kI += 1) {
-					removeActiveKey(activeMacros[mI][1][kI]);
-				}
-				activeMacros.splice(mI, 1);
-				mI -= 1;
-			}
-		}
-	}
-
-
-	//////////////
-	// BINDINGS //
-	//////////////
-
-	/**
-	 * Creates a binding object, and, if provided, binds a key down hander and
-	 *  a key up handler. Returns a binding object that emits keyup and
-	 *  keydown events.
-	 * @param  {String}		keyCombo
-	 * @param  {Function}	keyDownCallback	[Optional]
-	 * @param  {Function}	keyUpCallback	[Optional]
-	 * @return {Object}		binding
-	 */
-	function createBinding(keyCombo, keyDownCallback, keyUpCallback) {
-		var api = {}, binding, subBindings = [], bindingApi = {}, kI,
-		subCombo;
-
-		//break the combo down into a combo array
-		if(typeof keyCombo === 'string') {
-			keyCombo = parseKeyCombo(keyCombo);
-		}
-
-		//bind each sub combo contained within the combo string
-		for(kI = 0; kI < keyCombo.length; kI += 1) {
-			binding = {};
-
-			//stringify the combo again
-			subCombo = stringifyKeyCombo([keyCombo[kI]]);
-
-			//validate the sub combo
-			if(typeof subCombo !== 'string') { throw new Error('Failed to bind key combo. The key combo must be string.'); }
-
-			//create the binding
-			binding.keyCombo = subCombo;
-			binding.keyDownCallback = [];
-			binding.keyUpCallback = [];
-
-			//inject the key down and key up callbacks if given
-			if(keyDownCallback) { binding.keyDownCallback.push(keyDownCallback); }
-			if(keyUpCallback) { binding.keyUpCallback.push(keyUpCallback); }
-
-			//stash the new binding
-			bindings.push(binding);
-			subBindings.push(binding);
-		}
-
-		//build the binding api
-		api.clear = clear;
-		api.on = on;
-		return api;
-
-		/**
-		 * Clears the binding
-		 */
-		function clear() {
-			var bI;
-			for(bI = 0; bI < subBindings.length; bI += 1) {
-				bindings.splice(bindings.indexOf(subBindings[bI]), 1);
-			}
-		}
-
-		/**
-		 * Accepts an event name. and any number of callbacks. When the event is
-		 *  emitted, all callbacks are executed. Available events are key up and
-		 *  key down.
-		 * @param  {String}	eventName
-		 * @return {Object}	subBinding
-		 */
-		function on(eventName    ) {
-			var api = {}, callbacks, cI, bI;
-
-			//validate event name
-			if(typeof eventName !== 'string') { throw new Error('Cannot bind callback. The event name must be a string.'); }
-			if(eventName !== 'keyup' && eventName !== 'keydown') { throw new Error('Cannot bind callback. The event name must be a "keyup" or "keydown".'); }
-
-			//gather the callbacks
-			callbacks = Array.prototype.slice.apply(arguments, [1]);
-
-			//stash each the new binding
-			for(cI = 0; cI < callbacks.length; cI += 1) {
-				if(typeof callbacks[cI] === 'function') {
-					if(eventName === 'keyup') {
-						for(bI = 0; bI < subBindings.length; bI += 1) {
-							subBindings[bI].keyUpCallback.push(callbacks[cI]);
-						}
-					} else if(eventName === 'keydown') {
-						for(bI = 0; bI < subBindings.length; bI += 1) {
-							subBindings[bI].keyDownCallback.push(callbacks[cI]);
-						}
-					}
-				}
-			}
-
-			//construct and return the sub binding api
-			api.clear = clear;
-			return api;
-
-			/**
-			 * Clears the binding
-			 */
-			function clear() {
-				var cI, bI;
-				for(cI = 0; cI < callbacks.length; cI += 1) {
-					if(typeof callbacks[cI] === 'function') {
-						if(eventName === 'keyup') {
-							for(bI = 0; bI < subBindings.length; bI += 1) {
-								subBindings[bI].keyUpCallback.splice(subBindings[bI].keyUpCallback.indexOf(callbacks[cI]), 1);
-							}
-						} else {
-							for(bI = 0; bI < subBindings.length; bI += 1) {
-								subBindings[bI].keyDownCallback.splice(subBindings[bI].keyDownCallback.indexOf(callbacks[cI]), 1);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Clears all binding attached to a given key combo. Key name order does not
-	 * matter as long as the key combos equate.
-	 * @param  {String}	keyCombo
-	 */
-	function removeBindingByKeyCombo(keyCombo) {
-		var bI, binding, keyName;
-		for(bI = 0; bI < bindings.length; bI += 1) {
-			binding = bindings[bI];
-			if(compareCombos(keyCombo, binding.keyCombo)) {
-				bindings.splice(bI, 1); bI -= 1;
-			}
-		}
-	}
-
-	/**
-	 * Clears all binding attached to key combos containing a given key name.
-	 * @param  {String}	keyName
-	 */
-	function removeBindingByKeyName(keyName) {
-		var bI, kI, binding;
-		if(keyName) {
-			for(bI = 0; bI < bindings.length; bI += 1) {
-				binding = bindings[bI];
-				for(kI = 0; kI < binding.keyCombo.length; kI += 1) {
-					if(binding.keyCombo[kI].indexOf(keyName) > -1) {
-						bindings.splice(bI, 1); bI -= 1;
-						break;
-					}
-				}
-			}
-		} else {
-			bindings = [];
-		}
-	}
-
-	/**
-	 * Executes bindings that are active. Only allows the keys to be used once
-	 *  as to prevent binding overlap.
-	 * @param  {KeyboardEvent}	event	The keyboard event.
-	 */
-	function executeBindings(event) {
-		var bI, sBI, binding, bindingKeys, remainingKeys, cI, killEventBubble, kI, bindingKeysSatisfied,
-		index, sortedBindings = [], bindingWeight;
-
-		remainingKeys = [].concat(activeKeys);
-		for(bI = 0; bI < bindings.length; bI += 1) {
-			bindingWeight = extractComboKeys(bindings[bI].keyCombo).length;
-			if(!sortedBindings[bindingWeight]) { sortedBindings[bindingWeight] = []; }
-			sortedBindings[bindingWeight].push(bindings[bI]);
-		}
-		for(sBI = sortedBindings.length - 1; sBI >= 0; sBI -= 1) {
-			if(!sortedBindings[sBI]) { continue; }
-			for(bI = 0; bI < sortedBindings[sBI].length; bI += 1) {
-				binding = sortedBindings[sBI][bI];
-				bindingKeys = extractComboKeys(binding.keyCombo);
-				bindingKeysSatisfied = true;
-				for(kI = 0; kI < bindingKeys.length; kI += 1) {
-					if(remainingKeys.indexOf(bindingKeys[kI]) === -1) {
-						bindingKeysSatisfied = false;
-						break;
-					}
-				}
-				if(bindingKeysSatisfied && isSatisfiedCombo(binding.keyCombo)) {
-					activeBindings.push(binding);
-					for(kI = 0; kI < bindingKeys.length; kI += 1) {
-						index = remainingKeys.indexOf(bindingKeys[kI]);
-						if(index > -1) {
-							remainingKeys.splice(index, 1);
-							kI -= 1;
-						}
-					}
-					for(cI = 0; cI < binding.keyDownCallback.length; cI += 1) {
-						if (binding.keyDownCallback[cI](event, getActiveKeys(), binding.keyCombo) === false) {
-							killEventBubble = true;
-						}
-					}
-					if(killEventBubble === true) {
-						event.preventDefault();
-						event.stopPropagation();
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Removes bindings that are no longer satisfied by the active keys. Also
-	 *  fires the key up callbacks.
-	 * @param  {KeyboardEvent}	event
-	 */
-	function pruneBindings(event) {
-		var bI, cI, binding, killEventBubble;
-		for(bI = 0; bI < activeBindings.length; bI += 1) {
-			binding = activeBindings[bI];
-			if(isSatisfiedCombo(binding.keyCombo) === false) {
-				for(cI = 0; cI < binding.keyUpCallback.length; cI += 1) {
-					if (binding.keyUpCallback[cI](event, getActiveKeys(), binding.keyCombo) === false) {
-						killEventBubble = true;
-					}
-				}
-				if(killEventBubble === true) {
-					event.preventDefault();
-					event.stopPropagation();
-				}
-				activeBindings.splice(bI, 1);
-				bI -= 1;
-			}
-		}
-	}
-
-
-	///////////////////
-	// COMBO STRINGS //
-	///////////////////
-
-	/**
-	 * Compares two key combos returning true when they are functionally
-	 *  equivalent.
-	 * @param  {String}	keyComboArrayA keyCombo A key combo string or array.
-	 * @param  {String}	keyComboArrayB keyCombo A key combo string or array.
-	 * @return {Boolean}
-	 */
-	function compareCombos(keyComboArrayA, keyComboArrayB) {
-		var cI, sI, kI;
-		keyComboArrayA = parseKeyCombo(keyComboArrayA);
-		keyComboArrayB = parseKeyCombo(keyComboArrayB);
-		if(keyComboArrayA.length !== keyComboArrayB.length) { return false; }
-		for(cI = 0; cI < keyComboArrayA.length; cI += 1) {
-			if(keyComboArrayA[cI].length !== keyComboArrayB[cI].length) { return false; }
-			for(sI = 0; sI < keyComboArrayA[cI].length; sI += 1) {
-				if(keyComboArrayA[cI][sI].length !== keyComboArrayB[cI][sI].length) { return false; }
-				for(kI = 0; kI < keyComboArrayA[cI][sI].length; kI += 1) {
-					if(keyComboArrayB[cI][sI].indexOf(keyComboArrayA[cI][sI][kI]) === -1) { return false; }
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Checks to see if a key combo string or key array is satisfied by the
-	 *  currently active keys. It does not take into account spent keys.
-	 * @param  {String}	keyCombo	A key combo string or array.
-	 * @return {Boolean}
-	 */
-	function isSatisfiedCombo(keyCombo) {
-		var cI, sI, stage, kI, stageOffset = 0, index, comboMatches;
-		keyCombo = parseKeyCombo(keyCombo);
-		for(cI = 0; cI < keyCombo.length; cI += 1) {
-			comboMatches = true;
-			stageOffset = 0;
-			for(sI = 0; sI < keyCombo[cI].length; sI += 1) {
-				stage = [].concat(keyCombo[cI][sI]);
-				for(kI = stageOffset; kI < activeKeys.length; kI += 1) {
-					index = stage.indexOf(activeKeys[kI]);
-					if(index > -1) {
-						stage.splice(index, 1);
-						stageOffset = kI;
-					}
-				}
-				if(stage.length !== 0) { comboMatches = false; break; }
-			}
-			if(comboMatches) { return true; }
-		}
-		return false;
-	}
-
-	/**
-	 * Accepts a key combo array or string and returns a flat array containing all keys referenced by
-	 * the key combo.
-	 * @param  {String}	keyCombo	A key combo string or array.
-	 * @return {Array}
-	 */
-	function extractComboKeys(keyCombo) {
-		var cI, sI, kI, keys = [];
-		keyCombo = parseKeyCombo(keyCombo);
-		for(cI = 0; cI < keyCombo.length; cI += 1) {
-			for(sI = 0; sI < keyCombo[cI].length; sI += 1) {
-				keys = keys.concat(keyCombo[cI][sI]);
-			}
-		}
-		return keys;
-	}
-
-	/**
-	 * Parses a key combo string into a 3 dimensional array.
-	 * - Level 1 - sub combos.
-	 * - Level 2 - combo stages. A stage is a set of key name pairs that must
-	 *  be satisfied in the order they are defined.
-	 * - Level 3 - each key name to the stage.
-	 * @param  {String|Array}	keyCombo	A key combo string.
-	 * @return {Array}
-	 */
-	function parseKeyCombo(keyCombo) {
-		var s = keyCombo, i = 0, op = 0, ws = false, nc = false, combos = [], combo = [], stage = [], key = '';
-
-		if(typeof keyCombo === 'object' && typeof keyCombo.push === 'function') { return keyCombo; }
-		if(typeof keyCombo !== 'string') { throw new Error('Cannot parse "keyCombo" because its type is "' + (typeof keyCombo) + '". It must be a "string".'); }
-
-		//remove leading whitespace
-		while(s.charAt(i) === ' ') { i += 1; }
-		while(true) {
-			if(s.charAt(i) === ' ') {
-				//white space & next combo op
-				while(s.charAt(i) === ' ') { i += 1; }
-				ws = true;
-			} else if(s.charAt(i) === ',') {
-				if(op || nc) { throw new Error('Failed to parse key combo. Unexpected , at character index ' + i + '.'); }
-				nc = true;
-				i += 1;
-			} else if(s.charAt(i) === '+') {
-				//next key
-				if(key.length) { stage.push(key); key = ''; }
-				if(op || nc) { throw new Error('Failed to parse key combo. Unexpected + at character index ' + i + '.'); }
-				op = true;
-				i += 1;
-			} else if(s.charAt(i) === '>') {
-				//next stage op
-				if(key.length) { stage.push(key); key = ''; }
-				if(stage.length) { combo.push(stage); stage = []; }
-				if(op || nc) { throw new Error('Failed to parse key combo. Unexpected > at character index ' + i + '.'); }
-				op = true;
-				i += 1;
-			} else if(i < s.length - 1 && s.charAt(i) === '!' && (s.charAt(i + 1) === '>' || s.charAt(i + 1) === ',' || s.charAt(i + 1) === '+')) {
-				key += s.charAt(i + 1);
-				op = false;
-				ws = false;
-				nc = false;
-				i += 2;
-			} else if(i < s.length && s.charAt(i) !== '+' && s.charAt(i) !== '>' && s.charAt(i) !== ',' && s.charAt(i) !== ' ') {
-				//end combo
-				if(op === false && ws === true || nc === true) {
-					if(key.length) { stage.push(key); key = ''; }
-					if(stage.length) { combo.push(stage); stage = []; }
-					if(combo.length) { combos.push(combo); combo = []; }
-				}
-				op = false;
-				ws = false;
-				nc = false;
-				//key
-				while(i < s.length && s.charAt(i) !== '+' && s.charAt(i) !== '>' && s.charAt(i) !== ',' && s.charAt(i) !== ' ') {
-					key += s.charAt(i);
-					i += 1;
-				}
-			} else {
-				//unknown char
-				i += 1;
-				continue;
-			}
-			//end of combos string
-			if(i >= s.length) {
-				if(key.length) { stage.push(key); key = ''; }
-				if(stage.length) { combo.push(stage); stage = []; }
-				if(combo.length) { combos.push(combo); combo = []; }
-				break;
-			}
-		}
-		return combos;
-	}
-
-	/**
-	 * Stringifys a key combo.
-	 * @param  {Array|String}	keyComboArray	A key combo array. If a key
-	 *  combo string is given it will be returned.
-	 * @return {String}
-	 */
-	function stringifyKeyCombo(keyComboArray) {
-		var cI, ccI, output = [];
-		if(typeof keyComboArray === 'string') { return keyComboArray; }
-		if(typeof keyComboArray !== 'object' || typeof keyComboArray.push !== 'function') { throw new Error('Cannot stringify key combo.'); }
-		for(cI = 0; cI < keyComboArray.length; cI += 1) {
-			output[cI] = [];
-			for(ccI = 0; ccI < keyComboArray[cI].length; ccI += 1) {
-				output[cI][ccI] = keyComboArray[cI][ccI].join(' + ');
-			}
-			output[cI] = output[cI].join(' > ');
-		}
-		return output.join(' ');
-	}
-
-
-	/////////////////
-	// ACTIVE KEYS //
-	/////////////////
-
-	/**
-	 * Returns the a copy of the active keys array.
-	 * @return {Array}
-	 */
-	function getActiveKeys() {
-		return [].concat(activeKeys);
-	}
-
-	/**
-	 * Adds a key to the active keys array, but only if it has not already been
-	 *  added.
-	 * @param {String}	keyName	The key name string.
-	 */
-	function addActiveKey(keyName) {
-		if(keyName.match(/\s/)) { throw new Error('Cannot add key name ' + keyName + ' to active keys because it contains whitespace.'); }
-		if(activeKeys.indexOf(keyName) > -1) { return; }
-		activeKeys.push(keyName);
-	}
-
-	/**
-	 * Removes a key from the active keys array.
-	 * @param  {String}	keyNames	The key name string.
-	 */
-	function removeActiveKey(keyName) {
-		var keyCode = getKeyCode(keyName);
-		if(keyCode === '91' || keyCode === '92') { activeKeys = []; } //remove all key on release of super.
-		else { activeKeys.splice(activeKeys.indexOf(keyName), 1); }
-		// Mac Specific remove all keys on release of super
-		if(/^Mac/.test(navigator.platform)){
-			// Chrome,Safari
-			if(/Chrome/.test(navigator.userAgent) ||
-				 /Safari/.test(navigator.userAgent)){
-				if(keyCode === '91' || keyCode === '93') { activeKeys = []; }
-			}
-			// Opera
-			if(/Opera/.test(navigator.userAgent) && keyCode == "17"){
-				activeKeys = [];
-			}
-			// Firefox
-			if(/Firefox/.test(navigator.userAgent) && keyCode == "224"){
-				activeKeys = [];
-			}
-		}
-	}
-
-
-	/////////////
-	// LOCALES //
-	/////////////
-
-	/**
-	 * Registers a new locale. This is useful if you would like to add support for a new keyboard layout. It could also be useful for
-	 * alternative key names. For example if you program games you could create a locale for your key mappings. Instead of key 65 mapped
-	 * to 'a' you could map it to 'jump'.
-	 * @param  {String}	localeName	The name of the new locale.
-	 * @param  {Object}	localeMap	The locale map.
-	 */
-	function registerLocale(localeName, localeMap) {
-
-		//validate arguments
-		if(typeof localeName !== 'string') { throw new Error('Cannot register new locale. The locale name must be a string.'); }
-		if(typeof localeMap !== 'object') { throw new Error('Cannot register ' + localeName + ' locale. The locale map must be an object.'); }
-		if(typeof localeMap.map !== 'object') { throw new Error('Cannot register ' + localeName + ' locale. The locale map is invalid.'); }
-
-		//stash the locale
-		if(!localeMap.macros) { localeMap.macros = []; }
-		locales[localeName] = localeMap;
-	}
-
-	/**
-	 * Swaps the current locale.
-	 * @param  {String}	localeName	The locale to activate.
-	 * @return {Object}
-	 */
-	function getSetLocale(localeName) {
-
-		//if a new locale is given then set it
-		if(localeName) {
-			if(typeof localeName !== 'string') { throw new Error('Cannot set locale. The locale name must be a string.'); }
-			if(!locales[localeName]) { throw new Error('Cannot set locale to ' + localeName + ' because it does not exist. If you would like to submit a ' + localeName + ' locale map for KeyboardJS please submit it at https://github.com/RobertWHurst/KeyboardJS/issues.'); }
-
-			//set the current map and macros
-			map = locales[localeName].map;
-			macros = locales[localeName].macros;
-
-			//set the current locale
-			locale = localeName;
-		}
-
-		//return the current locale
-		return locale;
-	}
-});
-
-
-
-},{}],4:[function(require,module,exports){
+
+var Keyboard = require('./lib/keyboard');
+var Locale   = require('./lib/locale');
+var KeyCombo = require('./lib/key-combo');
+
+var keyboard = new Keyboard();
+
+keyboard.setLocale('us', require('./locales/us'));
+
+exports          = module.exports = keyboard;
+exports.Keyboard = Keyboard;
+exports.Locale   = Locale;
+exports.KeyCombo = KeyCombo;
+
+},{"./lib/key-combo":4,"./lib/keyboard":5,"./lib/locale":6,"./locales/us":7}],4:[function(require,module,exports){
+
+function KeyCombo(keyComboStr) {
+  this.sourceStr = keyComboStr;
+  this.subCombos = KeyCombo.parseComboStr(keyComboStr);
+  this.keyNames  = this.subCombos.reduce(function(memo, nextSubCombo) {
+    return memo.concat(nextSubCombo);
+  });
+}
+
+// TODO: Add support for key combo sequences
+KeyCombo.sequenceDeliminator = '>>';
+KeyCombo.comboDeliminator    = '>';
+KeyCombo.keyDeliminator      = '+';
+
+KeyCombo.parseComboStr = function(keyComboStr) {
+  var subComboStrs = KeyCombo._splitStr(keyComboStr, KeyCombo.comboDeliminator);
+  var combo        = [];
+
+  for (var i = 0 ; i < subComboStrs.length; i += 1) {
+    combo.push(KeyCombo._splitStr(subComboStrs[i], KeyCombo.keyDeliminator));
+  }
+  return combo;
+};
+
+KeyCombo.prototype.check = function(pressedKeyNames) {
+  var startingKeyNameIndex = 0;
+  for (var i = 0; i < this.subCombos.length; i += 1) {
+    startingKeyNameIndex = this._checkSubCombo(
+      this.subCombos[i],
+      startingKeyNameIndex,
+      pressedKeyNames
+    );
+    if (startingKeyNameIndex === -1) { return false; }
+  }
+  return true;
+};
+
+KeyCombo.prototype.isEqual = function(otherKeyCombo) {
+  if (
+    !otherKeyCombo ||
+    typeof otherKeyCombo !== 'string' &&
+    typeof otherKeyCombo !== 'object'
+  ) { return false; }
+
+  if (typeof otherKeyCombo === 'string') {
+    otherKeyCombo = new KeyCombo(otherKeyCombo);
+  }
+
+  if (this.subCombos.length !== otherKeyCombo.subCombos.length) {
+    return false;
+  }
+  for (var i = 0; i < this.subCombos.length; i += 1) {
+    if (this.subCombos[i].length !== otherKeyCombo.subCombos[i].length) {
+      return false;
+    }
+  }
+
+  for (var i = 0; i < this.subCombos.length; i += 1) {
+    var subCombo      = this.subCombos[i];
+    var otherSubCombo = otherKeyCombo.subCombos[i].slice(0);
+
+    for (var j = 0; j < subCombo.length; j += 1) {
+      var keyName = subCombo[j];
+      var index   = otherSubCombo.indexOf(keyName);
+
+      if (index > -1) {
+        otherSubCombo.splice(index, 1);
+      }
+    }
+    if (otherSubCombo.length !== 0) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+KeyCombo._splitStr = function(str, deliminator) {
+  var s  = str;
+  var d  = deliminator;
+  var c  = '';
+  var ca = [];
+
+  for (var ci = 0; ci < s.length; ci += 1) {
+    if (ci > 0 && s[ci] === d && s[ci - 1] !== '\\') {
+      ca.push(c.trim());
+      c = '';
+      ci += 1;
+    }
+    c += s[ci];
+  }
+  if (c) { ca.push(c.trim()); }
+
+  return ca;
+};
+
+KeyCombo.prototype._checkSubCombo = function(subCombo, startingKeyNameIndex, pressedKeyNames) {
+  subCombo = subCombo.slice(0);
+  pressedKeyNames = pressedKeyNames.slice(startingKeyNameIndex);
+
+  var endIndex = startingKeyNameIndex;
+  for (var i = 0; i < subCombo.length; i += 1) {
+
+    var keyName = subCombo[i];
+    if (keyName[0] === '\\') {
+      var escapedKeyName = keyName.slice(1);
+      if (
+        escapedKeyName === KeyCombo.comboDeliminator ||
+        escapedKeyName === KeyCombo.keyDeliminator
+      ) {
+        keyName = escapedKeyName;
+      }
+    }
+
+    var index = pressedKeyNames.indexOf(keyName);
+    if (index > -1) {
+      subCombo.splice(i, 1);
+      i -= 1;
+      if (index > endIndex) {
+        endIndex = index;
+      }
+      if (subCombo.length === 0) {
+        return endIndex;
+      }
+    }
+  }
+  return -1;
+};
+
+
+module.exports = KeyCombo;
+
+},{}],5:[function(require,module,exports){
+(function (global){
+
+var Locale = require('./locale');
+var KeyCombo = require('./key-combo');
+
+
+function Keyboard(targetWindow, targetElement, platform, userAgent) {
+  this._locale               = null;
+  this._currentContext       = null;
+  this._contexts             = {};
+  this._listeners            = [];
+  this._appliedListeners     = [];
+  this._locales              = {};
+  this._targetElement        = null;
+  this._targetWindow         = null;
+  this._targetPlatform       = '';
+  this._targetUserAgent      = '';
+  this._isModernBrowser      = false;
+  this._targetKeyDownBinding = null;
+  this._targetKeyUpBinding   = null;
+  this._targetResetBinding   = null;
+  this._paused               = false;
+
+  this.setContext('global');
+  this.watch(targetWindow, targetElement, platform, userAgent);
+}
+
+Keyboard.prototype.setLocale = function(localeName, localeBuilder) {
+  var locale = null;
+  if (typeof localeName === 'string') {
+
+    if (localeBuilder) {
+      locale = new Locale(localeName);
+      localeBuilder(locale, this._targetPlatform, this._targetUserAgent);
+    } else {
+      locale = this._locales[localeName] || null;
+    }
+  } else {
+    locale     = localeName;
+    localeName = locale._localeName;
+  }
+
+  this._locale              = locale;
+  this._locales[localeName] = locale;
+  if (locale) {
+    this._locale.pressedKeys = locale.pressedKeys;
+  }
+};
+
+Keyboard.prototype.getLocale = function(localName) {
+  localName || (localName = this._locale.localeName);
+  return this._locales[localName] || null;
+};
+
+Keyboard.prototype.bind = function(keyComboStr, pressHandler, releaseHandler, preventRepeatByDefault) {
+  if (keyComboStr === null || typeof keyComboStr === 'function') {
+    preventRepeatByDefault = releaseHandler;
+    releaseHandler         = pressHandler;
+    pressHandler           = keyComboStr;
+    keyComboStr            = null;
+  }
+
+  if (
+    keyComboStr &&
+    typeof keyComboStr === 'object' &&
+    typeof keyComboStr.length === 'number'
+  ) {
+    for (var i = 0; i < keyComboStr.length; i += 1) {
+      this.bind(keyComboStr[i], pressHandler, releaseHandler);
+    }
+    return;
+  }
+
+  this._listeners.push({
+    keyCombo               : keyComboStr ? new KeyCombo(keyComboStr) : null,
+    pressHandler           : pressHandler           || null,
+    releaseHandler         : releaseHandler         || null,
+    preventRepeat          : preventRepeatByDefault || false,
+    preventRepeatByDefault : preventRepeatByDefault || false
+  });
+};
+Keyboard.prototype.addListener = Keyboard.prototype.bind;
+Keyboard.prototype.on          = Keyboard.prototype.bind;
+
+Keyboard.prototype.unbind = function(keyComboStr, pressHandler, releaseHandler) {
+  if (keyComboStr === null || typeof keyComboStr === 'function') {
+    releaseHandler = pressHandler;
+    pressHandler   = keyComboStr;
+    keyComboStr = null;
+  }
+
+  if (
+    keyComboStr &&
+    typeof keyComboStr === 'object' &&
+    typeof keyComboStr.length === 'number'
+  ) {
+    for (var i = 0; i < keyComboStr.length; i += 1) {
+      this.unbind(keyComboStr[i], pressHandler, releaseHandler);
+    }
+    return;
+  }
+
+  for (var i = 0; i < this._listeners.length; i += 1) {
+    var listener = this._listeners[i];
+
+    var comboMatches          = !keyComboStr && !listener.keyCombo ||
+                                listener.keyCombo.isEqual(keyComboStr);
+    var pressHandlerMatches   = !pressHandler && !releaseHandler ||
+                                !pressHandler && !listener.pressHandler ||
+                                pressHandler === listener.pressHandler;
+    var releaseHandlerMatches = !pressHandler && !releaseHandler ||
+                                !releaseHandler && !listener.releaseHandler ||
+                                releaseHandler === listener.releaseHandler;
+
+    if (comboMatches && pressHandlerMatches && releaseHandlerMatches) {
+      this._listeners.splice(i, 1);
+      i -= 1;
+    }
+  }
+};
+Keyboard.prototype.removeListener = Keyboard.prototype.unbind;
+Keyboard.prototype.off            = Keyboard.prototype.unbind;
+
+Keyboard.prototype.setContext = function(contextName) {
+  if(this._locale) { this.releaseAllKeys(); }
+
+  if (!this._contexts[contextName]) {
+    this._contexts[contextName] = [];
+  }
+  this._listeners      = this._contexts[contextName];
+  this._currentContext = contextName;
+};
+
+Keyboard.prototype.getContext = function() {
+  return this._currentContext;
+};
+
+Keyboard.prototype.withContext = function(contextName, callback) {
+  var previousContextName = this.getContext();
+  this.setContext(contextName);
+
+  callback();
+
+  this.setContext(previousContextName);
+};
+
+Keyboard.prototype.watch = function(targetWindow, targetElement, targetPlatform, targetUserAgent) {
+  var _this = this;
+
+  this.stop();
+
+  if (!targetWindow) {
+    if (!global.addEventListener && !global.attachEvent) {
+      throw new Error('Cannot find global functions addEventListener or attachEvent.');
+    }
+    targetWindow = global;
+  }
+
+  if (typeof targetWindow.nodeType === 'number') {
+    targetUserAgent = targetPlatform;
+    targetPlatform  = targetElement;
+    targetElement   = targetWindow;
+    targetWindow    = global;
+  }
+  
+  if (!targetWindow.addEventListener && !targetWindow.attachEvent) {
+    throw new Error('Cannot find addEventListener or attachEvent methods on targetWindow.');
+  }
+  
+  this._isModernBrowser = !!targetWindow.addEventListener;
+
+  var userAgent = targetWindow.navigator && targetWindow.navigator.userAgent || '';
+  var platform  = targetWindow.navigator && targetWindow.navigator.platform  || '';
+
+  targetElement   && targetElement   !== null || (targetElement   = targetWindow.document);
+  targetPlatform  && targetPlatform  !== null || (targetPlatform  = platform);
+  targetUserAgent && targetUserAgent !== null || (targetUserAgent = userAgent);
+
+  this._targetKeyDownBinding = function(event) {
+    _this.pressKey(event.keyCode, event);
+  };
+  this._targetKeyUpBinding = function(event) {
+    _this.releaseKey(event.keyCode, event);
+  };
+  this._targetResetBinding = function(event) {
+    _this.releaseAllKeys(event)
+  };
+
+  this._bindEvent(targetElement, 'keydown', this._targetKeyDownBinding);
+  this._bindEvent(targetElement, 'keyup',   this._targetKeyUpBinding);
+  this._bindEvent(targetWindow,  'focus',   this._targetResetBinding);
+  this._bindEvent(targetWindow,  'blur',    this._targetResetBinding);
+
+  this._targetElement   = targetElement;
+  this._targetWindow    = targetWindow;
+  this._targetPlatform  = targetPlatform;
+  this._targetUserAgent = targetUserAgent;
+};
+
+Keyboard.prototype.stop = function() {
+  var _this = this;
+
+  if (!this._targetElement || !this._targetWindow) { return; }
+
+  this._unbindEvent(this._targetElement, 'keydown', this._targetKeyDownBinding);
+  this._unbindEvent(this._targetElement, 'keyup',   this._targetKeyUpBinding);
+  this._unbindEvent(this._targetWindow,  'focus',   this._targetResetBinding);
+  this._unbindEvent(this._targetWindow,  'blur',    this._targetResetBinding);
+
+  this._targetWindow  = null;
+  this._targetElement = null;
+};
+
+Keyboard.prototype.pressKey = function(keyCode, event) {
+  if (this._paused) { return; }
+  if (!this._locale) { throw new Error('Locale not set'); }
+
+  this._locale.pressKey(keyCode);
+  this._applyBindings(event);
+};
+
+Keyboard.prototype.releaseKey = function(keyCode, event) {
+  if (this._paused) { return; }
+  if (!this._locale) { throw new Error('Locale not set'); }
+
+  this._locale.releaseKey(keyCode);
+  this._clearBindings(event);
+};
+
+Keyboard.prototype.releaseAllKeys = function(event) {
+  if (this._paused) { return; }
+  if (!this._locale) { throw new Error('Locale not set'); }
+
+  this._locale.pressedKeys.length = 0;
+  this._clearBindings(event);
+};
+
+Keyboard.prototype.pause = function() {
+  if (this._paused) { return; }
+  if (this._locale) { this.releaseAllKeys(); }
+  this._paused = true;
+};
+
+Keyboard.prototype.resume = function() {
+  this._paused = false;
+};
+
+Keyboard.prototype.reset = function() {
+  this.releaseAllKeys();
+  this._listeners.length = 0;
+};
+
+Keyboard.prototype._bindEvent = function(targetElement, eventName, handler) {
+  return this._isModernBrowser ?
+    targetElement.addEventListener(eventName, handler, false) :
+    targetElement.attachEvent('on' + eventName, handler);
+};
+
+Keyboard.prototype._unbindEvent = function(targetElement, eventName, handler) {
+  return this._isModernBrowser ?
+    targetElement.removeEventListener(eventName, handler, false) :
+    targetElement.detachEvent('on' + eventName, handler);
+};
+
+Keyboard.prototype._getGroupedListeners = function() {
+  var listenerGroups   = [];
+  var listenerGroupMap = [];
+
+  var listeners = this._listeners;
+  if (this._currentContext !== 'global') {
+    listeners = [].concat(listeners, this._contexts.global);
+  }
+
+  listeners.sort(function(a, b) {
+    return b.keyCombo.keyNames.length - a.keyCombo.keyNames.length;
+  }).forEach(function(l) {
+    var mapIndex = -1;
+    for (var i = 0; i < listenerGroupMap.length; i += 1) {
+      if (listenerGroupMap[i].isEqual(l.keyCombo)) {
+        mapIndex = i;
+      }
+    }
+    if (mapIndex === -1) {
+      mapIndex = listenerGroupMap.length;
+      listenerGroupMap.push(l.keyCombo);
+    }
+    if (!listenerGroups[mapIndex]) {
+      listenerGroups[mapIndex] = [];
+    }
+    listenerGroups[mapIndex].push(l);
+  });
+  return listenerGroups;
+};
+
+Keyboard.prototype._applyBindings = function(event) {
+  var preventRepeat = false;
+
+  event || (event = {});
+  event.preventRepeat = function() { preventRepeat = true; };
+  event.pressedKeys   = this._locale.pressedKeys.slice(0);
+
+  var pressedKeys    = this._locale.pressedKeys.slice(0);
+  var listenerGroups = this._getGroupedListeners();
+
+
+  for (var i = 0; i < listenerGroups.length; i += 1) {
+    var listeners = listenerGroups[i];
+    var keyCombo  = listeners[0].keyCombo;
+
+    if (keyCombo === null || keyCombo.check(pressedKeys)) {
+      for (var j = 0; j < listeners.length; j += 1) {
+        var listener = listeners[j];
+
+        if (keyCombo === null) {
+          listener = {
+            keyCombo               : new KeyCombo(pressedKeys.join('+')),
+            pressHandler           : listener.pressHandler,
+            releaseHandler         : listener.releaseHandler,
+            preventRepeat          : listener.preventRepeat,
+            preventRepeatByDefault : listener.preventRepeatByDefault
+          };
+        }
+
+        if (listener.pressHandler && !listener.preventRepeat) {
+          listener.pressHandler.call(this, event);
+          if (preventRepeat) {
+            listener.preventRepeat = preventRepeat;
+            preventRepeat          = false;
+          }
+        }
+
+        if (listener.releaseHandler && this._appliedListeners.indexOf(listener) === -1) {
+          this._appliedListeners.push(listener);
+        }
+      }
+
+      if (keyCombo) {
+        for (var j = 0; j < keyCombo.keyNames.length; j += 1) {
+          var index = pressedKeys.indexOf(keyCombo.keyNames[j]);
+          if (index !== -1) {
+            pressedKeys.splice(index, 1);
+            j -= 1;
+          }
+        }
+      }
+    }
+  }
+};
+
+Keyboard.prototype._clearBindings = function(event) {
+  event || (event = {});
+
+  for (var i = 0; i < this._appliedListeners.length; i += 1) {
+    var listener = this._appliedListeners[i];
+    var keyCombo = listener.keyCombo;
+    if (keyCombo === null || !keyCombo.check(this._locale.pressedKeys)) {
+      listener.preventRepeat = listener.preventRepeatByDefault;
+      listener.releaseHandler.call(this, event);
+      this._appliedListeners.splice(i, 1);
+      i -= 1;
+    }
+  }
+};
+
+module.exports = Keyboard;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./key-combo":4,"./locale":6}],6:[function(require,module,exports){
+
+var KeyCombo = require('./key-combo');
+
+
+function Locale(name) {
+  this.localeName     = name;
+  this.pressedKeys    = [];
+  this._appliedMacros = [];
+  this._keyMap        = {};
+  this._killKeyCodes  = [];
+  this._macros        = [];
+}
+
+Locale.prototype.bindKeyCode = function(keyCode, keyNames) {
+  if (typeof keyNames === 'string') {
+    keyNames = [keyNames];
+  }
+
+  this._keyMap[keyCode] = keyNames;
+};
+
+Locale.prototype.bindMacro = function(keyComboStr, keyNames) {
+  if (typeof keyNames === 'string') {
+    keyNames = [ keyNames ];
+  }
+
+  var handler = null;
+  if (typeof keyNames === 'function') {
+    handler = keyNames;
+    keyNames = null;
+  }
+
+  var macro = {
+    keyCombo : new KeyCombo(keyComboStr),
+    keyNames : keyNames,
+    handler  : handler
+  };
+
+  this._macros.push(macro);
+};
+
+Locale.prototype.getKeyCodes = function(keyName) {
+  var keyCodes = [];
+  for (var keyCode in this._keyMap) {
+    var index = this._keyMap[keyCode].indexOf(keyName);
+    if (index > -1) { keyCodes.push(keyCode|0); }
+  }
+  return keyCodes;
+};
+
+Locale.prototype.getKeyNames = function(keyCode) {
+  return this._keyMap[keyCode] || [];
+};
+
+Locale.prototype.setKillKey = function(keyCode) {
+  if (typeof keyCode === 'string') {
+    var keyCodes = this.getKeyCodes(keyCode);
+    for (var i = 0; i < keyCodes.length; i += 1) {
+      this.setKillKey(keyCodes[i]);
+    }
+    return;
+  }
+
+  this._killKeyCodes.push(keyCode);
+};
+
+Locale.prototype.pressKey = function(keyCode) {
+  if (typeof keyCode === 'string') {
+    var keyCodes = this.getKeyCodes(keyCode);
+    for (var i = 0; i < keyCodes.length; i += 1) {
+      this.pressKey(keyCodes[i]);
+    }
+    return;
+  }
+
+  var keyNames = this.getKeyNames(keyCode);
+  for (var i = 0; i < keyNames.length; i += 1) {
+    if (this.pressedKeys.indexOf(keyNames[i]) === -1) {
+      this.pressedKeys.push(keyNames[i]);
+    }
+  }
+
+  this._applyMacros();
+};
+
+Locale.prototype.releaseKey = function(keyCode) {
+  if (typeof keyCode === 'string') {
+    var keyCodes = this.getKeyCodes(keyCode);
+    for (var i = 0; i < keyCodes.length; i += 1) {
+      this.releaseKey(keyCodes[i]);
+    }
+  }
+
+  else {
+    var keyNames         = this.getKeyNames(keyCode);
+    var killKeyCodeIndex = this._killKeyCodes.indexOf(keyCode);
+    
+    if (killKeyCodeIndex > -1) {
+      this.pressedKeys.length = 0;
+    } else {
+      for (var i = 0; i < keyNames.length; i += 1) {
+        var index = this.pressedKeys.indexOf(keyNames[i]);
+        if (index > -1) {
+          this.pressedKeys.splice(index, 1);
+        }
+      }
+    }
+
+    this._clearMacros();
+  }
+};
+
+Locale.prototype._applyMacros = function() {
+  var macros = this._macros.slice(0);
+  for (var i = 0; i < macros.length; i += 1) {
+    var macro = macros[i];
+    if (macro.keyCombo.check(this.pressedKeys)) {
+      if (macro.handler) {
+        macro.keyNames = macro.handler(this.pressedKeys);
+      }
+      for (var j = 0; j < macro.keyNames.length; j += 1) {
+        if (this.pressedKeys.indexOf(macro.keyNames[j]) === -1) {
+          this.pressedKeys.push(macro.keyNames[j]);
+        }
+      }
+      this._appliedMacros.push(macro);
+    }
+  }
+};
+
+Locale.prototype._clearMacros = function() {
+  for (var i = 0; i < this._appliedMacros.length; i += 1) {
+    var macro = this._appliedMacros[i];
+    if (!macro.keyCombo.check(this.pressedKeys)) {
+      for (var j = 0; j < macro.keyNames.length; j += 1) {
+        var index = this.pressedKeys.indexOf(macro.keyNames[j]);
+        if (index > -1) {
+          this.pressedKeys.splice(index, 1);
+        }
+      }
+      if (macro.handler) {
+        macro.keyNames = null;
+      }
+      this._appliedMacros.splice(i, 1);
+      i -= 1;
+    }
+  }
+};
+
+
+module.exports = Locale;
+
+},{"./key-combo":4}],7:[function(require,module,exports){
+
+module.exports = function(locale, platform, userAgent) {
+
+  // general
+  locale.bindKeyCode(3,   ['cancel']);
+  locale.bindKeyCode(8,   ['backspace']);
+  locale.bindKeyCode(9,   ['tab']);
+  locale.bindKeyCode(12,  ['clear']);
+  locale.bindKeyCode(13,  ['enter']);
+  locale.bindKeyCode(16,  ['shift']);
+  locale.bindKeyCode(17,  ['ctrl']);
+  locale.bindKeyCode(18,  ['alt', 'menu']);
+  locale.bindKeyCode(19,  ['pause', 'break']);
+  locale.bindKeyCode(20,  ['capslock']);
+  locale.bindKeyCode(27,  ['escape', 'esc']);
+  locale.bindKeyCode(32,  ['space', 'spacebar']);
+  locale.bindKeyCode(33,  ['pageup']);
+  locale.bindKeyCode(34,  ['pagedown']);
+  locale.bindKeyCode(35,  ['end']);
+  locale.bindKeyCode(36,  ['home']);
+  locale.bindKeyCode(37,  ['left']);
+  locale.bindKeyCode(38,  ['up']);
+  locale.bindKeyCode(39,  ['right']);
+  locale.bindKeyCode(40,  ['down']);
+  locale.bindKeyCode(41,  ['select']);
+  locale.bindKeyCode(42,  ['printscreen']);
+  locale.bindKeyCode(43,  ['execute']);
+  locale.bindKeyCode(44,  ['snapshot']);
+  locale.bindKeyCode(45,  ['insert', 'ins']);
+  locale.bindKeyCode(46,  ['delete', 'del']);
+  locale.bindKeyCode(47,  ['help']);
+  locale.bindKeyCode(145, ['scrolllock', 'scroll']);
+  locale.bindKeyCode(187, ['equal', 'equalsign', '=']);
+  locale.bindKeyCode(188, ['comma', ',']);
+  locale.bindKeyCode(190, ['period', '.']);
+  locale.bindKeyCode(191, ['slash', 'forwardslash', '/']);
+  locale.bindKeyCode(192, ['graveaccent', '`']);
+  locale.bindKeyCode(219, ['openbracket', '[']);
+  locale.bindKeyCode(220, ['backslash', '\\']);
+  locale.bindKeyCode(221, ['closebracket', ']']);
+  locale.bindKeyCode(222, ['apostrophe', '\'']);
+
+  // 0-9
+  locale.bindKeyCode(48, ['zero', '0']);
+  locale.bindKeyCode(49, ['one', '1']);
+  locale.bindKeyCode(50, ['two', '2']);
+  locale.bindKeyCode(51, ['three', '3']);
+  locale.bindKeyCode(52, ['four', '4']);
+  locale.bindKeyCode(53, ['five', '5']);
+  locale.bindKeyCode(54, ['six', '6']);
+  locale.bindKeyCode(55, ['seven', '7']);
+  locale.bindKeyCode(56, ['eight', '8']);
+  locale.bindKeyCode(57, ['nine', '9']);
+
+  // numpad
+  locale.bindKeyCode(96, ['numzero', 'num0']);
+  locale.bindKeyCode(97, ['numone', 'num1']);
+  locale.bindKeyCode(98, ['numtwo', 'num2']);
+  locale.bindKeyCode(99, ['numthree', 'num3']);
+  locale.bindKeyCode(100, ['numfour', 'num4']);
+  locale.bindKeyCode(101, ['numfive', 'num5']);
+  locale.bindKeyCode(102, ['numsix', 'num6']);
+  locale.bindKeyCode(103, ['numseven', 'num7']);
+  locale.bindKeyCode(104, ['numeight', 'num8']);
+  locale.bindKeyCode(105, ['numnine', 'num9']);
+  locale.bindKeyCode(106, ['nummultiply', 'num*']);
+  locale.bindKeyCode(107, ['numadd', 'num+']);
+  locale.bindKeyCode(108, ['numenter']);
+  locale.bindKeyCode(109, ['numsubtract', 'num-']);
+  locale.bindKeyCode(110, ['numdecimal', 'num.']);
+  locale.bindKeyCode(111, ['numdivide', 'num/']);
+  locale.bindKeyCode(144, ['numlock', 'num']);
+
+  // function keys
+  locale.bindKeyCode(112, ['f1']);
+  locale.bindKeyCode(113, ['f2']);
+  locale.bindKeyCode(114, ['f3']);
+  locale.bindKeyCode(115, ['f4']);
+  locale.bindKeyCode(116, ['f5']);
+  locale.bindKeyCode(117, ['f6']);
+  locale.bindKeyCode(118, ['f7']);
+  locale.bindKeyCode(119, ['f8']);
+  locale.bindKeyCode(120, ['f9']);
+  locale.bindKeyCode(121, ['f10']);
+  locale.bindKeyCode(122, ['f11']);
+  locale.bindKeyCode(123, ['f12']);
+
+  // secondary key symbols
+  locale.bindMacro('shift + `', ['tilde', '~']);
+  locale.bindMacro('shift + 1', ['exclamation', 'exclamationpoint', '!']);
+  locale.bindMacro('shift + 2', ['at', '@']);
+  locale.bindMacro('shift + 3', ['number', '#']);
+  locale.bindMacro('shift + 4', ['dollar', 'dollars', 'dollarsign', '$']);
+  locale.bindMacro('shift + 5', ['percent', '%']);
+  locale.bindMacro('shift + 6', ['caret', '^']);
+  locale.bindMacro('shift + 7', ['ampersand', 'and', '&']);
+  locale.bindMacro('shift + 8', ['asterisk', '*']);
+  locale.bindMacro('shift + 9', ['openparen', '(']);
+  locale.bindMacro('shift + 0', ['closeparen', ')']);
+  locale.bindMacro('shift + -', ['underscore', '_']);
+  locale.bindMacro('shift + =', ['plus', '+']);
+  locale.bindMacro('shift + [', ['opencurlybrace', 'opencurlybracket', '{']);
+  locale.bindMacro('shift + ]', ['closecurlybrace', 'closecurlybracket', '}']);
+  locale.bindMacro('shift + \\', ['verticalbar', '|']);
+  locale.bindMacro('shift + ;', ['colon', ':']);
+  locale.bindMacro('shift + \'', ['quotationmark', '\'']);
+  locale.bindMacro('shift + !,', ['openanglebracket', '<']);
+  locale.bindMacro('shift + .', ['closeanglebracket', '>']);
+  locale.bindMacro('shift + /', ['questionmark', '?']);
+
+  //a-z and A-Z
+  for (var keyCode = 65; keyCode <= 90; keyCode += 1) {
+    var keyName = String.fromCharCode(keyCode + 32);
+    var capitalKeyName = String.fromCharCode(keyCode);
+  	locale.bindKeyCode(keyCode, keyName);
+  	locale.bindMacro('shift + ' + keyName, capitalKeyName);
+  	locale.bindMacro('capslock + ' + keyName, capitalKeyName);
+  }
+
+  // browser caveats
+  var semicolonKeyCode = userAgent.match('Firefox') ? 59  : 186;
+  var dashKeyCode      = userAgent.match('Firefox') ? 173 : 189;
+  var leftCommandKeyCode;
+  var rightCommandKeyCode;
+  if (platform.match('Mac') && (userAgent.match('Safari') || userAgent.match('Chrome'))) {
+    leftCommandKeyCode  = 91;
+    rightCommandKeyCode = 93;
+  } else if(platform.match('Mac') && userAgent.match('Opera')) {
+    leftCommandKeyCode  = 17;
+    rightCommandKeyCode = 17;
+  } else if(platform.match('Mac') && userAgent.match('Firefox')) {
+    leftCommandKeyCode  = 224;
+    rightCommandKeyCode = 224;
+  }
+  locale.bindKeyCode(semicolonKeyCode,    ['semicolon', ';']);
+  locale.bindKeyCode(dashKeyCode,         ['dash', '-']);
+  locale.bindKeyCode(leftCommandKeyCode,  ['command', 'windows', 'win', 'super', 'leftcommand', 'leftwindows', 'leftwin', 'leftsuper']);
+  locale.bindKeyCode(rightCommandKeyCode, ['command', 'windows', 'win', 'super', 'rightcommand', 'rightwindows', 'rightwin', 'rightsuper']);
+
+  // kill keys
+  locale.setKillKey('command');
+};
+
+},{}],8:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -1379,7 +1203,7 @@ module.exports = extractAnnotations;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.13.1';
+  var VERSION = '4.15.0';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -1393,7 +1217,7 @@ module.exports = extractAnnotations;
   /** Used as the internal argument placeholder. */
   var PLACEHOLDER = '__lodash_placeholder__';
 
-  /** Used to compose bitmasks for wrapper metadata. */
+  /** Used to compose bitmasks for function metadata. */
   var BIND_FLAG = 1,
       BIND_KEY_FLAG = 2,
       CURRY_BOUND_FLAG = 4,
@@ -1432,6 +1256,19 @@ module.exports = extractAnnotations;
   var MAX_ARRAY_LENGTH = 4294967295,
       MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1,
       HALF_MAX_ARRAY_LENGTH = MAX_ARRAY_LENGTH >>> 1;
+
+  /** Used to associate wrap methods with their bit flags. */
+  var wrapFlags = [
+    ['ary', ARY_FLAG],
+    ['bind', BIND_FLAG],
+    ['bindKey', BIND_KEY_FLAG],
+    ['curry', CURRY_FLAG],
+    ['curryRight', CURRY_RIGHT_FLAG],
+    ['flip', FLIP_FLAG],
+    ['partial', PARTIAL_FLAG],
+    ['partialRight', PARTIAL_RIGHT_FLAG],
+    ['rearg', REARG_FLAG]
+  ];
 
   /** `Object#toString` result references. */
   var argsTag = '[object Arguments]',
@@ -1483,11 +1320,12 @@ module.exports = extractAnnotations;
   /** Used to match property names within property paths. */
   var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
       reIsPlainProp = /^\w*$/,
-      rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(\.|\[\])(?:\4|$))/g;
+      reLeadingDot = /^\./,
+      rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 
   /**
    * Used to match `RegExp`
-   * [syntax characters](http://ecma-international.org/ecma-262/6.0/#sec-patterns).
+   * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
    */
   var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
       reHasRegExpChar = RegExp(reRegExpChar.source);
@@ -1497,15 +1335,20 @@ module.exports = extractAnnotations;
       reTrimStart = /^\s+/,
       reTrimEnd = /\s+$/;
 
-  /** Used to match non-compound words composed of alphanumeric characters. */
-  var reBasicWord = /[a-zA-Z0-9]+/g;
+  /** Used to match wrap detail comments. */
+  var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
+      reWrapDetails = /\{\n\/\* \[wrapped with (.+)\] \*/,
+      reSplitDetails = /,? & /;
+
+  /** Used to match words composed of alphanumeric characters. */
+  var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
 
   /** Used to match backslashes in property paths. */
   var reEscapeChar = /\\(\\)?/g;
 
   /**
    * Used to match
-   * [ES template delimiters](http://ecma-international.org/ecma-262/6.0/#sec-template-literal-lexical-components).
+   * [ES template delimiters](http://ecma-international.org/ecma-262/7.0/#sec-template-literal-lexical-components).
    */
   var reEsTemplate = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g;
 
@@ -1530,8 +1373,8 @@ module.exports = extractAnnotations;
   /** Used to detect unsigned integer values. */
   var reIsUint = /^(?:0|[1-9]\d*)$/;
 
-  /** Used to match latin-1 supplementary letters (excluding mathematical operators). */
-  var reLatin1 = /[\xc0-\xd6\xd8-\xde\xdf-\xf6\xf8-\xff]/g;
+  /** Used to match Latin Unicode letters (excluding mathematical operators). */
+  var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
 
   /** Used to ensure capturing order of template delimiters. */
   var reNoMatch = /($^)/;
@@ -1592,10 +1435,10 @@ module.exports = extractAnnotations;
   var reComboMark = RegExp(rsCombo, 'g');
 
   /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-  var reComplexSymbol = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+  var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 
   /** Used to match complex or compound words. */
-  var reComplexWord = RegExp([
+  var reUnicodeWord = RegExp([
     rsUpper + '?' + rsLower + '+' + rsOptLowerContr + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
     rsUpperMisc + '+' + rsOptUpperContr + '(?=' + [rsBreak, rsUpper + rsLowerMisc, '$'].join('|') + ')',
     rsUpper + '?' + rsLowerMisc + '+' + rsOptLowerContr,
@@ -1605,18 +1448,18 @@ module.exports = extractAnnotations;
   ].join('|'), 'g');
 
   /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-  var reHasComplexSymbol = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
+  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
 
   /** Used to detect strings that need a more robust regexp to match words. */
-  var reHasComplexWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
+  var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 
   /** Used to assign default `context` object properties. */
   var contextProps = [
     'Array', 'Buffer', 'DataView', 'Date', 'Error', 'Float32Array', 'Float64Array',
     'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Map', 'Math', 'Object',
-    'Promise', 'Reflect', 'RegExp', 'Set', 'String', 'Symbol', 'TypeError',
-    'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap',
-    '_', 'isFinite', 'parseInt', 'setTimeout'
+    'Promise', 'RegExp', 'Set', 'String', 'Symbol', 'TypeError', 'Uint8Array',
+    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap',
+    '_', 'clearTimeout', 'isFinite', 'parseInt', 'setTimeout'
   ];
 
   /** Used to make template sourceURLs easier to identify. */
@@ -1654,16 +1497,17 @@ module.exports = extractAnnotations;
   cloneableTags[errorTag] = cloneableTags[funcTag] =
   cloneableTags[weakMapTag] = false;
 
-  /** Used to map latin-1 supplementary letters to basic latin letters. */
+  /** Used to map Latin Unicode letters to basic Latin letters. */
   var deburredLetters = {
+    // Latin-1 Supplement block.
     '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
     '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
     '\xc7': 'C',  '\xe7': 'c',
     '\xd0': 'D',  '\xf0': 'd',
     '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
     '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
-    '\xcC': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
-    '\xeC': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
+    '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
+    '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
     '\xd1': 'N',  '\xf1': 'n',
     '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
     '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
@@ -1672,7 +1516,43 @@ module.exports = extractAnnotations;
     '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
     '\xc6': 'Ae', '\xe6': 'ae',
     '\xde': 'Th', '\xfe': 'th',
-    '\xdf': 'ss'
+    '\xdf': 'ss',
+    // Latin Extended-A block.
+    '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
+    '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
+    '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
+    '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
+    '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
+    '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
+    '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
+    '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
+    '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
+    '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
+    '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
+    '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
+    '\u0134': 'J',  '\u0135': 'j',
+    '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
+    '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
+    '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
+    '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
+    '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
+    '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
+    '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
+    '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
+    '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
+    '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
+    '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
+    '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
+    '\u0163': 't',  '\u0165': 't', '\u0167': 't',
+    '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
+    '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
+    '\u0174': 'W',  '\u0175': 'w',
+    '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
+    '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
+    '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
+    '\u0132': 'IJ', '\u0133': 'ij',
+    '\u0152': 'Oe', '\u0153': 'oe',
+    '\u0149': "'n", '\u017f': 'ss'
   };
 
   /** Used to map characters to HTML entities. */
@@ -1709,26 +1589,41 @@ module.exports = extractAnnotations;
   var freeParseFloat = parseFloat,
       freeParseInt = parseInt;
 
+  /** Detect free variable `global` from Node.js. */
+  var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+  /** Detect free variable `self`. */
+  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+  /** Used as a reference to the global object. */
+  var root = freeGlobal || freeSelf || Function('return this')();
+
   /** Detect free variable `exports`. */
-  var freeExports = typeof exports == 'object' && exports;
+  var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
 
   /** Detect free variable `module`. */
-  var freeModule = freeExports && typeof module == 'object' && module;
+  var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
 
   /** Detect the popular CommonJS extension `module.exports`. */
   var moduleExports = freeModule && freeModule.exports === freeExports;
 
-  /** Detect free variable `global` from Node.js. */
-  var freeGlobal = checkGlobal(typeof global == 'object' && global);
+  /** Detect free variable `process` from Node.js. */
+  var freeProcess = moduleExports && freeGlobal.process;
 
-  /** Detect free variable `self`. */
-  var freeSelf = checkGlobal(typeof self == 'object' && self);
+  /** Used to access faster Node.js helpers. */
+  var nodeUtil = (function() {
+    try {
+      return freeProcess && freeProcess.binding('util');
+    } catch (e) {}
+  }());
 
-  /** Detect `this` as the global object. */
-  var thisGlobal = checkGlobal(typeof this == 'object' && this);
-
-  /** Used as a reference to the global object. */
-  var root = freeGlobal || freeSelf || thisGlobal || Function('return this')();
+  /* Node.js helper references. */
+  var nodeIsArrayBuffer = nodeUtil && nodeUtil.isArrayBuffer,
+      nodeIsDate = nodeUtil && nodeUtil.isDate,
+      nodeIsMap = nodeUtil && nodeUtil.isMap,
+      nodeIsRegExp = nodeUtil && nodeUtil.isRegExp,
+      nodeIsSet = nodeUtil && nodeUtil.isSet,
+      nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
 
   /*--------------------------------------------------------------------------*/
 
@@ -1741,7 +1636,7 @@ module.exports = extractAnnotations;
    * @returns {Object} Returns `map`.
    */
   function addMapEntry(map, pair) {
-    // Don't return `Map#set` because it doesn't return the map instance in IE 11.
+    // Don't return `map.set` because it's not chainable in IE 11.
     map.set(pair[0], pair[1]);
     return map;
   }
@@ -1755,6 +1650,7 @@ module.exports = extractAnnotations;
    * @returns {Object} Returns `set`.
    */
   function addSetEntry(set, value) {
+    // Don't return `set.add` because it's not chainable in IE 11.
     set.add(value);
     return set;
   }
@@ -1770,8 +1666,7 @@ module.exports = extractAnnotations;
    * @returns {*} Returns the result of `func`.
    */
   function apply(func, thisArg, args) {
-    var length = args.length;
-    switch (length) {
+    switch (args.length) {
       case 0: return func.call(thisArg);
       case 1: return func.call(thisArg, args[0]);
       case 2: return func.call(thisArg, args[0], args[1]);
@@ -1893,7 +1788,7 @@ module.exports = extractAnnotations;
    * specifying an index to search from.
    *
    * @private
-   * @param {Array} [array] The array to search.
+   * @param {Array} [array] The array to inspect.
    * @param {*} target The value to search for.
    * @returns {boolean} Returns `true` if `target` is found, else `false`.
    */
@@ -1906,7 +1801,7 @@ module.exports = extractAnnotations;
    * This function is like `arrayIncludes` except that it accepts a comparator.
    *
    * @private
-   * @param {Array} [array] The array to search.
+   * @param {Array} [array] The array to inspect.
    * @param {*} target The value to search for.
    * @param {Function} comparator The comparator invoked per element.
    * @returns {boolean} Returns `true` if `target` is found, else `false`.
@@ -2033,12 +1928,43 @@ module.exports = extractAnnotations;
   }
 
   /**
+   * Gets the size of an ASCII `string`.
+   *
+   * @private
+   * @param {string} string The string inspect.
+   * @returns {number} Returns the string size.
+   */
+  var asciiSize = baseProperty('length');
+
+  /**
+   * Converts an ASCII `string` to an array.
+   *
+   * @private
+   * @param {string} string The string to convert.
+   * @returns {Array} Returns the converted array.
+   */
+  function asciiToArray(string) {
+    return string.split('');
+  }
+
+  /**
+   * Splits an ASCII `string` into an array of its words.
+   *
+   * @private
+   * @param {string} The string to inspect.
+   * @returns {Array} Returns the words of `string`.
+   */
+  function asciiWords(string) {
+    return string.match(reAsciiWord) || [];
+  }
+
+  /**
    * The base implementation of methods like `_.findKey` and `_.findLastKey`,
    * without support for iteratee shorthands, which iterates over `collection`
    * using `eachFunc`.
    *
    * @private
-   * @param {Array|Object} collection The collection to search.
+   * @param {Array|Object} collection The collection to inspect.
    * @param {Function} predicate The function invoked per iteration.
    * @param {Function} eachFunc The function to iterate over `collection`.
    * @returns {*} Returns the found element or its key, else `undefined`.
@@ -2059,7 +1985,7 @@ module.exports = extractAnnotations;
    * support for iteratee shorthands.
    *
    * @private
-   * @param {Array} array The array to search.
+   * @param {Array} array The array to inspect.
    * @param {Function} predicate The function invoked per iteration.
    * @param {number} fromIndex The index to search from.
    * @param {boolean} [fromRight] Specify iterating from right to left.
@@ -2081,14 +2007,14 @@ module.exports = extractAnnotations;
    * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
    *
    * @private
-   * @param {Array} array The array to search.
+   * @param {Array} array The array to inspect.
    * @param {*} value The value to search for.
    * @param {number} fromIndex The index to search from.
    * @returns {number} Returns the index of the matched value, else `-1`.
    */
   function baseIndexOf(array, value, fromIndex) {
     if (value !== value) {
-      return indexOfNaN(array, fromIndex);
+      return baseFindIndex(array, baseIsNaN, fromIndex);
     }
     var index = fromIndex - 1,
         length = array.length;
@@ -2105,7 +2031,7 @@ module.exports = extractAnnotations;
    * This function is like `baseIndexOf` except that it accepts a comparator.
    *
    * @private
-   * @param {Array} array The array to search.
+   * @param {Array} array The array to inspect.
    * @param {*} value The value to search for.
    * @param {number} fromIndex The index to search from.
    * @param {Function} comparator The comparator invoked per element.
@@ -2124,6 +2050,17 @@ module.exports = extractAnnotations;
   }
 
   /**
+   * The base implementation of `_.isNaN` without support for number objects.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+   */
+  function baseIsNaN(value) {
+    return value !== value;
+  }
+
+  /**
    * The base implementation of `_.mean` and `_.meanBy` without support for
    * iteratee shorthands.
    *
@@ -2135,6 +2072,32 @@ module.exports = extractAnnotations;
   function baseMean(array, iteratee) {
     var length = array ? array.length : 0;
     return length ? (baseSum(array, iteratee) / length) : NAN;
+  }
+
+  /**
+   * The base implementation of `_.property` without support for deep paths.
+   *
+   * @private
+   * @param {string} key The key of the property to get.
+   * @returns {Function} Returns the new accessor function.
+   */
+  function baseProperty(key) {
+    return function(object) {
+      return object == null ? undefined : object[key];
+    };
+  }
+
+  /**
+   * The base implementation of `_.propertyOf` without support for deep paths.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @returns {Function} Returns the new accessor function.
+   */
+  function basePropertyOf(object) {
+    return function(key) {
+      return object == null ? undefined : object[key];
+    };
   }
 
   /**
@@ -2237,7 +2200,7 @@ module.exports = extractAnnotations;
   }
 
   /**
-   * The base implementation of `_.unary` without support for storing wrapper metadata.
+   * The base implementation of `_.unary` without support for storing metadata.
    *
    * @private
    * @param {Function} func The function to cap arguments for.
@@ -2311,17 +2274,6 @@ module.exports = extractAnnotations;
   }
 
   /**
-   * Checks if `value` is a global object.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {null|Object} Returns `value` if it's a global object, else `null`.
-   */
-  function checkGlobal(value) {
-    return (value && value.Object === Object) ? value : null;
-  }
-
-  /**
    * Gets the number of `placeholder` occurrences in `array`.
    *
    * @private
@@ -2342,15 +2294,14 @@ module.exports = extractAnnotations;
   }
 
   /**
-   * Used by `_.deburr` to convert latin-1 supplementary letters to basic latin letters.
+   * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
+   * letters to basic Latin letters.
    *
    * @private
    * @param {string} letter The matched letter to deburr.
    * @returns {string} Returns the deburred letter.
    */
-  function deburrLetter(letter) {
-    return deburredLetters[letter];
-  }
+  var deburrLetter = basePropertyOf(deburredLetters);
 
   /**
    * Used by `_.escape` to convert characters to HTML entities.
@@ -2359,9 +2310,7 @@ module.exports = extractAnnotations;
    * @param {string} chr The matched character to escape.
    * @returns {string} Returns the escaped character.
    */
-  function escapeHtmlChar(chr) {
-    return htmlEscapes[chr];
-  }
+  var escapeHtmlChar = basePropertyOf(htmlEscapes);
 
   /**
    * Used by `_.template` to escape characters for inclusion in compiled string literals.
@@ -2387,25 +2336,25 @@ module.exports = extractAnnotations;
   }
 
   /**
-   * Gets the index at which the first occurrence of `NaN` is found in `array`.
+   * Checks if `string` contains Unicode symbols.
    *
    * @private
-   * @param {Array} array The array to search.
-   * @param {number} fromIndex The index to search from.
-   * @param {boolean} [fromRight] Specify iterating from right to left.
-   * @returns {number} Returns the index of the matched `NaN`, else `-1`.
+   * @param {string} string The string to inspect.
+   * @returns {boolean} Returns `true` if a symbol is found, else `false`.
    */
-  function indexOfNaN(array, fromIndex, fromRight) {
-    var length = array.length,
-        index = fromIndex + (fromRight ? 1 : -1);
+  function hasUnicode(string) {
+    return reHasUnicode.test(string);
+  }
 
-    while ((fromRight ? index-- : ++index < length)) {
-      var other = array[index];
-      if (other !== other) {
-        return index;
-      }
-    }
-    return -1;
+  /**
+   * Checks if `string` contains a word composed of Unicode symbols.
+   *
+   * @private
+   * @param {string} string The string to inspect.
+   * @returns {boolean} Returns `true` if a word is found, else `false`.
+   */
+  function hasUnicodeWord(string) {
+    return reHasUnicodeWord.test(string);
   }
 
   /**
@@ -2459,6 +2408,20 @@ module.exports = extractAnnotations;
       result[++index] = [key, value];
     });
     return result;
+  }
+
+  /**
+   * Creates a unary function that invokes `func` with its argument transformed.
+   *
+   * @private
+   * @param {Function} func The function to wrap.
+   * @param {Function} transform The argument transform.
+   * @returns {Function} Returns the new function.
+   */
+  function overArg(func, transform) {
+    return function(arg) {
+      return func(transform(arg));
+    };
   }
 
   /**
@@ -2528,14 +2491,9 @@ module.exports = extractAnnotations;
    * @returns {number} Returns the string size.
    */
   function stringSize(string) {
-    if (!(string && reHasComplexSymbol.test(string))) {
-      return string.length;
-    }
-    var result = reComplexSymbol.lastIndex = 0;
-    while (reComplexSymbol.test(string)) {
-      result++;
-    }
-    return result;
+    return hasUnicode(string)
+      ? unicodeSize(string)
+      : asciiSize(string);
   }
 
   /**
@@ -2546,7 +2504,9 @@ module.exports = extractAnnotations;
    * @returns {Array} Returns the converted array.
    */
   function stringToArray(string) {
-    return string.match(reComplexSymbol);
+    return hasUnicode(string)
+      ? unicodeToArray(string)
+      : asciiToArray(string);
   }
 
   /**
@@ -2556,8 +2516,43 @@ module.exports = extractAnnotations;
    * @param {string} chr The matched character to unescape.
    * @returns {string} Returns the unescaped character.
    */
-  function unescapeHtmlChar(chr) {
-    return htmlUnescapes[chr];
+  var unescapeHtmlChar = basePropertyOf(htmlUnescapes);
+
+  /**
+   * Gets the size of a Unicode `string`.
+   *
+   * @private
+   * @param {string} string The string inspect.
+   * @returns {number} Returns the string size.
+   */
+  function unicodeSize(string) {
+    var result = reUnicode.lastIndex = 0;
+    while (reUnicode.test(string)) {
+      result++;
+    }
+    return result;
+  }
+
+  /**
+   * Converts a Unicode `string` to an array.
+   *
+   * @private
+   * @param {string} string The string to convert.
+   * @returns {Array} Returns the converted array.
+   */
+  function unicodeToArray(string) {
+    return string.match(reUnicode) || [];
+  }
+
+  /**
+   * Splits a Unicode `string` into an array of its words.
+   *
+   * @private
+   * @param {string} The string to inspect.
+   * @returns {Array} Returns the words of `string`.
+   */
+  function unicodeWords(string) {
+    return string.match(reUnicodeWord) || [];
   }
 
   /*--------------------------------------------------------------------------*/
@@ -2599,19 +2594,23 @@ module.exports = extractAnnotations;
    * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
    */
   function runInContext(context) {
-    context = context ? _.defaults({}, context, _.pick(root, contextProps)) : root;
+    context = context ? _.defaults(root.Object(), context, _.pick(root, contextProps)) : root;
 
     /** Built-in constructor references. */
-    var Date = context.Date,
+    var Array = context.Array,
+        Date = context.Date,
         Error = context.Error,
+        Function = context.Function,
         Math = context.Math,
+        Object = context.Object,
         RegExp = context.RegExp,
+        String = context.String,
         TypeError = context.TypeError;
 
     /** Used for built-in method references. */
-    var arrayProto = context.Array.prototype,
-        objectProto = context.Object.prototype,
-        stringProto = context.String.prototype;
+    var arrayProto = Array.prototype,
+        funcProto = Function.prototype,
+        objectProto = Object.prototype;
 
     /** Used to detect overreaching core-js shims. */
     var coreJsData = context['__core-js_shared__'];
@@ -2623,7 +2622,7 @@ module.exports = extractAnnotations;
     }());
 
     /** Used to resolve the decompiled source of functions. */
-    var funcToString = context.Function.prototype.toString;
+    var funcToString = funcProto.toString;
 
     /** Used to check objects for own properties. */
     var hasOwnProperty = objectProto.hasOwnProperty;
@@ -2636,7 +2635,7 @@ module.exports = extractAnnotations;
 
     /**
      * Used to resolve the
-     * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
      * of values.
      */
     var objectToString = objectProto.toString;
@@ -2652,33 +2651,33 @@ module.exports = extractAnnotations;
 
     /** Built-in value references. */
     var Buffer = moduleExports ? context.Buffer : undefined,
-        Reflect = context.Reflect,
         Symbol = context.Symbol,
         Uint8Array = context.Uint8Array,
-        enumerate = Reflect ? Reflect.enumerate : undefined,
-        getOwnPropertySymbols = Object.getOwnPropertySymbols,
-        iteratorSymbol = typeof (iteratorSymbol = Symbol && Symbol.iterator) == 'symbol' ? iteratorSymbol : undefined,
+        getPrototype = overArg(Object.getPrototypeOf, Object),
+        iteratorSymbol = Symbol ? Symbol.iterator : undefined,
         objectCreate = Object.create,
         propertyIsEnumerable = objectProto.propertyIsEnumerable,
-        splice = arrayProto.splice;
+        splice = arrayProto.splice,
+        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
 
-    /** Built-in method references that are mockable. */
-    var setTimeout = function(func, wait) { return context.setTimeout.call(root, func, wait); };
+    /** Mocked built-ins. */
+    var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout,
+        ctxNow = Date && Date.now !== root.Date.now && Date.now,
+        ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
 
     /* Built-in method references for those with the same name as other `lodash` methods. */
     var nativeCeil = Math.ceil,
         nativeFloor = Math.floor,
-        nativeGetPrototype = Object.getPrototypeOf,
+        nativeGetSymbols = Object.getOwnPropertySymbols,
+        nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
         nativeIsFinite = context.isFinite,
         nativeJoin = arrayProto.join,
-        nativeKeys = Object.keys,
+        nativeKeys = overArg(Object.keys, Object),
         nativeMax = Math.max,
         nativeMin = Math.min,
         nativeParseInt = context.parseInt,
         nativeRandom = Math.random,
-        nativeReplace = stringProto.replace,
-        nativeReverse = arrayProto.reverse,
-        nativeSplit = stringProto.split;
+        nativeReverse = arrayProto.reverse;
 
     /* Built-in method references that are verified to be native. */
     var DataView = getNative(context, 'DataView'),
@@ -2687,6 +2686,14 @@ module.exports = extractAnnotations;
         Set = getNative(context, 'Set'),
         WeakMap = getNative(context, 'WeakMap'),
         nativeCreate = getNative(Object, 'create');
+
+    /* Used to set `toString` methods. */
+    var defineProperty = (function() {
+      var func = getNative(Object, 'defineProperty'),
+          name = getNative.name;
+
+      return (name && name.length > 2) ? func : undefined;
+    }());
 
     /** Used to store function metadata. */
     var metaMap = WeakMap && new WeakMap;
@@ -2777,16 +2784,16 @@ module.exports = extractAnnotations;
      *
      * The wrapper methods that are **not** chainable by default are:
      * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clamp`, `clone`,
-     * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `deburr`, `divide`, `each`,
-     * `eachRight`, `endsWith`, `eq`, `escape`, `escapeRegExp`, `every`, `find`,
-     * `findIndex`, `findKey`, `findLast`, `findLastIndex`, `findLastKey`, `first`,
-     * `floor`, `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`,
-     * `forOwnRight`, `get`, `gt`, `gte`, `has`, `hasIn`, `head`, `identity`,
-     * `includes`, `indexOf`, `inRange`, `invoke`, `isArguments`, `isArray`,
-     * `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`, `isBoolean`,
-     * `isBuffer`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isEqualWith`,
-     * `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`, `isMap`,
-     * `isMatch`, `isMatchWith`, `isNaN`, `isNative`, `isNil`, `isNull`,
+     * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `conformsTo`, `deburr`,
+     * `defaultTo`, `divide`, `each`, `eachRight`, `endsWith`, `eq`, `escape`,
+     * `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`, `findLast`,
+     * `findLastIndex`, `findLastKey`, `first`, `floor`, `forEach`, `forEachRight`,
+     * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
+     * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
+     * `isArguments`, `isArray`, `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`,
+     * `isBoolean`, `isBuffer`, `isDate`, `isElement`, `isEmpty`, `isEqual`,
+     * `isEqualWith`, `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`,
+     * `isMap`, `isMatch`, `isMatchWith`, `isNaN`, `isNative`, `isNil`, `isNull`,
      * `isNumber`, `isObject`, `isObjectLike`, `isPlainObject`, `isRegExp`,
      * `isSafeInteger`, `isSet`, `isString`, `isUndefined`, `isTypedArray`,
      * `isWeakMap`, `isWeakSet`, `join`, `kebabCase`, `last`, `lastIndexOf`,
@@ -3489,8 +3496,13 @@ module.exports = extractAnnotations;
      */
     function stackSet(key, value) {
       var cache = this.__data__;
-      if (cache instanceof ListCache && cache.__data__.length == LARGE_ARRAY_SIZE) {
-        cache = this.__data__ = new MapCache(cache.__data__);
+      if (cache instanceof ListCache) {
+        var pairs = cache.__data__;
+        if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+          pairs.push([key, value]);
+          return this;
+        }
+        cache = this.__data__ = new MapCache(pairs);
       }
       cache.set(key, value);
       return this;
@@ -3504,6 +3516,33 @@ module.exports = extractAnnotations;
     Stack.prototype.set = stackSet;
 
     /*------------------------------------------------------------------------*/
+
+    /**
+     * Creates an array of the enumerable property names of the array-like `value`.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @param {boolean} inherited Specify returning inherited property names.
+     * @returns {Array} Returns the array of property names.
+     */
+    function arrayLikeKeys(value, inherited) {
+      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+      // Safari 9 makes `arguments.length` enumerable in strict mode.
+      var result = (isArray(value) || isArguments(value))
+        ? baseTimes(value.length, String)
+        : [];
+
+      var length = result.length,
+          skipIndexes = !!length;
+
+      for (var key in value) {
+        if ((inherited || hasOwnProperty.call(value, key)) &&
+            !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+          result.push(key);
+        }
+      }
+      return result;
+    }
 
     /**
      * Used by `_.defaults` to customize its `_.assignIn` use.
@@ -3541,7 +3580,7 @@ module.exports = extractAnnotations;
 
     /**
      * Assigns `value` to `key` of `object` if the existing value is not equivalent
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons.
      *
      * @private
@@ -3561,7 +3600,7 @@ module.exports = extractAnnotations;
      * Gets the index at which the `key` is found in `array` of key-value pairs.
      *
      * @private
-     * @param {Array} array The array to search.
+     * @param {Array} array The array to inspect.
      * @param {*} key The key to search for.
      * @returns {number} Returns the index of the matched value, else `-1`.
      */
@@ -3627,7 +3666,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * The base implementation of `_.clamp` which doesn't coerce arguments to numbers.
+     * The base implementation of `_.clamp` which doesn't coerce arguments.
      *
      * @private
      * @param {number} number The number to clamp.
@@ -3711,12 +3750,12 @@ module.exports = extractAnnotations;
       if (!isArr) {
         var props = isFull ? getAllKeys(value) : keys(value);
       }
-      // Recursively populate clone (susceptible to call stack limits).
       arrayEach(props || value, function(subValue, key) {
         if (props) {
           key = subValue;
           subValue = value[key];
         }
+        // Recursively populate clone (susceptible to call stack limits).
         assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
       });
       return result;
@@ -3730,26 +3769,36 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new spec function.
      */
     function baseConforms(source) {
-      var props = keys(source),
-          length = props.length;
-
+      var props = keys(source);
       return function(object) {
-        if (object == null) {
-          return !length;
-        }
-        var index = length;
-        while (index--) {
-          var key = props[index],
-              predicate = source[key],
-              value = object[key];
-
-          if ((value === undefined &&
-              !(key in Object(object))) || !predicate(value)) {
-            return false;
-          }
-        }
-        return true;
+        return baseConformsTo(object, source, props);
       };
+    }
+
+    /**
+     * The base implementation of `_.conformsTo` which accepts `props` to check.
+     *
+     * @private
+     * @param {Object} object The object to inspect.
+     * @param {Object} source The object of property predicates to conform to.
+     * @returns {boolean} Returns `true` if `object` conforms, else `false`.
+     */
+    function baseConformsTo(object, source, props) {
+      var length = props.length;
+      if (object == null) {
+        return !length;
+      }
+      object = Object(object);
+      while (length--) {
+        var key = props[length],
+            predicate = source[key],
+            value = object[key];
+
+        if ((value === undefined && !(key in object)) || !predicate(value)) {
+          return false;
+        }
+      }
+      return true;
     }
 
     /**
@@ -3765,14 +3814,14 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * The base implementation of `_.delay` and `_.defer` which accepts an array
-     * of `func` arguments.
+     * The base implementation of `_.delay` and `_.defer` which accepts `args`
+     * to provide to `func`.
      *
      * @private
      * @param {Function} func The function to delay.
      * @param {number} wait The number of milliseconds to delay invocation.
-     * @param {Object} args The arguments to provide to `func`.
-     * @returns {number} Returns the timer id.
+     * @param {Array} args The arguments to provide to `func`.
+     * @returns {number|Object} Returns the timer id or timeout object.
      */
     function baseDelay(func, wait, args) {
       if (typeof func != 'function') {
@@ -4085,7 +4134,18 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * The base implementation of `_.gt` which doesn't coerce arguments to numbers.
+     * The base implementation of `getTag`.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @returns {string} Returns the `toStringTag`.
+     */
+    function baseGetTag(value) {
+      return objectToString.call(value);
+    }
+
+    /**
+     * The base implementation of `_.gt` which doesn't coerce arguments.
      *
      * @private
      * @param {*} value The value to compare.
@@ -4106,12 +4166,7 @@ module.exports = extractAnnotations;
      * @returns {boolean} Returns `true` if `key` exists, else `false`.
      */
     function baseHas(object, key) {
-      // Avoid a bug in IE 10-11 where objects with a [[Prototype]] of `null`,
-      // that are composed entirely of index properties, return `false` for
-      // `hasOwnProperty` checks of them.
-      return object != null &&
-        (hasOwnProperty.call(object, key) ||
-          (typeof object == 'object' && key in object && getPrototype(object) === null));
+      return object != null && hasOwnProperty.call(object, key);
     }
 
     /**
@@ -4127,7 +4182,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * The base implementation of `_.inRange` which doesn't coerce arguments to numbers.
+     * The base implementation of `_.inRange` which doesn't coerce arguments.
      *
      * @private
      * @param {number} number The number to check.
@@ -4241,6 +4296,28 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * The base implementation of `_.isArrayBuffer` without Node.js optimizations.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
+     */
+    function baseIsArrayBuffer(value) {
+      return isObjectLike(value) && objectToString.call(value) == arrayBufferTag;
+    }
+
+    /**
+     * The base implementation of `_.isDate` without Node.js optimizations.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+     */
+    function baseIsDate(value) {
+      return isObjectLike(value) && objectToString.call(value) == dateTag;
+    }
+
+    /**
      * The base implementation of `_.isEqual` which supports partial comparisons
      * and tracks traversed objects.
      *
@@ -4324,6 +4401,17 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * The base implementation of `_.isMap` without Node.js optimizations.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+     */
+    function baseIsMap(value) {
+      return isObjectLike(value) && getTag(value) == mapTag;
+    }
+
+    /**
      * The base implementation of `_.isMatch` without support for iteratee shorthands.
      *
      * @private
@@ -4394,6 +4482,40 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * The base implementation of `_.isRegExp` without Node.js optimizations.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
+     */
+    function baseIsRegExp(value) {
+      return isObject(value) && objectToString.call(value) == regexpTag;
+    }
+
+    /**
+     * The base implementation of `_.isSet` without Node.js optimizations.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+     */
+    function baseIsSet(value) {
+      return isObjectLike(value) && getTag(value) == setTag;
+    }
+
+    /**
+     * The base implementation of `_.isTypedArray` without Node.js optimizations.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+     */
+    function baseIsTypedArray(value) {
+      return isObjectLike(value) &&
+        isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
+    }
+
+    /**
      * The base implementation of `_.iteratee`.
      *
      * @private
@@ -4418,44 +4540,49 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * The base implementation of `_.keys` which doesn't skip the constructor
-     * property of prototypes or treat sparse arrays as dense.
+     * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
      *
      * @private
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of property names.
      */
     function baseKeys(object) {
-      return nativeKeys(Object(object));
+      if (!isPrototype(object)) {
+        return nativeKeys(object);
+      }
+      var result = [];
+      for (var key in Object(object)) {
+        if (hasOwnProperty.call(object, key) && key != 'constructor') {
+          result.push(key);
+        }
+      }
+      return result;
     }
 
     /**
-     * The base implementation of `_.keysIn` which doesn't skip the constructor
-     * property of prototypes or treat sparse arrays as dense.
+     * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.
      *
      * @private
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of property names.
      */
     function baseKeysIn(object) {
-      object = object == null ? object : Object(object);
+      if (!isObject(object)) {
+        return nativeKeysIn(object);
+      }
+      var isProto = isPrototype(object),
+          result = [];
 
-      var result = [];
       for (var key in object) {
-        result.push(key);
+        if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+          result.push(key);
+        }
       }
       return result;
     }
 
-    // Fallback for IE < 9 with es6-shim.
-    if (enumerate && !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf')) {
-      baseKeysIn = function(object) {
-        return iteratorToArray(enumerate(object));
-      };
-    }
-
     /**
-     * The base implementation of `_.lt` which doesn't coerce arguments to numbers.
+     * The base implementation of `_.lt` which doesn't coerce arguments.
      *
      * @private
      * @param {*} value The value to compare.
@@ -4538,7 +4665,7 @@ module.exports = extractAnnotations;
         return;
       }
       if (!(isArray(source) || isTypedArray(source))) {
-        var props = keysIn(source);
+        var props = baseKeysIn(source);
       }
       arrayEach(props || source, function(srcValue, key) {
         if (props) {
@@ -4622,18 +4749,17 @@ module.exports = extractAnnotations;
           isCommon = false;
         }
       }
-      stack.set(srcValue, newValue);
-
       if (isCommon) {
         // Recursively merge objects and arrays (susceptible to call stack limits).
+        stack.set(srcValue, newValue);
         mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
+        stack['delete'](srcValue);
       }
-      stack['delete'](srcValue);
       assignMergeValue(object, key, newValue);
     }
 
     /**
-     * The base implementation of `_.nth` which doesn't coerce `n` to an integer.
+     * The base implementation of `_.nth` which doesn't coerce arguments.
      *
      * @private
      * @param {Array} array The array to query.
@@ -4685,12 +4811,9 @@ module.exports = extractAnnotations;
      */
     function basePick(object, props) {
       object = Object(object);
-      return arrayReduce(props, function(result, key) {
-        if (key in object) {
-          result[key] = object[key];
-        }
-        return result;
-      }, {});
+      return basePickBy(object, props, function(value, key) {
+        return key in object;
+      });
     }
 
     /**
@@ -4698,12 +4821,12 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Object} object The source object.
+     * @param {string[]} props The property identifiers to pick from.
      * @param {Function} predicate The function invoked per property.
      * @returns {Object} Returns the new object.
      */
-    function basePickBy(object, predicate) {
+    function basePickBy(object, props, predicate) {
       var index = -1,
-          props = getAllKeysIn(object),
           length = props.length,
           result = {};
 
@@ -4716,19 +4839,6 @@ module.exports = extractAnnotations;
         }
       }
       return result;
-    }
-
-    /**
-     * The base implementation of `_.property` without support for deep paths.
-     *
-     * @private
-     * @param {string} key The key of the property to get.
-     * @returns {Function} Returns the new accessor function.
-     */
-    function baseProperty(key) {
-      return function(object) {
-        return object == null ? undefined : object[key];
-      };
     }
 
     /**
@@ -4833,7 +4943,7 @@ module.exports = extractAnnotations;
 
     /**
      * The base implementation of `_.range` and `_.rangeRight` which doesn't
-     * coerce arguments to numbers.
+     * coerce arguments.
      *
      * @private
      * @param {number} start The start of the range.
@@ -4883,16 +4993,48 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+     *
+     * @private
+     * @param {Function} func The function to apply a rest parameter to.
+     * @param {number} [start=func.length-1] The start position of the rest parameter.
+     * @returns {Function} Returns the new function.
+     */
+    function baseRest(func, start) {
+      start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+      return function() {
+        var args = arguments,
+            index = -1,
+            length = nativeMax(args.length - start, 0),
+            array = Array(length);
+
+        while (++index < length) {
+          array[index] = args[start + index];
+        }
+        index = -1;
+        var otherArgs = Array(start + 1);
+        while (++index < start) {
+          otherArgs[index] = args[index];
+        }
+        otherArgs[start] = array;
+        return apply(func, this, otherArgs);
+      };
+    }
+
+    /**
      * The base implementation of `_.set`.
      *
      * @private
-     * @param {Object} object The object to query.
+     * @param {Object} object The object to modify.
      * @param {Array|string} path The path of the property to set.
      * @param {*} value The value to set.
      * @param {Function} [customizer] The function to customize path creation.
      * @returns {Object} Returns `object`.
      */
     function baseSet(object, path, value, customizer) {
+      if (!isObject(object)) {
+        return object;
+      }
       path = isKey(path, object) ? [path] : castPath(path);
 
       var index = -1,
@@ -4901,20 +5043,19 @@ module.exports = extractAnnotations;
           nested = object;
 
       while (nested != null && ++index < length) {
-        var key = toKey(path[index]);
-        if (isObject(nested)) {
-          var newValue = value;
-          if (index != lastIndex) {
-            var objValue = nested[key];
-            newValue = customizer ? customizer(objValue, key, nested) : undefined;
-            if (newValue === undefined) {
-              newValue = objValue == null
-                ? (isIndex(path[index + 1]) ? [] : {})
-                : objValue;
-            }
+        var key = toKey(path[index]),
+            newValue = value;
+
+        if (index != lastIndex) {
+          var objValue = nested[key];
+          newValue = customizer ? customizer(objValue, key, nested) : undefined;
+          if (newValue === undefined) {
+            newValue = isObject(objValue)
+              ? objValue
+              : (isIndex(path[index + 1]) ? [] : {});
           }
-          assignValue(nested, key, newValue);
         }
+        assignValue(nested, key, newValue);
         nested = nested[key];
       }
       return object;
@@ -5207,14 +5348,14 @@ module.exports = extractAnnotations;
       object = parent(object, path);
 
       var key = toKey(last(path));
-      return !(object != null && baseHas(object, key)) || delete object[key];
+      return !(object != null && hasOwnProperty.call(object, key)) || delete object[key];
     }
 
     /**
      * The base implementation of `_.update`.
      *
      * @private
-     * @param {Object} object The object to query.
+     * @param {Object} object The object to modify.
      * @param {Array|string} path The path of the property to update.
      * @param {Function} updater The function to produce the updated value.
      * @param {Function} [customizer] The function to customize path creation.
@@ -5361,6 +5502,16 @@ module.exports = extractAnnotations;
       end = end === undefined ? length : end;
       return (!start && end >= length) ? array : baseSlice(array, start, end);
     }
+
+    /**
+     * A simple wrapper around the global [`clearTimeout`](https://mdn.io/clearTimeout).
+     *
+     * @private
+     * @param {number|Object} id The timer id or timeout object of the timer to clear.
+     */
+    var clearTimeout = ctxClearTimeout || function(id) {
+      return root.clearTimeout(id);
+    };
 
     /**
      * Creates a clone of  `buffer`.
@@ -5661,9 +5812,9 @@ module.exports = extractAnnotations;
 
         var newValue = customizer
           ? customizer(object[key], source[key], key, object, source)
-          : source[key];
+          : undefined;
 
-        assignValue(object, key, newValue);
+        assignValue(object, key, newValue === undefined ? source[key] : newValue);
       }
       return object;
     }
@@ -5693,7 +5844,7 @@ module.exports = extractAnnotations;
         var func = isArray(collection) ? arrayAggregator : baseAggregator,
             accumulator = initializer ? initializer() : {};
 
-        return func(collection, setter, getIteratee(iteratee), accumulator);
+        return func(collection, setter, getIteratee(iteratee, 2), accumulator);
       };
     }
 
@@ -5705,7 +5856,7 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new assigner function.
      */
     function createAssigner(assigner) {
-      return rest(function(object, sources) {
+      return baseRest(function(object, sources) {
         var index = -1,
             length = sources.length,
             customizer = length > 1 ? sources[length - 1] : undefined,
@@ -5789,14 +5940,13 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-     *  for more details.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
      * @param {*} [thisArg] The `this` binding of `func`.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createBaseWrapper(func, bitmask, thisArg) {
+    function createBind(func, bitmask, thisArg) {
       var isBind = bitmask & BIND_FLAG,
-          Ctor = createCtorWrapper(func);
+          Ctor = createCtor(func);
 
       function wrapper() {
         var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
@@ -5816,7 +5966,7 @@ module.exports = extractAnnotations;
       return function(string) {
         string = toString(string);
 
-        var strSymbols = reHasComplexSymbol.test(string)
+        var strSymbols = hasUnicode(string)
           ? stringToArray(string)
           : undefined;
 
@@ -5853,10 +6003,10 @@ module.exports = extractAnnotations;
      * @param {Function} Ctor The constructor to wrap.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createCtorWrapper(Ctor) {
+    function createCtor(Ctor) {
       return function() {
         // Use a `switch` statement to work with class constructors. See
-        // http://ecma-international.org/ecma-262/6.0/#sec-ecmascript-function-objects-call-thisargument-argumentslist
+        // http://ecma-international.org/ecma-262/7.0/#sec-ecmascript-function-objects-call-thisargument-argumentslist
         // for more details.
         var args = arguments;
         switch (args.length) {
@@ -5883,13 +6033,12 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-     *  for more details.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
      * @param {number} arity The arity of `func`.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createCurryWrapper(func, bitmask, arity) {
-      var Ctor = createCtorWrapper(func);
+    function createCurry(func, bitmask, arity) {
+      var Ctor = createCtor(func);
 
       function wrapper() {
         var length = arguments.length,
@@ -5906,8 +6055,8 @@ module.exports = extractAnnotations;
 
         length -= holders.length;
         if (length < arity) {
-          return createRecurryWrapper(
-            func, bitmask, createHybridWrapper, wrapper.placeholder, undefined,
+          return createRecurry(
+            func, bitmask, createHybrid, wrapper.placeholder, undefined,
             args, holders, undefined, undefined, arity - length);
         }
         var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
@@ -5926,18 +6075,13 @@ module.exports = extractAnnotations;
     function createFind(findIndexFunc) {
       return function(collection, predicate, fromIndex) {
         var iterable = Object(collection);
-        predicate = getIteratee(predicate, 3);
         if (!isArrayLike(collection)) {
-          var props = keys(collection);
+          var iteratee = getIteratee(predicate, 3);
+          collection = keys(collection);
+          predicate = function(key) { return iteratee(iterable[key], key, iterable); };
         }
-        var index = findIndexFunc(props || collection, function(value, key) {
-          if (props) {
-            key = value;
-            value = iterable[key];
-          }
-          return predicate(value, key, iterable);
-        }, fromIndex);
-        return index > -1 ? collection[props ? props[index] : index] : undefined;
+        var index = findIndexFunc(collection, predicate, fromIndex);
+        return index > -1 ? iterable[iteratee ? collection[index] : index] : undefined;
       };
     }
 
@@ -5949,7 +6093,7 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new flow function.
      */
     function createFlow(fromRight) {
-      return rest(function(funcs) {
+      return baseRest(function(funcs) {
         funcs = baseFlatten(funcs, 1);
 
         var length = funcs.length,
@@ -6011,8 +6155,7 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function|string} func The function or method name to wrap.
-     * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-     *  for more details.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
      * @param {*} [thisArg] The `this` binding of `func`.
      * @param {Array} [partials] The arguments to prepend to those provided to
      *  the new function.
@@ -6025,13 +6168,13 @@ module.exports = extractAnnotations;
      * @param {number} [arity] The arity of `func`.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createHybridWrapper(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
+    function createHybrid(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
       var isAry = bitmask & ARY_FLAG,
           isBind = bitmask & BIND_FLAG,
           isBindKey = bitmask & BIND_KEY_FLAG,
           isCurried = bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG),
           isFlip = bitmask & FLIP_FLAG,
-          Ctor = isBindKey ? undefined : createCtorWrapper(func);
+          Ctor = isBindKey ? undefined : createCtor(func);
 
       function wrapper() {
         var length = arguments.length,
@@ -6054,8 +6197,8 @@ module.exports = extractAnnotations;
         length -= holdersCount;
         if (isCurried && length < arity) {
           var newHolders = replaceHolders(args, placeholder);
-          return createRecurryWrapper(
-            func, bitmask, createHybridWrapper, wrapper.placeholder, thisArg,
+          return createRecurry(
+            func, bitmask, createHybrid, wrapper.placeholder, thisArg,
             args, newHolders, argPos, ary, arity - length
           );
         }
@@ -6072,7 +6215,7 @@ module.exports = extractAnnotations;
           args.length = ary;
         }
         if (this && this !== root && this instanceof wrapper) {
-          fn = Ctor || createCtorWrapper(fn);
+          fn = Ctor || createCtor(fn);
         }
         return fn.apply(thisBinding, args);
       }
@@ -6098,13 +6241,14 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function} operator The function to perform the operation.
+     * @param {number} [defaultValue] The value used for `undefined` arguments.
      * @returns {Function} Returns the new mathematical operation function.
      */
-    function createMathOperation(operator) {
+    function createMathOperation(operator, defaultValue) {
       return function(value, other) {
         var result;
         if (value === undefined && other === undefined) {
-          return 0;
+          return defaultValue;
         }
         if (value !== undefined) {
           result = value;
@@ -6134,12 +6278,12 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new over function.
      */
     function createOver(arrayFunc) {
-      return rest(function(iteratees) {
+      return baseRest(function(iteratees) {
         iteratees = (iteratees.length == 1 && isArray(iteratees[0]))
           ? arrayMap(iteratees[0], baseUnary(getIteratee()))
-          : arrayMap(baseFlatten(iteratees, 1, isFlattenableIteratee), baseUnary(getIteratee()));
+          : arrayMap(baseFlatten(iteratees, 1), baseUnary(getIteratee()));
 
-        return rest(function(args) {
+        return baseRest(function(args) {
           var thisArg = this;
           return arrayFunc(iteratees, function(iteratee) {
             return apply(iteratee, thisArg, args);
@@ -6165,7 +6309,7 @@ module.exports = extractAnnotations;
         return charsLength ? baseRepeat(chars, length) : chars;
       }
       var result = baseRepeat(chars, nativeCeil(length / stringSize(chars)));
-      return reHasComplexSymbol.test(chars)
+      return hasUnicode(chars)
         ? castSlice(stringToArray(result), 0, length).join('')
         : result.slice(0, length);
     }
@@ -6176,16 +6320,15 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-     *  for more details.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
      * @param {*} thisArg The `this` binding of `func`.
      * @param {Array} partials The arguments to prepend to those provided to
      *  the new function.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createPartialWrapper(func, bitmask, thisArg, partials) {
+    function createPartial(func, bitmask, thisArg, partials) {
       var isBind = bitmask & BIND_FLAG,
-          Ctor = createCtorWrapper(func);
+          Ctor = createCtor(func);
 
       function wrapper() {
         var argsIndex = -1,
@@ -6219,15 +6362,14 @@ module.exports = extractAnnotations;
           end = step = undefined;
         }
         // Ensure the sign of `-0` is preserved.
-        start = toNumber(start);
-        start = start === start ? start : 0;
+        start = toFinite(start);
         if (end === undefined) {
           end = start;
           start = 0;
         } else {
-          end = toNumber(end) || 0;
+          end = toFinite(end);
         }
-        step = step === undefined ? (start < end ? 1 : -1) : (toNumber(step) || 0);
+        step = step === undefined ? (start < end ? 1 : -1) : toFinite(step);
         return baseRange(start, end, step, fromRight);
       };
     }
@@ -6254,8 +6396,7 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function} func The function to wrap.
-     * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-     *  for more details.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
      * @param {Function} wrapFunc The function to create the `func` wrapper.
      * @param {*} placeholder The placeholder value.
      * @param {*} [thisArg] The `this` binding of `func`.
@@ -6267,7 +6408,7 @@ module.exports = extractAnnotations;
      * @param {number} [arity] The arity of `func`.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createRecurryWrapper(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
+    function createRecurry(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
       var isCurry = bitmask & CURRY_FLAG,
           newHolders = isCurry ? holders : undefined,
           newHoldersRight = isCurry ? undefined : holders,
@@ -6290,7 +6431,7 @@ module.exports = extractAnnotations;
         setData(result, newData);
       }
       result.placeholder = placeholder;
-      return result;
+      return setWrapToString(result, func, bitmask);
     }
 
     /**
@@ -6319,7 +6460,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * Creates a set of `values`.
+     * Creates a set object of `values`.
      *
      * @private
      * @param {Array} values The values to add to the set.
@@ -6355,7 +6496,7 @@ module.exports = extractAnnotations;
      *
      * @private
      * @param {Function|string} func The function or method name to wrap.
-     * @param {number} bitmask The bitmask of wrapper flags.
+     * @param {number} bitmask The bitmask flags.
      *  The bitmask may be composed of the following flags:
      *     1 - `_.bind`
      *     2 - `_.bindKey`
@@ -6375,7 +6516,7 @@ module.exports = extractAnnotations;
      * @param {number} [arity] The arity of `func`.
      * @returns {Function} Returns the new wrapped function.
      */
-    function createWrapper(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
+    function createWrap(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
       var isBindKey = bitmask & BIND_KEY_FLAG;
       if (!isBindKey && typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
@@ -6418,16 +6559,16 @@ module.exports = extractAnnotations;
         bitmask &= ~(CURRY_FLAG | CURRY_RIGHT_FLAG);
       }
       if (!bitmask || bitmask == BIND_FLAG) {
-        var result = createBaseWrapper(func, bitmask, thisArg);
+        var result = createBind(func, bitmask, thisArg);
       } else if (bitmask == CURRY_FLAG || bitmask == CURRY_RIGHT_FLAG) {
-        result = createCurryWrapper(func, bitmask, arity);
+        result = createCurry(func, bitmask, arity);
       } else if ((bitmask == PARTIAL_FLAG || bitmask == (BIND_FLAG | PARTIAL_FLAG)) && !holders.length) {
-        result = createPartialWrapper(func, bitmask, thisArg, partials);
+        result = createPartial(func, bitmask, thisArg, partials);
       } else {
-        result = createHybridWrapper.apply(undefined, newData);
+        result = createHybrid.apply(undefined, newData);
       }
       var setter = data ? baseSetData : setData;
-      return setter(result, newData);
+      return setWrapToString(setter(result, newData), func, bitmask);
     }
 
     /**
@@ -6454,7 +6595,7 @@ module.exports = extractAnnotations;
       }
       // Assume cyclic values are equal.
       var stacked = stack.get(array);
-      if (stacked) {
+      if (stacked && stack.get(other)) {
         return stacked == other;
       }
       var index = -1,
@@ -6462,6 +6603,7 @@ module.exports = extractAnnotations;
           seen = (bitmask & UNORDERED_COMPARE_FLAG) ? new SetCache : undefined;
 
       stack.set(array, other);
+      stack.set(other, array);
 
       // Ignore non-index properties.
       while (++index < arrLength) {
@@ -6500,6 +6642,7 @@ module.exports = extractAnnotations;
         }
       }
       stack['delete'](array);
+      stack['delete'](other);
       return result;
     }
 
@@ -6540,22 +6683,18 @@ module.exports = extractAnnotations;
 
         case boolTag:
         case dateTag:
-          // Coerce dates and booleans to numbers, dates to milliseconds and
-          // booleans to `1` or `0` treating invalid dates coerced to `NaN` as
-          // not equal.
-          return +object == +other;
+        case numberTag:
+          // Coerce booleans to `1` or `0` and dates to milliseconds.
+          // Invalid dates are coerced to `NaN`.
+          return eq(+object, +other);
 
         case errorTag:
           return object.name == other.name && object.message == other.message;
 
-        case numberTag:
-          // Treat `NaN` vs. `NaN` as equal.
-          return (object != +object) ? other != +other : object == +other;
-
         case regexpTag:
         case stringTag:
           // Coerce regexes to strings and treat strings, primitives and objects,
-          // as equal. See http://www.ecma-international.org/ecma-262/6.0/#sec-regexp.prototype.tostring
+          // as equal. See http://www.ecma-international.org/ecma-262/7.0/#sec-regexp.prototype.tostring
           // for more details.
           return object == (other + '');
 
@@ -6575,10 +6714,12 @@ module.exports = extractAnnotations;
             return stacked == other;
           }
           bitmask |= UNORDERED_COMPARE_FLAG;
-          stack.set(object, other);
 
           // Recursively compare objects (susceptible to call stack limits).
-          return equalArrays(convert(object), convert(other), equalFunc, customizer, bitmask, stack);
+          stack.set(object, other);
+          var result = equalArrays(convert(object), convert(other), equalFunc, customizer, bitmask, stack);
+          stack['delete'](object);
+          return result;
 
         case symbolTag:
           if (symbolValueOf) {
@@ -6615,17 +6756,18 @@ module.exports = extractAnnotations;
       var index = objLength;
       while (index--) {
         var key = objProps[index];
-        if (!(isPartial ? key in other : baseHas(other, key))) {
+        if (!(isPartial ? key in other : hasOwnProperty.call(other, key))) {
           return false;
         }
       }
       // Assume cyclic values are equal.
       var stacked = stack.get(object);
-      if (stacked) {
+      if (stacked && stack.get(other)) {
         return stacked == other;
       }
       var result = true;
       stack.set(object, other);
+      stack.set(other, object);
 
       var skipCtor = isPartial;
       while (++index < objLength) {
@@ -6661,6 +6803,7 @@ module.exports = extractAnnotations;
         }
       }
       stack['delete'](object);
+      stack['delete'](other);
       return result;
     }
 
@@ -6750,19 +6893,6 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * Gets the "length" property value of `object`.
-     *
-     * **Note:** This function is used to avoid a
-     * [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792) that affects
-     * Safari on at least iOS 8.1-8.3 ARM64.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {*} Returns the "length" value.
-     */
-    var getLength = baseProperty('length');
-
-    /**
      * Gets the data for `map`.
      *
      * @private
@@ -6811,33 +6941,13 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * Gets the `[[Prototype]]` of `value`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @returns {null|Object} Returns the `[[Prototype]]`.
-     */
-    function getPrototype(value) {
-      return nativeGetPrototype(Object(value));
-    }
-
-    /**
      * Creates an array of the own enumerable symbol properties of `object`.
      *
      * @private
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of symbols.
      */
-    function getSymbols(object) {
-      // Coerce `object` to an object to avoid non-object errors in V8.
-      // See https://bugs.chromium.org/p/v8/issues/detail?id=3443 for more details.
-      return getOwnPropertySymbols(Object(object));
-    }
-
-    // Fallback for IE < 11.
-    if (!getOwnPropertySymbols) {
-      getSymbols = stubArray;
-    }
+    var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
 
     /**
      * Creates an array of the own and inherited enumerable symbol properties
@@ -6847,7 +6957,7 @@ module.exports = extractAnnotations;
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of symbols.
      */
-    var getSymbolsIn = !getOwnPropertySymbols ? getSymbols : function(object) {
+    var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
       var result = [];
       while (object) {
         arrayPush(result, getSymbols(object));
@@ -6863,12 +6973,10 @@ module.exports = extractAnnotations;
      * @param {*} value The value to query.
      * @returns {string} Returns the `toStringTag`.
      */
-    function getTag(value) {
-      return objectToString.call(value);
-    }
+    var getTag = baseGetTag;
 
     // Fallback for data views, maps, sets, and weak maps in IE 11,
-    // for data views in Edge, and promises in Node.js.
+    // for data views in Edge < 14, and promises in Node.js.
     if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
         (Map && getTag(new Map) != mapTag) ||
         (Promise && getTag(Promise.resolve()) != promiseTag) ||
@@ -6921,6 +7029,18 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * Extracts wrapper details from the `source` body comment.
+     *
+     * @private
+     * @param {string} source The source to inspect.
+     * @returns {Array} Returns the wrapper details.
+     */
+    function getWrapDetails(source) {
+      var match = source.match(reWrapDetails);
+      return match ? match[1].split(reSplitDetails) : [];
+    }
+
+    /**
      * Checks if `path` exists on `object`.
      *
      * @private
@@ -6948,7 +7068,7 @@ module.exports = extractAnnotations;
       }
       var length = object ? object.length : 0;
       return !!length && isLength(length) && isIndex(key, length) &&
-        (isArray(object) || isString(object) || isArguments(object));
+        (isArray(object) || isArguments(object));
     }
 
     /**
@@ -7033,20 +7153,20 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * Creates an array of index keys for `object` values of arrays,
-     * `arguments` objects, and strings, otherwise `null` is returned.
+     * Inserts wrapper `details` in a comment at the top of the `source` body.
      *
      * @private
-     * @param {Object} object The object to query.
-     * @returns {Array|null} Returns index keys, else `null`.
+     * @param {string} source The source to modify.
+     * @returns {Array} details The details to insert.
+     * @returns {string} Returns the modified source.
      */
-    function indexKeys(object) {
-      var length = object ? object.length : undefined;
-      if (isLength(length) &&
-          (isArray(object) || isString(object) || isArguments(object))) {
-        return baseTimes(length, String);
-      }
-      return null;
+    function insertWrapDetails(source, details) {
+      var length = details.length,
+          lastIndex = length - 1;
+
+      details[lastIndex] = (length > 1 ? '& ' : '') + details[lastIndex];
+      details = details.join(length > 2 ? ', ' : ' ');
+      return source.replace(reWrapComment, '{\n/* [wrapped with ' + details + '] */\n');
     }
 
     /**
@@ -7057,19 +7177,8 @@ module.exports = extractAnnotations;
      * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
      */
     function isFlattenable(value) {
-      return isArray(value) || isArguments(value);
-    }
-
-    /**
-     * Checks if `value` is a flattenable array and not a `_.matchesProperty`
-     * iteratee shorthand.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
-     */
-    function isFlattenableIteratee(value) {
-      return isArray(value) && !(value.length == 2 && !isFunction(value[0]));
+      return isArray(value) || isArguments(value) ||
+        !!(spreadableSymbol && value && value[spreadableSymbol]);
     }
 
     /**
@@ -7319,9 +7428,31 @@ module.exports = extractAnnotations;
      */
     function mergeDefaults(objValue, srcValue, key, object, source, stack) {
       if (isObject(objValue) && isObject(srcValue)) {
-        baseMerge(objValue, srcValue, undefined, mergeDefaults, stack.set(srcValue, objValue));
+        // Recursively merge objects and arrays (susceptible to call stack limits).
+        stack.set(srcValue, objValue);
+        baseMerge(objValue, srcValue, undefined, mergeDefaults, stack);
+        stack['delete'](srcValue);
       }
       return objValue;
+    }
+
+    /**
+     * This function is like
+     * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+     * except that it includes inherited enumerable properties.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @returns {Array} Returns the array of property names.
+     */
+    function nativeKeysIn(object) {
+      var result = [];
+      if (object != null) {
+        for (var key in Object(object)) {
+          result.push(key);
+        }
+      }
+      return result;
     }
 
     /**
@@ -7393,6 +7524,37 @@ module.exports = extractAnnotations;
     }());
 
     /**
+     * A simple wrapper around the global [`setTimeout`](https://mdn.io/setTimeout).
+     *
+     * @private
+     * @param {Function} func The function to delay.
+     * @param {number} wait The number of milliseconds to delay invocation.
+     * @returns {number|Object} Returns the timer id or timeout object.
+     */
+    var setTimeout = ctxSetTimeout || function(func, wait) {
+      return root.setTimeout(func, wait);
+    };
+
+    /**
+     * Sets the `toString` method of `wrapper` to mimic the source of `reference`
+     * with wrapper details in a comment at the top of the source body.
+     *
+     * @private
+     * @param {Function} wrapper The function to modify.
+     * @param {Function} reference The reference function.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+     * @returns {Function} Returns `wrapper`.
+     */
+    var setWrapToString = !defineProperty ? identity : function(wrapper, reference, bitmask) {
+      var source = (reference + '');
+      return defineProperty(wrapper, 'toString', {
+        'configurable': true,
+        'enumerable': false,
+        'value': constant(insertWrapDetails(source, updateWrapDetails(getWrapDetails(source), bitmask)))
+      });
+    };
+
+    /**
      * Converts `string` to a property path array.
      *
      * @private
@@ -7400,8 +7562,13 @@ module.exports = extractAnnotations;
      * @returns {Array} Returns the property path array.
      */
     var stringToPath = memoize(function(string) {
+      string = toString(string);
+
       var result = [];
-      toString(string).replace(rePropName, function(match, number, quote, string) {
+      if (reLeadingDot.test(string)) {
+        result.push('');
+      }
+      string.replace(rePropName, function(match, number, quote, string) {
         result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
       });
       return result;
@@ -7439,6 +7606,24 @@ module.exports = extractAnnotations;
         } catch (e) {}
       }
       return '';
+    }
+
+    /**
+     * Updates wrapper `details` based on `bitmask` flags.
+     *
+     * @private
+     * @returns {Array} details The details to modify.
+     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+     * @returns {Array} Returns `details`.
+     */
+    function updateWrapDetails(details, bitmask) {
+      arrayEach(wrapFlags, function(pair) {
+        var value = '_.' + pair[0];
+        if ((bitmask & pair[1]) && !arrayIncludes(details, value)) {
+          details.push(value);
+        }
+      });
+      return details.sort();
     }
 
     /**
@@ -7569,10 +7754,12 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * Creates an array of unique `array` values not included in the other given
-     * arrays using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * Creates an array of `array` values not included in the other given arrays
+     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons. The order of result values is determined by the
      * order they occur in the first array.
+     *
+     * **Note:** Unlike `_.pullAll`, this method returns a new array.
      *
      * @static
      * @memberOf _
@@ -7587,7 +7774,7 @@ module.exports = extractAnnotations;
      * _.difference([2, 1], [2, 3]);
      * // => [1]
      */
-    var difference = rest(function(array, values) {
+    var difference = baseRest(function(array, values) {
       return isArrayLikeObject(array)
         ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true))
         : [];
@@ -7599,14 +7786,15 @@ module.exports = extractAnnotations;
      * by which they're compared. Result values are chosen from the first array.
      * The iteratee is invoked with one argument: (value).
      *
+     * **Note:** Unlike `_.pullAllBy`, this method returns a new array.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Array
      * @param {Array} array The array to inspect.
      * @param {...Array} [values] The values to exclude.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {Array} Returns the new array of filtered values.
      * @example
      *
@@ -7617,13 +7805,13 @@ module.exports = extractAnnotations;
      * _.differenceBy([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x');
      * // => [{ 'x': 2 }]
      */
-    var differenceBy = rest(function(array, values) {
+    var differenceBy = baseRest(function(array, values) {
       var iteratee = last(values);
       if (isArrayLikeObject(iteratee)) {
         iteratee = undefined;
       }
       return isArrayLikeObject(array)
-        ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), getIteratee(iteratee))
+        ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), getIteratee(iteratee, 2))
         : [];
     });
 
@@ -7632,6 +7820,8 @@ module.exports = extractAnnotations;
      * which is invoked to compare elements of `array` to `values`. Result values
      * are chosen from the first array. The comparator is invoked with two arguments:
      * (arrVal, othVal).
+     *
+     * **Note:** Unlike `_.pullAllWith`, this method returns a new array.
      *
      * @static
      * @memberOf _
@@ -7648,7 +7838,7 @@ module.exports = extractAnnotations;
      * _.differenceWith(objects, [{ 'x': 1, 'y': 2 }], _.isEqual);
      * // => [{ 'x': 2, 'y': 1 }]
      */
-    var differenceWith = rest(function(array, values) {
+    var differenceWith = baseRest(function(array, values) {
       var comparator = last(values);
       if (isArrayLikeObject(comparator)) {
         comparator = undefined;
@@ -7737,8 +7927,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Array
      * @param {Array} array The array to query.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [predicate=_.identity] The function invoked per iteration.
      * @returns {Array} Returns the slice of `array`.
      * @example
      *
@@ -7779,7 +7968,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Array
      * @param {Array} array The array to query.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the slice of `array`.
      * @example
@@ -7860,8 +8049,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 1.1.0
      * @category Array
-     * @param {Array} array The array to search.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Array} array The array to inspect.
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @param {number} [fromIndex=0] The index to search from.
      * @returns {number} Returns the index of the found element, else `-1`.
@@ -7908,8 +8097,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 2.0.0
      * @category Array
-     * @param {Array} array The array to search.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Array} array The array to inspect.
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @param {number} [fromIndex=array.length-1] The index to search from.
      * @returns {number} Returns the index of the found element, else `-1`.
@@ -8030,8 +8219,8 @@ module.exports = extractAnnotations;
      * @returns {Object} Returns the new object.
      * @example
      *
-     * _.fromPairs([['fred', 30], ['barney', 40]]);
-     * // => { 'fred': 30, 'barney': 40 }
+     * _.fromPairs([['a', 1], ['b', 2]]);
+     * // => { 'a': 1, 'b': 2 }
      */
     function fromPairs(pairs) {
       var index = -1,
@@ -8069,7 +8258,7 @@ module.exports = extractAnnotations;
 
     /**
      * Gets the index at which the first occurrence of `value` is found in `array`
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons. If `fromIndex` is negative, it's used as the
      * offset from the end of `array`.
      *
@@ -8077,7 +8266,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to search.
+     * @param {Array} array The array to inspect.
      * @param {*} value The value to search for.
      * @param {number} [fromIndex=0] The index to search from.
      * @returns {number} Returns the index of the matched value, else `-1`.
@@ -8117,12 +8306,13 @@ module.exports = extractAnnotations;
      * // => [1, 2]
      */
     function initial(array) {
-      return dropRight(array, 1);
+      var length = array ? array.length : 0;
+      return length ? baseSlice(array, 0, -1) : [];
     }
 
     /**
      * Creates an array of unique values that are included in all given arrays
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons. The order of result values is determined by the
      * order they occur in the first array.
      *
@@ -8137,7 +8327,7 @@ module.exports = extractAnnotations;
      * _.intersection([2, 1], [2, 3]);
      * // => [2]
      */
-    var intersection = rest(function(arrays) {
+    var intersection = baseRest(function(arrays) {
       var mapped = arrayMap(arrays, castArrayLikeObject);
       return (mapped.length && mapped[0] === arrays[0])
         ? baseIntersection(mapped)
@@ -8155,8 +8345,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Array
      * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {Array} Returns the new array of intersecting values.
      * @example
      *
@@ -8167,7 +8356,7 @@ module.exports = extractAnnotations;
      * _.intersectionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 1 }]
      */
-    var intersectionBy = rest(function(arrays) {
+    var intersectionBy = baseRest(function(arrays) {
       var iteratee = last(arrays),
           mapped = arrayMap(arrays, castArrayLikeObject);
 
@@ -8177,7 +8366,7 @@ module.exports = extractAnnotations;
         mapped.pop();
       }
       return (mapped.length && mapped[0] === arrays[0])
-        ? baseIntersection(mapped, getIteratee(iteratee))
+        ? baseIntersection(mapped, getIteratee(iteratee, 2))
         : [];
     });
 
@@ -8202,7 +8391,7 @@ module.exports = extractAnnotations;
      * _.intersectionWith(objects, others, _.isEqual);
      * // => [{ 'x': 1, 'y': 2 }]
      */
-    var intersectionWith = rest(function(arrays) {
+    var intersectionWith = baseRest(function(arrays) {
       var comparator = last(arrays),
           mapped = arrayMap(arrays, castArrayLikeObject);
 
@@ -8262,7 +8451,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 0.1.0
      * @category Array
-     * @param {Array} array The array to search.
+     * @param {Array} array The array to inspect.
      * @param {*} value The value to search for.
      * @param {number} [fromIndex=array.length-1] The index to search from.
      * @returns {number} Returns the index of the matched value, else `-1`.
@@ -8290,7 +8479,7 @@ module.exports = extractAnnotations;
         ) + 1;
       }
       if (value !== value) {
-        return indexOfNaN(array, index - 1, true);
+        return baseFindIndex(array, baseIsNaN, index - 1, true);
       }
       while (index--) {
         if (array[index] === value) {
@@ -8327,7 +8516,7 @@ module.exports = extractAnnotations;
 
     /**
      * Removes all given values from `array` using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons.
      *
      * **Note:** Unlike `_.without`, this method mutates `array`. Use `_.remove`
@@ -8348,7 +8537,7 @@ module.exports = extractAnnotations;
      * console.log(array);
      * // => ['b', 'b']
      */
-    var pull = rest(pullAll);
+    var pull = baseRest(pullAll);
 
     /**
      * This method is like `_.pull` except that it accepts an array of values to remove.
@@ -8389,7 +8578,7 @@ module.exports = extractAnnotations;
      * @category Array
      * @param {Array} array The array to modify.
      * @param {Array} values The values to remove.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee invoked per element.
      * @returns {Array} Returns `array`.
      * @example
@@ -8402,7 +8591,7 @@ module.exports = extractAnnotations;
      */
     function pullAllBy(array, values, iteratee) {
       return (array && array.length && values && values.length)
-        ? basePullAll(array, values, getIteratee(iteratee))
+        ? basePullAll(array, values, getIteratee(iteratee, 2))
         : array;
     }
 
@@ -8459,7 +8648,7 @@ module.exports = extractAnnotations;
      * console.log(pulled);
      * // => ['b', 'd']
      */
-    var pullAt = rest(function(array, indexes) {
+    var pullAt = baseRest(function(array, indexes) {
       indexes = baseFlatten(indexes, 1);
 
       var length = array ? array.length : 0,
@@ -8485,7 +8674,7 @@ module.exports = extractAnnotations;
      * @since 2.0.0
      * @category Array
      * @param {Array} array The array to modify.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the new array of removed elements.
      * @example
@@ -8613,7 +8802,7 @@ module.exports = extractAnnotations;
      * @category Array
      * @param {Array} array The sorted array to inspect.
      * @param {*} value The value to evaluate.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee invoked per element.
      * @returns {number} Returns the index at which `value` should be inserted
      *  into `array`.
@@ -8629,7 +8818,7 @@ module.exports = extractAnnotations;
      * // => 0
      */
     function sortedIndexBy(array, value, iteratee) {
-      return baseSortedIndexBy(array, value, getIteratee(iteratee));
+      return baseSortedIndexBy(array, value, getIteratee(iteratee, 2));
     }
 
     /**
@@ -8640,7 +8829,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to search.
+     * @param {Array} array The array to inspect.
      * @param {*} value The value to search for.
      * @returns {number} Returns the index of the matched value, else `-1`.
      * @example
@@ -8692,7 +8881,7 @@ module.exports = extractAnnotations;
      * @category Array
      * @param {Array} array The sorted array to inspect.
      * @param {*} value The value to evaluate.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee invoked per element.
      * @returns {number} Returns the index at which `value` should be inserted
      *  into `array`.
@@ -8708,7 +8897,7 @@ module.exports = extractAnnotations;
      * // => 1
      */
     function sortedLastIndexBy(array, value, iteratee) {
-      return baseSortedIndexBy(array, value, getIteratee(iteratee), true);
+      return baseSortedIndexBy(array, value, getIteratee(iteratee, 2), true);
     }
 
     /**
@@ -8719,7 +8908,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 4.0.0
      * @category Array
-     * @param {Array} array The array to search.
+     * @param {Array} array The array to inspect.
      * @param {*} value The value to search for.
      * @returns {number} Returns the index of the matched value, else `-1`.
      * @example
@@ -8777,7 +8966,7 @@ module.exports = extractAnnotations;
      */
     function sortedUniqBy(array, iteratee) {
       return (array && array.length)
-        ? baseSortedUniq(array, getIteratee(iteratee))
+        ? baseSortedUniq(array, getIteratee(iteratee, 2))
         : [];
     }
 
@@ -8796,7 +8985,8 @@ module.exports = extractAnnotations;
      * // => [2, 3]
      */
     function tail(array) {
-      return drop(array, 1);
+      var length = array ? array.length : 0;
+      return length ? baseSlice(array, 1, length) : [];
     }
 
     /**
@@ -8877,7 +9067,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Array
      * @param {Array} array The array to query.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the slice of `array`.
      * @example
@@ -8919,7 +9109,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Array
      * @param {Array} array The array to query.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the slice of `array`.
      * @example
@@ -8953,7 +9143,7 @@ module.exports = extractAnnotations;
 
     /**
      * Creates an array of unique values, in order, from all given arrays using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons.
      *
      * @static
@@ -8967,14 +9157,15 @@ module.exports = extractAnnotations;
      * _.union([2], [1, 2]);
      * // => [2, 1]
      */
-    var union = rest(function(arrays) {
+    var union = baseRest(function(arrays) {
       return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true));
     });
 
     /**
      * This method is like `_.union` except that it accepts `iteratee` which is
      * invoked for each element of each `arrays` to generate the criterion by
-     * which uniqueness is computed. The iteratee is invoked with one argument:
+     * which uniqueness is computed. Result values are chosen from the first
+     * array in which the value occurs. The iteratee is invoked with one argument:
      * (value).
      *
      * @static
@@ -8982,7 +9173,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Array
      * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee invoked per element.
      * @returns {Array} Returns the new array of combined values.
      * @example
@@ -8994,17 +9185,18 @@ module.exports = extractAnnotations;
      * _.unionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 1 }, { 'x': 2 }]
      */
-    var unionBy = rest(function(arrays) {
+    var unionBy = baseRest(function(arrays) {
       var iteratee = last(arrays);
       if (isArrayLikeObject(iteratee)) {
         iteratee = undefined;
       }
-      return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), getIteratee(iteratee));
+      return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), getIteratee(iteratee, 2));
     });
 
     /**
      * This method is like `_.union` except that it accepts `comparator` which
-     * is invoked to compare elements of `arrays`. The comparator is invoked
+     * is invoked to compare elements of `arrays`. Result values are chosen from
+     * the first array in which the value occurs. The comparator is invoked
      * with two arguments: (arrVal, othVal).
      *
      * @static
@@ -9022,7 +9214,7 @@ module.exports = extractAnnotations;
      * _.unionWith(objects, others, _.isEqual);
      * // => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]
      */
-    var unionWith = rest(function(arrays) {
+    var unionWith = baseRest(function(arrays) {
       var comparator = last(arrays);
       if (isArrayLikeObject(comparator)) {
         comparator = undefined;
@@ -9032,7 +9224,7 @@ module.exports = extractAnnotations;
 
     /**
      * Creates a duplicate-free version of an array, using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons, in which only the first occurrence of each
      * element is kept.
      *
@@ -9063,7 +9255,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Array
      * @param {Array} array The array to inspect.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee invoked per element.
      * @returns {Array} Returns the new duplicate free array.
      * @example
@@ -9077,7 +9269,7 @@ module.exports = extractAnnotations;
      */
     function uniqBy(array, iteratee) {
       return (array && array.length)
-        ? baseUniq(array, getIteratee(iteratee))
+        ? baseUniq(array, getIteratee(iteratee, 2))
         : [];
     }
 
@@ -9119,11 +9311,11 @@ module.exports = extractAnnotations;
      * @returns {Array} Returns the new array of regrouped elements.
      * @example
      *
-     * var zipped = _.zip(['fred', 'barney'], [30, 40], [true, false]);
-     * // => [['fred', 30, true], ['barney', 40, false]]
+     * var zipped = _.zip(['a', 'b'], [1, 2], [true, false]);
+     * // => [['a', 1, true], ['b', 2, false]]
      *
      * _.unzip(zipped);
-     * // => [['fred', 'barney'], [30, 40], [true, false]]
+     * // => [['a', 'b'], [1, 2], [true, false]]
      */
     function unzip(array) {
       if (!(array && array.length)) {
@@ -9177,8 +9369,10 @@ module.exports = extractAnnotations;
 
     /**
      * Creates an array excluding all given values using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * for equality comparisons.
+     *
+     * **Note:** Unlike `_.pull`, this method returns a new array.
      *
      * @static
      * @memberOf _
@@ -9193,7 +9387,7 @@ module.exports = extractAnnotations;
      * _.without([2, 1, 2, 3], 1, 2);
      * // => [3]
      */
-    var without = rest(function(array, values) {
+    var without = baseRest(function(array, values) {
       return isArrayLikeObject(array)
         ? baseDifference(array, values)
         : [];
@@ -9217,7 +9411,7 @@ module.exports = extractAnnotations;
      * _.xor([2, 1], [2, 3]);
      * // => [1, 3]
      */
-    var xor = rest(function(arrays) {
+    var xor = baseRest(function(arrays) {
       return baseXor(arrayFilter(arrays, isArrayLikeObject));
     });
 
@@ -9232,7 +9426,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Array
      * @param {...Array} [arrays] The arrays to inspect.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee invoked per element.
      * @returns {Array} Returns the new array of filtered values.
      * @example
@@ -9244,12 +9438,12 @@ module.exports = extractAnnotations;
      * _.xorBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 2 }]
      */
-    var xorBy = rest(function(arrays) {
+    var xorBy = baseRest(function(arrays) {
       var iteratee = last(arrays);
       if (isArrayLikeObject(iteratee)) {
         iteratee = undefined;
       }
-      return baseXor(arrayFilter(arrays, isArrayLikeObject), getIteratee(iteratee));
+      return baseXor(arrayFilter(arrays, isArrayLikeObject), getIteratee(iteratee, 2));
     });
 
     /**
@@ -9272,7 +9466,7 @@ module.exports = extractAnnotations;
      * _.xorWith(objects, others, _.isEqual);
      * // => [{ 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]
      */
-    var xorWith = rest(function(arrays) {
+    var xorWith = baseRest(function(arrays) {
       var comparator = last(arrays);
       if (isArrayLikeObject(comparator)) {
         comparator = undefined;
@@ -9293,10 +9487,10 @@ module.exports = extractAnnotations;
      * @returns {Array} Returns the new array of grouped elements.
      * @example
      *
-     * _.zip(['fred', 'barney'], [30, 40], [true, false]);
-     * // => [['fred', 30, true], ['barney', 40, false]]
+     * _.zip(['a', 'b'], [1, 2], [true, false]);
+     * // => [['a', 1, true], ['b', 2, false]]
      */
-    var zip = rest(unzip);
+    var zip = baseRest(unzip);
 
     /**
      * This method is like `_.fromPairs` except that it accepts two arrays,
@@ -9356,7 +9550,7 @@ module.exports = extractAnnotations;
      * });
      * // => [111, 222]
      */
-    var zipWith = rest(function(arrays) {
+    var zipWith = baseRest(function(arrays) {
       var length = arrays.length,
           iteratee = length > 1 ? arrays[length - 1] : undefined;
 
@@ -9472,7 +9666,7 @@ module.exports = extractAnnotations;
      * _(object).at(['a[0].b.c', 'a[1]']).value();
      * // => [3, 4]
      */
-    var wrapperAt = rest(function(paths) {
+    var wrapperAt = baseRest(function(paths) {
       paths = baseFlatten(paths, 1);
       var length = paths.length,
           start = length ? paths[0] : 0,
@@ -9725,7 +9919,7 @@ module.exports = extractAnnotations;
      * @since 0.5.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee to transform keys.
      * @returns {Object} Returns the composed aggregate object.
      * @example
@@ -9746,12 +9940,17 @@ module.exports = extractAnnotations;
      * Iteration is stopped once `predicate` returns falsey. The predicate is
      * invoked with three arguments: (value, index|key, collection).
      *
+     * **Note:** This method returns `true` for
+     * [empty collections](https://en.wikipedia.org/wiki/Empty_set) because
+     * [everything is true](https://en.wikipedia.org/wiki/Vacuous_truth) of
+     * elements of empty collections.
+     *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
      * @returns {boolean} Returns `true` if all elements pass the predicate check,
@@ -9791,12 +9990,14 @@ module.exports = extractAnnotations;
      * `predicate` returns truthy for. The predicate is invoked with three
      * arguments: (value, index|key, collection).
      *
+     * **Note:** Unlike `_.remove`, this method returns a new array.
+     *
      * @static
      * @memberOf _
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the new filtered array.
      * @see _.reject
@@ -9836,8 +10037,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to search.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Array|Object} collection The collection to inspect.
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @param {number} [fromIndex=0] The index to search from.
      * @returns {*} Returns the matched element, else `undefined`.
@@ -9874,8 +10075,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 2.0.0
      * @category Collection
-     * @param {Array|Object} collection The collection to search.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
+     * @param {Array|Object} collection The collection to inspect.
+     * @param {Function} [predicate=_.identity]
      *  The function invoked per iteration.
      * @param {number} [fromIndex=collection.length-1] The index to search from.
      * @returns {*} Returns the matched element, else `undefined`.
@@ -9898,7 +10099,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the new flattened array.
      * @example
@@ -9923,7 +10124,7 @@ module.exports = extractAnnotations;
      * @since 4.7.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The function invoked per iteration.
      * @returns {Array} Returns the new flattened array.
      * @example
@@ -9948,7 +10149,7 @@ module.exports = extractAnnotations;
      * @since 4.7.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The function invoked per iteration.
      * @param {number} [depth=1] The maximum recursion depth.
      * @returns {Array} Returns the new flattened array.
@@ -10038,7 +10239,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee to transform keys.
      * @returns {Object} Returns the composed aggregate object.
      * @example
@@ -10061,7 +10262,7 @@ module.exports = extractAnnotations;
     /**
      * Checks if `value` is in `collection`. If `collection` is a string, it's
      * checked for a substring of `value`, otherwise
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * is used for equality comparisons. If `fromIndex` is negative, it's used as
      * the offset from the end of `collection`.
      *
@@ -10069,7 +10270,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object|string} collection The collection to search.
+     * @param {Array|Object|string} collection The collection to inspect.
      * @param {*} value The value to search for.
      * @param {number} [fromIndex=0] The index to search from.
      * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
@@ -10082,10 +10283,10 @@ module.exports = extractAnnotations;
      * _.includes([1, 2, 3], 1, 2);
      * // => false
      *
-     * _.includes({ 'user': 'fred', 'age': 40 }, 'fred');
+     * _.includes({ 'a': 1, 'b': 2 }, 1);
      * // => true
      *
-     * _.includes('pebbles', 'eb');
+     * _.includes('abcd', 'bc');
      * // => true
      */
     function includes(collection, value, fromIndex, guard) {
@@ -10104,8 +10305,8 @@ module.exports = extractAnnotations;
     /**
      * Invokes the method at `path` of each element in `collection`, returning
      * an array of the results of each invoked method. Any additional arguments
-     * are provided to each invoked method. If `methodName` is a function, it's
-     * invoked for and `this` bound to, each element in `collection`.
+     * are provided to each invoked method. If `path` is a function, it's invoked
+     * for, and `this` bound to, each element in `collection`.
      *
      * @static
      * @memberOf _
@@ -10124,7 +10325,7 @@ module.exports = extractAnnotations;
      * _.invokeMap([123, 456], String.prototype.split, '');
      * // => [['1', '2', '3'], ['4', '5', '6']]
      */
-    var invokeMap = rest(function(collection, path, args) {
+    var invokeMap = baseRest(function(collection, path, args) {
       var index = -1,
           isFunc = typeof path == 'function',
           isProp = isKey(path),
@@ -10148,7 +10349,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
+     * @param {Function} [iteratee=_.identity]
      *  The iteratee to transform keys.
      * @returns {Object} Returns the composed aggregate object.
      * @example
@@ -10189,8 +10390,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
      * @returns {Array} Returns the new mapped array.
      * @example
      *
@@ -10272,8 +10472,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [predicate=_.identity] The function invoked per iteration.
      * @returns {Array} Returns the array of grouped elements.
      * @example
      *
@@ -10384,8 +10583,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [predicate=_.identity] The function invoked per iteration.
      * @returns {Array} Returns the new filtered array.
      * @see _.filter
      * @example
@@ -10412,10 +10610,7 @@ module.exports = extractAnnotations;
      */
     function reject(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
-      predicate = getIteratee(predicate, 3);
-      return func(collection, function(value, index, collection) {
-        return !predicate(value, index, collection);
-      });
+      return func(collection, negate(getIteratee(predicate, 3)));
     }
 
     /**
@@ -10508,7 +10703,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 0.1.0
      * @category Collection
-     * @param {Array|Object} collection The collection to inspect.
+     * @param {Array|Object|string} collection The collection to inspect.
      * @returns {number} Returns the collection size.
      * @example
      *
@@ -10526,16 +10721,13 @@ module.exports = extractAnnotations;
         return 0;
       }
       if (isArrayLike(collection)) {
-        var result = collection.length;
-        return (result && isString(collection)) ? stringSize(collection) : result;
+        return isString(collection) ? stringSize(collection) : collection.length;
       }
-      if (isObjectLike(collection)) {
-        var tag = getTag(collection);
-        if (tag == mapTag || tag == setTag) {
-          return collection.size;
-        }
+      var tag = getTag(collection);
+      if (tag == mapTag || tag == setTag) {
+        return collection.size;
       }
-      return keys(collection).length;
+      return baseKeys(collection).length;
     }
 
     /**
@@ -10548,8 +10740,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [predicate=_.identity] The function invoked per iteration.
      * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
      * @returns {boolean} Returns `true` if any element passes the predicate check,
      *  else `false`.
@@ -10594,8 +10785,8 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Collection
      * @param {Array|Object} collection The collection to iterate over.
-     * @param {...(Array|Array[]|Function|Function[]|Object|Object[]|string|string[])}
-     *  [iteratees=[_.identity]] The iteratees to sort by.
+     * @param {...(Function|Function[])} [iteratees=[_.identity]]
+     *  The iteratees to sort by.
      * @returns {Array} Returns the new sorted array.
      * @example
      *
@@ -10617,7 +10808,7 @@ module.exports = extractAnnotations;
      * });
      * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
      */
-    var sortBy = rest(function(collection, iteratees) {
+    var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
         return [];
       }
@@ -10627,11 +10818,7 @@ module.exports = extractAnnotations;
       } else if (length > 2 && isIterateeCall(iteratees[0], iteratees[1], iteratees[2])) {
         iteratees = [iteratees[0]];
       }
-      iteratees = (iteratees.length == 1 && isArray(iteratees[0]))
-        ? iteratees[0]
-        : baseFlatten(iteratees, 1, isFlattenableIteratee);
-
-      return baseOrderBy(collection, iteratees, []);
+      return baseOrderBy(collection, baseFlatten(iteratees, 1), []);
     });
 
     /*------------------------------------------------------------------------*/
@@ -10652,9 +10839,9 @@ module.exports = extractAnnotations;
      * }, _.now());
      * // => Logs the number of milliseconds it took for the deferred invocation.
      */
-    function now() {
-      return Date.now();
-    }
+    var now = ctxNow || function() {
+      return root.Date.now();
+    };
 
     /*------------------------------------------------------------------------*/
 
@@ -10714,7 +10901,7 @@ module.exports = extractAnnotations;
     function ary(func, n, guard) {
       n = guard ? undefined : n;
       n = (func && n == null) ? func.length : n;
-      return createWrapper(func, ARY_FLAG, undefined, undefined, undefined, undefined, n);
+      return createWrap(func, ARY_FLAG, undefined, undefined, undefined, undefined, n);
     }
 
     /**
@@ -10732,7 +10919,7 @@ module.exports = extractAnnotations;
      * @example
      *
      * jQuery(element).on('click', _.before(5, addContactToList));
-     * // => allows adding up to 4 contacts to the list
+     * // => Allows adding up to 4 contacts to the list.
      */
     function before(n, func) {
       var result;
@@ -10771,9 +10958,9 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new bound function.
      * @example
      *
-     * var greet = function(greeting, punctuation) {
+     * function greet(greeting, punctuation) {
      *   return greeting + ' ' + this.user + punctuation;
-     * };
+     * }
      *
      * var object = { 'user': 'fred' };
      *
@@ -10786,13 +10973,13 @@ module.exports = extractAnnotations;
      * bound('hi');
      * // => 'hi fred!'
      */
-    var bind = rest(function(func, thisArg, partials) {
+    var bind = baseRest(function(func, thisArg, partials) {
       var bitmask = BIND_FLAG;
       if (partials.length) {
         var holders = replaceHolders(partials, getHolder(bind));
         bitmask |= PARTIAL_FLAG;
       }
-      return createWrapper(func, bitmask, thisArg, partials, holders);
+      return createWrap(func, bitmask, thisArg, partials, holders);
     });
 
     /**
@@ -10840,13 +11027,13 @@ module.exports = extractAnnotations;
      * bound('hi');
      * // => 'hiya fred!'
      */
-    var bindKey = rest(function(object, key, partials) {
+    var bindKey = baseRest(function(object, key, partials) {
       var bitmask = BIND_FLAG | BIND_KEY_FLAG;
       if (partials.length) {
         var holders = replaceHolders(partials, getHolder(bindKey));
         bitmask |= PARTIAL_FLAG;
       }
-      return createWrapper(key, bitmask, object, partials, holders);
+      return createWrap(key, bitmask, object, partials, holders);
     });
 
     /**
@@ -10892,7 +11079,7 @@ module.exports = extractAnnotations;
      */
     function curry(func, arity, guard) {
       arity = guard ? undefined : arity;
-      var result = createWrapper(func, CURRY_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
+      var result = createWrap(func, CURRY_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
       result.placeholder = curry.placeholder;
       return result;
     }
@@ -10937,7 +11124,7 @@ module.exports = extractAnnotations;
      */
     function curryRight(func, arity, guard) {
       arity = guard ? undefined : arity;
-      var result = createWrapper(func, CURRY_RIGHT_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
+      var result = createWrap(func, CURRY_RIGHT_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
       result.placeholder = curryRight.placeholder;
       return result;
     }
@@ -10947,14 +11134,18 @@ module.exports = extractAnnotations;
      * milliseconds have elapsed since the last time the debounced function was
      * invoked. The debounced function comes with a `cancel` method to cancel
      * delayed `func` invocations and a `flush` method to immediately invoke them.
-     * Provide an options object to indicate whether `func` should be invoked on
-     * the leading and/or trailing edge of the `wait` timeout. The `func` is invoked
-     * with the last arguments provided to the debounced function. Subsequent calls
-     * to the debounced function return the result of the last `func` invocation.
+     * Provide `options` to indicate whether `func` should be invoked on the
+     * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+     * with the last arguments provided to the debounced function. Subsequent
+     * calls to the debounced function return the result of the last `func`
+     * invocation.
      *
-     * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
-     * on the trailing edge of the timeout only if the debounced function is
-     * invoked more than once during the `wait` timeout.
+     * **Note:** If `leading` and `trailing` options are `true`, `func` is
+     * invoked on the trailing edge of the timeout only if the debounced function
+     * is invoked more than once during the `wait` timeout.
+     *
+     * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+     * until to the next tick, similar to `setTimeout` with a timeout of `0`.
      *
      * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
      * for details over the differences between `_.debounce` and `_.throttle`.
@@ -11075,6 +11266,9 @@ module.exports = extractAnnotations;
       }
 
       function cancel() {
+        if (timerId !== undefined) {
+          clearTimeout(timerId);
+        }
         lastInvokeTime = 0;
         lastArgs = lastCallTime = lastThis = timerId = undefined;
       }
@@ -11129,7 +11323,7 @@ module.exports = extractAnnotations;
      * }, 'deferred');
      * // => Logs 'deferred' after one or more milliseconds.
      */
-    var defer = rest(function(func, args) {
+    var defer = baseRest(function(func, args) {
       return baseDelay(func, 1, args);
     });
 
@@ -11152,7 +11346,7 @@ module.exports = extractAnnotations;
      * }, 1000, 'later');
      * // => Logs 'later' after one second.
      */
-    var delay = rest(function(func, wait, args) {
+    var delay = baseRest(function(func, wait, args) {
       return baseDelay(func, toNumber(wait) || 0, args);
     });
 
@@ -11175,7 +11369,7 @@ module.exports = extractAnnotations;
      * // => ['d', 'c', 'b', 'a']
      */
     function flip(func) {
-      return createWrapper(func, FLIP_FLAG);
+      return createWrap(func, FLIP_FLAG);
     }
 
     /**
@@ -11188,7 +11382,7 @@ module.exports = extractAnnotations;
      * **Note:** The cache is exposed as the `cache` property on the memoized
      * function. Its creation may be customized by replacing the `_.memoize.Cache`
      * constructor with one whose instances implement the
-     * [`Map`](http://ecma-international.org/ecma-262/6.0/#sec-properties-of-the-map-prototype-object)
+     * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
      * method interface of `delete`, `get`, `has`, and `set`.
      *
      * @static
@@ -11270,7 +11464,14 @@ module.exports = extractAnnotations;
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       return function() {
-        return !predicate.apply(this, arguments);
+        var args = arguments;
+        switch (args.length) {
+          case 0: return !predicate.call(this);
+          case 1: return !predicate.call(this, args[0]);
+          case 2: return !predicate.call(this, args[0], args[1]);
+          case 3: return !predicate.call(this, args[0], args[1], args[2]);
+        }
+        return !predicate.apply(this, args);
       };
     }
 
@@ -11290,23 +11491,22 @@ module.exports = extractAnnotations;
      * var initialize = _.once(createApplication);
      * initialize();
      * initialize();
-     * // `initialize` invokes `createApplication` once
+     * // => `createApplication` is invoked once
      */
     function once(func) {
       return before(2, func);
     }
 
     /**
-     * Creates a function that invokes `func` with arguments transformed by
-     * corresponding `transforms`.
+     * Creates a function that invokes `func` with its arguments transformed.
      *
      * @static
      * @since 4.0.0
      * @memberOf _
      * @category Function
      * @param {Function} func The function to wrap.
-     * @param {...(Array|Array[]|Function|Function[]|Object|Object[]|string|string[])}
-     *  [transforms[_.identity]] The functions to transform.
+     * @param {...(Function|Function[])} [transforms=[_.identity]]
+     *  The argument transforms.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -11328,13 +11528,13 @@ module.exports = extractAnnotations;
      * func(10, 5);
      * // => [100, 10]
      */
-    var overArgs = rest(function(func, transforms) {
+    var overArgs = baseRest(function(func, transforms) {
       transforms = (transforms.length == 1 && isArray(transforms[0]))
         ? arrayMap(transforms[0], baseUnary(getIteratee()))
-        : arrayMap(baseFlatten(transforms, 1, isFlattenableIteratee), baseUnary(getIteratee()));
+        : arrayMap(baseFlatten(transforms, 1), baseUnary(getIteratee()));
 
       var funcsLength = transforms.length;
-      return rest(function(args) {
+      return baseRest(function(args) {
         var index = -1,
             length = nativeMin(args.length, funcsLength);
 
@@ -11365,9 +11565,9 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new partially applied function.
      * @example
      *
-     * var greet = function(greeting, name) {
+     * function greet(greeting, name) {
      *   return greeting + ' ' + name;
-     * };
+     * }
      *
      * var sayHelloTo = _.partial(greet, 'hello');
      * sayHelloTo('fred');
@@ -11378,9 +11578,9 @@ module.exports = extractAnnotations;
      * greetFred('hi');
      * // => 'hi fred'
      */
-    var partial = rest(function(func, partials) {
+    var partial = baseRest(function(func, partials) {
       var holders = replaceHolders(partials, getHolder(partial));
-      return createWrapper(func, PARTIAL_FLAG, undefined, partials, holders);
+      return createWrap(func, PARTIAL_FLAG, undefined, partials, holders);
     });
 
     /**
@@ -11402,9 +11602,9 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new partially applied function.
      * @example
      *
-     * var greet = function(greeting, name) {
+     * function greet(greeting, name) {
      *   return greeting + ' ' + name;
-     * };
+     * }
      *
      * var greetFred = _.partialRight(greet, 'fred');
      * greetFred('hi');
@@ -11415,9 +11615,9 @@ module.exports = extractAnnotations;
      * sayHelloTo('fred');
      * // => 'hello fred'
      */
-    var partialRight = rest(function(func, partials) {
+    var partialRight = baseRest(function(func, partials) {
       var holders = replaceHolders(partials, getHolder(partialRight));
-      return createWrapper(func, PARTIAL_RIGHT_FLAG, undefined, partials, holders);
+      return createWrap(func, PARTIAL_RIGHT_FLAG, undefined, partials, holders);
     });
 
     /**
@@ -11442,8 +11642,8 @@ module.exports = extractAnnotations;
      * rearged('b', 'c', 'a')
      * // => ['a', 'b', 'c']
      */
-    var rearg = rest(function(func, indexes) {
-      return createWrapper(func, REARG_FLAG, undefined, undefined, undefined, baseFlatten(indexes, 1));
+    var rearg = baseRest(function(func, indexes) {
+      return createWrap(func, REARG_FLAG, undefined, undefined, undefined, baseFlatten(indexes, 1));
     });
 
     /**
@@ -11475,35 +11675,14 @@ module.exports = extractAnnotations;
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      start = nativeMax(start === undefined ? (func.length - 1) : toInteger(start), 0);
-      return function() {
-        var args = arguments,
-            index = -1,
-            length = nativeMax(args.length - start, 0),
-            array = Array(length);
-
-        while (++index < length) {
-          array[index] = args[start + index];
-        }
-        switch (start) {
-          case 0: return func.call(this, array);
-          case 1: return func.call(this, args[0], array);
-          case 2: return func.call(this, args[0], args[1], array);
-        }
-        var otherArgs = Array(start + 1);
-        index = -1;
-        while (++index < start) {
-          otherArgs[index] = args[index];
-        }
-        otherArgs[start] = array;
-        return apply(func, this, otherArgs);
-      };
+      start = start === undefined ? start : toInteger(start);
+      return baseRest(func, start);
     }
 
     /**
      * Creates a function that invokes `func` with the `this` binding of the
      * create function and an array of arguments much like
-     * [`Function#apply`](http://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.apply).
+     * [`Function#apply`](http://www.ecma-international.org/ecma-262/7.0/#sec-function.prototype.apply).
      *
      * **Note:** This method is based on the
      * [spread operator](https://mdn.io/spread_operator).
@@ -11539,7 +11718,7 @@ module.exports = extractAnnotations;
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       start = start === undefined ? 0 : nativeMax(toInteger(start), 0);
-      return rest(function(args) {
+      return baseRest(function(args) {
         var array = args[start],
             otherArgs = castSlice(args, 0, start);
 
@@ -11554,8 +11733,8 @@ module.exports = extractAnnotations;
      * Creates a throttled function that only invokes `func` at most once per
      * every `wait` milliseconds. The throttled function comes with a `cancel`
      * method to cancel delayed `func` invocations and a `flush` method to
-     * immediately invoke them. Provide an options object to indicate whether
-     * `func` should be invoked on the leading and/or trailing edge of the `wait`
+     * immediately invoke them. Provide `options` to indicate whether `func`
+     * should be invoked on the leading and/or trailing edge of the `wait`
      * timeout. The `func` is invoked with the last arguments provided to the
      * throttled function. Subsequent calls to the throttled function return the
      * result of the last `func` invocation.
@@ -11563,6 +11742,9 @@ module.exports = extractAnnotations;
      * **Note:** If `leading` and `trailing` options are `true`, `func` is
      * invoked on the trailing edge of the timeout only if the throttled function
      * is invoked more than once during the `wait` timeout.
+     *
+     * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+     * until to the next tick, similar to `setTimeout` with a timeout of `0`.
      *
      * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
      * for details over the differences between `_.throttle` and `_.debounce`.
@@ -11629,10 +11811,10 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * Creates a function that provides `value` to the wrapper function as its
-     * first argument. Any additional arguments provided to the function are
-     * appended to those provided to the wrapper function. The wrapper is invoked
-     * with the `this` binding of the created function.
+     * Creates a function that provides `value` to `wrapper` as its first
+     * argument. Any additional arguments provided to the function are appended
+     * to those provided to the `wrapper`. The wrapper is invoked with the `this`
+     * binding of the created function.
      *
      * @static
      * @memberOf _
@@ -11818,8 +12000,36 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * Checks if `object` conforms to `source` by invoking the predicate
+     * properties of `source` with the corresponding property values of `object`.
+     *
+     * **Note:** This method is equivalent to `_.conforms` when `source` is
+     * partially applied.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.14.0
+     * @category Lang
+     * @param {Object} object The object to inspect.
+     * @param {Object} source The object of property predicates to conform to.
+     * @returns {boolean} Returns `true` if `object` conforms, else `false`.
+     * @example
+     *
+     * var object = { 'a': 1, 'b': 2 };
+     *
+     * _.conformsTo(object, { 'b': function(n) { return n > 1; } });
+     * // => true
+     *
+     * _.conformsTo(object, { 'b': function(n) { return n > 2; } });
+     * // => false
+     */
+    function conformsTo(object, source) {
+      return source == null || baseConformsTo(object, source, keys(source));
+    }
+
+    /**
      * Performs a
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
      * comparison between two values to determine if they are equivalent.
      *
      * @static
@@ -11831,8 +12041,8 @@ module.exports = extractAnnotations;
      * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      * @example
      *
-     * var object = { 'user': 'fred' };
-     * var other = { 'user': 'fred' };
+     * var object = { 'a': 1 };
+     * var other = { 'a': 1 };
      *
      * _.eq(object, object);
      * // => true
@@ -11913,7 +12123,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
+     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
      *  else `false`.
      * @example
      *
@@ -11924,7 +12134,7 @@ module.exports = extractAnnotations;
      * // => false
      */
     function isArguments(value) {
-      // Safari 8.1 incorrectly makes `arguments.callee` enumerable in strict mode.
+      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
       return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
         (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
     }
@@ -11935,11 +12145,9 @@ module.exports = extractAnnotations;
      * @static
      * @memberOf _
      * @since 0.1.0
-     * @type {Function}
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is an array, else `false`.
      * @example
      *
      * _.isArray([1, 2, 3]);
@@ -11964,8 +12172,7 @@ module.exports = extractAnnotations;
      * @since 4.3.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
      * @example
      *
      * _.isArrayBuffer(new ArrayBuffer(2));
@@ -11974,9 +12181,7 @@ module.exports = extractAnnotations;
      * _.isArrayBuffer(new Array(2));
      * // => false
      */
-    function isArrayBuffer(value) {
-      return isObjectLike(value) && objectToString.call(value) == arrayBufferTag;
-    }
+    var isArrayBuffer = nodeIsArrayBuffer ? baseUnary(nodeIsArrayBuffer) : baseIsArrayBuffer;
 
     /**
      * Checks if `value` is array-like. A value is considered array-like if it's
@@ -12004,7 +12209,7 @@ module.exports = extractAnnotations;
      * // => false
      */
     function isArrayLike(value) {
-      return value != null && isLength(getLength(value)) && !isFunction(value);
+      return value != null && isLength(value.length) && !isFunction(value);
     }
 
     /**
@@ -12044,8 +12249,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a boolean, else `false`.
      * @example
      *
      * _.isBoolean(false);
@@ -12076,9 +12280,7 @@ module.exports = extractAnnotations;
      * _.isBuffer(new Uint8Array(2));
      * // => false
      */
-    var isBuffer = !Buffer ? stubFalse : function(value) {
-      return value instanceof Buffer;
-    };
+    var isBuffer = nativeIsBuffer || stubFalse;
 
     /**
      * Checks if `value` is classified as a `Date` object.
@@ -12088,8 +12290,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
      * @example
      *
      * _.isDate(new Date);
@@ -12098,9 +12299,7 @@ module.exports = extractAnnotations;
      * _.isDate('Mon April 23 2012');
      * // => false
      */
-    function isDate(value) {
-      return isObjectLike(value) && objectToString.call(value) == dateTag;
-    }
+    var isDate = nodeIsDate ? baseUnary(nodeIsDate) : baseIsDate;
 
     /**
      * Checks if `value` is likely a DOM element.
@@ -12110,8 +12309,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a DOM element,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a DOM element, else `false`.
      * @example
      *
      * _.isElement(document.body);
@@ -12159,22 +12357,23 @@ module.exports = extractAnnotations;
      */
     function isEmpty(value) {
       if (isArrayLike(value) &&
-          (isArray(value) || isString(value) || isFunction(value.splice) ||
-            isArguments(value) || isBuffer(value))) {
+          (isArray(value) || typeof value == 'string' ||
+            typeof value.splice == 'function' || isBuffer(value) || isArguments(value))) {
         return !value.length;
       }
-      if (isObjectLike(value)) {
-        var tag = getTag(value);
-        if (tag == mapTag || tag == setTag) {
-          return !value.size;
-        }
+      var tag = getTag(value);
+      if (tag == mapTag || tag == setTag) {
+        return !value.size;
+      }
+      if (nonEnumShadows || isPrototype(value)) {
+        return !nativeKeys(value).length;
       }
       for (var key in value) {
         if (hasOwnProperty.call(value, key)) {
           return false;
         }
       }
-      return !(nonEnumShadows && keys(value).length);
+      return true;
     }
 
     /**
@@ -12193,12 +12392,11 @@ module.exports = extractAnnotations;
      * @category Lang
      * @param {*} value The value to compare.
      * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if the values are equivalent,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      * @example
      *
-     * var object = { 'user': 'fred' };
-     * var other = { 'user': 'fred' };
+     * var object = { 'a': 1 };
+     * var other = { 'a': 1 };
      *
      * _.isEqual(object, other);
      * // => true
@@ -12223,8 +12421,7 @@ module.exports = extractAnnotations;
      * @param {*} value The value to compare.
      * @param {*} other The other value to compare.
      * @param {Function} [customizer] The function to customize comparisons.
-     * @returns {boolean} Returns `true` if the values are equivalent,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      * @example
      *
      * function isGreeting(value) {
@@ -12258,8 +12455,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an error object,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is an error object, else `false`.
      * @example
      *
      * _.isError(new Error);
@@ -12287,8 +12483,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a finite number,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a finite number, else `false`.
      * @example
      *
      * _.isFinite(3);
@@ -12315,8 +12510,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a function, else `false`.
      * @example
      *
      * _.isFunction(_);
@@ -12327,8 +12521,7 @@ module.exports = extractAnnotations;
      */
     function isFunction(value) {
       // The use of `Object#toString` avoids issues with the `typeof` operator
-      // in Safari 8 which returns 'object' for typed array and weak map constructors,
-      // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+      // in Safari 8-9 which returns 'object' for typed array and other constructors.
       var tag = isObject(value) ? objectToString.call(value) : '';
       return tag == funcTag || tag == genTag;
     }
@@ -12366,16 +12559,15 @@ module.exports = extractAnnotations;
     /**
      * Checks if `value` is a valid array-like length.
      *
-     * **Note:** This function is loosely based on
-     * [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+     * **Note:** This method is loosely based on
+     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
      *
      * @static
      * @memberOf _
      * @since 4.0.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a valid length,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
      * @example
      *
      * _.isLength(3);
@@ -12397,7 +12589,7 @@ module.exports = extractAnnotations;
 
     /**
      * Checks if `value` is the
-     * [language type](http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-language-types)
+     * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
      * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
      *
      * @static
@@ -12461,8 +12653,7 @@ module.exports = extractAnnotations;
      * @since 4.3.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a map, else `false`.
      * @example
      *
      * _.isMap(new Map);
@@ -12471,16 +12662,18 @@ module.exports = extractAnnotations;
      * _.isMap(new WeakMap);
      * // => false
      */
-    function isMap(value) {
-      return isObjectLike(value) && getTag(value) == mapTag;
-    }
+    var isMap = nodeIsMap ? baseUnary(nodeIsMap) : baseIsMap;
 
     /**
      * Performs a partial deep comparison between `object` and `source` to
-     * determine if `object` contains equivalent property values. This method is
-     * equivalent to a `_.matches` function when `source` is partially applied.
+     * determine if `object` contains equivalent property values.
      *
-     * **Note:** This method supports comparing the same values as `_.isEqual`.
+     * **Note:** This method is equivalent to `_.matches` when `source` is
+     * partially applied.
+     *
+     * Partial comparisons will match empty array and empty object `source`
+     * values against any array or object value, respectively. See `_.isEqual`
+     * for a list of supported value comparisons.
      *
      * @static
      * @memberOf _
@@ -12491,12 +12684,12 @@ module.exports = extractAnnotations;
      * @returns {boolean} Returns `true` if `object` is a match, else `false`.
      * @example
      *
-     * var object = { 'user': 'fred', 'age': 40 };
+     * var object = { 'a': 1, 'b': 2 };
      *
-     * _.isMatch(object, { 'age': 40 });
+     * _.isMatch(object, { 'b': 2 });
      * // => true
      *
-     * _.isMatch(object, { 'age': 36 });
+     * _.isMatch(object, { 'b': 1 });
      * // => false
      */
     function isMatch(object, source) {
@@ -12578,13 +12771,13 @@ module.exports = extractAnnotations;
     /**
      * Checks if `value` is a pristine native function.
      *
-     * **Note:** This method can't reliably detect native functions in the
-     * presence of the `core-js` package because `core-js` circumvents this kind
-     * of detection. Despite multiple requests, the `core-js` maintainer has made
-     * it clear: any attempt to fix the detection will be obstructed. As a result,
-     * we're left with little choice but to throw an error. Unfortunately, this
-     * also affects packages, like [babel-polyfill](https://www.npmjs.com/package/babel-polyfill),
-     * which rely on `core-js`.
+     * **Note:** This method can't reliably detect native functions in the presence
+     * of the core-js package because core-js circumvents this kind of detection.
+     * Despite multiple requests, the core-js maintainer has made it clear: any
+     * attempt to fix the detection will be obstructed. As a result, we're left
+     * with little choice but to throw an error. Unfortunately, this also affects
+     * packages, like [babel-polyfill](https://www.npmjs.com/package/babel-polyfill),
+     * which rely on core-js.
      *
      * @static
      * @memberOf _
@@ -12603,7 +12796,7 @@ module.exports = extractAnnotations;
      */
     function isNative(value) {
       if (isMaskable(value)) {
-        throw new Error('This method is not supported with `core-js`. Try https://github.com/es-shims.');
+        throw new Error('This method is not supported with core-js. Try https://github.com/es-shims.');
       }
       return baseIsNative(value);
     }
@@ -12664,8 +12857,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a number, else `false`.
      * @example
      *
      * _.isNumber(3);
@@ -12694,8 +12886,7 @@ module.exports = extractAnnotations;
      * @since 0.8.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a plain object,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
      * @example
      *
      * function Foo() {
@@ -12736,8 +12927,7 @@ module.exports = extractAnnotations;
      * @since 0.1.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
      * @example
      *
      * _.isRegExp(/abc/);
@@ -12746,9 +12936,7 @@ module.exports = extractAnnotations;
      * _.isRegExp('/abc/');
      * // => false
      */
-    function isRegExp(value) {
-      return isObject(value) && objectToString.call(value) == regexpTag;
-    }
+    var isRegExp = nodeIsRegExp ? baseUnary(nodeIsRegExp) : baseIsRegExp;
 
     /**
      * Checks if `value` is a safe integer. An integer is safe if it's an IEEE-754
@@ -12762,8 +12950,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a safe integer,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a safe integer, else `false`.
      * @example
      *
      * _.isSafeInteger(3);
@@ -12790,8 +12977,7 @@ module.exports = extractAnnotations;
      * @since 4.3.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a set, else `false`.
      * @example
      *
      * _.isSet(new Set);
@@ -12800,9 +12986,7 @@ module.exports = extractAnnotations;
      * _.isSet(new WeakSet);
      * // => false
      */
-    function isSet(value) {
-      return isObjectLike(value) && getTag(value) == setTag;
-    }
+    var isSet = nodeIsSet ? baseUnary(nodeIsSet) : baseIsSet;
 
     /**
      * Checks if `value` is classified as a `String` primitive or object.
@@ -12812,8 +12996,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a string, else `false`.
      * @example
      *
      * _.isString('abc');
@@ -12835,8 +13018,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
      * @example
      *
      * _.isSymbol(Symbol.iterator);
@@ -12858,8 +13040,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
      * @example
      *
      * _.isTypedArray(new Uint8Array);
@@ -12868,10 +13049,7 @@ module.exports = extractAnnotations;
      * _.isTypedArray([]);
      * // => false
      */
-    function isTypedArray(value) {
-      return isObjectLike(value) &&
-        isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
-    }
+    var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
 
     /**
      * Checks if `value` is `undefined`.
@@ -12902,8 +13080,7 @@ module.exports = extractAnnotations;
      * @since 4.3.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a weak map, else `false`.
      * @example
      *
      * _.isWeakMap(new WeakMap);
@@ -12924,8 +13101,7 @@ module.exports = extractAnnotations;
      * @since 4.3.0
      * @category Lang
      * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is correctly classified,
-     *  else `false`.
+     * @returns {boolean} Returns `true` if `value` is a weak set, else `false`.
      * @example
      *
      * _.isWeakSet(new WeakSet);
@@ -13068,7 +13244,7 @@ module.exports = extractAnnotations;
      * Converts `value` to an integer.
      *
      * **Note:** This method is loosely based on
-     * [`ToInteger`](http://www.ecma-international.org/ecma-262/6.0/#sec-tointeger).
+     * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
      *
      * @static
      * @memberOf _
@@ -13102,7 +13278,7 @@ module.exports = extractAnnotations;
      * array-like object.
      *
      * **Note:** This method is based on
-     * [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
      *
      * @static
      * @memberOf _
@@ -13159,7 +13335,7 @@ module.exports = extractAnnotations;
         return NAN;
       }
       if (isObject(value)) {
-        var other = isFunction(value.valueOf) ? value.valueOf() : value;
+        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
         value = isObject(other) ? (other + '') : other;
       }
       if (typeof value != 'string') {
@@ -13274,18 +13450,18 @@ module.exports = extractAnnotations;
      * @example
      *
      * function Foo() {
-     *   this.c = 3;
+     *   this.a = 1;
      * }
      *
      * function Bar() {
-     *   this.e = 5;
+     *   this.c = 3;
      * }
      *
-     * Foo.prototype.d = 4;
-     * Bar.prototype.f = 6;
+     * Foo.prototype.b = 2;
+     * Bar.prototype.d = 4;
      *
-     * _.assign({ 'a': 1 }, new Foo, new Bar);
-     * // => { 'a': 1, 'c': 3, 'e': 5 }
+     * _.assign({ 'a': 0 }, new Foo, new Bar);
+     * // => { 'a': 1, 'c': 3 }
      */
     var assign = createAssigner(function(object, source) {
       if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
@@ -13317,27 +13493,21 @@ module.exports = extractAnnotations;
      * @example
      *
      * function Foo() {
-     *   this.b = 2;
+     *   this.a = 1;
      * }
      *
      * function Bar() {
-     *   this.d = 4;
+     *   this.c = 3;
      * }
      *
-     * Foo.prototype.c = 3;
-     * Bar.prototype.e = 5;
+     * Foo.prototype.b = 2;
+     * Bar.prototype.d = 4;
      *
-     * _.assignIn({ 'a': 1 }, new Foo, new Bar);
-     * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5 }
+     * _.assignIn({ 'a': 0 }, new Foo, new Bar);
+     * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
      */
     var assignIn = createAssigner(function(object, source) {
-      if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
-        copyObject(source, keysIn(source), object);
-        return;
-      }
-      for (var key in source) {
-        assignValue(object, key, source[key]);
-      }
+      copyObject(source, keysIn(source), object);
     });
 
     /**
@@ -13422,7 +13592,7 @@ module.exports = extractAnnotations;
      * _.at(object, ['a[0].b.c', 'a[1]']);
      * // => [3, 4]
      */
-    var at = rest(function(object, paths) {
+    var at = baseRest(function(object, paths) {
       return baseAt(object, baseFlatten(paths, 1));
     });
 
@@ -13483,10 +13653,10 @@ module.exports = extractAnnotations;
      * @see _.defaultsDeep
      * @example
      *
-     * _.defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
-     * // => { 'user': 'barney', 'age': 36 }
+     * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+     * // => { 'a': 1, 'b': 2 }
      */
-    var defaults = rest(function(args) {
+    var defaults = baseRest(function(args) {
       args.push(undefined, assignInDefaults);
       return apply(assignInWith, undefined, args);
     });
@@ -13507,11 +13677,10 @@ module.exports = extractAnnotations;
      * @see _.defaults
      * @example
      *
-     * _.defaultsDeep({ 'user': { 'name': 'barney' } }, { 'user': { 'name': 'fred', 'age': 36 } });
-     * // => { 'user': { 'name': 'barney', 'age': 36 } }
-     *
+     * _.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } });
+     * // => { 'a': { 'b': 2, 'c': 3 } }
      */
-    var defaultsDeep = rest(function(args) {
+    var defaultsDeep = baseRest(function(args) {
       args.push(undefined, mergeDefaults);
       return apply(mergeWith, undefined, args);
     });
@@ -13524,9 +13693,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 1.1.0
      * @category Object
-     * @param {Object} object The object to search.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per iteration.
+     * @param {Object} object The object to inspect.
+     * @param {Function} [predicate=_.identity] The function invoked per iteration.
      * @returns {string|undefined} Returns the key of the matched element,
      *  else `undefined`.
      * @example
@@ -13564,9 +13732,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 2.0.0
      * @category Object
-     * @param {Object} object The object to search.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per iteration.
+     * @param {Object} object The object to inspect.
+     * @param {Function} [predicate=_.identity] The function invoked per iteration.
      * @returns {string|undefined} Returns the key of the matched element,
      *  else `undefined`.
      * @example
@@ -13780,7 +13947,7 @@ module.exports = extractAnnotations;
 
     /**
      * Gets the value at `path` of `object`. If the resolved value is
-     * `undefined`, the `defaultValue` is used in its place.
+     * `undefined`, the `defaultValue` is returned in its place.
      *
      * @static
      * @memberOf _
@@ -13903,8 +14070,7 @@ module.exports = extractAnnotations;
      * @since 4.1.0
      * @category Object
      * @param {Object} object The object to invert.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {Object} Returns the new inverted object.
      * @example
      *
@@ -13944,13 +14110,13 @@ module.exports = extractAnnotations;
      * _.invoke(object, 'a[0].b.c.slice', 1, 3);
      * // => [2, 3]
      */
-    var invoke = rest(baseInvoke);
+    var invoke = baseRest(baseInvoke);
 
     /**
      * Creates an array of the own enumerable property names of `object`.
      *
      * **Note:** Non-object values are coerced to objects. See the
-     * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
+     * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
      * for more details.
      *
      * @static
@@ -13975,23 +14141,7 @@ module.exports = extractAnnotations;
      * // => ['0', '1']
      */
     function keys(object) {
-      var isProto = isPrototype(object);
-      if (!(isProto || isArrayLike(object))) {
-        return baseKeys(object);
-      }
-      var indexes = indexKeys(object),
-          skipIndexes = !!indexes,
-          result = indexes || [],
-          length = result.length;
-
-      for (var key in object) {
-        if (baseHas(object, key) &&
-            !(skipIndexes && (key == 'length' || isIndex(key, length))) &&
-            !(isProto && key == 'constructor')) {
-          result.push(key);
-        }
-      }
-      return result;
+      return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
     }
 
     /**
@@ -14018,23 +14168,7 @@ module.exports = extractAnnotations;
      * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
      */
     function keysIn(object) {
-      var index = -1,
-          isProto = isPrototype(object),
-          props = baseKeysIn(object),
-          propsLength = props.length,
-          indexes = indexKeys(object),
-          skipIndexes = !!indexes,
-          result = indexes || [],
-          length = result.length;
-
-      while (++index < propsLength) {
-        var key = props[index];
-        if (!(skipIndexes && (key == 'length' || isIndex(key, length))) &&
-            !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
-          result.push(key);
-        }
-      }
-      return result;
+      return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
     }
 
     /**
@@ -14048,8 +14182,7 @@ module.exports = extractAnnotations;
      * @since 3.8.0
      * @category Object
      * @param {Object} object The object to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
      * @returns {Object} Returns the new mapped object.
      * @see _.mapValues
      * @example
@@ -14080,8 +14213,7 @@ module.exports = extractAnnotations;
      * @since 2.4.0
      * @category Object
      * @param {Object} object The object to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The function invoked per iteration.
+     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
      * @returns {Object} Returns the new mapped object.
      * @see _.mapKeys
      * @example
@@ -14128,16 +14260,16 @@ module.exports = extractAnnotations;
      * @returns {Object} Returns `object`.
      * @example
      *
-     * var users = {
-     *   'data': [{ 'user': 'barney' }, { 'user': 'fred' }]
+     * var object = {
+     *   'a': [{ 'b': 2 }, { 'd': 4 }]
      * };
      *
-     * var ages = {
-     *   'data': [{ 'age': 36 }, { 'age': 40 }]
+     * var other = {
+     *   'a': [{ 'c': 3 }, { 'e': 5 }]
      * };
      *
-     * _.merge(users, ages);
-     * // => { 'data': [{ 'user': 'barney', 'age': 36 }, { 'user': 'fred', 'age': 40 }] }
+     * _.merge(object, other);
+     * // => { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
      */
     var merge = createAssigner(function(object, source, srcIndex) {
       baseMerge(object, source, srcIndex);
@@ -14168,18 +14300,11 @@ module.exports = extractAnnotations;
      *   }
      * }
      *
-     * var object = {
-     *   'fruits': ['apple'],
-     *   'vegetables': ['beet']
-     * };
-     *
-     * var other = {
-     *   'fruits': ['banana'],
-     *   'vegetables': ['carrot']
-     * };
+     * var object = { 'a': [1], 'b': [2] };
+     * var other = { 'a': [3], 'b': [4] };
      *
      * _.mergeWith(object, other, customizer);
-     * // => { 'fruits': ['apple', 'banana'], 'vegetables': ['beet', 'carrot'] }
+     * // => { 'a': [1, 3], 'b': [2, 4] }
      */
     var mergeWith = createAssigner(function(object, source, srcIndex, customizer) {
       baseMerge(object, source, srcIndex, customizer);
@@ -14204,7 +14329,7 @@ module.exports = extractAnnotations;
      * _.omit(object, ['a', 'c']);
      * // => { 'b': '2' }
      */
-    var omit = rest(function(object, props) {
+    var omit = baseRest(function(object, props) {
       if (object == null) {
         return {};
       }
@@ -14223,8 +14348,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Object
      * @param {Object} object The source object.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per property.
+     * @param {Function} [predicate=_.identity] The function invoked per property.
      * @returns {Object} Returns the new object.
      * @example
      *
@@ -14234,10 +14358,7 @@ module.exports = extractAnnotations;
      * // => { 'b': '2' }
      */
     function omitBy(object, predicate) {
-      predicate = getIteratee(predicate);
-      return basePickBy(object, function(value, key) {
-        return !predicate(value, key);
-      });
+      return pickBy(object, negate(getIteratee(predicate)));
     }
 
     /**
@@ -14257,7 +14378,7 @@ module.exports = extractAnnotations;
      * _.pick(object, ['a', 'c']);
      * // => { 'a': 1, 'c': 3 }
      */
-    var pick = rest(function(object, props) {
+    var pick = baseRest(function(object, props) {
       return object == null ? {} : basePick(object, arrayMap(baseFlatten(props, 1), toKey));
     });
 
@@ -14270,8 +14391,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Object
      * @param {Object} object The source object.
-     * @param {Array|Function|Object|string} [predicate=_.identity]
-     *  The function invoked per property.
+     * @param {Function} [predicate=_.identity] The function invoked per property.
      * @returns {Object} Returns the new object.
      * @example
      *
@@ -14281,7 +14401,7 @@ module.exports = extractAnnotations;
      * // => { 'a': 1, 'c': 3 }
      */
     function pickBy(object, predicate) {
-      return object == null ? {} : basePickBy(object, getIteratee(predicate));
+      return object == null ? {} : basePickBy(object, getAllKeysIn(object), getIteratee(predicate));
     }
 
     /**
@@ -14725,12 +14845,12 @@ module.exports = extractAnnotations;
      * // => true
      */
     function inRange(number, start, end) {
-      start = toNumber(start) || 0;
+      start = toFinite(start);
       if (end === undefined) {
         end = start;
         start = 0;
       } else {
-        end = toNumber(end) || 0;
+        end = toFinite(end);
       }
       number = toNumber(number);
       return baseInRange(number, start, end);
@@ -14786,12 +14906,12 @@ module.exports = extractAnnotations;
         upper = 1;
       }
       else {
-        lower = toNumber(lower) || 0;
+        lower = toFinite(lower);
         if (upper === undefined) {
           upper = lower;
           lower = 0;
         } else {
-          upper = toNumber(upper) || 0;
+          upper = toFinite(upper);
         }
       }
       if (lower > upper) {
@@ -14854,8 +14974,9 @@ module.exports = extractAnnotations;
 
     /**
      * Deburrs `string` by converting
-     * [latin-1 supplementary letters](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
-     * to basic latin letters and removing
+     * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
+     * and [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
+     * letters to basic Latin letters and removing
      * [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
      *
      * @static
@@ -14871,7 +14992,7 @@ module.exports = extractAnnotations;
      */
     function deburr(string) {
       string = toString(string);
-      return string && string.replace(reLatin1, deburrLetter).replace(reComboMark, '');
+      return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
     }
 
     /**
@@ -14881,7 +15002,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to search.
+     * @param {string} [string=''] The string to inspect.
      * @param {string} [target] The string to search for.
      * @param {number} [position=string.length] The position to search up to.
      * @returns {boolean} Returns `true` if `string` ends with `target`,
@@ -14906,8 +15027,9 @@ module.exports = extractAnnotations;
         ? length
         : baseClamp(toInteger(position), 0, length);
 
+      var end = position;
       position -= target.length;
-      return position >= 0 && string.indexOf(target, position) == position;
+      return position >= 0 && string.slice(position, end) == target;
     }
 
     /**
@@ -15236,7 +15358,7 @@ module.exports = extractAnnotations;
       var args = arguments,
           string = toString(args[0]);
 
-      return args.length < 3 ? string : nativeReplace.call(string, args[1], args[2]);
+      return args.length < 3 ? string : string.replace(args[1], args[2]);
     }
 
     /**
@@ -15297,11 +15419,11 @@ module.exports = extractAnnotations;
             (separator != null && !isRegExp(separator))
           )) {
         separator = baseToString(separator);
-        if (separator == '' && reHasComplexSymbol.test(string)) {
+        if (!separator && hasUnicode(string)) {
           return castSlice(stringToArray(string), 0, limit);
         }
       }
-      return nativeSplit.call(string, separator, limit);
+      return string.split(separator, limit);
     }
 
     /**
@@ -15336,7 +15458,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 3.0.0
      * @category String
-     * @param {string} [string=''] The string to search.
+     * @param {string} [string=''] The string to inspect.
      * @param {string} [target] The string to search for.
      * @param {number} [position=0] The position to search from.
      * @returns {boolean} Returns `true` if `string` starts with `target`,
@@ -15355,7 +15477,8 @@ module.exports = extractAnnotations;
     function startsWith(string, target, position) {
       string = toString(string);
       position = baseClamp(toInteger(position), 0, string.length);
-      return string.lastIndexOf(baseToString(target), position) == position;
+      target = baseToString(target);
+      return string.slice(position, position + target.length) == target;
     }
 
     /**
@@ -15772,7 +15895,7 @@ module.exports = extractAnnotations;
       string = toString(string);
 
       var strLength = string.length;
-      if (reHasComplexSymbol.test(string)) {
+      if (hasUnicode(string)) {
         var strSymbols = stringToArray(string);
         strLength = strSymbols.length;
       }
@@ -15909,7 +16032,7 @@ module.exports = extractAnnotations;
       pattern = guard ? undefined : pattern;
 
       if (pattern === undefined) {
-        pattern = reHasComplexWord.test(string) ? reComplexWord : reBasicWord;
+        return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
       }
       return string.match(pattern) || [];
     }
@@ -15938,7 +16061,7 @@ module.exports = extractAnnotations;
      *   elements = [];
      * }
      */
-    var attempt = rest(function(func, args) {
+    var attempt = baseRest(function(func, args) {
       try {
         return apply(func, undefined, args);
       } catch (e) {
@@ -15963,16 +16086,16 @@ module.exports = extractAnnotations;
      *
      * var view = {
      *   'label': 'docs',
-     *   'onClick': function() {
+     *   'click': function() {
      *     console.log('clicked ' + this.label);
      *   }
      * };
      *
-     * _.bindAll(view, ['onClick']);
-     * jQuery(element).on('click', view.onClick);
+     * _.bindAll(view, ['click']);
+     * jQuery(element).on('click', view.click);
      * // => Logs 'clicked docs' when clicked.
      */
-    var bindAll = rest(function(object, methodNames) {
+    var bindAll = baseRest(function(object, methodNames) {
       arrayEach(baseFlatten(methodNames, 1), function(key) {
         key = toKey(key);
         object[key] = bind(object[key], object);
@@ -15997,7 +16120,7 @@ module.exports = extractAnnotations;
      * var func = _.cond([
      *   [_.matches({ 'a': 1 }),           _.constant('matches A')],
      *   [_.conforms({ 'b': _.isNumber }), _.constant('matches B')],
-     *   [_.constant(true),                _.constant('no match')]
+     *   [_.stubTrue,                      _.constant('no match')]
      * ]);
      *
      * func({ 'a': 1, 'b': 2 });
@@ -16020,7 +16143,7 @@ module.exports = extractAnnotations;
         return [toIteratee(pair[0]), pair[1]];
       });
 
-      return rest(function(args) {
+      return baseRest(function(args) {
         var index = -1;
         while (++index < length) {
           var pair = pairs[index];
@@ -16036,6 +16159,9 @@ module.exports = extractAnnotations;
      * the corresponding property values of a given object, returning `true` if
      * all predicates return truthy, else `false`.
      *
+     * **Note:** The created function is equivalent to `_.conformsTo` with
+     * `source` partially applied.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -16044,13 +16170,13 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new spec function.
      * @example
      *
-     * var users = [
-     *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 40 }
+     * var objects = [
+     *   { 'a': 2, 'b': 1 },
+     *   { 'a': 1, 'b': 2 }
      * ];
      *
-     * _.filter(users, _.conforms({ 'age': function(n) { return n > 38; } }));
-     * // => [{ 'user': 'fred', 'age': 40 }]
+     * _.filter(objects, _.conforms({ 'b': function(n) { return n > 1; } }));
+     * // => [{ 'a': 1, 'b': 2 }]
      */
     function conforms(source) {
       return baseConforms(baseClone(source, true));
@@ -16082,6 +16208,30 @@ module.exports = extractAnnotations;
     }
 
     /**
+     * Checks `value` to determine whether a default value should be returned in
+     * its place. The `defaultValue` is returned if `value` is `NaN`, `null`,
+     * or `undefined`.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.14.0
+     * @category Util
+     * @param {*} value The value to check.
+     * @param {*} defaultValue The default value.
+     * @returns {*} Returns the resolved value.
+     * @example
+     *
+     * _.defaultTo(1, 10);
+     * // => 1
+     *
+     * _.defaultTo(undefined, 10);
+     * // => 10
+     */
+    function defaultTo(value, defaultValue) {
+      return (value == null || value !== value) ? defaultValue : value;
+    }
+
+    /**
      * Creates a function that returns the result of invoking the given functions
      * with the `this` binding of the created function, where each successive
      * invocation is supplied the return value of the previous.
@@ -16090,7 +16240,7 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 3.0.0
      * @category Util
-     * @param {...(Function|Function[])} [funcs] Functions to invoke.
+     * @param {...(Function|Function[])} [funcs] The functions to invoke.
      * @returns {Function} Returns the new composite function.
      * @see _.flowRight
      * @example
@@ -16113,7 +16263,7 @@ module.exports = extractAnnotations;
      * @since 3.0.0
      * @memberOf _
      * @category Util
-     * @param {...(Function|Function[])} [funcs] Functions to invoke.
+     * @param {...(Function|Function[])} [funcs] The functions to invoke.
      * @returns {Function} Returns the new composite function.
      * @see _.flow
      * @example
@@ -16129,7 +16279,7 @@ module.exports = extractAnnotations;
     var flowRight = createFlow(true);
 
     /**
-     * This method returns the first argument given to it.
+     * This method returns the first argument it receives.
      *
      * @static
      * @since 0.1.0
@@ -16139,7 +16289,7 @@ module.exports = extractAnnotations;
      * @returns {*} Returns `value`.
      * @example
      *
-     * var object = { 'user': 'fred' };
+     * var object = { 'a': 1 };
      *
      * console.log(_.identity(object) === object);
      * // => true
@@ -16197,10 +16347,14 @@ module.exports = extractAnnotations;
     /**
      * Creates a function that performs a partial deep comparison between a given
      * object and `source`, returning `true` if the given object has equivalent
-     * property values, else `false`. The created function is equivalent to
-     * `_.isMatch` with a `source` partially applied.
+     * property values, else `false`.
      *
-     * **Note:** This method supports comparing the same values as `_.isEqual`.
+     * **Note:** The created function is equivalent to `_.isMatch` with `source`
+     * partially applied.
+     *
+     * Partial comparisons will match empty array and empty object `source`
+     * values against any array or object value, respectively. See `_.isEqual`
+     * for a list of supported value comparisons.
      *
      * @static
      * @memberOf _
@@ -16210,13 +16364,13 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new spec function.
      * @example
      *
-     * var users = [
-     *   { 'user': 'barney', 'age': 36, 'active': true },
-     *   { 'user': 'fred',   'age': 40, 'active': false }
+     * var objects = [
+     *   { 'a': 1, 'b': 2, 'c': 3 },
+     *   { 'a': 4, 'b': 5, 'c': 6 }
      * ];
      *
-     * _.filter(users, _.matches({ 'age': 40, 'active': false }));
-     * // => [{ 'user': 'fred', 'age': 40, 'active': false }]
+     * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
+     * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, true));
@@ -16227,7 +16381,9 @@ module.exports = extractAnnotations;
      * value at `path` of a given object to `srcValue`, returning `true` if the
      * object value is equivalent, else `false`.
      *
-     * **Note:** This method supports comparing the same values as `_.isEqual`.
+     * **Note:** Partial comparisons will match empty array and empty object
+     * `srcValue` values against any array or object value, respectively. See
+     * `_.isEqual` for a list of supported value comparisons.
      *
      * @static
      * @memberOf _
@@ -16238,13 +16394,13 @@ module.exports = extractAnnotations;
      * @returns {Function} Returns the new spec function.
      * @example
      *
-     * var users = [
-     *   { 'user': 'barney' },
-     *   { 'user': 'fred' }
+     * var objects = [
+     *   { 'a': 1, 'b': 2, 'c': 3 },
+     *   { 'a': 4, 'b': 5, 'c': 6 }
      * ];
      *
-     * _.find(users, _.matchesProperty('user', 'fred'));
-     * // => { 'user': 'fred' }
+     * _.find(objects, _.matchesProperty('a', 4));
+     * // => { 'a': 4, 'b': 5, 'c': 6 }
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, true));
@@ -16274,7 +16430,7 @@ module.exports = extractAnnotations;
      * _.map(objects, _.method(['a', 'b']));
      * // => [2, 1]
      */
-    var method = rest(function(path, args) {
+    var method = baseRest(function(path, args) {
       return function(object) {
         return baseInvoke(object, path, args);
       };
@@ -16303,7 +16459,7 @@ module.exports = extractAnnotations;
      * _.map([['a', '2'], ['c', '0']], _.methodOf(object));
      * // => [2, 0]
      */
-    var methodOf = rest(function(object, args) {
+    var methodOf = baseRest(function(object, args) {
       return function(path) {
         return baseInvoke(object, path, args);
       };
@@ -16402,7 +16558,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * A method that returns `undefined`.
+     * This method returns `undefined`.
      *
      * @static
      * @memberOf _
@@ -16439,7 +16595,7 @@ module.exports = extractAnnotations;
      */
     function nthArg(n) {
       n = toInteger(n);
-      return rest(function(args) {
+      return baseRest(function(args) {
         return baseNth(args, n);
       });
     }
@@ -16452,8 +16608,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {...(Array|Array[]|Function|Function[]|Object|Object[]|string|string[])}
-     *  [iteratees=[_.identity]] The iteratees to invoke.
+     * @param {...(Function|Function[])} [iteratees=[_.identity]]
+     *  The iteratees to invoke.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -16472,8 +16628,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {...(Array|Array[]|Function|Function[]|Object|Object[]|string|string[])}
-     *  [predicates=[_.identity]] The predicates to check.
+     * @param {...(Function|Function[])} [predicates=[_.identity]]
+     *  The predicates to check.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -16498,8 +16654,8 @@ module.exports = extractAnnotations;
      * @memberOf _
      * @since 4.0.0
      * @category Util
-     * @param {...(Array|Array[]|Function|Function[]|Object|Object[]|string|string[])}
-     *  [predicates=[_.identity]] The predicates to check.
+     * @param {...(Function|Function[])} [predicates=[_.identity]]
+     *  The predicates to check.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -16651,7 +16807,7 @@ module.exports = extractAnnotations;
     var rangeRight = createRange(true);
 
     /**
-     * A method that returns a new empty array.
+     * This method returns a new empty array.
      *
      * @static
      * @memberOf _
@@ -16673,7 +16829,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * A method that returns `false`.
+     * This method returns `false`.
      *
      * @static
      * @memberOf _
@@ -16690,7 +16846,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * A method that returns a new empty object.
+     * This method returns a new empty object.
      *
      * @static
      * @memberOf _
@@ -16712,7 +16868,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * A method that returns an empty string.
+     * This method returns an empty string.
      *
      * @static
      * @memberOf _
@@ -16729,7 +16885,7 @@ module.exports = extractAnnotations;
     }
 
     /**
-     * A method that returns `true`.
+     * This method returns `true`.
      *
      * @static
      * @memberOf _
@@ -16847,7 +17003,7 @@ module.exports = extractAnnotations;
      */
     var add = createMathOperation(function(augend, addend) {
       return augend + addend;
-    });
+    }, 0);
 
     /**
      * Computes `number` rounded up to `precision`.
@@ -16889,7 +17045,7 @@ module.exports = extractAnnotations;
      */
     var divide = createMathOperation(function(dividend, divisor) {
       return dividend / divisor;
-    });
+    }, 1);
 
     /**
      * Computes `number` rounded down to `precision`.
@@ -16948,8 +17104,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Math
      * @param {Array} array The array to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {*} Returns the maximum value.
      * @example
      *
@@ -16964,7 +17119,7 @@ module.exports = extractAnnotations;
      */
     function maxBy(array, iteratee) {
       return (array && array.length)
-        ? baseExtremum(array, getIteratee(iteratee), baseGt)
+        ? baseExtremum(array, getIteratee(iteratee, 2), baseGt)
         : undefined;
     }
 
@@ -16996,8 +17151,7 @@ module.exports = extractAnnotations;
      * @since 4.7.0
      * @category Math
      * @param {Array} array The array to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {number} Returns the mean.
      * @example
      *
@@ -17011,7 +17165,7 @@ module.exports = extractAnnotations;
      * // => 5
      */
     function meanBy(array, iteratee) {
-      return baseMean(array, getIteratee(iteratee));
+      return baseMean(array, getIteratee(iteratee, 2));
     }
 
     /**
@@ -17048,8 +17202,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Math
      * @param {Array} array The array to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {*} Returns the minimum value.
      * @example
      *
@@ -17064,7 +17217,7 @@ module.exports = extractAnnotations;
      */
     function minBy(array, iteratee) {
       return (array && array.length)
-        ? baseExtremum(array, getIteratee(iteratee), baseLt)
+        ? baseExtremum(array, getIteratee(iteratee, 2), baseLt)
         : undefined;
     }
 
@@ -17085,7 +17238,7 @@ module.exports = extractAnnotations;
      */
     var multiply = createMathOperation(function(multiplier, multiplicand) {
       return multiplier * multiplicand;
-    });
+    }, 1);
 
     /**
      * Computes `number` rounded to `precision`.
@@ -17127,7 +17280,7 @@ module.exports = extractAnnotations;
      */
     var subtract = createMathOperation(function(minuend, subtrahend) {
       return minuend - subtrahend;
-    });
+    }, 0);
 
     /**
      * Computes the sum of the values in `array`.
@@ -17159,8 +17312,7 @@ module.exports = extractAnnotations;
      * @since 4.0.0
      * @category Math
      * @param {Array} array The array to iterate over.
-     * @param {Array|Function|Object|string} [iteratee=_.identity]
-     *  The iteratee invoked per element.
+     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
      * @returns {number} Returns the sum.
      * @example
      *
@@ -17175,7 +17327,7 @@ module.exports = extractAnnotations;
      */
     function sumBy(array, iteratee) {
       return (array && array.length)
-        ? baseSum(array, getIteratee(iteratee))
+        ? baseSum(array, getIteratee(iteratee, 2))
         : 0;
     }
 
@@ -17354,7 +17506,9 @@ module.exports = extractAnnotations;
     lodash.cloneDeep = cloneDeep;
     lodash.cloneDeepWith = cloneDeepWith;
     lodash.cloneWith = cloneWith;
+    lodash.conformsTo = conformsTo;
     lodash.deburr = deburr;
+    lodash.defaultTo = defaultTo;
     lodash.divide = divide;
     lodash.endsWith = endsWith;
     lodash.eq = eq;
@@ -17595,7 +17749,7 @@ module.exports = extractAnnotations;
       return this.reverse().find(predicate);
     };
 
-    LazyWrapper.prototype.invokeMap = rest(function(path, args) {
+    LazyWrapper.prototype.invokeMap = baseRest(function(path, args) {
       if (typeof path == 'function') {
         return new LazyWrapper(this);
       }
@@ -17605,10 +17759,7 @@ module.exports = extractAnnotations;
     });
 
     LazyWrapper.prototype.reject = function(predicate) {
-      predicate = getIteratee(predicate, 3);
-      return this.filter(function(value) {
-        return !predicate(value);
-      });
+      return this.filter(negate(getIteratee(predicate)));
     };
 
     LazyWrapper.prototype.slice = function(start, end) {
@@ -17712,7 +17863,7 @@ module.exports = extractAnnotations;
       }
     });
 
-    realNames[createHybridWrapper(undefined, BIND_KEY_FLAG).name] = [{
+    realNames[createHybrid(undefined, BIND_KEY_FLAG).name] = [{
       'name': 'wrapper',
       'func': undefined
     }];
@@ -17731,6 +17882,9 @@ module.exports = extractAnnotations;
     lodash.prototype.reverse = wrapperReverse;
     lodash.prototype.toJSON = lodash.prototype.valueOf = lodash.prototype.value = wrapperValue;
 
+    // Add lazy aliases.
+    lodash.prototype.first = lodash.prototype.head;
+
     if (iteratorSymbol) {
       lodash.prototype[iteratorSymbol] = wrapperToIterator;
     }
@@ -17742,22 +17896,21 @@ module.exports = extractAnnotations;
   // Export lodash.
   var _ = runInContext();
 
-  // Expose Lodash on the free variable `window` or `self` when available so it's
-  // globally accessible, even when bundled with Browserify, Webpack, etc. This
-  // also prevents errors in cases where Lodash is loaded by a script tag in the
-  // presence of an AMD loader. See http://requirejs.org/docs/errors.html#mismatch
-  // for more details. Use `_.noConflict` to remove Lodash from the global object.
-  (freeSelf || {})._ = _;
-
-  // Some AMD build optimizers like r.js check for condition patterns like the following:
+  // Some AMD build optimizers, like r.js, check for condition patterns like:
   if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+    // Expose Lodash on the global object to prevent errors when Lodash is
+    // loaded by a script tag in the presence of an AMD loader.
+    // See http://requirejs.org/docs/errors.html#mismatch for more details.
+    // Use `_.noConflict` to remove Lodash from the global object.
+    root._ = _;
+
     // Define as an anonymous module so, through path mapping, it can be
     // referenced as the "underscore" module.
     define(function() {
       return _;
     });
   }
-  // Check for `exports` after `define` in case a build optimizer adds an `exports` object.
+  // Check for `exports` after `define` in case a build optimizer adds it.
   else if (freeModule) {
     // Export for Node.js.
     (freeModule.exports = _)._ = _;
@@ -17771,7 +17924,7 @@ module.exports = extractAnnotations;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],5:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Fabien LOISON <http://flozz.fr>
  * All rights reserved.
@@ -17845,7 +17998,7 @@ module.exports = {
     updateDomTranslation: updateDomTranslation
 };
 
-},{"./gettext.js":6}],6:[function(require,module,exports){
+},{"./gettext.js":10}],10:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Fabien LOISON <http://flozz.fr>
  * All rights reserved.
@@ -17962,7 +18115,7 @@ module.exports = {
     setBestMatchingLocale: setBestMatchingLocale
 };
 
-},{"./helpers.js":7}],7:[function(require,module,exports){
+},{"./helpers.js":11}],11:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Fabien LOISON <http://flozz.fr>
  * All rights reserved.
@@ -18197,7 +18350,7 @@ module.exports = {
     findBestMatchingLocale: findBestMatchingLocale
 };
 
-},{}],8:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Fabien LOISON <http://flozz.fr>
  * All rights reserved.
@@ -18262,7 +18415,7 @@ module.exports = {
     updateDomTranslation: dom.updateDomTranslation
 };
 
-},{"./dom.js":5,"./gettext.js":6,"./helpers.js":7}],9:[function(require,module,exports){
+},{"./dom.js":9,"./gettext.js":10,"./helpers.js":11}],13:[function(require,module,exports){
 (function (global){
 
 var rng;
@@ -18297,7 +18450,7 @@ module.exports = rng;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],10:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 //     uuid.js
 //
 //     Copyright (c) 2010-2012 Robert Kieffer
@@ -18482,7 +18635,7 @@ uuid.unparse = unparse;
 
 module.exports = uuid;
 
-},{"./rng":9}],11:[function(require,module,exports){
+},{"./rng":13}],15:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -18554,6 +18707,16 @@ var Base = Class.$extend({
         for (var param in params) {
             if (this.$map.computedProperties[param]) {
                 this[param] = params[param];
+            }
+        }
+
+        // Update properties
+        for (var propName in this.$map.computedProperties) {
+            var prop = this.$map.computedProperties[propName];
+            if (params[propName] === undefined &&
+                prop.annotations["photonui-update"] &&
+                prop.get && prop.set) {
+                this[propName] = this[propName];
             }
         }
 
@@ -18684,11 +18847,18 @@ var Base = Class.$extend({
     /**
      * Force the update of the given properties.
      *
+     * This method is deprecated.
+     * One should use '@photonui-update' abitbol's annotation on concerned properties.
+     *
      * @method _updateProperties
      * @private
+     * @deprecated
      * @param {Array} properties The properties to update.
      */
     _updateProperties: function (properties) {
+        Helpers.log("warn", "'photonui.Base._updateProperties()' is deprecated." +
+                            " One should use '@photonui-update' abitbol's annotation on concerned properties.");
+
         for (var i = 0 ; i < properties.length ; i++) {
             this[properties[i]] = this[properties[i]];
         }
@@ -18777,7 +18947,7 @@ var Base = Class.$extend({
 
 module.exports = Base;
 
-},{"./helpers.js":26,"abitbol":1,"uuid":10}],12:[function(require,module,exports){
+},{"./helpers.js":31,"abitbol":1,"uuid":14}],16:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -18846,7 +19016,6 @@ var ColorButton = Button.$extend({
         this._registerWEvents(["value-changed"]);
         this.$super(params);
         this._buildUi();
-        this._updateProperties(["color"]);
     },
 
     //////////////////////////////////////////
@@ -18878,6 +19047,7 @@ var ColorButton = Button.$extend({
     _color: null,
 
     getColor: function () {
+        "@photonui-update";
         return this._color;
     },
 
@@ -19039,7 +19209,7 @@ var ColorButton = Button.$extend({
 
 module.exports = ColorButton;
 
-},{"../container/popupwindow.js":21,"../interactive/button.js":27,"../interactive/colorpalette.js":29,"../layout/boxlayout.js":39,"../nonvisual/color.js":46,"./colorpickerdialog.js":13,"stonejs":8}],13:[function(require,module,exports){
+},{"../container/popupwindow.js":26,"../interactive/button.js":32,"../interactive/colorpalette.js":34,"../layout/boxlayout.js":44,"../nonvisual/color.js":51,"./colorpickerdialog.js":17,"stonejs":12}],17:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -19121,7 +19291,6 @@ var ColorPickerDialog = Dialog.$extend({
         this.$super(params);
 
         this._buildUi();
-        this._updateProperties(["color"]);
     },
 
     //////////////////////////////////////////
@@ -19141,6 +19310,7 @@ var ColorPickerDialog = Dialog.$extend({
     _color: null,
 
     getColor: function () {
+        "@photonui-update";
         return this._color;
     },
 
@@ -19152,8 +19322,8 @@ var ColorPickerDialog = Dialog.$extend({
             this._color = color;
             this._color.registerCallback("photonui.colorpickerdialog.value-changed::" + this.name, "value-changed",
                                          this.__onColorChanged, this);
+            this.__onColorChanged();
         }
-        this.__onColorChanged();
     },
 
     /**
@@ -19207,6 +19377,13 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Color Picker
         this.__widgets.colorPicker = new ColorPicker();
+        if (this._color !== null) {
+            this.__widgets.colorPicker.color.setHSB(
+                    this._color.hue,
+                    this._color.saturation,
+                    this._color.brightness
+            );
+        }
         this.__widgets.hbox.addChild(this.__widgets.colorPicker);
 
         // Color Palette
@@ -19222,6 +19399,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Red field + label
         this.__widgets.fieldRed = new Slider({
+            value: (this._color) ? this._color.red : undefined,
             min: 0,
             max: 255,
             decimalDigits: 0
@@ -19237,6 +19415,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Green field + label
         this.__widgets.fieldGreen = new Slider({
+            value: (this._color) ? this._color.green : undefined,
             min: 0,
             max: 255,
             decimalDigits: 0
@@ -19252,6 +19431,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Blue field + label
         this.__widgets.fieldBlue = new Slider({
+            value: (this._color) ? this._color.blue : undefined,
             min: 0,
             max: 255,
             decimalDigits: 0
@@ -19276,6 +19456,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Hue field + label
         this.__widgets.fieldHue = new Slider({
+            value: (this._color) ? this._color.hue : undefined,
             min: 0,
             max: 360,
             decimalDigits: 0
@@ -19291,6 +19472,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Saturation field + label
         this.__widgets.fieldSaturation = new Slider({
+            value: (this._color) ? this._color.saturation : undefined,
             min: 0,
             max: 100,
             decimalDigits: 0
@@ -19306,6 +19488,7 @@ var ColorPickerDialog = Dialog.$extend({
 
         // Brightness field + label
         this.__widgets.fieldBrightness = new Slider({
+            value: (this._color) ? this._color.brightness : undefined,
             min: 0,
             max: 100,
             decimalDigits: 0
@@ -19427,6 +19610,10 @@ var ColorPickerDialog = Dialog.$extend({
      * @private
      */
     __onColorChanged: function () {
+        if (!this.__widgets.colorPicker) {
+            return;
+        }
+
         this.__widgets.colorPicker.color.setHSB(
                 this._color.hue,
                 this._color.saturation,
@@ -19437,7 +19624,7 @@ var ColorPickerDialog = Dialog.$extend({
 
 module.exports = ColorPickerDialog;
 
-},{"../container/dialog.js":19,"../interactive/button.js":27,"../interactive/colorpalette.js":29,"../interactive/colorpicker.js":30,"../interactive/slider.js":34,"../layout/boxlayout.js":39,"../layout/gridlayout.js":41,"../nonvisual/color.js":46,"../visual/faicon.js":55,"../visual/label.js":57,"../visual/separator.js":59,"stonejs":8}],14:[function(require,module,exports){
+},{"../container/dialog.js":23,"../interactive/button.js":32,"../interactive/colorpalette.js":34,"../interactive/colorpicker.js":35,"../interactive/slider.js":39,"../layout/boxlayout.js":44,"../layout/gridlayout.js":46,"../nonvisual/color.js":51,"../visual/faicon.js":60,"../visual/label.js":62,"../visual/separator.js":64,"stonejs":12}],18:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -19572,7 +19759,7 @@ var FontSelect = Select.$extend({
 
 module.exports = FontSelect;
 
-},{"../container/menuitem.js":20,"./select.js":16,"stonejs":8}],15:[function(require,module,exports){
+},{"../container/menuitem.js":25,"./select.js":20,"stonejs":12}],19:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -19690,7 +19877,7 @@ var PopupMenu = PopupWindow.$extend({
 
 module.exports = PopupMenu;
 
-},{"../container/popupwindow.js":21,"../layout/menu.js":43}],16:[function(require,module,exports){
+},{"../container/popupwindow.js":26,"../layout/menu.js":48}],20:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -19764,8 +19951,8 @@ var Select = Widget.$extend({
         this._registerWEvents(["value-changed"]);
         this.$super(params);
 
-        this._updateProperties(["value", "iconVisible"]);
         this._bindEvent("popup", this.html, "click", this.__onClick.bind(this));
+        this._bindEvent("mouse-down", this.html, "mousedown", this.__onMouseDown.bind(this));
 
         this.setValue(params.value || this.value, true);
     },
@@ -19786,6 +19973,7 @@ var Select = Widget.$extend({
     _value: "",
 
     getValue: function () {
+        "@photonui-update";
         return this._value;
     },
 
@@ -19950,7 +20138,10 @@ var Select = Widget.$extend({
      * @type Boolean
      * @default: false
      */
-    isIconVisible: function () { return this.__popupMenu.isIconVisible(); },
+    isIconVisible: function () {
+        "@photonui-update";
+        return this.__popupMenu.isIconVisible();
+    },
     setIconVisible: function (p) {
         if (!p) {
             this.addClass("photonui-select-noicon");
@@ -19958,6 +20149,13 @@ var Select = Widget.$extend({
             this.removeClass("photonui-select-noicon");
         }
         this.__popupMenu.setIconVisible(p);
+    },
+
+    setVisible: function (visible) {
+        this.$super(visible);
+        if (!visible) {
+            this.__popupMenu.hide();
+        }
     },
 
     /**
@@ -19971,6 +20169,8 @@ var Select = Widget.$extend({
     getHtml: function () {
         return this.__html.select;
     },
+
+    // ====== Private properties ======
 
     /**
      * The popupMenu.
@@ -20053,7 +20253,22 @@ var Select = Widget.$extend({
         if (!this._minWidthDefined) {
             this.popupMinWidth = this.offsetWidth;
         }
-        this.__popupMenu.popupWidget(this);
+        if (this.__popupMenu.visible) {
+            this.__popupMenu.hide();
+        } else {
+            this.__popupMenu.popupWidget(this);
+        }
+    },
+
+    /**
+     * @method __onMouseDown
+     * @private
+     * @param event
+     */
+    __onMouseDown: function (event) {
+        if (this.__popupMenu.visible) {
+            event.stopPropagation();
+        }
     },
 
     /**
@@ -20065,11 +20280,12 @@ var Select = Widget.$extend({
         this.value = widget.value;
         this._callCallbacks("value-changed", [this.value]);
     }
+
 });
 
 module.exports = Select;
 
-},{"../container/menuitem.js":20,"../helpers.js":26,"../widget.js":63,"./popupmenu.js":15,"stonejs":8}],17:[function(require,module,exports){
+},{"../container/menuitem.js":25,"../helpers.js":31,"../widget.js":68,"./popupmenu.js":19,"stonejs":12}],21:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -20139,12 +20355,6 @@ var BaseWindow = Container.$extend({
 
         // Insert the window in the DOM tree
         Widget.domInsert(this);
-
-        // Update properties
-        this._updateProperties([
-            "position", "width", "height", "minWidth", "minHeight",
-            "maxWidth", "maxHeight", "padding"
-        ]);
     },
 
     //////////////////////////////////////////
@@ -20163,6 +20373,7 @@ var BaseWindow = Container.$extend({
      * @default {x: 0, y: 0}
      */
     getPosition: function () {
+        "@photonui-update";
         if (this.visible && this.html.parentNode) {
             return this.absolutePosition;
         }
@@ -20232,6 +20443,7 @@ var BaseWindow = Container.$extend({
     _width: null,
 
     getWidth: function () {
+        "@photonui-update";
         if (this.visible && this.html.parenNode) {
             return this.containerNode.offsetWidth;
         }
@@ -20257,6 +20469,7 @@ var BaseWindow = Container.$extend({
     _height: null,
 
     getHeight: function () {
+        "@photonui-update";
         if (this.visible && this.html.parenNode) {
             return this.containerNode.offsetHeight;
         }
@@ -20282,6 +20495,7 @@ var BaseWindow = Container.$extend({
     _minWidth: null,
 
     getMinWidth: function () {
+        "@photonui-update";
         return this._minWidth;
     },
 
@@ -20304,6 +20518,7 @@ var BaseWindow = Container.$extend({
     _minHeight: null,
 
     getMinHeight: function () {
+        "@photonui-update";
         return this._minHeight;
     },
 
@@ -20326,6 +20541,7 @@ var BaseWindow = Container.$extend({
     _maxWidth: null,
 
     getMaxWidth: function () {
+        "@photonui-update";
         return this._maxWidth;
     },
 
@@ -20348,6 +20564,7 @@ var BaseWindow = Container.$extend({
     _maxHeight: null,
 
     getMaxHeight: function () {
+        "@photonui-update";
         return this._maxHeight;
     },
 
@@ -20370,6 +20587,7 @@ var BaseWindow = Container.$extend({
     _padding: 0,
 
     getPadding: function () {
+        "@photonui-update";
         return this._padding;
     },
 
@@ -20439,7 +20657,7 @@ var BaseWindow = Container.$extend({
 
 module.exports = BaseWindow;
 
-},{"../widget.js":63,"./container.js":18}],18:[function(require,module,exports){
+},{"../widget.js":68,"./container.js":22}],22:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -20493,8 +20711,6 @@ var Container = Widget.$extend({
     __init__: function (params) {
         this.$super(params);
 
-        this._updateProperties(["horizontalChildExpansion", "verticalChildExpansion"]);
-
         // Force to update the parent of the child
         if (this._childName) {
             this.child._parentName = this.name;
@@ -20517,6 +20733,7 @@ var Container = Widget.$extend({
     _horizontalChildExpansion: true,
 
     getHorizontalChildExpansion: function () {
+        "@photonui-update";
         return this._horizontalChildExpansion;
     },
 
@@ -20542,6 +20759,7 @@ var Container = Widget.$extend({
     _verticalChildExpansion: false,
 
     getVerticalChildExpansion: function () {
+        "@photonui-update";
         return this._verticalChildExpansion;
     },
 
@@ -20666,7 +20884,7 @@ var Container = Widget.$extend({
 
 module.exports = Container;
 
-},{"../widget.js":63}],19:[function(require,module,exports){
+},{"../widget.js":68}],23:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -20917,7 +21135,237 @@ var Dialog = Window.$extend({
 
 module.exports = Dialog;
 
-},{"../helpers.js":26,"../widget.js":63,"./window.js":25}],20:[function(require,module,exports){
+},{"../helpers.js":31,"../widget.js":68,"./window.js":30}],24:[function(require,module,exports){
+/*
+ * Copyright (c) 2014-2016, Wanadev <http://www.wanadev.fr/>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *   * Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *   * Neither the name of Wanadev nor the names of its contributors may be used
+ *     to endorse or promote products derived from this software without specific
+ *     prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authored by: Alexis BREUST
+ */
+
+/**
+ * PhotonUI - Javascript Web User Interface.
+ *
+ * @module PhotonUI
+ * @submodule Container
+ * @namespace photonui
+ */
+
+var Helpers = require("../helpers.js");
+var Widget = require("../widget.js");
+var Container = require("./container.js");
+
+/**
+ * Expander container.
+ *
+ * wEvents:
+ *
+ *   * folded:
+ *     - description: called when the expander is folded by user.
+ *     - callback:    function(widget)
+ *   * unfolded:
+ *     - description: called when the expander is unfolded by user.
+ *     - callback:    function(widget)
+ *
+ * @class Expander
+ * @constructor
+ * @extends photonui.Container
+ */
+var Expander = Container.$extend({
+
+    // Constructor
+    __init__: function (params) {
+        this._registerWEvents(["folded", "unfolded"]);
+        this.$super(params);
+
+        this._bindEvent("keypress", this.__html.title, "keypress", this.__onTitleKeyPress);
+        this._bindEvent("click", this.__html.title, "click", this.__onTitleClicked);
+    },
+
+    //////////////////////////////////////////
+    // Properties and Accessors             //
+    //////////////////////////////////////////
+
+    // ====== Public properties ======
+
+    /**
+     * The title.
+     *
+     * @property title
+     * @type String
+     * @default "Expander"
+     */
+    _title: "Expander",
+
+    getTitle: function () {
+        "@photonui-update";
+        return this._title;
+    },
+
+    setTitle: function (title) {
+        this._title = title;
+        Helpers.cleanNode(this.__html.title);
+        this.__html.title.appendChild(document.createTextNode(title));
+    },
+
+    /**
+     * Whether the expander is folded.
+     *
+     * @property folded
+     * @type Boolean
+     * @default false
+     */
+    _folded: false,
+
+    getFolded: function () {
+        "@photonui-update";
+        return this._folded;
+    },
+
+    setFolded: function (folded) {
+        this._folded = folded;
+
+        if (this._folded) {
+            this.__html.content.style.display = "none";
+            this.addClass("photonui-expander-folded");
+        } else {
+            this.__html.content.style.display = "block";
+            this.removeClass("photonui-expander-folded");
+        }
+    },
+
+    /**
+     * Container node padding.
+     *
+     * @property padding
+     * @type Number
+     * @default 0
+     */
+    _padding: 0,
+
+    getPadding: function () {
+        "@photonui-update";
+        return this._padding;
+    },
+
+    setPadding: function (padding) {
+        this._padding = padding;
+        this.__html.content.style.padding = padding + "px";
+    },
+
+    /**
+     * Html outer element of the widget (if any).
+     *
+     * @property html
+     * @type HTMLElement
+     * @default null
+     * @readOnly
+     */
+    getHtml: function () {
+        return this.__html.outer;
+    },
+
+    /**
+     * HTML Element that contain the child widget HTML.
+     *
+     * @property containerNode
+     * @type HTMLElement
+     * @readOnly
+     */
+    getContainerNode: function () {
+        return this.__html.content;
+    },
+
+    //////////////////////////////////////////
+    // Methods                              //
+    //////////////////////////////////////////
+
+    // ====== Public methods ======
+
+    /**
+     * Toggle current folded state and sends and event.
+     *
+     * @method toggleFolded
+     * @param {Event} event
+     */
+    toggleFolded: function () {
+        this.folded = !this._folded;
+
+        if (this._folded) {
+            this._callCallbacks("folded", []);
+        } else {
+            this._callCallbacks("unfolded", []);
+        }
+    },
+
+    // ====== Private methods ======
+
+    /**
+     * Build the widget HTML.
+     *
+     * @method _buildHtml
+     * @private
+     */
+    _buildHtml: function () {
+        this.__html.outer = document.createElement("div");
+        this.__html.outer.className = "photonui-widget photonui-expander";
+
+        this.__html.title = document.createElement("div");
+        this.__html.title.className = "photonui-expander-title";
+        this.__html.title.tabIndex = "0";
+        this.__html.outer.appendChild(this.__html.title);
+
+        this.__html.content = document.createElement("div");
+        this.__html.content.className = "photonui-container photonui-expander-content";
+        this.__html.outer.appendChild(this.__html.content);
+    },
+
+    /**
+     * @method __onTitleClicked
+     * @private
+     */
+    __onTitleClicked: function (widget, event) {
+        this.toggleFolded();
+    },
+
+    /**
+     * @method __onTitleKeyPress
+     * @private
+     */
+    __onTitleKeyPress: function (event) {
+        if (event.charCode == 32 || event.keyCode == 13) {
+            this.toggleFolded();
+        }
+    }
+
+});
+
+module.exports = Expander;
+
+},{"../helpers.js":31,"../widget.js":68,"./container.js":22}],25:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -20974,7 +21422,6 @@ var MenuItem = Container.$extend({
     __init__: function (params) {
         this._registerWEvents(["click"]);
         this.$super(params);
-        this._updateProperties(["text", "icon", "active"]);
 
         this._bindEvent("click", this.__html.outer, "click", function (event) {
             this._callCallbacks("click", [event]);
@@ -21014,6 +21461,7 @@ var MenuItem = Container.$extend({
     _text: "Menu Item",
 
     getText: function () {
+        "@photonui-update";
         return this._text;
     },
 
@@ -21052,6 +21500,7 @@ var MenuItem = Container.$extend({
      * @default: null
      */
     getIcon: function () {
+        "@photonui-update";
         return Widget.getWidget(this._iconName);
     },
 
@@ -21073,6 +21522,7 @@ var MenuItem = Container.$extend({
     _active: false,
 
     getActive: function () {
+        "@photonui-update";
         return this._active;
     },
 
@@ -21134,7 +21584,7 @@ var MenuItem = Container.$extend({
         this.__html.outer.appendChild(this.__html.text);
 
         this.__html.widget = document.createElement("span");
-        this.__html.widget.className = "photonui-menuitem-widget";
+        this.__html.widget.className = "photonui-container photonui-menuitem-widget";
         this.__html.outer.appendChild(this.__html.widget);
     },
 
@@ -21147,7 +21597,7 @@ var MenuItem = Container.$extend({
 
 module.exports = MenuItem;
 
-},{"../helpers.js":26,"../visual/baseicon.js":53,"../widget.js":63,"./container.js":18}],21:[function(require,module,exports){
+},{"../helpers.js":31,"../visual/baseicon.js":58,"../widget.js":68,"./container.js":22}],26:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -21320,7 +21770,7 @@ var PopupWindow = BaseWindow.$extend({
 
 module.exports = PopupWindow;
 
-},{"./basewindow.js":17}],22:[function(require,module,exports){
+},{"./basewindow.js":21}],27:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -21377,7 +21827,6 @@ var SubMenuItem = MenuItem.$extend({
         this.$super(params);
         this.addClass("photonui-submenuitem");
         this.registerCallback("toggle-folding", "click", this.__onItemClicked, this);
-        this._updateProperties(["menuName"]);
     },
 
     //////////////////////////////////////////
@@ -21396,6 +21845,7 @@ var SubMenuItem = MenuItem.$extend({
     _menuName: null,
 
     getMenuName: function () {
+        "@photonui-update";
         return this._menuName;
     },
 
@@ -21469,7 +21919,7 @@ var SubMenuItem = MenuItem.$extend({
 
 module.exports = SubMenuItem;
 
-},{"../layout/menu.js":43,"../widget.js":63,"./menuitem.js":20}],23:[function(require,module,exports){
+},{"../layout/menu.js":48,"../widget.js":68,"./menuitem.js":25}],28:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -21534,7 +21984,6 @@ var TabItem = Container.$extend({
     __init__: function (params) {
         this._registerWEvents(["click"]);
         this.$super(params);
-        this._updateProperties(["title", "leftIconName", "rightIconName"]);
 
         this._bindEvent("tab-click", this.__html.tab, "click", this.__onClick.bind(this));
         this._update();
@@ -21556,6 +22005,7 @@ var TabItem = Container.$extend({
     _title: "Tab",
 
     getTitle: function () {
+        "@photonui-update";
         return this._title;
     },
 
@@ -21668,6 +22118,7 @@ var TabItem = Container.$extend({
     _leftIconName: null,
 
     getLeftIconName: function () {
+        "@photonui-update";
         return this._leftIconName;
     },
 
@@ -21728,6 +22179,7 @@ var TabItem = Container.$extend({
     _rightIconName: null,
 
     getRightIconName: function () {
+        "@photonui-update";
         return this._rightIconName;
     },
 
@@ -21855,7 +22307,7 @@ var TabItem = Container.$extend({
 module.exports = TabItem;
 
 
-},{"../helpers.js":26,"../interactive/iconbutton.js":32,"../visual/baseicon.js":53,"../widget.js":63,"./container.js":18}],24:[function(require,module,exports){
+},{"../helpers.js":31,"../interactive/iconbutton.js":37,"../visual/baseicon.js":58,"../widget.js":68,"./container.js":22}],29:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -21909,11 +22361,6 @@ var Viewport = Container.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties([
-            "padding", "verticalScrollbar", "horizontalScrollbar",
-            "minWidth", "maxWidth", "width",
-            "minHeight", "maxHeight", "height"
-        ]);
     },
 
     //////////////////////////////////////////
@@ -21932,6 +22379,7 @@ var Viewport = Container.$extend({
     _padding: 0,
 
     getPadding: function () {
+        "@photonui-update";
         return this._padding;
     },
 
@@ -21954,6 +22402,7 @@ var Viewport = Container.$extend({
     _verticalScrollbar: null,
 
     getVerticalScrollbar: function () {
+        "@photonui-update";
         return this._verticalScrollbar;
     },
 
@@ -21982,6 +22431,7 @@ var Viewport = Container.$extend({
     _horizontalScrollbar: null,
 
     getHorizontalScrollbar: function () {
+        "@photonui-update";
         return this._horizontalScrollbar;
     },
 
@@ -22010,6 +22460,7 @@ var Viewport = Container.$extend({
     _minWidth: null,
 
     getMinWidth: function () {
+        "@photonui-update";
         return this._minWidth;
     },
 
@@ -22032,6 +22483,7 @@ var Viewport = Container.$extend({
     _maxWidth: null,
 
     getMaxWidth: function () {
+        "@photonui-update";
         return this._maxWidth;
     },
 
@@ -22054,6 +22506,7 @@ var Viewport = Container.$extend({
     _width: Infinity,
 
     getWidth: function () {
+        "@photonui-update";
         return this._width;
     },
 
@@ -22076,6 +22529,7 @@ var Viewport = Container.$extend({
     _minHeight: null,
 
     getMinHeight: function () {
+        "@photonui-update";
         return this._minHeight;
     },
 
@@ -22098,6 +22552,7 @@ var Viewport = Container.$extend({
     _maxHeight: null,
 
     getMaxHeight: function () {
+        "@photonui-update";
         return this._maxHeight;
     },
 
@@ -22120,6 +22575,7 @@ var Viewport = Container.$extend({
     _height: Infinity,
 
     getHeight: function () {
+        "@photonui-update";
         return this._height;
     },
 
@@ -22243,7 +22699,7 @@ var Viewport = Container.$extend({
 
 module.exports = Viewport;
 
-},{"../helpers.js":26,"./container.js":18}],25:[function(require,module,exports){
+},{"../helpers.js":31,"./container.js":22}],30:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -22321,7 +22777,6 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
                         function (event) { event.stopPropagation(); });
 
         // Update Properties
-        this._updateProperties(["title", "closeButtonVisible"]);
         this.moveToFront();
     },
 
@@ -22341,6 +22796,7 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
     _title: "Window",
 
     getTitle: function () {
+        "@photonui-update";
         return this._title;
     },
 
@@ -22399,6 +22855,7 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
     _closeButtonVisible: true,
 
     getCloseButtonVisible: function () {
+        "@photonui-update";
         return this._closeButtonVisible;
     },
 
@@ -22735,7 +23192,7 @@ var Window = BaseWindow.$extend({  // jshint ignore:line
 
 module.exports = Window;
 
-},{"../helpers.js":26,"../widget.js":63,"./basewindow.js":17,"stonejs":8}],26:[function(require,module,exports){
+},{"../helpers.js":31,"../widget.js":68,"./basewindow.js":21,"stonejs":12}],31:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -22930,7 +23387,7 @@ Helpers.log = function (level, message) {
 
 module.exports = Helpers;
 
-},{"uuid":10}],27:[function(require,module,exports){
+},{"uuid":14}],32:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -22997,7 +23454,6 @@ var Button = Widget.$extend({
         this._bindEvent("click", this.__html.button, "click", this.__onButtonClicked.bind(this));
 
         // Update properties
-        this._updateProperties(["text", "leftIconName", "rightIconName"]);
         this._update();
     },
 
@@ -23017,6 +23473,7 @@ var Button = Widget.$extend({
     _text: "Button",
 
     getText: function () {
+        "@photonui-update";
         return this._text;
     },
 
@@ -23054,6 +23511,7 @@ var Button = Widget.$extend({
     _leftIconName: null,
 
     getLeftIconName: function () {
+        "@photonui-update";
         return this._leftIconName;
     },
 
@@ -23113,6 +23571,7 @@ var Button = Widget.$extend({
     _rightIconName: null,
 
     getRightIconName: function () {
+        "@photonui-update";
         return this._rightIconName;
     },
 
@@ -23347,7 +23806,7 @@ Button._buttonMixin = {
 
 module.exports = Button;
 
-},{"../helpers.js":26,"../visual/baseicon.js":53,"../widget.js":63}],28:[function(require,module,exports){
+},{"../helpers.js":31,"../visual/baseicon.js":58,"../widget.js":68}],33:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -23529,7 +23988,7 @@ var CheckBox = Widget.$extend({
 
 module.exports = CheckBox;
 
-},{"../widget.js":63}],29:[function(require,module,exports){
+},{"../widget.js":68}],34:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -23593,7 +24052,6 @@ var ColorPalette = Widget.$extend({
         this._color = new Color(ColorPalette.palette[0][0]);
         this._registerWEvents(["value-changed"]);
         this.$super(params);
-        this._updateProperties(["palette", "value"]);
     },
 
     //////////////////////////////////////////
@@ -23609,6 +24067,7 @@ var ColorPalette = Widget.$extend({
      * @type String
      */
     getValue: function () {
+        "@photonui-update";
         return this.color.hexString;
     },
 
@@ -23644,6 +24103,7 @@ var ColorPalette = Widget.$extend({
     _palette: null,
 
     getPalette: function () {
+        "@photonui-update";
         return this._palette || ColorPalette.palette;
     },
 
@@ -23733,7 +24193,7 @@ ColorPalette.palette = [
 
 module.exports = ColorPalette;
 
-},{"../helpers.js":26,"../nonvisual/color.js":46,"../widget.js":63}],30:[function(require,module,exports){
+},{"../helpers.js":31,"../nonvisual/color.js":51,"../widget.js":68}],35:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -23811,7 +24271,6 @@ var ColorPicker = Widget.$extend({
         this._updateSB();
         this._updateSBmask();
         this._updateCanvas();
-        this._updateProperties(["color"]);
 
         this.__mouseManager = new MouseManager(this.__html.canvas);
 
@@ -23854,6 +24313,7 @@ var ColorPicker = Widget.$extend({
     _color: null,
 
     getColor: function () {
+        "@photonui-update";
         return this._color;
     },
 
@@ -24251,7 +24711,7 @@ var ColorPicker = Widget.$extend({
 
 module.exports = ColorPicker;
 
-},{"../helpers.js":26,"../nonvisual/color.js":46,"../nonvisual/mousemanager.js":49,"../widget.js":63}],31:[function(require,module,exports){
+},{"../helpers.js":31,"../nonvisual/color.js":51,"../nonvisual/mousemanager.js":54,"../widget.js":68}],36:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -24330,7 +24790,6 @@ var Field = Widget.$extend({
             "selection-changed"
         ]);
         this.$super(params);
-        this._updateProperties(["value", "placeholder"]);
         this.__html.field.name = this.name;
     },
 
@@ -24348,6 +24807,7 @@ var Field = Widget.$extend({
      * @default ""
      */
     getValue: function () {
+        "@photonui-update";
         return this.__html.field.value;
     },
 
@@ -24365,6 +24825,7 @@ var Field = Widget.$extend({
     _placeholder: "",
 
     getPlaceholder: function () {
+        "@photonui-update";
         return this._placeholder;
     },
 
@@ -24441,7 +24902,7 @@ var Field = Widget.$extend({
 
 module.exports = Field;
 
-},{"../widget.js":63}],32:[function(require,module,exports){
+},{"../widget.js":68}],37:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2016, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -24504,7 +24965,6 @@ var IconButton = Widget.$extend({
     __init__: function (params) {
         this._registerWEvents(["click"]);
         this.$super(params);
-        this._updateProperties(["width", "height"]);
 
         this._bindEvent("click", this.__html.div, "click", this.__onButtonClicked.bind(this));
     },
@@ -24525,6 +24985,7 @@ var IconButton = Widget.$extend({
     _width: 16,
 
     getWidth: function () {
+        "@photonui-update";
         return this._width;
     },
 
@@ -24545,6 +25006,7 @@ var IconButton = Widget.$extend({
     _height: 16,
 
     getHeight: function () {
+        "@photonui-update";
         return this._height;
     },
 
@@ -24647,7 +25109,7 @@ var IconButton = Widget.$extend({
 
 module.exports = IconButton;
 
-},{"../helpers.js":26,"../visual/baseicon.js":53,"../widget.js":63}],33:[function(require,module,exports){
+},{"../helpers.js":31,"../visual/baseicon.js":58,"../widget.js":68}],38:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -24700,7 +25162,6 @@ var NumericField = Field.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["value"]);
         this._bindFieldEvents();
         this._unbindEvent("value-changed");
         this._bindEvent("keypress", this.__html.field, "keypress", this.__onKeypress.bind(this));
@@ -24731,7 +25192,10 @@ var NumericField = Field.$extend({
     },
 
     setMin: function (min) {
+        "@photonui-update";
         this._min = min;
+        this._updateValue(this.value);
+        this._updateFieldValue();
     },
 
     /**
@@ -24748,7 +25212,10 @@ var NumericField = Field.$extend({
     },
 
     setMax: function (max) {
+        "@photonui-update";
         this._max = max;
+        this._updateValue(this.value);
+        this._updateFieldValue();
     },
 
     /**
@@ -24778,11 +25245,14 @@ var NumericField = Field.$extend({
     _decimalDigits: null,
 
     getDecimalDigits: function () {
+        "@photonui-update";
         return this._decimalDigits;
     },
 
     setDecimalDigits: function (decimalDigits) {
         this._decimalDigits = decimalDigits;
+        this._updateValue(this.value);
+        this._updateFieldValue();
     },
 
     /**
@@ -24795,11 +25265,14 @@ var NumericField = Field.$extend({
     _decimalSymbol: ".",
 
     getDecimalSymbol: function () {
+        "@photonui-update";
         return this._decimalSymbol;
     },
 
     setDecimalSymbol: function (decimalSymbol) {
         this._decimalSymbol = decimalSymbol;
+        this._updateValue(this.value);
+        this._updateFieldValue();
     },
 
     /**
@@ -24812,6 +25285,7 @@ var NumericField = Field.$extend({
     _value: 0,
 
     getValue: function () {
+        "@photonui-update";
         return parseFloat(this._value);
     },
 
@@ -25013,7 +25487,7 @@ var NumericField = Field.$extend({
 
 module.exports = NumericField;
 
-},{"./field.js":31}],34:[function(require,module,exports){
+},{"./field.js":36}],39:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -25072,8 +25546,6 @@ var Slider = NumericField.$extend({
         this.inputId = this.name + "-field";
         this.__html.field.id = this.inputId;
 
-        this._updateProperties(["fieldVisible"]);
-
         this._bindEvent("slider-mousedown", this.__html.slider, "mousedown", this.__onSliderMouseDown.bind(this));
         this._bindEvent("slider-touchstart", this.__html.slider, "touchstart", this.__onSliderTouchStart.bind(this));
 
@@ -25105,6 +25577,7 @@ var Slider = NumericField.$extend({
     _fieldVisible: true,
 
     isFieldVisible: function () {
+        "@photonui-update";
         return this._fieldVisible;
     },
 
@@ -25301,14 +25774,16 @@ var Slider = NumericField.$extend({
      */
     __onSliderKeyDown: function (event) {
         if (event.keyCode == 38 || event.keyCode == 39) {  // Up, Right
+            event.preventDefault();
+            event.stopPropagation();
             this.value += this.step;
             this._callCallbacks("value-changed", [this.value]);
         } else if (event.keyCode == 40 || event.keyCode == 37) {  // Down, Left
+            event.preventDefault();
+            event.stopPropagation();
             this.value -= this.step;
             this._callCallbacks("value-changed", [this.value]);
         }
-        event.preventDefault();
-        event.stopPropagation();
     },
 
     /**
@@ -25373,7 +25848,7 @@ var Slider = NumericField.$extend({
 
 module.exports = Slider;
 
-},{"../helpers.js":26,"./numericfield.js":33}],35:[function(require,module,exports){
+},{"../helpers.js":31,"./numericfield.js":38}],40:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -25433,7 +25908,7 @@ var Switch = CheckBox.$extend({
 
 module.exports = Switch;
 
-},{"./checkbox.js":28}],36:[function(require,module,exports){
+},{"./checkbox.js":33}],41:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -25547,7 +26022,7 @@ var TextAreaField = Field.$extend({
 
 module.exports = TextAreaField;
 
-},{"./field.js":31}],37:[function(require,module,exports){
+},{"./field.js":36}],42:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -25661,7 +26136,7 @@ var TextField = Field.$extend({
 
 module.exports = TextField;
 
-},{"./field.js":31}],38:[function(require,module,exports){
+},{"./field.js":36}],43:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -25725,8 +26200,6 @@ var ToggleButton = CheckBox.$extend({
 
     // photonui.Button constructor (without the call to $super)
     __buttonInit: function () {
-        // Update properties
-        this._updateProperties(["text", "leftIconName", "rightIconName"]);
         this._update();
     },
 
@@ -25756,7 +26229,7 @@ var ToggleButton = CheckBox.$extend({
 
 module.exports = ToggleButton;
 
-},{"./button.js":27,"./checkbox.js":28}],39:[function(require,module,exports){
+},{"./button.js":32,"./checkbox.js":33}],44:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -25826,7 +26299,6 @@ var BoxLayout = Layout.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["orientation"]);
     },
 
     //////////////////////////////////////////
@@ -25845,6 +26317,7 @@ var BoxLayout = Layout.$extend({
     _orientation: "vertical",
 
     getOrientation: function () {
+        "@photonui-update";
         return this._orientation;
     },
 
@@ -25856,7 +26329,7 @@ var BoxLayout = Layout.$extend({
         this.removeClass("photonui-layout-orientation-vertical");
         this.removeClass("photonui-layout-orientation-horizontal");
         this.addClass("photonui-layout-orientation-" + this.orientation);
-        this._updateProperties(["spacing"]);
+        this.spacing = this.spacing;
     },
 
     /**
@@ -25948,6 +26421,30 @@ var BoxLayout = Layout.$extend({
     },
 
     /**
+     * Whether to stretch the box to its parent height or not.
+     *
+     * @property stretchToParentHeight
+     * @type Boolean
+     * @default true
+     */
+    _stretchToParentHeight: true,
+
+    getStretchToParentHeight: function () {
+        "@photonui-update";
+        return this._stretchToParentHeight;
+    },
+
+    setStretchToParentHeight: function (stretch) {
+        this._stretchToParentHeight = stretch;
+
+        if (this._stretchToParentHeight) {
+            this.__html.outerbox.style.height = "100%";
+        } else {
+            this.__html.outerbox.style.height = "";
+        }
+    },
+
+    /**
      * Html outer element of the widget (if any).
      *
      * @property html
@@ -26030,8 +26527,7 @@ var BoxLayout = Layout.$extend({
         }
 
         this.__html.outerbox.appendChild(fragment);
-
-        this._updateProperties(["spacing"]);
+        this.spacing = this.spacing;
     },
 
     /**
@@ -26104,7 +26600,7 @@ var BoxLayout = Layout.$extend({
 
 module.exports = BoxLayout;
 
-},{"../helpers.js":26,"./layout.js":42}],40:[function(require,module,exports){
+},{"../helpers.js":31,"./layout.js":47}],45:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -26486,7 +26982,7 @@ var FluidLayout = Layout.$extend({
 
 module.exports = FluidLayout;
 
-},{"../helpers.js":26,"./layout.js":42}],41:[function(require,module,exports){
+},{"../helpers.js":31,"./layout.js":47}],46:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -26562,13 +27058,13 @@ var GridLayout = Layout.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["verticalSpacing"]);
 
         // XXX Sizing Hack
         if (window.MutationObserver) {
             this.__sizinghack_observer = new MutationObserver(this._sizingHack.bind(this));
             this.__sizinghack_observer_params = {attributes: true, childList: true, characterData: true, subtree: true};
             this.__sizinghack_observer.observe(this.__html.gridBody, this.__sizinghack_observer_params);
+            this._updateLayout();
         }
     },
 
@@ -26632,15 +27128,12 @@ var GridLayout = Layout.$extend({
     _verticalSpacing: 5,
 
     getVerticalSpacing: function () {
+        "@photonui-update";
         return this._verticalSpacing;
     },
 
     setVerticalSpacing: function (verticalSpacing) {
         this._verticalSpacing = verticalSpacing;
-        //this._updatingLayout = true;
-        //this._updateSpacing();
-        //this._updatingLayout = false;
-        //this._sizingHack();
         this._updateLayout();
     },
 
@@ -26659,10 +27152,6 @@ var GridLayout = Layout.$extend({
 
     setHorizontalSpacing: function (horizontalSpacing) {
         this._horizontalSpacing = horizontalSpacing;
-        //this._updatingLayout = true;
-        //this._updateSpacing();
-        //this._updatingLayout = false;
-        //this._sizingHack();
         this._updateLayout();
     },
 
@@ -27130,7 +27619,7 @@ var GridLayout = Layout.$extend({
 
 module.exports = GridLayout;
 
-},{"../helpers.js":26,"./layout.js":42}],42:[function(require,module,exports){
+},{"../helpers.js":31,"./layout.js":47}],47:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -27416,7 +27905,7 @@ var Layout = Container.$extend({
 
 module.exports = Layout;
 
-},{"../container/container.js":18,"../widget.js":63}],43:[function(require,module,exports){
+},{"../container/container.js":22,"../widget.js":68}],48:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -27470,7 +27959,6 @@ var Menu = Layout.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["iconVisible"]);
     },
 
     //////////////////////////////////////////
@@ -27489,6 +27977,7 @@ var Menu = Layout.$extend({
     _iconVisible: true,
 
     isIconVisible: function () {
+        "@photonui-update";
         return this._iconVisible;
     },
 
@@ -27556,7 +28045,7 @@ var Menu = Layout.$extend({
 
 module.exports = Menu;
 
-},{"../helpers.js":26,"./layout.js":42}],44:[function(require,module,exports){
+},{"../helpers.js":31,"./layout.js":47}],49:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -27614,7 +28103,7 @@ var TabLayout = Layout.$extend({
     __init__: function (params) {
         this._registerWEvents([]);
         this.$super(params);
-        this._updateProperties(["activeTab", "tabsPosition", "padding"]);
+        this.activeTab = this.activeTab;
     },
 
     //////////////////////////////////////////
@@ -27638,6 +28127,7 @@ var TabLayout = Layout.$extend({
     _tabsPosition: "top",
 
     getTabsPosition: function () {
+        "@photonui-update";
         return this._tabsPosition;
     },
 
@@ -27707,6 +28197,7 @@ var TabLayout = Layout.$extend({
     _padding: 10,
 
     getPadding: function () {
+        "@photonui-update";
         return this._padding;
     },
 
@@ -27856,7 +28347,7 @@ var TabLayout = Layout.$extend({
 module.exports = TabLayout;
 
 
-},{"../container/tabitem.js":23,"../helpers.js":26,"../widget.js":63,"./layout.js":42}],45:[function(require,module,exports){
+},{"../container/tabitem.js":28,"../helpers.js":31,"../widget.js":68,"./layout.js":47}],50:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -27958,9 +28449,9 @@ var AccelManager = Base.$extend({
         this.__kbd[id] = {
             keys: keys,
             safe: ((safe === undefined) ? true : safe),
-            callback: callback,
-            binding: KeyboardJS.on(keys, this.__onAccell.bind(this))
+            callback: callback
         };
+        KeyboardJS.bind(keys, this.__onAccell.bind(this, id));
     },
 
     /**
@@ -27973,7 +28464,7 @@ var AccelManager = Base.$extend({
         if (!this.__kbd[id]) {
             return;
         }
-        this.__kbd[id].binding.clear();
+        KeyboardJS.unbind(this.__kbd[id].keys);
         delete this.__kbd[id];
     },
 
@@ -27995,31 +28486,29 @@ var AccelManager = Base.$extend({
      * @param keys
      * @param combo
      */
-    __onAccell: function (event, keys, combo) {
-        for (var id in this.__kbd) {
-            if (this.__kbd[id].keys != combo) {
-                continue;
-            }
-
-            if (this.__kbd[id].safe) {
-                if (document.activeElement instanceof HTMLInputElement ||
-                    document.activeElement instanceof HTMLSelectElement ||
-                    document.activeElement instanceof HTMLTextAreaElement) {
-                    continue;
-                }
-            }
-
-            this.__kbd[id].callback();
-            event.stopPropagation();
-            event.preventDefault();
+    __onAccell: function (id, event) {
+        if (!this.__kbd[id]) {
+            return;
         }
+
+        if (this.__kbd[id].safe) {
+            if (document.activeElement instanceof HTMLInputElement ||
+                document.activeElement instanceof HTMLSelectElement ||
+                document.activeElement instanceof HTMLTextAreaElement) {
+                return;
+            }
+        }
+
+        this.__kbd[id].callback();
+        event.stopPropagation();
+        event.preventDefault();
     }
 
 });
 
 module.exports = AccelManager;
 
-},{"../base.js":11,"keyboardjs":3}],46:[function(require,module,exports){
+},{"../base.js":15,"keyboardjs":3}],51:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -28506,7 +28995,7 @@ var Color = Base.$extend({
 
 module.exports = Color;
 
-},{"../base.js":11}],47:[function(require,module,exports){
+},{"../base.js":15}],52:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -28654,8 +29143,8 @@ var FileManager = Base.$extend({
             this._bindEvent("document-drop", document, "drop", function (event) {
                 event.preventDefault();
             });
-            this._bindEvent("element-dragover", document, "dragover", function (event) {});
-            this._bindEvent("element-drop", document, "drop", this.__onFileDropped.bind(this));
+            this._bindEvent("element-dragover", element, "dragover", function (event) {});
+            this._bindEvent("element-drop", element, "drop", this.__onFileDropped.bind(this));
         }
     },
 
@@ -28706,6 +29195,7 @@ var FileManager = Base.$extend({
      */
     open: function () {
         this.__fileField.style.display = "inline-block";
+        this.__fileField.value = null;
         this.__fileField.focus();
         this.__fileField.click();
         this.__fileField.style.display = "none";
@@ -28772,7 +29262,7 @@ var FileManager = Base.$extend({
             }
         }
 
-        if (match) {
+        if (match || this.acceptedMimes.length === 0 && this.acceptedExts.length === 0) {
             this._callCallbacks("file-open", [file, x, y]);
         }
     },
@@ -28822,7 +29312,7 @@ var FileManager = Base.$extend({
 
 module.exports = FileManager;
 
-},{"../base.js":11}],48:[function(require,module,exports){
+},{"../base.js":15}],53:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -28912,7 +29402,6 @@ var KeyboardManager = Base.$extend({
         } else {
             this.$super(element);
         }
-        this._updateProperties(["safe", "noPreventDefault"]);
 
         this._initKeyCache();
 
@@ -28938,6 +29427,7 @@ var KeyboardManager = Base.$extend({
     _safe: true,
 
     getSafe: function () {
+        "@photonui-update";
         return this._safe;
     },
 
@@ -28955,6 +29445,7 @@ var KeyboardManager = Base.$extend({
     _noPreventDefault: false,
 
     getNoPreventDefault: function () {
+        "@photonui-update";
         return this._noPreventDefault;
     },
 
@@ -29334,7 +29825,7 @@ var KeyboardManager = Base.$extend({
 
 module.exports = KeyboardManager;
 
-},{"../base.js":11,"../helpers.js":26,"../widget.js":63}],49:[function(require,module,exports){
+},{"../base.js":15,"../helpers.js":31,"../widget.js":68}],54:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -29968,7 +30459,6 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onMouseDown: function (event) {
-        event.stopPropagation();
         this._stateMachine("mouse-down", event);
     },
 
@@ -29978,7 +30468,6 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onMouseUp: function (event) {
-        event.stopPropagation();
         this._stateMachine("mouse-up", event);
     },
 
@@ -29997,7 +30486,6 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onMouseMove: function (event) {
-        event.stopPropagation();
         this._stateMachine("mouse-move", event);
     },
 
@@ -30009,6 +30497,9 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onDocumentMouseUp: function (event) {
+        if (event.target === this._element) {
+            return;
+        }
         if (this.action == "dragging" || this.action == "drag-start") {
             this._stateMachine("drag-end", event);
         }
@@ -30022,6 +30513,9 @@ var MouseManager = Base.$extend({
      * @param event
      */
     __onDocumentMouseMove: function (event) {
+        if (event.target === this._element) {
+            return;
+        }
         if (this.action == "dragging" || this.action == "drag-start") {
             this._stateMachine("dragging", event);
         }
@@ -30062,7 +30556,7 @@ var MouseManager = Base.$extend({
 
 module.exports = MouseManager;
 
-},{"../base.js":11,"../helpers.js":26,"../widget.js":63}],50:[function(require,module,exports){
+},{"../base.js":15,"../helpers.js":31,"../widget.js":68}],55:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -30118,7 +30612,6 @@ var SpriteSheet = Base.$extend({
     __init__: function (params) {
         this._icons = {};
         this.$super(params);
-        this._updateProperties(["name"]);
     },
 
     //////////////////////////////////////////
@@ -30137,6 +30630,7 @@ var SpriteSheet = Base.$extend({
     _name: "default",
 
     getName: function () {
+        "@photonui-update";
         return this._name;
     },
 
@@ -30288,7 +30782,7 @@ SpriteSheet.getSpriteSheet = function (name) {
 
 module.exports = SpriteSheet;
 
-},{"../base.js":11}],51:[function(require,module,exports){
+},{"../base.js":15}],56:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -30463,7 +30957,7 @@ var Translation = Base.$extend({
 
 module.exports = Translation;
 
-},{"../base.js":11,"stonejs":8}],52:[function(require,module,exports){
+},{"../base.js":15,"stonejs":12}],57:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -30565,6 +31059,7 @@ photonui.BaseWindow = require("./container/basewindow.js");
 photonui.Window = require("./container/window.js");
 photonui.PopupWindow = require("./container/popupwindow.js");
 photonui.Dialog = require("./container/dialog.js");
+photonui.Expander = require("./container/expander.js");
 photonui.ColorPickerDialog = require("./composite/colorpickerdialog.js");
 photonui.PopupMenu = require("./composite/popupmenu.js");
 photonui.TabItem = require("./container/tabitem.js");
@@ -30576,7 +31071,7 @@ photonui.Template = require("./visual/template.js");
 
 module.exports = photonui;
 
-},{"./base.js":11,"./composite/colorbutton.js":12,"./composite/colorpickerdialog.js":13,"./composite/fontselect.js":14,"./composite/popupmenu.js":15,"./composite/select.js":16,"./container/basewindow.js":17,"./container/container.js":18,"./container/dialog.js":19,"./container/menuitem.js":20,"./container/popupwindow.js":21,"./container/submenuitem.js":22,"./container/tabitem.js":23,"./container/viewport.js":24,"./container/window.js":25,"./helpers.js":26,"./interactive/button.js":27,"./interactive/checkbox.js":28,"./interactive/colorpalette.js":29,"./interactive/colorpicker.js":30,"./interactive/field.js":31,"./interactive/iconbutton.js":32,"./interactive/numericfield.js":33,"./interactive/slider.js":34,"./interactive/switch.js":35,"./interactive/textareafield.js":36,"./interactive/textfield.js":37,"./interactive/togglebutton.js":38,"./layout/boxlayout.js":39,"./layout/fluidlayout.js":40,"./layout/gridlayout.js":41,"./layout/layout.js":42,"./layout/menu.js":43,"./layout/tablayout.js":44,"./nonvisual/accelmanager.js":45,"./nonvisual/color.js":46,"./nonvisual/filemanager.js":47,"./nonvisual/keyboardmanager.js":48,"./nonvisual/mousemanager.js":49,"./nonvisual/spritesheet.js":50,"./nonvisual/translation.js":51,"./visual/baseicon.js":53,"./visual/canvas.js":54,"./visual/faicon.js":55,"./visual/image.js":56,"./visual/label.js":57,"./visual/progressbar.js":58,"./visual/separator.js":59,"./visual/spriteicon.js":60,"./visual/template.js":61,"./visual/text.js":62,"./widget.js":63,"abitbol":1,"keyboardjs":3,"lodash":4,"stonejs":8,"uuid":10}],53:[function(require,module,exports){
+},{"./base.js":15,"./composite/colorbutton.js":16,"./composite/colorpickerdialog.js":17,"./composite/fontselect.js":18,"./composite/popupmenu.js":19,"./composite/select.js":20,"./container/basewindow.js":21,"./container/container.js":22,"./container/dialog.js":23,"./container/expander.js":24,"./container/menuitem.js":25,"./container/popupwindow.js":26,"./container/submenuitem.js":27,"./container/tabitem.js":28,"./container/viewport.js":29,"./container/window.js":30,"./helpers.js":31,"./interactive/button.js":32,"./interactive/checkbox.js":33,"./interactive/colorpalette.js":34,"./interactive/colorpicker.js":35,"./interactive/field.js":36,"./interactive/iconbutton.js":37,"./interactive/numericfield.js":38,"./interactive/slider.js":39,"./interactive/switch.js":40,"./interactive/textareafield.js":41,"./interactive/textfield.js":42,"./interactive/togglebutton.js":43,"./layout/boxlayout.js":44,"./layout/fluidlayout.js":45,"./layout/gridlayout.js":46,"./layout/layout.js":47,"./layout/menu.js":48,"./layout/tablayout.js":49,"./nonvisual/accelmanager.js":50,"./nonvisual/color.js":51,"./nonvisual/filemanager.js":52,"./nonvisual/keyboardmanager.js":53,"./nonvisual/mousemanager.js":54,"./nonvisual/spritesheet.js":55,"./nonvisual/translation.js":56,"./visual/baseicon.js":58,"./visual/canvas.js":59,"./visual/faicon.js":60,"./visual/image.js":61,"./visual/label.js":62,"./visual/progressbar.js":63,"./visual/separator.js":64,"./visual/spriteicon.js":65,"./visual/template.js":66,"./visual/text.js":67,"./widget.js":68,"abitbol":1,"keyboardjs":3,"lodash":8,"stonejs":12,"uuid":14}],58:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -30644,7 +31139,7 @@ var BaseIcon = Widget.$extend({
 
 module.exports = BaseIcon;
 
-},{"../widget.js":63}],54:[function(require,module,exports){
+},{"../widget.js":68}],59:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -30698,7 +31193,6 @@ var Canvas = Widget.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["width", "height"]);
 
         // --- Canvas methods proxies ---
 
@@ -30831,6 +31325,7 @@ var Canvas = Widget.$extend({
      * default 300
      */
     getWidth: function () {
+        "@photonui-update";
         return this.__html.canvas.width;
     },
 
@@ -30846,6 +31341,7 @@ var Canvas = Widget.$extend({
      * default 150
      */
     getHeight: function () {
+        "@photonui-update";
         return this.__html.canvas.height;
     },
 
@@ -30924,7 +31420,7 @@ var Canvas = Widget.$extend({
 
 module.exports = Canvas;
 
-},{"../widget.js":63}],55:[function(require,module,exports){
+},{"../widget.js":68}],60:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -30993,7 +31489,6 @@ var FAIcon = BaseIcon.$extend({
             params = params1;
         }
         this.$super(params);
-        this._updateProperties(["iconName", "size", "color"]);
     },
 
     //////////////////////////////////////////
@@ -31014,6 +31509,7 @@ var FAIcon = BaseIcon.$extend({
     _iconName: "",
 
     getIconName: function () {
+        "@photonui-update";
         return this._iconName;
     },
 
@@ -31034,6 +31530,7 @@ var FAIcon = BaseIcon.$extend({
     _size: "",
 
     getSize: function () {
+        "@photonui-update";
         return this._size;
     },
 
@@ -31052,6 +31549,7 @@ var FAIcon = BaseIcon.$extend({
     _color: "inherit",
 
     getColor: function () {
+        "@photonui-update";
         return this._color;
     },
 
@@ -31095,7 +31593,7 @@ var FAIcon = BaseIcon.$extend({
 
 module.exports = FAIcon;
 
-},{"./baseicon.js":53}],56:[function(require,module,exports){
+},{"./baseicon.js":58}],61:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -31250,7 +31748,7 @@ var Image_ = Widget.$extend({
 
 module.exports = Image_;
 
-},{"../widget.js":63}],57:[function(require,module,exports){
+},{"../widget.js":68}],62:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -31319,7 +31817,6 @@ var Label = Widget.$extend({
             params.layoutOptions.verticalExpansion = false;
         }
         this.$super(params);
-        this._updateProperties(["text", "textAlign", "forInputName"]);
     },
 
     //////////////////////////////////////////
@@ -31338,6 +31835,7 @@ var Label = Widget.$extend({
     _text: "Label",
 
     getText: function () {
+        "@photonui-update";
         return this._text;
     },
 
@@ -31370,6 +31868,7 @@ var Label = Widget.$extend({
     _textAlign: "left",
 
     getTextAlign: function () {
+        "@photonui-update";
         return this._textAlign;
     },
 
@@ -31391,6 +31890,7 @@ var Label = Widget.$extend({
     _forInputName: null,
 
     getForInputName: function () {
+        "@photonui-update";
         return this._forInputName;
     },
 
@@ -31458,7 +31958,7 @@ var Label = Widget.$extend({
 
 module.exports = Label;
 
-},{"../helpers.js":26,"../widget.js":63}],58:[function(require,module,exports){
+},{"../helpers.js":31,"../widget.js":68}],63:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -31511,7 +32011,6 @@ var ProgressBar = Widget.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["orientation", "value", "pulsate"]);
     },
 
     //////////////////////////////////////////
@@ -31548,6 +32047,7 @@ var ProgressBar = Widget.$extend({
     _value: 0,
 
     getValue: function () {
+        "@photonui-update";
         return this._value;
     },
 
@@ -31573,6 +32073,7 @@ var ProgressBar = Widget.$extend({
     _orientation: "horizontal",
 
     getOrientation: function () {
+        "@photonui-update";
         return this._orientation;
     },
 
@@ -31599,6 +32100,7 @@ var ProgressBar = Widget.$extend({
     _pulsate: false,
 
     isPulsate: function () {
+        "@photonui-update";
         return this._pulsate;
     },
 
@@ -31686,7 +32188,7 @@ var ProgressBar = Widget.$extend({
 
 module.exports = ProgressBar;
 
-},{"../widget.js":63}],59:[function(require,module,exports){
+},{"../widget.js":68}],64:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -31739,7 +32241,6 @@ var Separator = Widget.$extend({
     // Constructor
     __init__: function (params) {
         this.$super(params);
-        this._updateProperties(["orientation"]);
     },
 
     //////////////////////////////////////////
@@ -31758,6 +32259,7 @@ var Separator = Widget.$extend({
     _orientation: "horizontal",
 
     getOrientation: function () {
+        "@photonui-update";
         return this._orientation;
     },
 
@@ -31827,7 +32329,7 @@ var Separator = Widget.$extend({
 
 module.exports = Separator;
 
-},{"../widget.js":63}],60:[function(require,module,exports){
+},{"../widget.js":68}],65:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -32009,7 +32511,7 @@ var SpriteIcon = BaseIcon.$extend({
 
 module.exports = SpriteIcon;
 
-},{"../nonvisual/spritesheet.js":50,"./baseicon.js":53}],61:[function(require,module,exports){
+},{"../nonvisual/spritesheet.js":55,"./baseicon.js":58}],66:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -32166,7 +32668,7 @@ var Template = Widget.$extend({
 
 module.exports = Template;
 
-},{"../helpers.js":26,"../widget.js":63,"lodash":4}],62:[function(require,module,exports){
+},{"../helpers.js":31,"../widget.js":68,"lodash":8}],67:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -32312,7 +32814,7 @@ var Text_ = Widget.$extend({
 
 module.exports = Text_;
 
-},{"../helpers.js":26,"../widget.js":63,"stonejs":8}],63:[function(require,module,exports){
+},{"../helpers.js":31,"../widget.js":68,"stonejs":12}],68:[function(require,module,exports){
 /*
  * Copyright (c) 2014-2015, Wanadev <http://www.wanadev.fr/>
  * All rights reserved.
@@ -32394,9 +32896,6 @@ var Widget = Base.$extend({
 
         // Parent constructor
         this.$super(params);
-
-        // Update properties
-        this._updateProperties(["visible"]);
 
         // Default name
         if (!this.name) {
@@ -32482,6 +32981,7 @@ var Widget = Base.$extend({
     _visible: true,
 
     isVisible: function () {
+        "@photonui-update";
         return this._visible;
     },
 
@@ -32805,7 +33305,6 @@ var Widget = Base.$extend({
          * @method getWidget
          * @static
          * @param {String} name The widget name.
-         *
          * @return {Widget} The widget or null.
          */
         getWidget: function (name) {
@@ -32813,6 +33312,17 @@ var Widget = Base.$extend({
                 return _widgets[name];
             }
             return null;
+        },
+
+        /**
+         * Get all instanciated PhotonUI widgets.
+         *
+         * @method getAllWidgets
+         * @static
+         * @return {Object} An object containing all widgets `{"widgetName": Widget, ...}`
+         */
+        getAllWidgets: function (name) {
+            return _widgets;
         },
 
         /**
@@ -32837,5 +33347,5 @@ var Widget = Base.$extend({
 
 module.exports = Widget;
 
-},{"./base.js":11,"./container/popupwindow.js":21,"./helpers.js":26,"stonejs":8,"uuid":10}]},{},[52])(52)
+},{"./base.js":15,"./container/popupwindow.js":26,"./helpers.js":31,"stonejs":12,"uuid":14}]},{},[57])(57)
 });

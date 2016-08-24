@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.4.1</em>
+            <em>API Docs for: 1.6.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -53,6 +53,7 @@
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
+                                <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
@@ -203,7 +204,6 @@ var TabItem = Container.$extend({
     __init__: function (params) {
         this._registerWEvents([&quot;click&quot;]);
         this.$super(params);
-        this._updateProperties([&quot;title&quot;, &quot;leftIconName&quot;, &quot;rightIconName&quot;]);
 
         this._bindEvent(&quot;tab-click&quot;, this.__html.tab, &quot;click&quot;, this.__onClick.bind(this));
         this._update();
@@ -225,6 +225,7 @@ var TabItem = Container.$extend({
     _title: &quot;Tab&quot;,
 
     getTitle: function () {
+        &quot;@photonui-update&quot;;
         return this._title;
     },
 
@@ -337,6 +338,7 @@ var TabItem = Container.$extend({
     _leftIconName: null,
 
     getLeftIconName: function () {
+        &quot;@photonui-update&quot;;
         return this._leftIconName;
     },
 
@@ -397,6 +399,7 @@ var TabItem = Container.$extend({
     _rightIconName: null,
 
     getRightIconName: function () {
+        &quot;@photonui-update&quot;;
         return this._rightIconName;
     },
 
