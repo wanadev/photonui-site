@@ -13,14 +13,10 @@
 
         // Find and destroy all existing widgets
         var tags = document.querySelectorAll("*");
-        var widgets = [];
-        var widget;
-        for (var i=0 ; i<tags.length ; i++) {
-            if (!tags[i].id) continue;
-            widget = photonui.getWidget(tags[i].id);
-            if (widget) widgets.push(widget);
-        }
-        while (widget = widgets.pop()) {  // jshint ignore:line
+        var widgetNames = Object.keys(photonui.Widget.getAllWidgets());
+
+        for (var i = 0 ; i < widgetNames.length ; i++) {
+            var widget = photonui.getWidget(widgetNames[i]);
             try {
                 widget.destroy();
             }
