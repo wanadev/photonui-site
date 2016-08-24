@@ -7,6 +7,7 @@ PhotonUI is a javascript framework to create rich web user interfaces without ha
 
 <p style="text-align: center; margin: 50px 0;"><a href="doc/quick-start.html" class="button-big">Quick Start</a> <a href="https://github.com/wanadev/PhotonUI/archive/master.zip" class="button-big">Download</a></p>
 
+![Screenshot](./screenshot.png)
 
 ## Widgets
 
