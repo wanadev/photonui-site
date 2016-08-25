@@ -56,11 +56,15 @@
             var text = document.createTextNode(" Run / Edit");
             btn.appendChild(text);
 
+            // add a LF char to avoid code to be imported as a single line in the editor
+            var lines = codes[i].querySelectorAll(".line");
+            for (var j = 0 ; j < lines.length ; j++) {
+                lines[j].innerHTML += "\n";
+            }
+
             btn.onclick = function() {
                 scrollTo(0, photonui.Helpers.getAbsolutePosition("content").y);
-                this.innerHTML = this.innerHTML.replace(/<br(\s*\/)?>(<\/br>)?/ig, "\n");
                 editor.setValue(this.textContent);
-                highlight();
                 runScript();
             }.bind(codes[i]);
 
