@@ -23,14 +23,17 @@ To see it in action, please look at the [`photonui.ColorPickerDiaog`][colorpicke
 ```javascript
 var color = new photonui.Color("red");
 
-console.log(color.hexString);
+console.log(color.rgbHexString);
 // "#FF0000"
 
-console.log(color.rgbString);
+console.log(color.rgbaHexString);
+// "#FF0000FF"
+
+console.log(color.cssRgbString);
 // "rgb(255, 0, 0)"
 
-console.log(color.rgbaString);
-// "rgb(255, 0, 0, 1)"
+console.log(color.cssRgbaString);
+// "rgb(255, 0, 0, 1.00)"
 
 console.log(color.getRGB());
 // Array [ 255, 0, 0 ]
@@ -45,10 +48,10 @@ console.log(color.hue, color.saturation, color.brightness);
 // 0 100 100
 
 color.brightness = 50;
-console.log(color.hexString);
+console.log(color.rgbHexString);
 // "#7F0000"
 
 color.hue = 204;
-console.log(color.hexString);
+console.log(color.rgbHexString);
 // #004C7F
 ```
