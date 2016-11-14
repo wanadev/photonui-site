@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A javascript framework to create user interfaces",
-        "version": "1.6.2",
+        "version": "1.7.0",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
@@ -1229,8 +1229,8 @@
             "submodule": "Interactive",
             "namespace": "photonui",
             "file": "src/interactive/field.js",
-            "line": 41,
-            "description": "Base class for fields.\n\nwEvents:\n\n  * value-changed:\n    - description: called when the value was modified.\n    - callback:    function(widget, value)\n\n  * keydown:\n    - description: called when a key is pressed.\n    - callback:    function(widget, event)\n\n  * keyup:\n    - description: called when a key is released.\n    - callback:    function(widget, event)\n\n  * keypress:\n    - description: called just before the insertion of a char.\n    - callback:    function(widget, event)\n\n  * selection-changed:\n    - description: called when the selection was changed.\n    - callback:    function(widget, selectionStart, selectionEnd, selectedText, event)",
+            "line": 43,
+            "description": "Base class for fields.\n\nwEvents:\n\n  * value-changed:\n    - description: called when the value was modified.\n    - callback:    function(widget, value)\n\n  * value-changed-final:\n    - description: called when the value is no more modified after continuous changes\n    - callback:    function(widget, value)\n\n  * keydown:\n    - description: called when a key is pressed.\n    - callback:    function(widget, event)\n\n  * keyup:\n    - description: called when a key is released.\n    - callback:    function(widget, event)\n\n  * keypress:\n    - description: called just before the insertion of a char.\n    - callback:    function(widget, event)\n\n  * selection-changed:\n    - description: called when the selection was changed.\n    - callback:    function(widget, selectionStart, selectionEnd, selectedText, event)",
             "is_constructor": 1,
             "extends": "photonui.Widget"
         },
@@ -1512,7 +1512,7 @@
             "submodule": "NonVisual",
             "namespace": "photonui",
             "file": "src/nonvisual/color.js",
-            "line": 41,
+            "line": 194,
             "description": "Handle colors.\n\nwEvents:\n\n  * value-changed:\n     - description: the selected color changed.\n     - callback:    function(photonui.Color)",
             "is_constructor": 1,
             "extends": "photonui.Base",
@@ -2072,7 +2072,7 @@
         {
             "file": "src/composite/colorpickerdialog.js",
             "line": 117,
-            "description": "The color as hex string (shorthand to ColorPickerDialog.color.hexString).",
+            "description": "The color as hex string (shorthand to ColorPickerDialog.color.rgbHexString).",
             "itemtype": "property",
             "name": "value",
             "type": "String",
@@ -2546,6 +2546,18 @@
                     "type": "photonui.MenuItem"
                 }
             ],
+            "class": "photonui.Select",
+            "module": "PhotonUI",
+            "submodule": "Composite",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/composite/select.js",
+            "line": 404,
+            "itemtype": "method",
+            "name": "__onLocaleChanged",
+            "access": "private",
+            "tagname": "",
             "class": "photonui.Select",
             "module": "PhotonUI",
             "submodule": "Composite",
@@ -4817,7 +4829,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 88,
+            "line": 96,
             "description": "The field value.",
             "itemtype": "property",
             "name": "value",
@@ -4830,7 +4842,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 104,
+            "line": 112,
             "description": "The placeholder displayed if the field is empty.",
             "itemtype": "property",
             "name": "Placeholder",
@@ -4843,7 +4855,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 123,
+            "line": 131,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4857,7 +4869,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 141,
+            "line": 149,
             "description": "Bind Field events.",
             "itemtype": "method",
             "name": "_bindFieldEvents",
@@ -4870,7 +4882,7 @@
         },
         {
             "file": "src/interactive/field.js",
-            "line": 177,
+            "line": 186,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -4882,6 +4894,32 @@
                     "description": ""
                 }
             ],
+            "class": "photonui.Field",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/field.js",
+            "line": 197,
+            "description": "To be called indirectly through __debValueChangedFinal().",
+            "itemtype": "method",
+            "name": "__forValueChangedFinal",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.Field",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/field.js",
+            "line": 207,
+            "description": "Debounced version of __forValueChangedFinal.",
+            "itemtype": "method",
+            "name": "__debValueChangedFinal",
+            "access": "private",
+            "tagname": "",
             "class": "photonui.Field",
             "module": "PhotonUI",
             "submodule": "Interactive",
@@ -5150,7 +5188,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 297,
+            "line": 298,
             "itemtype": "method",
             "name": "__onKeyup",
             "access": "private",
@@ -5168,7 +5206,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 310,
+            "line": 311,
             "itemtype": "method",
             "name": "__onChange",
             "access": "private",
@@ -5186,7 +5224,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 320,
+            "line": 322,
             "itemtype": "method",
             "name": "__onMouseWheel",
             "access": "private",
@@ -5204,7 +5242,7 @@
         },
         {
             "file": "src/interactive/numericfield.js",
-            "line": 358,
+            "line": 362,
             "itemtype": "method",
             "name": "__onKeydown",
             "access": "private",
@@ -5348,7 +5386,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 225,
+            "line": 226,
             "itemtype": "method",
             "name": "__onSliderTouchStart",
             "access": "private",
@@ -5366,7 +5404,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 237,
+            "line": 238,
             "itemtype": "method",
             "name": "__onSliderTouchMove",
             "access": "private",
@@ -5384,7 +5422,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 246,
+            "line": 247,
             "itemtype": "method",
             "name": "__onSliderTouchEnd",
             "access": "private",
@@ -5402,7 +5440,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 257,
+            "line": 259,
             "description": "Gets the first touch event and normalizes pageX/Y and offsetX/Y properties.",
             "itemtype": "method",
             "name": "_moveTouchEnd",
@@ -5422,7 +5460,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 299,
+            "line": 303,
             "itemtype": "method",
             "name": "__onSliderMouseWheel",
             "access": "private",
@@ -5440,7 +5478,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 334,
+            "line": 340,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -5459,7 +5497,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 349,
+            "line": 355,
             "itemtype": "method",
             "name": "__onFieldContextMenu",
             "access": "private",
@@ -6338,10 +6376,12 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 64,
-            "description": "Keyboard bindings.\n\n    {\n        \"id\": {\n            safe: Boolean,\n            callback: Function,\n            binding: Object\n        },\n        ...\n    }",
+            "line": 65,
+            "description": "Registered keys.\n\n    {\n        \"key\": [ \"id\", \"id\", ... ]\n        ...\n    }",
             "itemtype": "property",
-            "name": "__kbd",
+            "name": "__keys",
+            "access": "private",
+            "tagname": "",
             "type": "Object",
             "class": "photonui.AccelManager",
             "module": "PhotonUI",
@@ -6350,7 +6390,21 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 87,
+            "line": 79,
+            "description": "Keyboard bindings.\n\n    {\n        \"id\": {\n            safe: Boolean,\n            callback: Function,\n            binding: Object\n        },\n        ...\n    }",
+            "itemtype": "property",
+            "name": "__kbd",
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "class": "photonui.AccelManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/accelmanager.js",
+            "line": 103,
             "description": "Add an accelerator.",
             "itemtype": "method",
             "name": "addAccel",
@@ -6383,7 +6437,7 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 107,
+            "line": 128,
             "description": "Remove an accelerator.",
             "itemtype": "method",
             "name": "removeAccel",
@@ -6401,23 +6455,21 @@
         },
         {
             "file": "src/nonvisual/accelmanager.js",
-            "line": 132,
+            "line": 160,
             "itemtype": "method",
-            "name": "__onAccell",
+            "name": "__onAccel",
             "access": "private",
             "tagname": "",
             "params": [
                 {
-                    "name": "event",
-                    "description": ""
-                },
-                {
                     "name": "keys",
-                    "description": ""
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "combo",
-                    "description": ""
+                    "name": "event",
+                    "description": "",
+                    "type": "Event"
                 }
             ],
             "class": "photonui.AccelManager",
@@ -6427,10 +6479,375 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 80,
-            "description": "The color in HTML RGB hexadecimal format (e.g. \"#FF0000\").",
+            "line": 233,
+            "description": "Object containing all known named colors (`colorName: [r, g, b]`).",
+            "itemtype": "property",
+            "name": "NAMED_COLORS",
+            "static": 1,
+            "type": "Object",
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 242,
+            "description": "Converts any supported color format to an `[r, g, b, a]` array.",
+            "itemtype": "method",
+            "name": "ParseString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "color",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`[r, g, b, a]` where each components is an integer between 0-255",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 288,
+            "description": "Converts a named color (e.g. \"red\") to an `[r, g, b]` array.",
+            "itemtype": "method",
+            "name": "ParseNamedColor",
+            "static": 1,
+            "params": [
+                {
+                    "name": "color",
+                    "description": "The named color",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`[r, g, b]` where each component is an integer between 0-255",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 304,
+            "description": "Converts an hexadecimal RGB color (e.g. `#FF0000`, `#F00`) to an `[r, g, b]` array.",
+            "itemtype": "method",
+            "name": "ParseRgbHexString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "color",
+                    "description": "The hexadecimal RGB color",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`[r, g, b]` where each component is an integer between 0-255",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 337,
+            "description": "Converts an hexadecimal RGBA color (e.g. `#FF0000FF`, `#F00F`) to an `[r, g, b, a]` array.",
+            "itemtype": "method",
+            "name": "ParseRgbaHexString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "color",
+                    "description": "The hexadecimal RGBA color",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`[r, g, b, a]` where each component is an integer between 0-255",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 372,
+            "description": "Converts a CSS RGB color (e.g. `rgb(255, 0, 0)`) to an `[r, g, b]` array.",
+            "itemtype": "method",
+            "name": "ParseCssRgbString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "color",
+                    "description": "The CSS RGB color",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`[r, g, b]` where each component is an integer between 0-255",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 404,
+            "description": "Converts a CSS RGBA color (e.g. `rgba(255, 0, 0, 0.3)`) to an `[r, g, b, a]` array.",
+            "itemtype": "method",
+            "name": "ParseCssRgbaString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "color",
+                    "description": "The CSS RGBA color",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`[r, g, b, a]` where each component is an integer between 0-255",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 442,
+            "description": "Format an RGB color to hexadecimal RGB string (e.g. `#FF0000`).",
+            "itemtype": "method",
+            "name": "FormatToRgbHexString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "red",
+                    "description": "The red component",
+                    "type": "Number"
+                },
+                {
+                    "name": "green",
+                    "description": "The green component",
+                    "type": "Number"
+                },
+                {
+                    "name": "blue",
+                    "description": "The blue component",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The formatted color string.",
+                "type": "String"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 468,
+            "description": "Format an RGBA color to hexadecimal RGBA string (e.g. `#FF0000FF`).",
+            "itemtype": "method",
+            "name": "FormatToRgbaHexString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "red",
+                    "description": "The red component",
+                    "type": "Number"
+                },
+                {
+                    "name": "green",
+                    "description": "The green component",
+                    "type": "Number"
+                },
+                {
+                    "name": "blue",
+                    "description": "The blue component",
+                    "type": "Number"
+                },
+                {
+                    "name": "alpha",
+                    "description": "The opacity of the color",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The formatted color string.",
+                "type": "String"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 487,
+            "description": "Format an RGB color to CSS RGB string (e.g. `rgb(255, 0, 0)`).",
+            "itemtype": "method",
+            "name": "FormatToCssRgbString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "red",
+                    "description": "The red component",
+                    "type": "Number"
+                },
+                {
+                    "name": "green",
+                    "description": "The green component",
+                    "type": "Number"
+                },
+                {
+                    "name": "blue",
+                    "description": "The blue component",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The formatted color string.",
+                "type": "String"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 501,
+            "description": "Format an RGBA color to CSS RGBA string (e.g. `rgba(255, 0, 0, 1.00)`).",
+            "itemtype": "method",
+            "name": "FormatToCssRgbaString",
+            "static": 1,
+            "params": [
+                {
+                    "name": "red",
+                    "description": "The red component",
+                    "type": "Number"
+                },
+                {
+                    "name": "green",
+                    "description": "The green component",
+                    "type": "Number"
+                },
+                {
+                    "name": "blue",
+                    "description": "The blue component",
+                    "type": "Number"
+                },
+                {
+                    "name": "alpha",
+                    "description": "The opacity of the color",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The formatted color string.",
+                "type": "String"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 517,
+            "description": "Normalize an RGB color.",
+            "itemtype": "method",
+            "name": "NormalizeRgbColor",
+            "static": 1,
+            "params": [
+                {
+                    "name": "red",
+                    "description": "The red component",
+                    "type": "Number"
+                },
+                {
+                    "name": "green",
+                    "description": "The green component",
+                    "type": "Number"
+                },
+                {
+                    "name": "blue",
+                    "description": "The blue component",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The normalized array `[r, g, b]` where each component is an integer between 0-255.",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 535,
+            "description": "Normalize an RGBA color.",
+            "itemtype": "method",
+            "name": "NormalizeRgbaColor",
+            "static": 1,
+            "params": [
+                {
+                    "name": "red",
+                    "description": "The red component",
+                    "type": "Number"
+                },
+                {
+                    "name": "green",
+                    "description": "The green component",
+                    "type": "Number"
+                },
+                {
+                    "name": "blue",
+                    "description": "The blue component",
+                    "type": "Number"
+                },
+                {
+                    "name": "alpha",
+                    "description": "The opacity of the color",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The normalized array `[r, g, b, a]` where each component is an integer between 0-255.",
+                "type": "Array"
+            },
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 566,
+            "description": "The color in RGB hexadecimal format (e.g. \"#FF0000\").",
             "itemtype": "property",
             "name": "hexString",
+            "deprecated": true,
             "type": "String",
             "class": "photonui.Color",
             "module": "PhotonUI",
@@ -6439,12 +6856,13 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 145,
-            "description": "The color in HTML RGB format (e.g. \"rgb(255, 0, 0)\").",
+            "line": 604,
+            "description": "The color in CSS RGB format (e.g. \"rgb(255, 0, 0)\").",
             "itemtype": "property",
             "name": "rgbString",
             "type": "String",
             "readonly": "",
+            "deprecated": true,
             "class": "photonui.Color",
             "module": "PhotonUI",
             "submodule": "NonVisual",
@@ -6452,12 +6870,13 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 156,
-            "description": "The color in HTML RGBA format (e.g. \"rgba(255, 0, 0, 1.0)\").",
+            "line": 617,
+            "description": "The color in CSS RGBA format (e.g. \"rgba(255, 0, 0, 1.0)\").",
             "itemtype": "property",
             "name": "rgbaString",
             "type": "String",
             "readonly": "",
+            "deprecated": true,
             "class": "photonui.Color",
             "module": "PhotonUI",
             "submodule": "NonVisual",
@@ -6465,7 +6884,55 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 167,
+            "line": 630,
+            "description": "The color in RGB hexadecimal format (e.g. \"#FF0000\").",
+            "itemtype": "property",
+            "name": "rgbHexString",
+            "type": "String",
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 648,
+            "description": "The color in RGBA hexadecimal format (e.g. \"#FF0000FF\").",
+            "itemtype": "property",
+            "name": "rgbaHexString",
+            "type": "String",
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 666,
+            "description": "The color in CSS RGB format (e.g. \"rgb(255, 0, 0)\").",
+            "itemtype": "property",
+            "name": "cssRgbString",
+            "type": "String",
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 684,
+            "description": "The color in CSS RGBA format (e.g. \"rgb(255, 0, 0, 1.0)\").",
+            "itemtype": "property",
+            "name": "cssRgbaString",
+            "type": "String",
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 702,
             "description": "Red (0-255).",
             "itemtype": "property",
             "name": "red",
@@ -6477,7 +6944,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 184,
+            "line": 719,
             "description": "Green (0-255).",
             "itemtype": "property",
             "name": "green",
@@ -6489,7 +6956,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 201,
+            "line": 736,
             "description": "Blue (0-255).",
             "itemtype": "property",
             "name": "blue",
@@ -6501,7 +6968,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 218,
+            "line": 753,
             "description": "Alpha channel (0-255)",
             "itemtype": "property",
             "name": "alpha",
@@ -6513,7 +6980,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 235,
+            "line": 770,
             "description": "Hue (0-360).",
             "itemtype": "property",
             "name": "hue",
@@ -6525,7 +6992,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 252,
+            "line": 787,
             "description": "Saturation (0-100).",
             "itemtype": "property",
             "name": "saturation",
@@ -6537,7 +7004,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 269,
+            "line": 804,
             "description": "Brightness (0-100).",
             "itemtype": "property",
             "name": "brightness",
@@ -6549,7 +7016,25 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 292,
+            "line": 827,
+            "description": "Defines the color from any supported string format.",
+            "itemtype": "method",
+            "name": "fromString",
+            "params": [
+                {
+                    "name": "color",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "photonui.Color",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/color.js",
+            "line": 841,
             "description": "Set RGB(A) color (alias for setRGBA).\n\nThe params can also be replaced by an array.",
             "itemtype": "method",
             "name": "setRGB",
@@ -6577,7 +7062,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 306,
+            "line": 855,
             "description": "Set RGBA color.\n\nThe params can also be replaced by an array.",
             "itemtype": "method",
             "name": "setRGBA",
@@ -6610,7 +7095,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 336,
+            "line": 885,
             "description": "Get RGB.",
             "itemtype": "method",
             "name": "getRGB",
@@ -6625,7 +7110,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 346,
+            "line": 895,
             "description": "Get RGBA.",
             "itemtype": "method",
             "name": "getRGBA",
@@ -6640,7 +7125,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 356,
+            "line": 905,
             "description": "Set HSB color\n\nThe params can also be replaced by an array.",
             "itemtype": "method",
             "name": "setHSB",
@@ -6668,7 +7153,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 388,
+            "line": 937,
             "description": "Update HSB from RGB.",
             "itemtype": "method",
             "name": "_updateHSB",
@@ -6681,7 +7166,7 @@
         },
         {
             "file": "src/nonvisual/color.js",
-            "line": 429,
+            "line": 978,
             "description": "Update RGB from HSB.",
             "itemtype": "method",
             "name": "_updateRGB",
@@ -9061,7 +9546,7 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 137,
+            "line": 149,
             "description": "Check and compute size to valid CSS size\n\nValid values and transformations:\n    undefined  -> defaultValue\n    null       -> \"auto\" (if \"auto\" is alowed, \"0px\" else)\n    +Infinity  -> \"100%\"\n    Number     -> \"<Number>px\"",
             "itemtype": "method",
             "name": "numberToCssSize",
@@ -9094,7 +9579,7 @@
         },
         {
             "file": "src/helpers.js",
-            "line": 169,
+            "line": 181,
             "description": "Write log into the terminal.",
             "itemtype": "method",
             "name": "log",

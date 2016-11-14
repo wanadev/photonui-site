@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.6.2</em>
+            <em>API Docs for: 1.7.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -209,7 +209,7 @@
 
                     <ul class="index-list methods extends">
                             <li class="index-item method private">
-                                <a href="#method___onAccell">__onAccell</a>
+                                <a href="#method___onAccel">__onAccel</a>
 
                             </li>
                             <li class="index-item method private inherited">
@@ -268,8 +268,12 @@
                                 <a href="#property___events">__events</a>
 
                             </li>
-                            <li class="index-item property">
+                            <li class="index-item property private">
                                 <a href="#property___kbd">__kbd</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property___keys">__keys</a>
 
                             </li>
                             <li class="index-item property inherited">
@@ -285,19 +289,16 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method___onAccell" class="method item private">
-    <h3 class="name"><code>__onAccell</code></h3>
+<div id="method___onAccel" class="method item private">
+    <h3 class="name"><code>__onAccel</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>event</code>
-                </li>
-                <li class="arg">
                         <code>keys</code>
                 </li>
                 <li class="arg">
-                        <code>combo</code>
+                        <code>event</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -313,7 +314,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_accelmanager.js.html#l132"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:132</code></a>
+        <a href="../files/src_nonvisual_accelmanager.js.html#l160"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:160</code></a>
         </p>
 
 
@@ -329,18 +330,8 @@
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">event</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
                         <code class="param-name">keys</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
                     <div class="param-description">
@@ -349,8 +340,8 @@
 
                 </li>
                 <li class="param">
-                        <code class="param-name">combo</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">event</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" class="crosslink external" target="_blank">Event</a></span>
 
 
                     <div class="param-description">
@@ -718,7 +709,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_accelmanager.js.html#l87"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:87</code></a>
+        <a href="../files/src_nonvisual_accelmanager.js.html#l103"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:103</code></a>
         </p>
 
 
@@ -929,7 +920,7 @@ Callback signature:
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_accelmanager.js.html#l107"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:107</code></a>
+        <a href="../files/src_nonvisual_accelmanager.js.html#l128"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:128</code></a>
         </p>
 
 
@@ -1070,18 +1061,19 @@ internal use).
 
 
 </div>
-<div id="property___kbd" class="property item">
+<div id="property___kbd" class="property item private">
     <h3 class="name"><code>__kbd</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
 
+        <span class="flag private">private</span>
 
 
 
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_accelmanager.js.html#l64"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:64</code></a>
+        <a href="../files/src_nonvisual_accelmanager.js.html#l79"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:79</code></a>
         </p>
 
 
@@ -1095,6 +1087,36 @@ internal use).
         callback: Function,
         binding: Object
     },
+    ...
+}</code></pre>
+
+    </div>
+
+
+
+</div>
+<div id="property___keys" class="property item private">
+    <h3 class="name"><code>__keys</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+        <span class="flag private">private</span>
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_nonvisual_accelmanager.js.html#l65"><code>src&#x2F;nonvisual&#x2F;accelmanager.js:65</code></a>
+        </p>
+
+
+    </div>
+
+    <div class="description">
+        <p>Registered keys.</p>
+<pre class="code prettyprint"><code>{
+    &quot;key&quot;: [ &quot;id&quot;, &quot;id&quot;, ... ]
     ...
 }</code></pre>
 

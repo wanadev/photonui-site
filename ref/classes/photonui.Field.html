@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.6.2</em>
+            <em>API Docs for: 1.7.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -144,7 +144,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_interactive_field.js.html#l41"><code>src&#x2F;interactive&#x2F;field.js:41</code></a>
+            Defined in: <a href="../files/src_interactive_field.js.html#l43"><code>src&#x2F;interactive&#x2F;field.js:43</code></a>
         </div>
 
             Module: <a href="../modules/Interactive.html">Interactive</a><br>
@@ -161,6 +161,13 @@
 <p>value-changed:</p>
 <ul>
 <li>description: called when the value was modified.</li>
+<li>callback:    function(widget, value)</li>
+</ul>
+</li>
+<li>
+<p>value-changed-final:</p>
+<ul>
+<li>description: called when the value is no more modified after continuous changes</li>
 <li>callback:    function(widget, value)</li>
 </ul>
 </li>
@@ -213,7 +220,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_field.js.html#l41"><code>src&#x2F;interactive&#x2F;field.js:41</code></a>
+        <a href="../files/src_interactive_field.js.html#l43"><code>src&#x2F;interactive&#x2F;field.js:43</code></a>
         </p>
 
 
@@ -246,6 +253,14 @@
                     <h3>Methods</h3>
 
                     <ul class="index-list methods extends">
+                            <li class="index-item method private">
+                                <a href="#method___debValueChangedFinal">__debValueChangedFinal</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method___forValueChangedFinal">__forValueChangedFinal</a>
+
+                            </li>
                             <li class="index-item method private inherited">
                                 <a href="#method___onContextMenu">__onContextMenu</a>
 
@@ -407,6 +422,70 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
+<div id="method___debValueChangedFinal" class="method item private">
+    <h3 class="name"><code>__debValueChangedFinal</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_interactive_field.js.html#l207"><code>src&#x2F;interactive&#x2F;field.js:207</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Debounced version of __forValueChangedFinal.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method___forValueChangedFinal" class="method item private">
+    <h3 class="name"><code>__forValueChangedFinal</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_interactive_field.js.html#l197"><code>src&#x2F;interactive&#x2F;field.js:197</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>To be called indirectly through __debValueChangedFinal().</p>
+
+    </div>
+
+
+
+
+</div>
 <div id="method___onContextMenu" class="method item private">
     <h3 class="name"><code>__onContextMenu</code></h3>
 
@@ -432,7 +511,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_interactive_field.js.html#l177"><code>src&#x2F;interactive&#x2F;field.js:177</code></a>
+        <a href="../files/src_interactive_field.js.html#l186"><code>src&#x2F;interactive&#x2F;field.js:186</code></a>
         </p>
 
 
@@ -603,7 +682,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_field.js.html#l141"><code>src&#x2F;interactive&#x2F;field.js:141</code></a>
+        <a href="../files/src_interactive_field.js.html#l149"><code>src&#x2F;interactive&#x2F;field.js:149</code></a>
         </p>
 
 
@@ -1506,7 +1585,7 @@ internal use).
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_interactive_field.js.html#l123"><code>src&#x2F;interactive&#x2F;field.js:123</code></a>
+        <a href="../files/src_interactive_field.js.html#l131"><code>src&#x2F;interactive&#x2F;field.js:131</code></a>
         </p>
 
 
@@ -1680,7 +1759,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_field.js.html#l104"><code>src&#x2F;interactive&#x2F;field.js:104</code></a>
+        <a href="../files/src_interactive_field.js.html#l112"><code>src&#x2F;interactive&#x2F;field.js:112</code></a>
         </p>
 
 
@@ -1731,7 +1810,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_field.js.html#l88"><code>src&#x2F;interactive&#x2F;field.js:88</code></a>
+        <a href="../files/src_interactive_field.js.html#l96"><code>src&#x2F;interactive&#x2F;field.js:96</code></a>
         </p>
 
 

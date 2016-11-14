@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.6.2</em>
+            <em>API Docs for: 1.7.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -257,17 +257,17 @@ var ColorPickerDialog = Dialog.$extend({
     },
 
     /**
-     * The color as hex string (shorthand to ColorPickerDialog.color.hexString).
+     * The color as hex string (shorthand to ColorPickerDialog.color.rgbHexString).
      *
      * @property value
      * @type String
      */
     getValue: function () {
-        return this._color.hexString;
+        return this._color.rgbHexString;
     },
 
     setValue: function (value) {
-        this._color.hexString = value;
+        this._color.fromString(value);
     },
 
     setVisible: function (visible) {

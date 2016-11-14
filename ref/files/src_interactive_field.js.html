@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.6.2</em>
+            <em>API Docs for: 1.7.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -178,6 +178,8 @@
  * @namespace photonui
  */
 
+var lodash = require(&quot;lodash&quot;);
+
 var Widget = require(&quot;../widget.js&quot;);
 
 /**
@@ -187,6 +189,10 @@ var Widget = require(&quot;../widget.js&quot;);
  *
  *   * value-changed:
  *     - description: called when the value was modified.
+ *     - callback:    function(widget, value)
+ *
+ *   * value-changed-final:
+ *     - description: called when the value is no more modified after continuous changes
  *     - callback:    function(widget, value)
  *
  *   * keydown:
@@ -214,11 +220,13 @@ var Field = Widget.$extend({
     // Constructor
     __init__: function (params) {
         this._registerWEvents([
-            &quot;value-changed&quot;, &quot;keydown&quot;, &quot;keyup&quot;, &quot;keypress&quot;,
+            &quot;value-changed&quot;, &quot;value-changed-final&quot;, &quot;keydown&quot;, &quot;keyup&quot;, &quot;keypress&quot;,
             &quot;selection-changed&quot;
         ]);
         this.$super(params);
         this.__html.field.name = this.name;
+
+        this.__debValueChangedFinal = lodash.debounce(this.__forValueChangedFinal, 250);
     },
 
     //////////////////////////////////////////
@@ -288,7 +296,8 @@ var Field = Widget.$extend({
      */
     _bindFieldEvents: function () {
         this._bindEvent(&quot;value-changed&quot;, this.__html.field, &quot;change&quot;, function (event) {
-            this._callCallbacks(&quot;value-changed&quot;, [this.getValue()]);
+            this._callCallbacks(&quot;value-changed&quot;, [this.value]);
+            this.__debValueChangedFinal();
         }.bind(this));
 
         this._bindEvent(&quot;keydown&quot;, this.__html.field, &quot;keydown&quot;, function (event) {
@@ -325,7 +334,25 @@ var Field = Widget.$extend({
      */
     __onContextMenu: function (event) {
         event.stopPropagation();  // Enable context menu on fields
-    }
+    },
+
+    /**
+     * To be called indirectly through __debValueChangedFinal().
+     *
+     * @method __forValueChangedFinal
+     * @private
+     */
+    __forValueChangedFinal: function () {
+        this._callCallbacks(&quot;value-changed-final&quot;, [this.value]);
+    },
+
+    /**
+     * Debounced version of __forValueChangedFinal.
+     *
+     * @method __debValueChangedFinal
+     * @private
+     */
+    __debValueChangedFinal: null
 });
 
 module.exports = Field;
