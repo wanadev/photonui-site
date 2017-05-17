@@ -1,5 +1,7 @@
 # PhotonUI Website
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/wanadev/photonui-site.svg)](https://greenkeeper.io/)
+
 This is the repository of the PhotonUI Website that is available here:
 
 * http://wanadev.github.io/PhotonUI/
