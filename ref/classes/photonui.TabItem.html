@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -144,7 +150,7 @@
         </div>
 
         <div class="foundat">
-            Defined in: <a href="../files/src_container_tabitem.js.html#l45"><code>src&#x2F;container&#x2F;tabitem.js:45</code></a>
+            Defined in: <a href="../files/src_container_tabitem.js.html#l46"><code>src&#x2F;container&#x2F;tabitem.js:46</code></a>
         </div>
 
             Module: <a href="../modules/Container.html">Container</a><br>
@@ -190,7 +196,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l45"><code>src&#x2F;container&#x2F;tabitem.js:45</code></a>
+        <a href="../files/src_container_tabitem.js.html#l46"><code>src&#x2F;container&#x2F;tabitem.js:46</code></a>
         </p>
 
 
@@ -285,7 +291,7 @@
                                 <a href="#method_addClass">addClass</a>
 
                             </li>
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_destroy">destroy</a>
 
                             </li>
@@ -475,7 +481,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l371"><code>src&#x2F;container&#x2F;tabitem.js:371</code></a>
+        <a href="../files/src_container_tabitem.js.html#l391"><code>src&#x2F;container&#x2F;tabitem.js:391</code></a>
         </p>
 
 
@@ -608,6 +614,9 @@
                 <li class="arg">
                         <code>callback</code>
                 </li>
+                <li class="arg">
+                        <code class="optional">[options]</code>
+                </li>
             </ul><span class="paren">)</span>
         </div>
 
@@ -677,6 +686,17 @@
                     </div>
 
                 </li>
+                <li class="param">
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        options for <code>addEventListener</code>
+                    </div>
+
+                </li>
             </ul>
         </div>
 
@@ -702,7 +722,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_tabitem.js.html#l340"><code>src&#x2F;container&#x2F;tabitem.js:340</code></a>
+        <a href="../files/src_container_tabitem.js.html#l360"><code>src&#x2F;container&#x2F;tabitem.js:360</code></a>
         </p>
 
 
@@ -743,7 +763,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__callCallbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l288"><code>src&#x2F;base.js:288</code></a>
+        <a href="../files/src_base.js.html#l292"><code>src&#x2F;base.js:292</code></a>
         </p>
 
 
@@ -809,7 +829,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__registerWEvents">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l272"><code>src&#x2F;base.js:272</code></a>
+        <a href="../files/src_base.js.html#l276"><code>src&#x2F;base.js:276</code></a>
         </p>
 
 
@@ -862,7 +882,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__unbindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l253"><code>src&#x2F;base.js:253</code></a>
+        <a href="../files/src_base.js.html#l257"><code>src&#x2F;base.js:257</code></a>
         </p>
 
 
@@ -1060,7 +1080,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
 
 
 </div>
-<div id="method_destroy" class="method item inherited">
+<div id="method_destroy" class="method item">
     <h3 class="name"><code>destroy</code></h3>
 
         <span class="paren">()</span>
@@ -1078,7 +1098,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
                 photonui.Base
             </a>
             but overwritten in
-        <a href="../files/src_container_container.js.html#l194"><code>src&#x2F;container&#x2F;container.js:194</code></a>
+        <a href="../files/src_container_tabitem.js.html#l317"><code>src&#x2F;container&#x2F;tabitem.js:317</code></a>
         </p>
 
 
@@ -1610,7 +1630,7 @@ internal use).
                 photonui.Container
             </a>
             but overwritten in
-        <a href="../files/src_container_tabitem.js.html#l138"><code>src&#x2F;container&#x2F;tabitem.js:138</code></a>
+        <a href="../files/src_container_tabitem.js.html#l139"><code>src&#x2F;container&#x2F;tabitem.js:139</code></a>
         </p>
 
 
@@ -1739,7 +1759,7 @@ internal use).
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_tabitem.js.html#l114"><code>src&#x2F;container&#x2F;tabitem.js:114</code></a>
+        <a href="../files/src_container_tabitem.js.html#l115"><code>src&#x2F;container&#x2F;tabitem.js:115</code></a>
         </p>
 
 
@@ -1790,7 +1810,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l212"><code>src&#x2F;container&#x2F;tabitem.js:212</code></a>
+        <a href="../files/src_container_tabitem.js.html#l213"><code>src&#x2F;container&#x2F;tabitem.js:213</code></a>
         </p>
 
 
@@ -1816,7 +1836,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l189"><code>src&#x2F;container&#x2F;tabitem.js:189</code></a>
+        <a href="../files/src_container_tabitem.js.html#l190"><code>src&#x2F;container&#x2F;tabitem.js:190</code></a>
         </p>
 
 
@@ -1842,7 +1862,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l231"><code>src&#x2F;container&#x2F;tabitem.js:231</code></a>
+        <a href="../files/src_container_tabitem.js.html#l232"><code>src&#x2F;container&#x2F;tabitem.js:232</code></a>
         </p>
 
 
@@ -1991,7 +2011,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l273"><code>src&#x2F;container&#x2F;tabitem.js:273</code></a>
+        <a href="../files/src_container_tabitem.js.html#l274"><code>src&#x2F;container&#x2F;tabitem.js:274</code></a>
         </p>
 
 
@@ -2017,7 +2037,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l292"><code>src&#x2F;container&#x2F;tabitem.js:292</code></a>
+        <a href="../files/src_container_tabitem.js.html#l293"><code>src&#x2F;container&#x2F;tabitem.js:293</code></a>
         </p>
 
 
@@ -2043,7 +2063,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l249"><code>src&#x2F;container&#x2F;tabitem.js:249</code></a>
+        <a href="../files/src_container_tabitem.js.html#l250"><code>src&#x2F;container&#x2F;tabitem.js:250</code></a>
         </p>
 
 
@@ -2069,7 +2089,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l126"><code>src&#x2F;container&#x2F;tabitem.js:126</code></a>
+        <a href="../files/src_container_tabitem.js.html#l127"><code>src&#x2F;container&#x2F;tabitem.js:127</code></a>
         </p>
 
 
@@ -2095,7 +2115,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l76"><code>src&#x2F;container&#x2F;tabitem.js:76</code></a>
+        <a href="../files/src_container_tabitem.js.html#l77"><code>src&#x2F;container&#x2F;tabitem.js:77</code></a>
         </p>
 
 
@@ -2121,7 +2141,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_container_tabitem.js.html#l96"><code>src&#x2F;container&#x2F;tabitem.js:96</code></a>
+        <a href="../files/src_container_tabitem.js.html#l97"><code>src&#x2F;container&#x2F;tabitem.js:97</code></a>
         </p>
 
 
@@ -2201,7 +2221,7 @@ internal use).
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_container_tabitem.js.html#l149"><code>src&#x2F;container&#x2F;tabitem.js:149</code></a>
+        <a href="../files/src_container_tabitem.js.html#l150"><code>src&#x2F;container&#x2F;tabitem.js:150</code></a>
         </p>
 
 

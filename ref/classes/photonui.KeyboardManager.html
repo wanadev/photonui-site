@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -396,7 +402,7 @@
 
                             </li>
                             <li class="index-item property private">
-                                <a href="#property___keyCache">__keyCache</a>
+                                <a href="#property___keyCodeCache">__keyCodeCache</a>
 
                             </li>
                             <li class="index-item property">
@@ -454,7 +460,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l449"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:449</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l452"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:452</code></a>
         </p>
 
 
@@ -508,7 +514,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l471"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:471</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l474"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:474</code></a>
         </p>
 
 
@@ -556,7 +562,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l493"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:493</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l496"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:496</code></a>
         </p>
 
 
@@ -588,6 +594,9 @@
                 </li>
                 <li class="arg">
                         <code>callback</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[options]</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -658,6 +667,17 @@
                     </div>
 
                 </li>
+                <li class="param">
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        options for <code>addEventListener</code>
+                    </div>
+
+                </li>
             </ul>
         </div>
 
@@ -689,7 +709,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__callCallbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l288"><code>src&#x2F;base.js:288</code></a>
+        <a href="../files/src_base.js.html#l292"><code>src&#x2F;base.js:292</code></a>
         </p>
 
 
@@ -758,7 +778,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l319"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:319</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l322"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:322</code></a>
         </p>
 
 
@@ -817,7 +837,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l306"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:306</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l309"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:309</code></a>
         </p>
 
 
@@ -859,7 +879,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l291"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:291</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l294"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:294</code></a>
         </p>
 
 
@@ -898,7 +918,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l340"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:340</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l343"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:343</code></a>
         </p>
 
 
@@ -939,7 +959,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l428"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:428</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l431"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:431</code></a>
         </p>
 
 
@@ -1001,7 +1021,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__registerWEvents">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l272"><code>src&#x2F;base.js:272</code></a>
+        <a href="../files/src_base.js.html#l276"><code>src&#x2F;base.js:276</code></a>
         </p>
 
 
@@ -1054,7 +1074,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__unbindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l253"><code>src&#x2F;base.js:253</code></a>
+        <a href="../files/src_base.js.html#l257"><code>src&#x2F;base.js:257</code></a>
         </p>
 
 
@@ -1101,7 +1121,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l241"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:241</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l244"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:244</code></a>
         </p>
 
 
@@ -1228,7 +1248,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l265"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:265</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l268"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:268</code></a>
         </p>
 
 
@@ -1292,7 +1312,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l277"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:277</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l280"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:280</code></a>
         </p>
 
 
@@ -1521,7 +1541,7 @@ Callback signature:
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l187"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:187</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l190"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:190</code></a>
         </p>
 
 
@@ -1532,7 +1552,7 @@ Callback signature:
 
     </div>
 
-        <p><strong>Default:</strong> {}</p>
+        <p><strong>Default:</strong> null</p>
 
 
 </div>
@@ -1564,7 +1584,7 @@ internal use).
 </div>
 <div id="property___key" class="property item private">
     <h3 class="name"><code>__key</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
 
         <span class="flag private">private</span>
@@ -1574,7 +1594,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l207"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:207</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l210"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:210</code></a>
         </p>
 
 
@@ -1585,7 +1605,7 @@ internal use).
 
     </div>
 
-        <p><strong>Default:</strong> {}</p>
+        <p><strong>Default:</strong> null</p>
 
 
 </div>
@@ -1601,7 +1621,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l217"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:217</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l220"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:220</code></a>
         </p>
 
 
@@ -1615,8 +1635,8 @@ internal use).
 
 
 </div>
-<div id="property___keyCache" class="property item private">
-    <h3 class="name"><code>__keyCache</code></h3>
+<div id="property___keyCodeCache" class="property item private">
+    <h3 class="name"><code>__keyCodeCache</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
 
@@ -1627,7 +1647,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l226"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:226</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l229"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:229</code></a>
         </p>
 
 
@@ -1652,7 +1672,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l168"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:168</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l171"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:171</code></a>
         </p>
 
 
@@ -1707,7 +1727,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l141"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:141</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l144"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:144</code></a>
         </p>
 
 
@@ -1736,7 +1756,7 @@ its HTML Element will be automatically assigned to the property instead.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l197"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:197</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l200"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:200</code></a>
         </p>
 
 
@@ -1762,7 +1782,7 @@ its HTML Element will be automatically assigned to the property instead.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l123"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:123</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l126"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:126</code></a>
         </p>
 
 
@@ -1788,7 +1808,7 @@ its HTML Element will be automatically assigned to the property instead.</p>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_nonvisual_keyboardmanager.js.html#l105"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:105</code></a>
+        <a href="../files/src_nonvisual_keyboardmanager.js.html#l108"><code>src&#x2F;nonvisual&#x2F;keyboardmanager.js:108</code></a>
         </p>
 
 

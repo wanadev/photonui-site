@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -195,6 +201,18 @@ var Slider = NumericField.$extend({
     __init__: function (params) {
         this.$super(params);
 
+        if (params &amp;&amp; params.decimalDigits === undefined) {
+            this.decimalDigits = 0;
+        }
+
+        if (params &amp;&amp; params.min === undefined) {
+            this.min = 0;
+        }
+
+        if (params &amp;&amp; params.max === undefined) {
+            this.max = 100;
+        }
+
         this.inputId = this.name + &quot;-field&quot;;
         this.__html.field.id = this.inputId;
 
@@ -207,11 +225,6 @@ var Slider = NumericField.$extend({
                         &quot;DOMMouseScroll&quot;, this.__onSliderMouseWheel.bind(this));
         this._bindEvent(&quot;field-contextmenu&quot;, this.__html.field, &quot;contextmenu&quot;, this.__onFieldContextMenu.bind(this));
     },
-
-    // Default value (!= NumericField)
-    _min: 0,
-    _max: 100,
-    _decimalDigits: 0,
 
     //////////////////////////////////////////
     // Properties and Accessors             //
@@ -254,11 +267,6 @@ var Slider = NumericField.$extend({
      * @readOnly
      */
     getHtml: function () {
-        // Hack: force grip position after insertion into the DOM...
-        setTimeout(function () {
-            this.value = this.value;
-        }.bind(this), 10);
-
         return this.__html.outer;
     },
 
@@ -279,8 +287,8 @@ var Slider = NumericField.$extend({
         var v = this.value - this.min;
         var m = this.max - this.min;
         var p = Math.min(Math.max(v / m, 0), 1);
-        this.__html.grip.style.left = &quot;calc(&quot; + Math.floor(p * 100) + &quot;% - &quot; +
-                                      Math.floor(this.__html.grip.offsetWidth * p) + &quot;px)&quot;;
+        this.__html.grip.style.left = Math.floor(p * 100) + &quot;%&quot;;
+        this.__html.grip.style.transform = &quot;translateX(&quot; + (-100 * p) + &quot;%)&quot;;
     },
 
     /**

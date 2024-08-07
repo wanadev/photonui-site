@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -160,10 +166,13 @@
 <li>value-changed:
 <ul>
 <li>description: the selected color changed.</li>
-<li>callback:    function(widget, color)</li>
+<li>callback:    function (widget, color)</li>
 </ul>
 </li>
 </ul>
+<p>value-changed-final:
+- description: called when the value is no more modified after continuous changes
+- callback:    function (widget, color)</p>
 
 </div>
 
@@ -270,6 +279,10 @@
                             </li>
                             <li class="index-item method private">
                                 <a href="#method___onMouseMove">__onMouseMove</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method___onMouseUp">__onMouseUp</a>
 
                             </li>
                             <li class="index-item method private">
@@ -547,7 +560,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l493"><code>src&#x2F;interactive&#x2F;colorpicker.js:493</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l509"><code>src&#x2F;interactive&#x2F;colorpicker.js:509</code></a>
         </p>
 
 
@@ -613,7 +626,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l482"><code>src&#x2F;interactive&#x2F;colorpicker.js:482</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l498"><code>src&#x2F;interactive&#x2F;colorpicker.js:498</code></a>
         </p>
 
 
@@ -679,7 +692,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l470"><code>src&#x2F;interactive&#x2F;colorpicker.js:470</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l486"><code>src&#x2F;interactive&#x2F;colorpicker.js:486</code></a>
         </p>
 
 
@@ -745,7 +758,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l453"><code>src&#x2F;interactive&#x2F;colorpicker.js:453</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l469"><code>src&#x2F;interactive&#x2F;colorpicker.js:469</code></a>
         </p>
 
 
@@ -842,7 +855,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l434"><code>src&#x2F;interactive&#x2F;colorpicker.js:434</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l440"><code>src&#x2F;interactive&#x2F;colorpicker.js:440</code></a>
         </p>
 
 
@@ -908,7 +921,73 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l420"><code>src&#x2F;interactive&#x2F;colorpicker.js:420</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l426"><code>src&#x2F;interactive&#x2F;colorpicker.js:426</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">manager</code>
+                        <span class="type"><a href="../classes/photonui.MouseManager.html" class="crosslink">photonui.MouseManager</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">mstate</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method___onMouseUp" class="method item private">
+    <h3 class="name"><code>__onMouseUp</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>manager</code>
+                </li>
+                <li class="arg">
+                        <code>mstate</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_interactive_colorpicker.js.html#l459"><code>src&#x2F;interactive&#x2F;colorpicker.js:459</code></a>
         </p>
 
 
@@ -965,7 +1044,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l505"><code>src&#x2F;interactive&#x2F;colorpicker.js:505</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l521"><code>src&#x2F;interactive&#x2F;colorpicker.js:521</code></a>
         </p>
 
 
@@ -996,6 +1075,9 @@
                 </li>
                 <li class="arg">
                         <code>callback</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[options]</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -1066,6 +1148,17 @@
                     </div>
 
                 </li>
+                <li class="param">
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        options for <code>addEventListener</code>
+                    </div>
+
+                </li>
             </ul>
         </div>
 
@@ -1091,7 +1184,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_interactive_colorpicker.js.html#l201"><code>src&#x2F;interactive&#x2F;colorpicker.js:201</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l207"><code>src&#x2F;interactive&#x2F;colorpicker.js:207</code></a>
         </p>
 
 
@@ -1132,7 +1225,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__callCallbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l288"><code>src&#x2F;base.js:288</code></a>
+        <a href="../files/src_base.js.html#l292"><code>src&#x2F;base.js:292</code></a>
         </p>
 
 
@@ -1201,7 +1294,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l392"><code>src&#x2F;interactive&#x2F;colorpicker.js:392</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l398"><code>src&#x2F;interactive&#x2F;colorpicker.js:398</code></a>
         </p>
 
 
@@ -1267,7 +1360,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l377"><code>src&#x2F;interactive&#x2F;colorpicker.js:377</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l383"><code>src&#x2F;interactive&#x2F;colorpicker.js:383</code></a>
         </p>
 
 
@@ -1331,7 +1424,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l365"><code>src&#x2F;interactive&#x2F;colorpicker.js:365</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l371"><code>src&#x2F;interactive&#x2F;colorpicker.js:371</code></a>
         </p>
 
 
@@ -1392,7 +1485,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__registerWEvents">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l272"><code>src&#x2F;base.js:272</code></a>
+        <a href="../files/src_base.js.html#l276"><code>src&#x2F;base.js:276</code></a>
         </p>
 
 
@@ -1445,7 +1538,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__unbindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l253"><code>src&#x2F;base.js:253</code></a>
+        <a href="../files/src_base.js.html#l257"><code>src&#x2F;base.js:257</code></a>
         </p>
 
 
@@ -1492,7 +1585,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l325"><code>src&#x2F;interactive&#x2F;colorpicker.js:325</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l331"><code>src&#x2F;interactive&#x2F;colorpicker.js:331</code></a>
         </p>
 
 
@@ -1524,7 +1617,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l227"><code>src&#x2F;interactive&#x2F;colorpicker.js:227</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l233"><code>src&#x2F;interactive&#x2F;colorpicker.js:233</code></a>
         </p>
 
 
@@ -1613,7 +1706,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l290"><code>src&#x2F;interactive&#x2F;colorpicker.js:290</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l296"><code>src&#x2F;interactive&#x2F;colorpicker.js:296</code></a>
         </p>
 
 
@@ -1645,7 +1738,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l256"><code>src&#x2F;interactive&#x2F;colorpicker.js:256</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l262"><code>src&#x2F;interactive&#x2F;colorpicker.js:262</code></a>
         </p>
 
 
@@ -2106,7 +2199,7 @@ Callback signature:
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l154"><code>src&#x2F;interactive&#x2F;colorpicker.js:154</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l160"><code>src&#x2F;interactive&#x2F;colorpicker.js:160</code></a>
         </p>
 
 
@@ -2132,7 +2225,7 @@ Callback signature:
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l163"><code>src&#x2F;interactive&#x2F;colorpicker.js:163</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l169"><code>src&#x2F;interactive&#x2F;colorpicker.js:169</code></a>
         </p>
 
 
@@ -2183,7 +2276,7 @@ Callback signature:
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l181"><code>src&#x2F;interactive&#x2F;colorpicker.js:181</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l187"><code>src&#x2F;interactive&#x2F;colorpicker.js:187</code></a>
         </p>
 
 
@@ -2261,7 +2354,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l172"><code>src&#x2F;interactive&#x2F;colorpicker.js:172</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l178"><code>src&#x2F;interactive&#x2F;colorpicker.js:178</code></a>
         </p>
 
 
@@ -2312,7 +2405,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l111"><code>src&#x2F;interactive&#x2F;colorpicker.js:111</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l116"><code>src&#x2F;interactive&#x2F;colorpicker.js:116</code></a>
         </p>
 
 
@@ -2415,7 +2508,7 @@ internal use).
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_interactive_colorpicker.js.html#l140"><code>src&#x2F;interactive&#x2F;colorpicker.js:140</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l146"><code>src&#x2F;interactive&#x2F;colorpicker.js:146</code></a>
         </p>
 
 
@@ -2614,7 +2707,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_interactive_colorpicker.js.html#l95"><code>src&#x2F;interactive&#x2F;colorpicker.js:95</code></a>
+        <a href="../files/src_interactive_colorpicker.js.html#l100"><code>src&#x2F;interactive&#x2F;colorpicker.js:100</code></a>
         </p>
 
 
