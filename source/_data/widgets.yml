@@ -38,6 +38,10 @@
   image: doc/widgets/colorpickerdialog.png
   url: doc/widgets/colorpickerdialog.html
 
+- name: DataView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/dataview.html # TODO
+
 - name: Dialog
   image: doc/widgets/dialog.png
   url: doc/widgets/dialog.html
