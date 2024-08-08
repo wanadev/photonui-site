@@ -9,20 +9,22 @@ var dataview = new photonui.FluidView({
     verticalSpacing: 5,
     horizontalSpacing: 10,
     items: [
-        { name: "John", count: 2, color: "red" },
-        { name: "Jane", count: 4, color: "blue" },
-        { name: "Janeth", count: 12, color: "green" }
+        { name: "Bicycle", icon: "fa-bicycle", color: "green" },
+        { name: "Subway", icon: "fa-subway", color: "blue" },
+        { name: "Train", icon: "fa-train", color: "red" },
     ],
-    columns: [ 
-        "name", 
-        "count", 
+    columns: [
         {
-            id: "color",
-            label: "Color",
+            id: "icon",
+            label: "Icon",
             value: function(item) {
-                return new photonui.ColorButton({ value: item.color })
+                return new photonui.FAIcon({
+                    iconName: item.icon,
+                    color: item.color,
+                })
             }
-        }
+        },
+        "name", 
     ],
 });
 
