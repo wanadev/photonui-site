@@ -5,10 +5,11 @@ demo_script: doc/empty-demo.js
 
 Data views are PhotoUI Widgets that can display a list of data items and provide basic events on those.
 
-There are three classes:
+There are five classes:
 * [`photonui.DataView`][doc-dataview], parent class
 * [`photonui.TableView`][doc-tableview]
-* [`photonui.FluidView`][doc-dataview]
+* [`photonui.FluidView`][doc-fluidview]
+* [`photonui.ListView`][doc-listview]
 
 ### DataView
 
@@ -260,7 +261,7 @@ var dataview = new photonui.FluidView({
     itemsHeight: 30,
     verticalPadding: 10,
     horizontalPadding: 20,
-    verticalSpacing: 5,
+    verticalSpacing: 20,
     horizontalSpacing: 10,
     items: [
         { name: "Bicycle", icon: "fa-bicycle", color: "green" },
@@ -292,5 +293,7 @@ photonui.domInsert(dataview, "demo");
 [doc-dataview]: widgets/dataview.html
 [doc-tableview]: widgets/tableview.html
 [doc-fluidview]: widgets/fluidview.html
+[doc-listview]: widgets/listview.html
+[doc-iconview]: widgets/iconview.html
 
 

@@ -90,6 +90,10 @@
   image: doc/widgets/label.png
   url: doc/widgets/label.html
 
+- name: ListView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/listview.html
+
 - name: Menu
   image: doc/widgets/menu.png
   url: doc/widgets/menu.html
