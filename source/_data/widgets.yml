@@ -40,7 +40,7 @@
 
 - name: DataView
   image: doc/widgets/default.png # TODO
-  url: doc/widgets/dataview.html # TODO
+  url: doc/widgets/dataview.html
 
 - name: Dialog
   image: doc/widgets/dialog.png
@@ -61,6 +61,10 @@
 - name: FluidLayout
   image: doc/widgets/fluidlayout.png
   url: doc/widgets/fluidlayout.html
+
+- name: FluidView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/fluidview.html
 
 - name: FontSelect
   image: doc/widgets/fontselect.png
@@ -145,6 +149,10 @@
 - name: TabLayout
   image: doc/widgets/tablayout.png
   url: doc/widgets/tablayout.html
+
+- name: TableView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/tableview.html
 
 - name: Template
   image: doc/widgets/template.png
