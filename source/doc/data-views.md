@@ -162,6 +162,44 @@ var dataview = new photonui.DataView({
 photonui.domInsert(dataview, "demo");
 ```
 
+#### Selection
+
+[`photonui.DataView`][doc-dataview] handles selection and multiselection of items. Default parameters are:
+* `selectable: true`
+* `multiSelectable: false`
+
+There are callbacks for `item-select` and `item-unselect`. When an item is selected, its HTML node get the CSS class `selected`.
+
+Multi-selection is handled by Ctrl+Click.
+
+```javascript
+var dataview = new photonui.DataView({
+    selectable: true, // default: true
+    multiSelectable: true, // default: false
+    items: [
+        { name: "John", count: 2 },
+        { name: "Jane", count: 4 },
+        { name: "Janeth", count: 12 }
+    ],
+    columns: [ 
+        {
+            id: "name",
+            value: function(item) { return `${item.name}: ` }
+        }, 
+        "count"
+    ],
+    callbacks: {
+        "item-select": function(event, item) {
+            item.node.style.fontWeight = "bold"
+        },
+        "item-unselect": function(event, item) {
+            item.node.style.fontWeight = ""
+        },
+    }
+});
+photonui.domInsert(dataview, "demo");
+```
+
 [doc-dataview]: widgets/dataview.html
 [doc-tableview]: widgets/tableview.html
 [doc-fluidview]: widgets/fluidview.html
