@@ -9,11 +9,21 @@ var dataview = new photonui.DataView({
             id: "name",
             value: function(item) { return `${item.name}: ` }
         }, 
-        {
-            id: "count",
-            value: function (item) { return item.count }
-        }
-    ]
+        "count"
+    ],
+    callbacks: {
+        "item-click": function(event, item) {
+            item.value.count++;
+            item.node.querySelector(".photonui-dataview-column-count")
+                .innerText = item.value.count;
+        },
+        "item-select": function(event, item) {
+            item.node.style.fontWeight = "bold"
+        },
+        "item-unselect": function(event, item) {
+            item.node.style.fontWeight = ""
+        },
+    }
 });
 
 photonui.domInsert(dataview, "demo");

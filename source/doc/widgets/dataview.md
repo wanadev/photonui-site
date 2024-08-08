@@ -10,12 +10,20 @@ demo_script: doc/widgets/dataview.js
 
 ### More examples
 
-```javascript
-// Get the position of the #demo area to display windows
-// in the right place
-var pos = photonui.Helpers.getAbsolutePosition("demo");
+#### Define html elements
 
-new photonui.DataView({
-    // TODO
+```javascript
+var dataview = new photonui.DataView({
+    containerElement: "table",
+    itemElement: "tr",
+    columnElement: "td",
+    items: [
+        { name: "John", count: 2 },
+        { name: "Jane", count: 4 },
+        { name: "Janeth", count: 12 }
+    ],
+    columns: [ "name", "count"],
 });
+
+photonui.domInsert(dataview, "demo");
 ```
