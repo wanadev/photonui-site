@@ -5,6 +5,11 @@ demo_script: doc/empty-demo.js
 
 Data views are PhotoUI Widgets that can display a list of data items and provide basic events on those.
 
+There are three classes:
+* [`photonui.DataView`][doc-dataview], parent class
+* [`photonui.TableView`][doc-tableview]
+* [`photonui.FluidView`][doc-dataview]
+
 ### DataView
 
 The base class of data view is [`photonui.DataView`][doc-dataview]
@@ -199,6 +204,90 @@ var dataview = new photonui.DataView({
 });
 photonui.domInsert(dataview, "demo");
 ```
+### TableView
+
+[`photonui.TableView`][doc-tableview] is a DataView that renders as a `<table>` HTML element.
+* There is a header for column labels
+  * the header can be hidden with parameter `showHeader: false`
+* Rows are `<tr>` HTML Elements
+* Columns are `<td>` HTML Elements
+
+```javascript
+var dataview = new photonui.TableView({
+    items: [
+        { name: "John", count: 2, color: "red" },
+        { name: "Jane", count: 4, color: "blue" },
+        { name: "Janeth", count: 12, color: "green" }
+    ],
+    columns: [ 
+        "name", 
+        "count", 
+        {
+            id: "color",
+            label: "Color",
+            value: function(item) {
+                return new photonui.ColorButton({ value: item.color })
+            }
+        }
+    ],
+    multiSelectable: true,
+    dragAndDroppable: true,
+});
+
+photonui.domInsert(dataview, "demo");
+```
+
+### FluidView
+
+[`photonui.TableView`][doc-tableview] is a DataView that can render elements with fixed dimensions and spacing.
+Items are displayed inline, until there is no space and goes to a new line.
+
+Parameters are :
+* `itemsWidth`
+* `itemsHeight`
+* `verticalPadding`
+* `horizontalPadding`
+* `verticalSpacing`
+* `horizontalSpacing`
+
+
+```javascript
+var dataview = new photonui.FluidView({
+    containerElement: "div",
+    itemElement: "div",
+    columnElement: "div",
+    itemsWidth: 70,
+    itemsHeight: 30,
+    verticalPadding: 10,
+    horizontalPadding: 20,
+    verticalSpacing: 5,
+    horizontalSpacing: 10,
+    items: [
+        { name: "Bicycle", icon: "fa-bicycle", color: "green" },
+        { name: "Subway", icon: "fa-subway", color: "blue" },
+        { name: "Train", icon: "fa-train", color: "red" },
+        { name: "Car", icon: "fa-car", color: "yellow" },
+        { name: "Ship", icon: "fa-ship", color: "cyan" },
+        { name: "Plane", icon: "fa-plane", color: "magenta" },
+    ],
+    columns: [
+        {
+            id: "icon",
+            label: "Icon",
+            value: function(item) {
+                return new photonui.FAIcon({
+                    iconName: item.icon,
+                    color: item.color,
+                })
+            }
+        },
+        "name", 
+    ],
+});
+
+photonui.domInsert(dataview, "demo");
+```
+
 
 [doc-dataview]: widgets/dataview.html
 [doc-tableview]: widgets/tableview.html
