@@ -1,4 +1,4 @@
-var dataview = new photonui.FluidView({
+var fluidview = new photonui.FluidView({
     containerElement: "div",
     itemElement: "div",
     columnElement: "div",
@@ -31,4 +31,4 @@ var dataview = new photonui.FluidView({
     ],
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(fluidview, "demo");

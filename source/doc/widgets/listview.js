@@ -1,4 +1,4 @@
-var dataview = new photonui.ListView({
+var listview = new photonui.ListView({
     items: [
         { name: "John", count: 2 },
         { name: "Jane", count: 4 },
@@ -26,4 +26,4 @@ var dataview = new photonui.ListView({
     }
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(listview, "demo");

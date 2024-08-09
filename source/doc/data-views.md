@@ -212,7 +212,7 @@ photonui.domInsert(dataview, "demo");
 ListView is just a stylized DataView with `<ul>`, `<li>` and `<span>` HTML elements.
 
 ```javascript
-var dataview = new photonui.ListView({
+var listview = new photonui.ListView({
     items: [
         { name: "John", count: 2 },
         { name: "Jane", count: 4 },
@@ -227,7 +227,7 @@ var dataview = new photonui.ListView({
     ],
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(listview, "demo");
 ```
 
 
@@ -240,7 +240,7 @@ photonui.domInsert(dataview, "demo");
 * Columns are `<td>` HTML Elements
 
 ```javascript
-var dataview = new photonui.TableView({
+var tableview = new photonui.TableView({
     items: [
         { name: "John", count: 2, color: "red" },
         { name: "Jane", count: 4, color: "blue" },
@@ -261,7 +261,7 @@ var dataview = new photonui.TableView({
     dragAndDroppable: true,
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(tableview, "demo");
 ```
 
 ### FluidView
@@ -279,7 +279,7 @@ Parameters are :
 
 
 ```javascript
-var dataview = new photonui.FluidView({
+var fluidview = new photonui.FluidView({
     containerElement: "div",
     itemElement: "div",
     columnElement: "div",
@@ -312,7 +312,7 @@ var dataview = new photonui.FluidView({
     ],
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(fluidview, "demo");
 ```
 
 ### IconView

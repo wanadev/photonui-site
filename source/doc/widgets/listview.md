@@ -17,7 +17,7 @@ demo_script: doc/widgets/listview.js
 #### Drag and drop
 
 ```javascript
-var dataview = new photonui.ListView({
+var listview = new photonui.ListView({
     dragAndDroppable: true,
     items: [
         { name: "John", count: 2 },
@@ -32,5 +32,5 @@ var dataview = new photonui.ListView({
     },
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(listview, "demo");
 ```

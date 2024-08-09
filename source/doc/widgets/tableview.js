@@ -1,4 +1,4 @@
-var dataview = new photonui.TableView({
+var tableview = new photonui.TableView({
     items: [
         { name: "John", count: 2, color: "red" },
         { name: "Jane", count: 4, color: "blue" },
@@ -19,4 +19,4 @@ var dataview = new photonui.TableView({
     dragAndDroppable: true,
 });
 
-photonui.domInsert(dataview, "demo");
+photonui.domInsert(tableview, "demo");
