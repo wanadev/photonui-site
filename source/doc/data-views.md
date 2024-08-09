@@ -7,9 +7,10 @@ Data views are PhotoUI Widgets that can display a list of data items and provide
 
 There are five classes:
 * [`photonui.DataView`][doc-dataview], parent class
+* [`photonui.ListView`][doc-listview]
 * [`photonui.TableView`][doc-tableview]
 * [`photonui.FluidView`][doc-fluidview]
-* [`photonui.ListView`][doc-listview]
+* [`photonui.IconView`][doc-iconview]
 
 ### DataView
 
@@ -205,6 +206,31 @@ var dataview = new photonui.DataView({
 });
 photonui.domInsert(dataview, "demo");
 ```
+
+### ListView
+
+ListView is just a stylized DataView with `<ul>`, `<li>` and `<span>` HTML elements.
+
+```javascript
+var dataview = new photonui.ListView({
+    items: [
+        { name: "John", count: 2 },
+        { name: "Jane", count: 4 },
+        { name: "Janeth", count: 12 }
+    ],
+    columns: [ 
+        {
+            id: "name",
+            value: function(item) { return `${item.name}: ` }
+        }, 
+        "count"
+    ],
+});
+
+photonui.domInsert(dataview, "demo");
+```
+
+
 ### TableView
 
 [`photonui.TableView`][doc-tableview] is a DataView that renders as a `<table>` HTML element.
