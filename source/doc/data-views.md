@@ -315,6 +315,29 @@ var dataview = new photonui.FluidView({
 photonui.domInsert(dataview, "demo");
 ```
 
+### IconView
+
+[`photonui.IconView`][doc-iconview] is a DataView to display FAIcons or Images
+
+
+```javascript
+var iconview = new photonui.IconView({
+    iconWidth: 32,
+    iconHeight: 32,
+    items: [
+        { faIcon: { iconName: "fa-bicycle" } },
+        { faIcon: { iconName: "fa-subway" } },
+        { faIcon: { iconName: "fa-train" } },
+        { faIcon: { iconName: "fa-car" } },
+        { faIcon: { iconName: "fa-ship" } },
+        { faIcon: { iconName: "fa-plane" } },
+    ],
+});
+
+photonui.domInsert(iconview, "demo");
+```
+
+
 
 [doc-dataview]: widgets/dataview.html
 [doc-tableview]: widgets/tableview.html

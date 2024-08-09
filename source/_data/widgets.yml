@@ -78,6 +78,10 @@
   image: doc/widgets/iconbutton.png
   url: doc/widgets/iconbutton.html
 
+- name: IconView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/iconview.html
+
 - name: Image
   image: doc/widgets/image.png
   url: doc/widgets/image.html
