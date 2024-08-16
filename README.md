@@ -20,7 +20,6 @@ To edit this site, first clone it:
 
 then install the required dependencies:
 
-    npm install -g grunt-cli hexo
     npm install
 
 
@@ -32,13 +31,21 @@ then install the required dependencies:
 
 To build the site just use the `grunt` command:
 
-    grunt
+    npx grunt
 
 If you are writing a documentation page and you want to see changes in your browser without rebuilding the site each times, you can start the server integrated to Hexo:
 
-    hexo server
+    npx hexo server
 
 then go to the following address:
 
 * http://localhost:4000/PhotonUI/
 
+
+### Updating PhotonUI
+
+To update PhotonUI, run:
+
+    npx grunt shell:updatePhotonUI
+
+This will update the content of `./ref/`, `./themes/photonui/source/style/_partial/` and `./themes/photonui/source/js/`.
