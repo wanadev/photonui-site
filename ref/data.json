@@ -2,7 +2,7 @@
     "project": {
         "name": "photonui",
         "description": "A javascript framework to create user interfaces",
-        "version": "1.7.0",
+        "version": "1.7.2",
         "url": "http://wanadev.github.io/PhotonUI/"
     },
     "files": {
@@ -169,6 +169,63 @@
             "modules": {},
             "classes": {
                 "photonui.Window": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/dataview/dataview.js": {
+            "name": "src/dataview/dataview.js",
+            "modules": {
+                "DataView": 1
+            },
+            "classes": {
+                "photonui.DataView": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/dataview/fluidview.js": {
+            "name": "src/dataview/fluidview.js",
+            "modules": {},
+            "classes": {
+                "photonui.FluidView": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/dataview/iconview.js": {
+            "name": "src/dataview/iconview.js",
+            "modules": {},
+            "classes": {
+                "photonui.IconView": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/dataview/listview.js": {
+            "name": "src/dataview/listview.js",
+            "modules": {},
+            "classes": {
+                "photonui.ListView": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "photonui": 1
+            }
+        },
+        "src/dataview/tableview.js": {
+            "name": "src/dataview/tableview.js",
+            "modules": {},
+            "classes": {
+                "photonui.TableView": 1
             },
             "fors": {},
             "namespaces": {
@@ -621,6 +678,7 @@
             "submodules": {
                 "Composite": 1,
                 "Container": 1,
+                "DataView": 1,
                 "Interactive": 1,
                 "Layout": 1,
                 "NonVisual": 1,
@@ -644,6 +702,11 @@
                 "photonui.TabItem": 1,
                 "photonui.Viewport": 1,
                 "photonui.Window": 1,
+                "photonui.DataView": 1,
+                "photonui.FluidView": 1,
+                "photonui.IconView": 1,
+                "photonui.ListView": 1,
+                "photonui.TableView": 1,
                 "photonui.Button": 1,
                 "photonui.CheckBox": 1,
                 "photonui.ColorPalette": 1,
@@ -739,6 +802,28 @@
             "module": "PhotonUI",
             "namespace": "",
             "file": "src/container/window.js",
+            "line": 46,
+            "description": "PhotonUI - Javascript Web User Interface."
+        },
+        "DataView": {
+            "name": "DataView",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "photonui.DataView": 1,
+                "photonui.FluidView": 1,
+                "photonui.IconView": 1,
+                "photonui.ListView": 1,
+                "photonui.TableView": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {
+                "photonui": 1
+            },
+            "module": "PhotonUI",
+            "namespace": "",
+            "file": "src/dataview/tableview.js",
             "line": 46,
             "description": "PhotonUI - Javascript Web User Interface."
         },
@@ -1036,7 +1121,7 @@
             "submodule": "Container",
             "namespace": "photonui",
             "file": "src/container/menuitem.js",
-            "line": 44,
+            "line": 45,
             "description": "Menu item.",
             "is_constructor": 1,
             "extends": "photonui.Container"
@@ -1087,7 +1172,7 @@
             "submodule": "Container",
             "namespace": "photonui",
             "file": "src/container/tabitem.js",
-            "line": 45,
+            "line": 46,
             "description": "Tab Item.\n\n wEvents:\n\n  * click:\n    - description: called when the tab was clicked.\n    - callback:    function(widget, event)",
             "is_constructor": 1,
             "extends": "photonui.Container",
@@ -1133,6 +1218,91 @@
             "is_constructor": 1,
             "extends": "photonui.BaseWindow"
         },
+        "photonui.DataView": {
+            "name": "photonui.DataView",
+            "shortname": "DataView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui",
+            "file": "src/dataview/dataview.js",
+            "line": 44,
+            "description": "DataView container.\n\nwEvents:\n\n  * item-click:\n    - description: called when an item is clicked.\n    - callback:    function (event, item)\n\n  * item-select:\n    - description: called when an item is selected.\n    - callback:    function (item)\n\n  * item-unselect:\n    - description: called when an item is unselected.\n    - callback:    function (item)\n\n  * item-sort:\n    - description: called when an item is moved to a new position.\n    - callback:    function (item, position)",
+            "is_constructor": 1,
+            "extends": "photonui.Widget"
+        },
+        "photonui.FluidView": {
+            "name": "photonui.FluidView",
+            "shortname": "FluidView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui",
+            "file": "src/dataview/fluidview.js",
+            "line": 43,
+            "description": "FluidView container.",
+            "is_constructor": 1,
+            "extends": "photonui.DataView"
+        },
+        "photonui.IconView": {
+            "name": "photonui.IconView",
+            "shortname": "IconView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui",
+            "file": "src/dataview/iconview.js",
+            "line": 47,
+            "description": "IconView container.",
+            "is_constructor": 1,
+            "extends": "photonui.FluidView"
+        },
+        "photonui.ListView": {
+            "name": "photonui.ListView",
+            "shortname": "ListView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui",
+            "file": "src/dataview/listview.js",
+            "line": 44,
+            "description": "ListView container.",
+            "is_constructor": 1,
+            "extends": "photonui.DataView"
+        },
+        "photonui.TableView": {
+            "name": "photonui.TableView",
+            "shortname": "TableView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui",
+            "file": "src/dataview/tableview.js",
+            "line": 46,
+            "description": "TableView container.",
+            "is_constructor": 1,
+            "extends": "photonui.DataView"
+        },
         "photonui.Button": {
             "name": "photonui.Button",
             "shortname": "Button",
@@ -1147,7 +1317,7 @@
             "submodule": "Interactive",
             "namespace": "photonui",
             "file": "src/interactive/button.js",
-            "line": 43,
+            "line": 44,
             "description": "Button.\n\nwEvents:\n\n  * click:\n    - description: called when the button was clicked.\n    - callback:    function(widget, event)",
             "is_constructor": 1,
             "extends": "photonui.Widget"
@@ -1206,7 +1376,7 @@
             "namespace": "photonui",
             "file": "src/interactive/colorpicker.js",
             "line": 44,
-            "description": "A Color Picker.\n\nwEvents:\n\n  * value-changed:\n     - description: the selected color changed.\n     - callback:    function(widget, color)",
+            "description": "A Color Picker.\n\nwEvents:\n\n  * value-changed:\n     - description: the selected color changed.\n     - callback:    function (widget, color)\n\nvalue-changed-final:\n     - description: called when the value is no more modified after continuous changes\n     - callback:    function (widget, color)",
             "is_constructor": 1,
             "extends": "photonui.Widget",
             "params": [
@@ -1246,7 +1416,7 @@
             "submodule": "Interactive",
             "namespace": "photonui",
             "file": "src/interactive/iconbutton.js",
-            "line": 43,
+            "line": 44,
             "description": "A simple flat button that only contains an icon\n\nwEvents:\n\n  * click:\n    - description: called when the button was clicked.\n    - callback:    function(widget, event)",
             "is_constructor": 1,
             "extends": "photonui.Widget",
@@ -2241,7 +2411,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 122,
+            "line": 125,
             "description": "The placeholder displayed if nothing is selected.",
             "itemtype": "property",
             "name": "placeholder",
@@ -2254,7 +2424,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 139,
+            "line": 142,
             "description": "Layout children widgets.",
             "itemtype": "property",
             "name": "children",
@@ -2267,7 +2437,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 152,
+            "line": 155,
             "description": "Layout children widgets name.",
             "itemtype": "property",
             "name": "childrenNames",
@@ -2280,7 +2450,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 165,
+            "line": 168,
             "description": "Width of the container node.",
             "itemtype": "property",
             "name": "popupWidth",
@@ -2293,7 +2463,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 175,
+            "line": 178,
             "description": "Height of the popup container node.",
             "itemtype": "property",
             "name": "popupHeight",
@@ -2306,7 +2476,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 185,
+            "line": 188,
             "description": "Maximum width of the popup container node.",
             "itemtype": "property",
             "name": "popupMaxWidth",
@@ -2319,7 +2489,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 195,
+            "line": 198,
             "description": "Minimum width of the popup container node.",
             "itemtype": "property",
             "name": "popupMinWidth",
@@ -2332,7 +2502,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 206,
+            "line": 209,
             "description": "Maximum height of the popup container node.",
             "itemtype": "property",
             "name": "popupMaxHeight",
@@ -2345,7 +2515,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 216,
+            "line": 219,
             "description": "Minimum height of the popup container node.",
             "itemtype": "property",
             "name": "popupMinHeight",
@@ -2358,7 +2528,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 226,
+            "line": 229,
             "description": "Popup width (outer HTML element).",
             "itemtype": "property",
             "name": "popupOffsetWidth",
@@ -2371,7 +2541,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 235,
+            "line": 238,
             "description": "Popup height (outer HTML element).",
             "itemtype": "property",
             "name": "popupOffsetHeight",
@@ -2384,7 +2554,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 244,
+            "line": 247,
             "description": "Window container node padding.",
             "itemtype": "property",
             "name": "popupPadding",
@@ -2397,7 +2567,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 254,
+            "line": 257,
             "description": "Define if icon on menu items are visible.",
             "itemtype": "property",
             "name": "iconVisible",
@@ -2410,7 +2580,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 281,
+            "line": 284,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -2424,7 +2594,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 295,
+            "line": 298,
             "description": "The popupMenu.",
             "itemtype": "property",
             "name": "__popupMenu",
@@ -2438,7 +2608,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 310,
+            "line": 313,
             "description": "Add a widget to the layout.",
             "itemtype": "method",
             "name": "addChild",
@@ -2461,7 +2631,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 322,
+            "line": 325,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -2472,7 +2642,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 334,
+            "line": 342,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -2485,7 +2655,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 346,
+            "line": 354,
             "description": "Update the popup items binding.",
             "itemtype": "method",
             "name": "_updateItemsBinding",
@@ -2498,7 +2668,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 367,
+            "line": 375,
             "itemtype": "method",
             "name": "__onClick",
             "access": "private",
@@ -2516,7 +2686,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 383,
+            "line": 391,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -2534,7 +2704,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 394,
+            "line": 402,
             "itemtype": "method",
             "name": "__onItemClicked",
             "access": "private",
@@ -2553,7 +2723,7 @@
         },
         {
             "file": "src/composite/select.js",
-            "line": 404,
+            "line": 412,
             "itemtype": "method",
             "name": "__onLocaleChanged",
             "access": "private",
@@ -3100,7 +3270,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 69,
+            "line": 70,
             "description": "An optional value for the item (can be used in select).",
             "itemtype": "property",
             "name": "value",
@@ -3113,7 +3283,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 86,
+            "line": 87,
             "description": "The item text.",
             "itemtype": "property",
             "name": "text",
@@ -3126,7 +3296,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 106,
+            "line": 107,
             "description": "Left icon widget name.",
             "itemtype": "property",
             "name": "iconName",
@@ -3139,7 +3309,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 127,
+            "line": 128,
             "description": "Left icon widget.",
             "itemtype": "property",
             "name": "icon",
@@ -3152,7 +3322,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 147,
+            "line": 148,
             "description": "Determine if the item is active (highlighted).",
             "itemtype": "property",
             "name": "active",
@@ -3165,7 +3335,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 171,
+            "line": 172,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3179,7 +3349,7 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 183,
+            "line": 184,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3192,7 +3362,18 @@
         },
         {
             "file": "src/container/menuitem.js",
-            "line": 200,
+            "line": 201,
+            "description": "Destroy the widget.",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "photonui.MenuItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/menuitem.js",
+            "line": 216,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3322,7 +3503,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 76,
+            "line": 77,
             "description": "Tab title.",
             "itemtype": "property",
             "name": "title",
@@ -3335,7 +3516,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 96,
+            "line": 97,
             "description": "Definie if the tabItem title is displayed or hidden.",
             "itemtype": "property",
             "name": "titleVisible",
@@ -3348,7 +3529,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 114,
+            "line": 115,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -3362,7 +3543,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 126,
+            "line": 127,
             "description": "Tab Html element.",
             "itemtype": "property",
             "name": "tabHtml",
@@ -3376,7 +3557,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 138,
+            "line": 139,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3389,7 +3570,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 149,
+            "line": 150,
             "description": "Is the widget visible or hidden.",
             "itemtype": "property",
             "name": "visible",
@@ -3402,7 +3583,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 189,
+            "line": 190,
             "description": "Left icon widget name",
             "itemtype": "property",
             "name": "leftIconName",
@@ -3415,7 +3596,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 212,
+            "line": 213,
             "description": "Left icon widget",
             "itemtype": "property",
             "name": "leftIcon",
@@ -3428,7 +3609,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 231,
+            "line": 232,
             "description": "Define if the left icon is displayed or hidden.",
             "itemtype": "property",
             "name": "leftIconVisible",
@@ -3441,7 +3622,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 249,
+            "line": 250,
             "description": "Right icon widget name",
             "itemtype": "property",
             "name": "rigthIconName",
@@ -3454,7 +3635,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 273,
+            "line": 274,
             "description": "Right icon widget",
             "itemtype": "property",
             "name": "rightIcon",
@@ -3467,7 +3648,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 292,
+            "line": 293,
             "description": "Define if the right icon is displayed or hidden.",
             "itemtype": "property",
             "name": "rightIconVisible",
@@ -3480,7 +3661,18 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 340,
+            "line": 317,
+            "description": "Destroy the widget.",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "photonui.TabItem",
+            "module": "PhotonUI",
+            "submodule": "Container",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/container/tabitem.js",
+            "line": 360,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3493,7 +3685,7 @@
         },
         {
             "file": "src/container/tabitem.js",
-            "line": 371,
+            "line": 391,
             "description": "Called when the tab is clicked.",
             "itemtype": "method",
             "name": "__onClick",
@@ -3715,7 +3907,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 87,
+            "line": 85,
             "description": "The window title.",
             "itemtype": "property",
             "name": "title",
@@ -3728,7 +3920,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 107,
+            "line": 105,
             "description": "Determine if the window can be moved (drag & drop) by the user.",
             "itemtype": "property",
             "name": "movable",
@@ -3741,7 +3933,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 124,
+            "line": 122,
             "description": "Fullscreen Window",
             "itemtype": "property",
             "name": "fullscreen",
@@ -3754,7 +3946,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 146,
+            "line": 144,
             "description": "Determine if the close button in the title bar is displayed or not.",
             "itemtype": "property",
             "name": "closeButtonVisible",
@@ -3766,7 +3958,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 172,
+            "line": 170,
             "description": "Modal window?",
             "itemtype": "property",
             "name": "modal",
@@ -3779,7 +3971,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 199,
+            "line": 197,
             "description": "HTML Element that contain the child widget HTML.",
             "itemtype": "property",
             "name": "containerNode",
@@ -3792,7 +3984,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 231,
+            "line": 229,
             "description": "Bring the window to front.",
             "itemtype": "method",
             "name": "moveToFront",
@@ -3803,7 +3995,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 245,
+            "line": 243,
             "description": "Bring the window to the back.",
             "itemtype": "method",
             "name": "moveToBack",
@@ -3814,7 +4006,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 259,
+            "line": 257,
             "description": "Destroy the widget.",
             "itemtype": "method",
             "name": "destroy",
@@ -3825,7 +4017,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 275,
+            "line": 273,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -3838,7 +4030,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 305,
+            "line": 303,
             "description": "Update all the windows.",
             "itemtype": "method",
             "name": "_updateWindowList",
@@ -3851,7 +4043,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 330,
+            "line": 328,
             "description": "Start moving the window.",
             "itemtype": "method",
             "name": "_moveDragStart",
@@ -3871,7 +4063,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 348,
+            "line": 346,
             "description": "Move the window.",
             "itemtype": "method",
             "name": "_moveDragging",
@@ -3901,7 +4093,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 361,
+            "line": 359,
             "description": "Stop moving the window.",
             "itemtype": "method",
             "name": "_moveDragEnd",
@@ -3921,7 +4113,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 374,
+            "line": 372,
             "description": "Move the window.",
             "itemtype": "method",
             "name": "__internalDragging",
@@ -3956,7 +4148,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 394,
+            "line": 392,
             "description": "Start moving the window.",
             "itemtype": "method",
             "name": "_moveTouchStart",
@@ -3976,7 +4168,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 417,
+            "line": 415,
             "description": "Move the window.",
             "itemtype": "method",
             "name": "_moveTouchMove",
@@ -4006,7 +4198,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 431,
+            "line": 429,
             "description": "Stop moving the window.",
             "itemtype": "method",
             "name": "_moveTouchEnd",
@@ -4026,7 +4218,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 445,
+            "line": 443,
             "description": "Gets the first touch event and normalizes pageX/Y and offsetX/Y properties.",
             "itemtype": "method",
             "name": "_moveTouchEnd",
@@ -4046,7 +4238,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 468,
+            "line": 466,
             "description": "Close button clicked.",
             "itemtype": "method",
             "name": "_closeButtonClicked",
@@ -4066,7 +4258,7 @@
         },
         {
             "file": "src/container/window.js",
-            "line": 479,
+            "line": 477,
             "description": "Called when the locale is changed.",
             "itemtype": "method",
             "name": "__onLocaleChanged",
@@ -4078,8 +4270,989 @@
             "namespace": "photonui"
         },
         {
+            "file": "src/dataview/dataview.js",
+            "line": 115,
+            "description": "The collection of items displayed by the data view widget.",
+            "itemtype": "property",
+            "name": "items",
+            "type": "Array",
+            "default": "null",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 151,
+            "description": "Defines if the data items can be selected.",
+            "itemtype": "property",
+            "name": "selectable",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 166,
+            "description": "If true, clicking outside of the items (in the container) will unselect\ncurrently selected items.\nOnly used when \"selectable\" option is set to \"true\".",
+            "itemtype": "property",
+            "name": "unselectOnOutsideClick",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 183,
+            "description": "Defines if the data items can be multi-selected.\nOnly used when \"selectable\" option is set to \"true\".",
+            "itemtype": "property",
+            "name": "multiSelectable",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 199,
+            "description": "Defines wether or not \"ctrl\" key has to be pressed to multi-select items.\nOnly used when \"multiSelectable\" option is set to \"true\".",
+            "itemtype": "property",
+            "name": "multiSelectWithCtrl",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 215,
+            "description": "If true, allow selecting multiple items with one click when pressing\n\"shift\" key.\nOnly used when \"multiSelectable\" option is set to \"true\".",
+            "itemtype": "property",
+            "name": "allowShiftSelect",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 232,
+            "description": "Defines if the data items can be drag & dropped.",
+            "itemtype": "property",
+            "name": "dragAndDroppable",
+            "type": "Boolean",
+            "default": "false",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 247,
+            "description": "A custom formater function which overrides the default rendering process\nof the widget.",
+            "itemtype": "property",
+            "name": "customWidgetFormater",
+            "type": "Function",
+            "default": "null",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 263,
+            "description": "The currently selected items.",
+            "itemtype": "property",
+            "name": "selectedItems",
+            "type": "Array",
+            "default": "[]",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 277,
+            "description": "The list of columns which defines the structure of the items (if not\nsetted manually, the columns are automatically generated).",
+            "itemtype": "property",
+            "name": "columns",
+            "type": "Array",
+            "default": "null",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 302,
+            "description": "Html outer element of the widget (if any).",
+            "itemtype": "property",
+            "name": "html",
+            "type": "HTMLElement",
+            "default": "null",
+            "readonly": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 314,
+            "description": "The type of the container DOM element which will be created during the\nrender process.",
+            "itemtype": "property",
+            "name": "containerElement",
+            "type": "String",
+            "default": "\"ul\"",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 330,
+            "description": "The type of the items DOM elements which will be created during the\nrender process.",
+            "itemtype": "property",
+            "name": "itemElement",
+            "type": "String",
+            "default": "\"li\"",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 346,
+            "description": "The type of the columns DOM elements which will be created during the\nrender process.",
+            "itemtype": "property",
+            "name": "columnElement",
+            "type": "String",
+            "default": "\"span\"",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 362,
+            "description": "The list of identifiers wich will be added to every generated elements\nof the widget as classnames.",
+            "itemtype": "property",
+            "name": "identifiers",
+            "type": "Array",
+            "default": "[]",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 388,
+            "description": "Destroy the widget.",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 398,
+            "description": "Selects the item(s) at given indexes.",
+            "itemtype": "method",
+            "name": "selectItems",
+            "params": [
+                {
+                    "name": "indexes",
+                    "description": "",
+                    "type": "...Number|Number[]"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 421,
+            "description": "Unselects the item(s) at given indexes.",
+            "itemtype": "method",
+            "name": "unselectItems",
+            "params": [
+                {
+                    "name": "indexes",
+                    "description": "",
+                    "type": "...Number|Number[]"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 446,
+            "description": "Destroy all children of the layout",
+            "itemtype": "method",
+            "name": "_empty",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 462,
+            "description": "Layout children widgets.",
+            "itemtype": "method",
+            "name": "_getChildren",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "the childen widget",
+                "type": "Array"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 481,
+            "description": "Returns the item at a given index.",
+            "itemtype": "method",
+            "name": "_getItemByIndex",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "the item",
+                "type": "Object"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 495,
+            "description": "Build the widget HTML.",
+            "itemtype": "method",
+            "name": "_buildHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 505,
+            "description": "Build the widget container HTML.",
+            "itemtype": "method",
+            "name": "_buildContainerHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 519,
+            "description": "Build the items list HTML.",
+            "itemtype": "method",
+            "name": "_buildItemsHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 551,
+            "description": "Renders a given item.",
+            "itemtype": "method",
+            "name": "_renderItem",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the rendered item",
+                "type": "Element"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 579,
+            "description": "Renders all the columns of a given item.",
+            "itemtype": "method",
+            "name": "_renderItemInner",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "itemNode",
+                    "description": "the container element of the item",
+                    "type": "Element"
+                },
+                {
+                    "name": "item",
+                    "description": "the rendered item",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the rendered item",
+                "type": "Element"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 602,
+            "description": "Renders a given column.",
+            "itemtype": "method",
+            "name": "_renderColumn",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "the content of the column",
+                    "type": "photonui.Widget|String"
+                },
+                {
+                    "name": "columnId",
+                    "description": "the identifier of the column",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the rendered column",
+                "type": "Element"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 632,
+            "description": "Generate the list of columns.",
+            "itemtype": "method",
+            "name": "_generateColumns",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 662,
+            "description": "Adds classes defined by the identifiers property to a given element, with\na given suffix.",
+            "itemtype": "method",
+            "name": "_addIdentifiersClasses",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "the node",
+                    "type": "Element"
+                },
+                {
+                    "name": "suffix",
+                    "description": "the suffix of the classes",
+                    "type": "String"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 686,
+            "description": "Selects an item.",
+            "itemtype": "method",
+            "name": "_selectItem",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "the item",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 702,
+            "description": "Unselects an item.",
+            "itemtype": "method",
+            "name": "_unselectItem",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "the item",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 718,
+            "description": "Selects all items from the current selection to a given item.",
+            "itemtype": "method",
+            "name": "_selectItemsTo",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "the item",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 739,
+            "description": "Unselects all items.",
+            "itemtype": "method",
+            "name": "unselectAllItems",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 751,
+            "description": "Gets an item of the collection from a given item DOM element.",
+            "itemtype": "method",
+            "name": "_getItemFromNode",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "itemNode",
+                    "description": "the item DOM element",
+                    "type": "Element"
+                }
+            ],
+            "return": {
+                "description": "the item",
+                "type": "Object"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 764,
+            "description": "Moves the item at a givent index to another given index. Rebuilds the\ndataview.",
+            "itemtype": "method",
+            "name": "_moveItem",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "itemIndex",
+                    "description": "the index of the item to move",
+                    "type": "Number"
+                },
+                {
+                    "name": "destinationIndex",
+                    "description": "the destination index",
+                    "type": "Number"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 782,
+            "description": "Handle item click events.",
+            "itemtype": "method",
+            "name": "_handleClick",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "the item",
+                    "type": "Object"
+                },
+                {
+                    "name": "modifiers",
+                    "description": "the modifiers states",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "ctrl",
+                            "description": "",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "shift",
+                            "description": "",
+                            "type": "Object"
+                        }
+                    ]
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 833,
+            "description": "Generates a placeholder item element.",
+            "itemtype": "method",
+            "name": "_generatePlaceholderElement",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "the placeholder item element",
+                "type": "Element"
+            },
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 861,
+            "description": "Called when an element is clicked.",
+            "itemtype": "method",
+            "name": "__onClick",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "the click event",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 885,
+            "description": "Called when an item is clicked.",
+            "itemtype": "method",
+            "name": "__onItemClick",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "the click event",
+                    "type": "Object"
+                },
+                {
+                    "name": "item",
+                    "description": "the clicked item",
+                    "type": "Item"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 903,
+            "description": "Called when an item is dragged.",
+            "itemtype": "method",
+            "name": "__onDragStart",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 935,
+            "description": "Called when a dragged item enters into another element.",
+            "itemtype": "method",
+            "name": "__onDragEnter",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 970,
+            "description": "Called when a item drag has ended.",
+            "itemtype": "method",
+            "name": "__onDragEnd",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 1000,
+            "description": "Called when a item is dragged (fix for firefox).",
+            "itemtype": "method",
+            "name": "__onDragOver",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 1016,
+            "description": "Called when a item is dropped (fix for firefox).",
+            "itemtype": "method",
+            "name": "__onDrop",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/dataview.js",
+            "line": 1032,
+            "description": "Called when the locale is changed.",
+            "itemtype": "method",
+            "name": "__onLocaleChanged",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.DataView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 65,
+            "description": "The width of the items.",
+            "itemtype": "property",
+            "name": "itemsWidth",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 81,
+            "description": "The height of the items.",
+            "itemtype": "property",
+            "name": "itemsHeight",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 97,
+            "description": "The vertical padding of the container element.",
+            "itemtype": "property",
+            "name": "verticalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 113,
+            "description": "The horizontal padding of the container element.",
+            "itemtype": "property",
+            "name": "horizontalPadding",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 129,
+            "description": "The vertical spacing between the elements.",
+            "itemtype": "property",
+            "name": "verticalSpacing",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 145,
+            "description": "The horizontal spacing between the elements.",
+            "itemtype": "property",
+            "name": "horizontalSpacing",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/fluidview.js",
+            "line": 161,
+            "description": "Build the items list HTML.",
+            "itemtype": "method",
+            "name": "_buildItemsHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.FluidView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/iconview.js",
+            "line": 88,
+            "description": "The width of the icons.",
+            "itemtype": "property",
+            "name": "iconWidth",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.IconView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/iconview.js",
+            "line": 104,
+            "description": "The width of the items.",
+            "itemtype": "property",
+            "name": "iconHeight",
+            "type": "Number",
+            "default": "0",
+            "class": "photonui.IconView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/iconview.js",
+            "line": 120,
+            "description": "Renders a given column.",
+            "itemtype": "method",
+            "name": "_renderColumn",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "the content of the column",
+                    "type": "photonui.Widget|String"
+                },
+                {
+                    "name": "columnId",
+                    "description": "the identifier of the column",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the rendered column",
+                "type": "Element"
+            },
+            "class": "photonui.IconView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/tableview.js",
+            "line": 70,
+            "description": "Defines if the header is displayed.",
+            "itemtype": "property",
+            "name": "showHeader",
+            "type": "Boolean",
+            "default": "true",
+            "class": "photonui.TableView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/tableview.js",
+            "line": 85,
+            "description": "Build the items list HTML.",
+            "itemtype": "method",
+            "name": "_buildItemsHtml",
+            "access": "private",
+            "tagname": "",
+            "class": "photonui.TableView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/dataview/tableview.js",
+            "line": 98,
+            "description": "Renders the table header.",
+            "itemtype": "method",
+            "name": "_renderHeader",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "the rendered header",
+                "type": "Element"
+            },
+            "class": "photonui.TableView",
+            "module": "PhotonUI",
+            "submodule": "DataView",
+            "namespace": "photonui"
+        },
+        {
             "file": "src/interactive/button.js",
-            "line": 76,
+            "line": 77,
             "description": "The button text.",
             "itemtype": "property",
             "name": "text",
@@ -4092,7 +5265,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 96,
+            "line": 97,
             "description": "Define if the button text is displayed or hidden.",
             "itemtype": "property",
             "name": "textVisible",
@@ -4105,7 +5278,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 114,
+            "line": 115,
             "description": "Left icon widget name.",
             "itemtype": "property",
             "name": "leftIconName",
@@ -4118,7 +5291,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 137,
+            "line": 138,
             "description": "Left icon widget.",
             "itemtype": "property",
             "name": "leftIcon",
@@ -4131,7 +5304,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 156,
+            "line": 157,
             "description": "Define if the left icon is displayed or hidden.",
             "itemtype": "property",
             "name": "leftIconVisible",
@@ -4144,7 +5317,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 174,
+            "line": 175,
             "description": "Right icon widget name.",
             "itemtype": "property",
             "name": "rightIconName",
@@ -4157,7 +5330,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 197,
+            "line": 198,
             "description": "Right icon widget.",
             "itemtype": "property",
             "name": "rightIcon",
@@ -4170,7 +5343,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 216,
+            "line": 217,
             "description": "Define if the right icon is displayed or hidden.",
             "itemtype": "property",
             "name": "rightIconVisible",
@@ -4183,7 +5356,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 234,
+            "line": 235,
             "description": "Define the button appearance.\n\n  * `normal`\n  * `flat`",
             "itemtype": "property",
             "name": "appearance",
@@ -4196,7 +5369,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 260,
+            "line": 261,
             "description": "Button's color.\n\nThe available colors depends on the theme. Particle, the\ndefault PhotonUI theme provides the following colors:\n\n  * `blue`\n  * `red`\n  * `yellow`\n  * `green`\n  * null (default)",
             "itemtype": "property",
             "name": "buttonColor",
@@ -4209,7 +5382,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 292,
+            "line": 293,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4223,7 +5396,18 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 310,
+            "line": 311,
+            "description": "Destroy the widget.",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "photonui.Button",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/button.js",
+            "line": 332,
             "description": "Update the button content",
             "itemtype": "method",
             "name": "_update",
@@ -4236,7 +5420,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 340,
+            "line": 362,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4249,7 +5433,7 @@
         },
         {
             "file": "src/interactive/button.js",
-            "line": 367,
+            "line": 389,
             "description": "Called when the button is clicked.",
             "itemtype": "method",
             "name": "__onButtonClicked",
@@ -4444,7 +5628,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 95,
+            "line": 100,
             "description": "The value (color in rgb hexadecimal format (e.g. \"#ff0000\")).",
             "itemtype": "property",
             "name": "value",
@@ -4456,7 +5640,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 111,
+            "line": 116,
             "description": "The color.",
             "itemtype": "property",
             "name": "color",
@@ -4468,7 +5652,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 140,
+            "line": 146,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4482,7 +5666,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 154,
+            "line": 160,
             "description": "Buffer canvas for hue circle.",
             "itemtype": "property",
             "name": "__buffH",
@@ -4496,7 +5680,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 163,
+            "line": 169,
             "description": "Buffer canvas for saturation/brightness square.",
             "itemtype": "property",
             "name": "__buffSB",
@@ -4510,7 +5694,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 172,
+            "line": 178,
             "description": "Mouse manager.",
             "itemtype": "property",
             "name": "__mouseManager",
@@ -4524,7 +5708,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 181,
+            "line": 187,
             "description": "FLAG: Disable SB square update.",
             "itemtype": "property",
             "name": "__disableSBUpdate",
@@ -4539,7 +5723,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 201,
+            "line": 207,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -4552,7 +5736,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 227,
+            "line": 233,
             "description": "Update hue circle",
             "itemtype": "method",
             "name": "_updateH",
@@ -4565,7 +5749,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 256,
+            "line": 262,
             "description": "Update saturation/brightness square mask",
             "itemtype": "method",
             "name": "_updateSBmask",
@@ -4578,7 +5762,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 290,
+            "line": 296,
             "description": "Update saturation/brightness square",
             "itemtype": "method",
             "name": "_updateSB",
@@ -4591,7 +5775,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 325,
+            "line": 331,
             "description": "Update the canvas",
             "itemtype": "method",
             "name": "_updateCanvas",
@@ -4604,7 +5788,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 365,
+            "line": 371,
             "description": "Is the pointer on the SB Square?",
             "itemtype": "method",
             "name": "_pointerOnSquare",
@@ -4627,7 +5811,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 377,
+            "line": 383,
             "description": "Is the pointer on the hue circle?",
             "itemtype": "method",
             "name": "_pointerOnCircle",
@@ -4650,7 +5834,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 392,
+            "line": 398,
             "description": "the angle of the pointer with the horizontal line that pass by the center of the hue circle.",
             "itemtype": "method",
             "name": "_pointerAngle",
@@ -4673,7 +5857,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 420,
+            "line": 426,
             "itemtype": "method",
             "name": "__onMouseMove",
             "access": "private",
@@ -4697,7 +5881,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 434,
+            "line": 440,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -4721,7 +5905,31 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 453,
+            "line": 459,
+            "itemtype": "method",
+            "name": "__onMouseUp",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "manager",
+                    "description": "",
+                    "type": "photonui.MouseManager"
+                },
+                {
+                    "name": "mstate",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "photonui.ColorPicker",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/colorpicker.js",
+            "line": 469,
             "itemtype": "method",
             "name": "__onDragStart",
             "access": "private",
@@ -4745,7 +5953,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 470,
+            "line": 486,
             "itemtype": "method",
             "name": "__onDraggingSquare",
             "access": "private",
@@ -4769,7 +5977,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 482,
+            "line": 498,
             "itemtype": "method",
             "name": "__onDraggingCircle",
             "access": "private",
@@ -4793,7 +6001,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 493,
+            "line": 509,
             "itemtype": "method",
             "name": "__onDragEnd",
             "access": "private",
@@ -4817,7 +6025,7 @@
         },
         {
             "file": "src/interactive/colorpicker.js",
-            "line": 505,
+            "line": 521,
             "itemtype": "method",
             "name": "__onValueChanged",
             "access": "private",
@@ -4927,7 +6135,7 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 73,
+            "line": 74,
             "description": "Button width",
             "itemtype": "property",
             "name": "width",
@@ -4940,7 +6148,7 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 94,
+            "line": 95,
             "description": "Button height",
             "itemtype": "property",
             "name": "height",
@@ -4953,7 +6161,7 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 116,
+            "line": 117,
             "description": "Icon widget name.",
             "itemtype": "property",
             "name": "iconName",
@@ -4966,7 +6174,7 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 138,
+            "line": 139,
             "description": "Icon widget.",
             "itemtype": "property",
             "name": "icon",
@@ -4979,7 +6187,7 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 157,
+            "line": 158,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -4993,7 +6201,18 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 175,
+            "line": 176,
+            "description": "Destroy the widget.",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "photonui.IconButton",
+            "module": "PhotonUI",
+            "submodule": "Interactive",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/interactive/iconbutton.js",
+            "line": 191,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5006,7 +6225,7 @@
         },
         {
             "file": "src/interactive/iconbutton.js",
-            "line": 192,
+            "line": 208,
             "description": "Called when the button is clicked.",
             "itemtype": "method",
             "name": "__onButtonClicked",
@@ -5260,7 +6479,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 80,
+            "line": 87,
             "description": "Define if the numeric field should be displayed.",
             "itemtype": "property",
             "name": "fieldVisible",
@@ -5273,7 +6492,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 106,
+            "line": 113,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -5287,7 +6506,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 129,
+            "line": 131,
             "description": "Update the value in the html field.",
             "itemtype": "method",
             "name": "_updateFieldValue",
@@ -5300,7 +6519,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 144,
+            "line": 146,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -5313,7 +6532,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 168,
+            "line": 170,
             "description": "Update the value form a mouse event occured on the slider.",
             "itemtype": "method",
             "name": "_updateFromMouseEvent",
@@ -5332,7 +6551,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 194,
+            "line": 196,
             "itemtype": "method",
             "name": "__onSliderMouseDown",
             "access": "private",
@@ -5350,7 +6569,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 205,
+            "line": 207,
             "itemtype": "method",
             "name": "__onSliderMouseMove",
             "access": "private",
@@ -5368,7 +6587,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 214,
+            "line": 216,
             "itemtype": "method",
             "name": "__onSliderMouseUp",
             "access": "private",
@@ -5386,7 +6605,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 226,
+            "line": 228,
             "itemtype": "method",
             "name": "__onSliderTouchStart",
             "access": "private",
@@ -5404,7 +6623,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 238,
+            "line": 240,
             "itemtype": "method",
             "name": "__onSliderTouchMove",
             "access": "private",
@@ -5422,7 +6641,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 247,
+            "line": 249,
             "itemtype": "method",
             "name": "__onSliderTouchEnd",
             "access": "private",
@@ -5440,7 +6659,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 259,
+            "line": 261,
             "description": "Gets the first touch event and normalizes pageX/Y and offsetX/Y properties.",
             "itemtype": "method",
             "name": "_moveTouchEnd",
@@ -5460,7 +6679,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 303,
+            "line": 305,
             "itemtype": "method",
             "name": "__onSliderMouseWheel",
             "access": "private",
@@ -5478,7 +6697,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 340,
+            "line": 342,
             "description": "Called when the context menu should be displayed.",
             "itemtype": "method",
             "name": "__onContextMenu",
@@ -5497,7 +6716,7 @@
         },
         {
             "file": "src/interactive/slider.js",
-            "line": 355,
+            "line": 357,
             "itemtype": "method",
             "name": "__onFieldContextMenu",
             "access": "private",
@@ -6242,7 +7461,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 67,
+            "line": 66,
             "description": "Define the tabs position.\n\n  * top\n  * bottom\n  * left\n  * right",
             "itemtype": "property",
             "name": "tabsPosition",
@@ -6255,7 +7474,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 98,
+            "line": 97,
             "description": "Html outer element of the widget (if any).",
             "itemtype": "property",
             "name": "html",
@@ -6269,7 +7488,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 110,
+            "line": 109,
             "description": "Define the active tab name.",
             "itemtype": "property",
             "name": "activeTabName",
@@ -6282,7 +7501,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 142,
+            "line": 141,
             "description": "Container node padding.",
             "itemtype": "property",
             "name": "padding",
@@ -6295,7 +7514,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 161,
+            "line": 160,
             "description": "Define the active tab.",
             "itemtype": "property",
             "name": "activeTab",
@@ -6308,7 +7527,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 201,
+            "line": 199,
             "description": "Remove a widget from the layout.",
             "itemtype": "method",
             "name": "removeChild",
@@ -6326,7 +7545,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 216,
+            "line": 214,
             "description": "Build the widget HTML.",
             "itemtype": "method",
             "name": "_buildHtml",
@@ -6339,7 +7558,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 239,
+            "line": 237,
             "description": "Update the layout.",
             "itemtype": "method",
             "name": "_updateLayout",
@@ -6352,7 +7571,7 @@
         },
         {
             "file": "src/layout/tablayout.js",
-            "line": 275,
+            "line": 273,
             "description": "Returns a normalized layoutOption for a given widget.",
             "itemtype": "method",
             "name": "_computeLayoutOptions",
@@ -7359,7 +8578,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 105,
+            "line": 108,
             "description": "Disable the keyboard manager callbacks when focusing a input field-like element.",
             "itemtype": "property",
             "name": "safe",
@@ -7372,7 +8591,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 123,
+            "line": 126,
             "description": "Disable concerned events default actions.",
             "itemtype": "property",
             "name": "noPreventDefault",
@@ -7385,7 +8604,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 141,
+            "line": 144,
             "description": "The HTML Element on which the events are binded.\n\nNOTE: If a photonui.Widget object is assigned to this property,\n      its HTML Element will be automatically assigned to the property instead.",
             "itemtype": "property",
             "name": "element",
@@ -7398,7 +8617,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 168,
+            "line": 171,
             "description": "The action:\n\n  * \"key-down\"\n  * \"key-up\"\n  * \"key-hold\"",
             "itemtype": "property",
             "name": "action",
@@ -7411,14 +8630,14 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 187,
+            "line": 190,
             "description": "Last event object.",
             "itemtype": "property",
             "name": "__event",
             "access": "private",
             "tagname": "",
             "type": "Object",
-            "default": "{}",
+            "default": "null",
             "class": "photonui.KeyboardManager",
             "module": "PhotonUI",
             "submodule": "NonVisual",
@@ -7426,7 +8645,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 197,
+            "line": 200,
             "description": "The currently active keys.",
             "itemtype": "property",
             "name": "keys",
@@ -7441,14 +8660,14 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 207,
+            "line": 210,
             "description": "Last key concerned.",
             "itemtype": "property",
             "name": "__key",
             "access": "private",
             "tagname": "",
-            "type": "Object",
-            "default": "{}",
+            "type": "String",
+            "default": "null",
             "class": "photonui.KeyboardManager",
             "module": "PhotonUI",
             "submodule": "NonVisual",
@@ -7456,7 +8675,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 217,
+            "line": 220,
             "description": "KeyCode correspondance to key name.",
             "itemtype": "property",
             "name": "__keyCache",
@@ -7470,10 +8689,10 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 226,
+            "line": 229,
             "description": "Key name correspondance to key code.",
             "itemtype": "property",
-            "name": "__keyCache",
+            "name": "__keyCodeCache",
             "access": "private",
             "tagname": "",
             "type": "Array",
@@ -7484,7 +8703,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 241,
+            "line": 244,
             "description": "Bind events on the HTML Element.",
             "itemtype": "method",
             "name": "_updateEvents",
@@ -7497,7 +8716,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 265,
+            "line": 268,
             "description": "Check if a specific key is currently pressed.",
             "itemtype": "method",
             "name": "isKeyPressed",
@@ -7519,7 +8738,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 277,
+            "line": 280,
             "description": "Check if a specific key is currently released.",
             "itemtype": "method",
             "name": "isKeyReleased",
@@ -7541,7 +8760,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 291,
+            "line": 294,
             "description": "Take a snapshot of the KeyboardManager",
             "itemtype": "method",
             "name": "_dump",
@@ -7558,7 +8777,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 306,
+            "line": 309,
             "description": "Check if the user has not focused an input element",
             "itemtype": "method",
             "name": "_checkFocus",
@@ -7575,7 +8794,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 319,
+            "line": 322,
             "description": "Check the validity of the keyboard event",
             "itemtype": "method",
             "name": "_checkEvent",
@@ -7599,7 +8818,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 340,
+            "line": 343,
             "description": "Create the key correspondance cache for basic touches",
             "itemtype": "method",
             "name": "_initKeyCache",
@@ -7612,7 +8831,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 428,
+            "line": 431,
             "description": "Get the key name from a native keyboard event",
             "itemtype": "method",
             "name": "_keyFromEvent",
@@ -7636,7 +8855,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 449,
+            "line": 452,
             "description": "Used to grab all keyboard events",
             "itemtype": "method",
             "name": "__onDocumentKeyDown",
@@ -7655,7 +8874,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 471,
+            "line": 474,
             "description": "Used to grab all keyboard events",
             "itemtype": "method",
             "name": "__onDocumentKeyUp",
@@ -7674,7 +8893,7 @@
         },
         {
             "file": "src/nonvisual/keyboardmanager.js",
-            "line": 493,
+            "line": 496,
             "description": "Called when the window loose focus",
             "itemtype": "method",
             "name": "__onWindowBlur",
@@ -7953,7 +9172,22 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 443,
+            "line": 439,
+            "description": "The button that triggered the drag start event\n\n  * null\n  * \"left\"\n  * \"middle\"\n  * \"right\"",
+            "itemtype": "property",
+            "name": "__dragStartButton",
+            "access": "private",
+            "tagname": "",
+            "type": "String",
+            "default": "null",
+            "class": "photonui.MouseManager",
+            "module": "PhotonUI",
+            "submodule": "NonVisual",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/nonvisual/mousemanager.js",
+            "line": 458,
             "description": "Bind events on the HTML Element.",
             "itemtype": "method",
             "name": "_updateEvents",
@@ -7966,7 +9200,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 470,
+            "line": 484,
             "description": "Take a snapshot of the MouseManager",
             "itemtype": "method",
             "name": "_dump",
@@ -7983,7 +9217,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 494,
+            "line": 508,
             "description": "Analyze and dispatche wEvents.",
             "itemtype": "method",
             "name": "_stateMachine",
@@ -8008,7 +9242,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 628,
+            "line": 644,
             "itemtype": "method",
             "name": "__onMouseDown",
             "access": "private",
@@ -8026,7 +9260,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 637,
+            "line": 653,
             "itemtype": "method",
             "name": "__onMouseUp",
             "access": "private",
@@ -8044,7 +9278,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 646,
+            "line": 662,
             "itemtype": "method",
             "name": "__onDoubleClick",
             "access": "private",
@@ -8062,7 +9296,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 655,
+            "line": 671,
             "itemtype": "method",
             "name": "__onMouseMove",
             "access": "private",
@@ -8080,7 +9314,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 664,
+            "line": 680,
             "description": "Used to detect drag-end outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseUp",
@@ -8099,7 +9333,7 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 680,
+            "line": 701,
             "description": "Used to detect dragging outside the element.",
             "itemtype": "method",
             "name": "__onDocumentMouseMove",
@@ -8118,9 +9352,9 @@
         },
         {
             "file": "src/nonvisual/mousemanager.js",
-            "line": 696,
+            "line": 717,
             "itemtype": "method",
-            "name": "__onMouseWheel",
+            "name": "__onWheel",
             "access": "private",
             "tagname": "",
             "params": [
@@ -9394,6 +10628,12 @@
                     "name": "callback",
                     "description": "The function that will be called when the event occured.",
                     "type": "Function"
+                },
+                {
+                    "name": "options",
+                    "description": "options for `addEventListener`",
+                    "type": "Object",
+                    "optional": true
                 }
             ],
             "class": "photonui.Base",
@@ -9402,7 +10642,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 253,
+            "line": 257,
             "description": "Unbind javascript event.",
             "itemtype": "method",
             "name": "_unbindEvent",
@@ -9421,7 +10661,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 272,
+            "line": 276,
             "description": "Register available wEvent.",
             "itemtype": "method",
             "name": "_registerWEvents",
@@ -9440,7 +10680,7 @@
         },
         {
             "file": "src/base.js",
-            "line": 288,
+            "line": 292,
             "description": "Call all callbacks for the given wEvent.\n\nNOTE: the first argument passed to the callback is the current widget.\nNOTE²: if the thisArg of the callback is null, this will be binded to the current widget.",
             "itemtype": "method",
             "name": "_callCallbacks",
@@ -9596,6 +10836,33 @@
                     "type": "String"
                 }
             ],
+            "class": "photonui.Helpers",
+            "module": "PhotonUI",
+            "submodule": "Helpers",
+            "namespace": "photonui"
+        },
+        {
+            "file": "src/helpers.js",
+            "line": 205,
+            "description": "Get the closest matching element up the DOM tree.\nhttps://gomakethings.com/climbing-up-and-down-the-dom-tree-with-vanilla-javascript/",
+            "itemtype": "method",
+            "name": "getClosest",
+            "params": [
+                {
+                    "name": "elem",
+                    "description": "Starting element",
+                    "type": "Element"
+                },
+                {
+                    "name": "selector",
+                    "description": "Selector to match against",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns null if not match found",
+                "type": "Boolean|Element"
+            },
             "class": "photonui.Helpers",
             "module": "PhotonUI",
             "submodule": "Helpers",
@@ -9948,7 +11215,9 @@
         {
             "file": "src/widget.js",
             "line": 511,
-            "description": "Insert a widget in the DOM.\n\nmethod domInsert",
+            "description": "Insert a widget in the DOM.",
+            "itemtype": "method",
+            "name": "domInsert",
             "static": 1,
             "params": [
                 {
@@ -9967,10 +11236,5 @@
             "namespace": "photonui"
         }
     ],
-    "warnings": [
-        {
-            "message": "Missing item type\nInsert a widget in the DOM.\n\nmethod domInsert",
-            "line": " src/widget.js:511"
-        }
-    ]
+    "warnings": []
 }

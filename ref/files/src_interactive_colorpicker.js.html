@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -190,7 +196,11 @@ var MouseManager = require(&quot;../nonvisual/mousemanager.js&quot;);
  *
  *   * value-changed:
  *      - description: the selected color changed.
- *      - callback:    function(widget, color)
+ *      - callback:    function (widget, color)
+ *
+* value-changed-final:
+ *      - description: called when the value is no more modified after continuous changes
+ *      - callback:    function (widget, color)
  *
  * @class ColorPicker
  * @constructor
@@ -201,7 +211,7 @@ var ColorPicker = Widget.$extend({
 
     // Constructor
     __init__: function (params) {
-        this._registerWEvents([&quot;value-changed&quot;]);
+        this._registerWEvents([&quot;value-changed&quot;, &quot;value-changed-final&quot;]);
         this._color = new Color();
         this.__buffH = document.createElement(&quot;canvas&quot;);
         this.__buffH.width = 200;
@@ -222,6 +232,7 @@ var ColorPicker = Widget.$extend({
 
         this.__mouseManager.registerCallback(&quot;click&quot;, &quot;mouse-move&quot;, this.__onMouseMove.bind(this));
         this.__mouseManager.registerCallback(&quot;mouse-down&quot;, &quot;mouse-down&quot;, this.__onMouseDown.bind(this));
+        this.__mouseManager.registerCallback(&quot;mouse-up&quot;, &quot;mouse-up&quot;, this.__onMouseUp.bind(this));
         this.__mouseManager.registerCallback(&quot;drag-start&quot;, &quot;drag-start&quot;, this.__onDragStart.bind(this));
 
         // Bind js events
@@ -270,10 +281,11 @@ var ColorPicker = Widget.$extend({
             }
             this._color = color;
             this._color.registerCallback(&quot;photonui.colorpicker.value-changed::&quot; +
-                                         this.name, &quot;value-changed&quot;, function () {
-                this._updateSB();
-                this._updateCanvas();
-            }.bind(this));
+                this.name, &quot;value-changed&quot;,
+                function () {
+                    this._updateSB();
+                    this._updateCanvas();
+                }.bind(this));
             this._updateSB();
             this._updateCanvas();
         }
@@ -379,7 +391,7 @@ var ColorPicker = Widget.$extend({
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (var i = 0 ; i &lt; 360 ; i++) {
+        for (var i = 0; i &lt; 360; i++) {
             color.hue = 360 - i;
             ctx.beginPath();
             ctx.fillStyle = color.rgbHexString;
@@ -410,8 +422,8 @@ var ColorPicker = Widget.$extend({
         var saturation = 0;
         var b = 0;
         var s = 0;
-        for (b = 0 ; b &lt; 100 ; b++) {
-            for (s = 0 ; s &lt; 100 ; s++) {
+        for (b = 0; b &lt; 100; b++) {
+            for (s = 0; s &lt; 100; s++) {
                 i = 400 * b + 4 * s;
 
                 // some magic here
@@ -590,6 +602,16 @@ var ColorPicker = Widget.$extend({
             this.color.hue = this._pointerAngle(mstate);
             this._callCallbacks(&quot;value-changed&quot;, this.color);
         }
+    },
+
+    /**
+     * @method __onMouseUp
+     * @private
+     * @param {photonui.MouseManager} manager
+     * @param {Object} mstate
+     */
+    __onMouseUp: function (manager, mstate) {
+        this._callCallbacks(&quot;value-changed-final&quot;, this.color);
     },
 
     /**

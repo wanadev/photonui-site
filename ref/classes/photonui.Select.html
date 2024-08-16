@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -468,7 +474,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l367"><code>src&#x2F;composite&#x2F;select.js:367</code></a>
+        <a href="../files/src_composite_select.js.html#l375"><code>src&#x2F;composite&#x2F;select.js:375</code></a>
         </p>
 
 
@@ -574,7 +580,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l394"><code>src&#x2F;composite&#x2F;select.js:394</code></a>
+        <a href="../files/src_composite_select.js.html#l402"><code>src&#x2F;composite&#x2F;select.js:402</code></a>
         </p>
 
 
@@ -624,7 +630,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_composite_select.js.html#l404"><code>src&#x2F;composite&#x2F;select.js:404</code></a>
+        <a href="../files/src_composite_select.js.html#l412"><code>src&#x2F;composite&#x2F;select.js:412</code></a>
         </p>
 
 
@@ -661,7 +667,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l383"><code>src&#x2F;composite&#x2F;select.js:383</code></a>
+        <a href="../files/src_composite_select.js.html#l391"><code>src&#x2F;composite&#x2F;select.js:391</code></a>
         </p>
 
 
@@ -708,6 +714,9 @@
                 </li>
                 <li class="arg">
                         <code>callback</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[options]</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -778,6 +787,17 @@
                     </div>
 
                 </li>
+                <li class="param">
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        options for <code>addEventListener</code>
+                    </div>
+
+                </li>
             </ul>
         </div>
 
@@ -803,7 +823,7 @@
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_composite_select.js.html#l334"><code>src&#x2F;composite&#x2F;select.js:334</code></a>
+        <a href="../files/src_composite_select.js.html#l342"><code>src&#x2F;composite&#x2F;select.js:342</code></a>
         </p>
 
 
@@ -844,7 +864,7 @@
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__callCallbacks">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l288"><code>src&#x2F;base.js:288</code></a>
+        <a href="../files/src_base.js.html#l292"><code>src&#x2F;base.js:292</code></a>
         </p>
 
 
@@ -910,7 +930,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__registerWEvents">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l272"><code>src&#x2F;base.js:272</code></a>
+        <a href="../files/src_base.js.html#l276"><code>src&#x2F;base.js:276</code></a>
         </p>
 
 
@@ -963,7 +983,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>Inherited from
                 <a href="../classes/photonui.Base.html#method__unbindEvent">photonui.Base</a>:
-        <a href="../files/src_base.js.html#l253"><code>src&#x2F;base.js:253</code></a>
+        <a href="../files/src_base.js.html#l257"><code>src&#x2F;base.js:257</code></a>
         </p>
 
 
@@ -1010,7 +1030,7 @@ NOTE²: if the thisArg of the callback is null, this will be binded to the curre
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l346"><code>src&#x2F;composite&#x2F;select.js:346</code></a>
+        <a href="../files/src_composite_select.js.html#l354"><code>src&#x2F;composite&#x2F;select.js:354</code></a>
         </p>
 
 
@@ -1161,7 +1181,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l310"><code>src&#x2F;composite&#x2F;select.js:310</code></a>
+        <a href="../files/src_composite_select.js.html#l313"><code>src&#x2F;composite&#x2F;select.js:313</code></a>
         </p>
 
 
@@ -1275,7 +1295,7 @@ One should use '@photonui-update' abitbol's annotation on concerned properties.
                 photonui.Base
             </a>
             but overwritten in
-        <a href="../files/src_composite_select.js.html#l322"><code>src&#x2F;composite&#x2F;select.js:322</code></a>
+        <a href="../files/src_composite_select.js.html#l325"><code>src&#x2F;composite&#x2F;select.js:325</code></a>
         </p>
 
 
@@ -1673,7 +1693,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l295"><code>src&#x2F;composite&#x2F;select.js:295</code></a>
+        <a href="../files/src_composite_select.js.html#l298"><code>src&#x2F;composite&#x2F;select.js:298</code></a>
         </p>
 
 
@@ -1724,7 +1744,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l139"><code>src&#x2F;composite&#x2F;select.js:139</code></a>
+        <a href="../files/src_composite_select.js.html#l142"><code>src&#x2F;composite&#x2F;select.js:142</code></a>
         </p>
 
 
@@ -1750,7 +1770,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l152"><code>src&#x2F;composite&#x2F;select.js:152</code></a>
+        <a href="../files/src_composite_select.js.html#l155"><code>src&#x2F;composite&#x2F;select.js:155</code></a>
         </p>
 
 
@@ -1854,7 +1874,7 @@ internal use).
                 photonui.Widget
             </a>
             but overwritten in
-        <a href="../files/src_composite_select.js.html#l281"><code>src&#x2F;composite&#x2F;select.js:281</code></a>
+        <a href="../files/src_composite_select.js.html#l284"><code>src&#x2F;composite&#x2F;select.js:284</code></a>
         </p>
 
 
@@ -1880,7 +1900,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l254"><code>src&#x2F;composite&#x2F;select.js:254</code></a>
+        <a href="../files/src_composite_select.js.html#l257"><code>src&#x2F;composite&#x2F;select.js:257</code></a>
         </p>
 
 
@@ -2054,7 +2074,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l122"><code>src&#x2F;composite&#x2F;select.js:122</code></a>
+        <a href="../files/src_composite_select.js.html#l125"><code>src&#x2F;composite&#x2F;select.js:125</code></a>
         </p>
 
 
@@ -2080,7 +2100,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l175"><code>src&#x2F;composite&#x2F;select.js:175</code></a>
+        <a href="../files/src_composite_select.js.html#l178"><code>src&#x2F;composite&#x2F;select.js:178</code></a>
         </p>
 
 
@@ -2106,7 +2126,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l206"><code>src&#x2F;composite&#x2F;select.js:206</code></a>
+        <a href="../files/src_composite_select.js.html#l209"><code>src&#x2F;composite&#x2F;select.js:209</code></a>
         </p>
 
 
@@ -2132,7 +2152,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l185"><code>src&#x2F;composite&#x2F;select.js:185</code></a>
+        <a href="../files/src_composite_select.js.html#l188"><code>src&#x2F;composite&#x2F;select.js:188</code></a>
         </p>
 
 
@@ -2158,7 +2178,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l216"><code>src&#x2F;composite&#x2F;select.js:216</code></a>
+        <a href="../files/src_composite_select.js.html#l219"><code>src&#x2F;composite&#x2F;select.js:219</code></a>
         </p>
 
 
@@ -2184,7 +2204,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l195"><code>src&#x2F;composite&#x2F;select.js:195</code></a>
+        <a href="../files/src_composite_select.js.html#l198"><code>src&#x2F;composite&#x2F;select.js:198</code></a>
         </p>
 
 
@@ -2210,7 +2230,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l235"><code>src&#x2F;composite&#x2F;select.js:235</code></a>
+        <a href="../files/src_composite_select.js.html#l238"><code>src&#x2F;composite&#x2F;select.js:238</code></a>
         </p>
 
 
@@ -2235,7 +2255,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l226"><code>src&#x2F;composite&#x2F;select.js:226</code></a>
+        <a href="../files/src_composite_select.js.html#l229"><code>src&#x2F;composite&#x2F;select.js:229</code></a>
         </p>
 
 
@@ -2260,7 +2280,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l244"><code>src&#x2F;composite&#x2F;select.js:244</code></a>
+        <a href="../files/src_composite_select.js.html#l247"><code>src&#x2F;composite&#x2F;select.js:247</code></a>
         </p>
 
 
@@ -2286,7 +2306,7 @@ internal use).
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_composite_select.js.html#l165"><code>src&#x2F;composite&#x2F;select.js:165</code></a>
+        <a href="../files/src_composite_select.js.html#l168"><code>src&#x2F;composite&#x2F;select.js:168</code></a>
         </p>
 
 

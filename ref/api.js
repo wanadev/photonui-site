@@ -15,20 +15,24 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.ColorPicker",
         "photonui.ColorPickerDialog",
         "photonui.Container",
+        "photonui.DataView",
         "photonui.Dialog",
         "photonui.Expander",
         "photonui.FAIcon",
         "photonui.Field",
         "photonui.FileManager",
         "photonui.FluidLayout",
+        "photonui.FluidView",
         "photonui.FontSelect",
         "photonui.GridLayout",
         "photonui.Helpers",
         "photonui.IconButton",
+        "photonui.IconView",
         "photonui.Image",
         "photonui.KeyboardManager",
         "photonui.Label",
         "photonui.Layout",
+        "photonui.ListView",
         "photonui.Menu",
         "photonui.MenuItem",
         "photonui.MouseManager",
@@ -45,6 +49,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "photonui.Switch",
         "photonui.TabItem",
         "photonui.TabLayout",
+        "photonui.TableView",
         "photonui.Template",
         "photonui.Text",
         "photonui.TextAreaField",
@@ -58,6 +63,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "modules": [
         "Composite",
         "Container",
+        "DataView",
         "Helpers",
         "Interactive",
         "Layout",
@@ -74,6 +80,11 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "Container",
             "name": "Container",
+            "description": "PhotonUI - Javascript Web User Interface."
+        },
+        {
+            "displayName": "DataView",
+            "name": "DataView",
             "description": "PhotonUI - Javascript Web User Interface."
         },
         {

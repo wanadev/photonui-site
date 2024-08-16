@@ -7,6 +7,7 @@ layout: homepage
 
 * [Quick Start](quick-start.html)
 * [Create a Custom Widget](custom-widget.html)
+* [Data views: DataView, FluidView, TableView](data-views.html)
 
 
 ## Class reference

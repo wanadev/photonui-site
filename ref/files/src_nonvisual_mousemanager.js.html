@@ -17,7 +17,7 @@
                 <h1><img src="../assets/css/logo.png" title="photonui" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.7.0</em>
+            <em>API Docs for: 1.7.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -52,20 +52,24 @@
                                 <li><a href="../classes/photonui.ColorPicker.html">photonui.ColorPicker</a></li>
                                 <li><a href="../classes/photonui.ColorPickerDialog.html">photonui.ColorPickerDialog</a></li>
                                 <li><a href="../classes/photonui.Container.html">photonui.Container</a></li>
+                                <li><a href="../classes/photonui.DataView.html">photonui.DataView</a></li>
                                 <li><a href="../classes/photonui.Dialog.html">photonui.Dialog</a></li>
                                 <li><a href="../classes/photonui.Expander.html">photonui.Expander</a></li>
                                 <li><a href="../classes/photonui.FAIcon.html">photonui.FAIcon</a></li>
                                 <li><a href="../classes/photonui.Field.html">photonui.Field</a></li>
                                 <li><a href="../classes/photonui.FileManager.html">photonui.FileManager</a></li>
                                 <li><a href="../classes/photonui.FluidLayout.html">photonui.FluidLayout</a></li>
+                                <li><a href="../classes/photonui.FluidView.html">photonui.FluidView</a></li>
                                 <li><a href="../classes/photonui.FontSelect.html">photonui.FontSelect</a></li>
                                 <li><a href="../classes/photonui.GridLayout.html">photonui.GridLayout</a></li>
                                 <li><a href="../classes/photonui.Helpers.html">photonui.Helpers</a></li>
                                 <li><a href="../classes/photonui.IconButton.html">photonui.IconButton</a></li>
+                                <li><a href="../classes/photonui.IconView.html">photonui.IconView</a></li>
                                 <li><a href="../classes/photonui.Image.html">photonui.Image</a></li>
                                 <li><a href="../classes/photonui.KeyboardManager.html">photonui.KeyboardManager</a></li>
                                 <li><a href="../classes/photonui.Label.html">photonui.Label</a></li>
                                 <li><a href="../classes/photonui.Layout.html">photonui.Layout</a></li>
+                                <li><a href="../classes/photonui.ListView.html">photonui.ListView</a></li>
                                 <li><a href="../classes/photonui.Menu.html">photonui.Menu</a></li>
                                 <li><a href="../classes/photonui.MenuItem.html">photonui.MenuItem</a></li>
                                 <li><a href="../classes/photonui.MouseManager.html">photonui.MouseManager</a></li>
@@ -82,6 +86,7 @@
                                 <li><a href="../classes/photonui.Switch.html">photonui.Switch</a></li>
                                 <li><a href="../classes/photonui.TabItem.html">photonui.TabItem</a></li>
                                 <li><a href="../classes/photonui.TabLayout.html">photonui.TabLayout</a></li>
+                                <li><a href="../classes/photonui.TableView.html">photonui.TableView</a></li>
                                 <li><a href="../classes/photonui.Template.html">photonui.Template</a></li>
                                 <li><a href="../classes/photonui.Text.html">photonui.Text</a></li>
                                 <li><a href="../classes/photonui.TextAreaField.html">photonui.TextAreaField</a></li>
@@ -97,6 +102,7 @@
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/Composite.html">Composite</a></li>
                                 <li><a href="../modules/Container.html">Container</a></li>
+                                <li><a href="../modules/DataView.html">DataView</a></li>
                                 <li><a href="../modules/Helpers.html">Helpers</a></li>
                                 <li><a href="../modules/Interactive.html">Interactive</a></li>
                                 <li><a href="../modules/Layout.html">Layout</a></li>
@@ -578,6 +584,21 @@ var MouseManager = Base.$extend({
      */
     __event: {},
 
+    /**
+     * The button that triggered the drag start event
+     *
+     *   * null
+     *   * &quot;left&quot;
+     *   * &quot;middle&quot;
+     *   * &quot;right&quot;
+     *
+     * @property __dragStartButton
+     * @private
+     * @type String
+     * @default null
+     */
+    __dragStartButton: null,
+
     //////////////////////////////////////////
     // Methods                              //
     //////////////////////////////////////////
@@ -602,8 +623,7 @@ var MouseManager = Base.$extend({
         this._bindEvent(&quot;mouse-up&quot;, this.element, &quot;mouseup&quot;, this.__onMouseUp.bind(this));
         this._bindEvent(&quot;double-click&quot;, this.element, &quot;dblclick&quot;, this.__onDoubleClick.bind(this));
         this._bindEvent(&quot;mouse-move&quot;, this.element, &quot;mousemove&quot;, this.__onMouseMove.bind(this));
-        this._bindEvent(&quot;mousewheel&quot;, this.element, &quot;mousewheel&quot;, this.__onMouseWheel.bind(this));
-        this._bindEvent(&quot;mousewheel-firefox&quot;, this.element, &quot;DOMMouseScroll&quot;, this.__onMouseWheel.bind(this));
+        this._bindEvent(&quot;wheel&quot;, this.element, &quot;wheel&quot;, this.__onWheel.bind(this));
 
         this._bindEvent(&quot;document-mouse-up&quot;, document, &quot;mouseup&quot;, this.__onDocumentMouseUp.bind(this));
         this._bindEvent(&quot;document-mouse-move&quot;, document, &quot;mousemove&quot;, this.__onDocumentMouseMove.bind(this));
@@ -649,13 +669,13 @@ var MouseManager = Base.$extend({
         this._action = action;
         this.__event = event;
         this._button = null;
-        if (event.button === 0) {
+        if (this.__dragStartButton) {
+            this._button = this.__dragStartButton;
+        } else if (event.button === 0) {
             this._button = &quot;left&quot;;
-        }
-        if (event.button === 1) {
+        } else if (event.button === 1) {
             this._button = &quot;middle&quot;;
-        }
-        if (event.button === 2) {
+        } else if (event.button === 2) {
             this._button = &quot;right&quot;;
         }
 
@@ -728,6 +748,7 @@ var MouseManager = Base.$extend({
             this.__prevState.action != &quot;dragging&quot; &amp;&amp; (this.btnLeft || this.btnMiddle || this.btnRight)) {
             if (Math.abs(this.pageX - this.__mouseDownEvent.pageX) &gt; this._threshold ||
                 Math.abs(this.pageY - this.__mouseDownEvent.pageY) &gt; this._threshold) {
+                this.__dragStartButton = this._button;
                 // Drag Start
                 this._action = &quot;drag-start&quot;;
                 this.__event = this.__mouseDownEvent;
@@ -752,6 +773,7 @@ var MouseManager = Base.$extend({
         } else if (action == &quot;drag-end&quot; || (action == &quot;mouse-up&quot; &amp;&amp; (this.__prevState.action == &quot;dragging&quot; ||
                  this.__prevState.action == &quot;drag-start&quot;) &amp;&amp; !(this.btnLeft || this.btnMiddle || this.btnRight))) {
             this._action = &quot;drag-end&quot;;
+            this.__dragStartButton = null;
             this._callCallbacks(&quot;mouse-event&quot;, [this._dump()]);
             this._callCallbacks(this.action, [this._dump()]);
         }
@@ -816,6 +838,11 @@ var MouseManager = Base.$extend({
         }
         if (this.action == &quot;dragging&quot; || this.action == &quot;drag-start&quot;) {
             this._stateMachine(&quot;drag-end&quot;, event);
+        } else if (event.button === 0 &amp;&amp; this._btnLeft ||
+            event.button === 1 &amp;&amp; this._btnMiddle ||
+            event.button === 2 &amp;&amp; this._btnRight) {
+
+            this._stateMachine(&quot;mouse-up&quot;, event);
         }
     },
 
@@ -836,26 +863,15 @@ var MouseManager = Base.$extend({
     },
 
     /**
-     * @method __onMouseWheel
+     * @method __onWheel
      * @private
      * @param event
      */
-    __onMouseWheel: function (event) {
+    __onWheel: function (event) {
         var wheelDelta = null;
 
-        // Webkit
-        if (event.wheelDeltaY !== undefined) {
-            wheelDelta = event.wheelDeltaY;
-        }
-        // MSIE
-        if (event.wheelDelta !== undefined) {
-            wheelDelta = event.wheelDelta;
-        }
-        // Firefox
-        if (event.axis !== undefined &amp;&amp; event.detail !== undefined) {
-            if (event.axis == 2) { // Y
-                wheelDelta = -event.detail;
-            }
+        if (event.deltaY !== undefined) {
+            wheelDelta = -event.deltaY;
         }
 
         if (wheelDelta !== null) {

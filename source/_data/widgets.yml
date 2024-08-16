@@ -38,6 +38,10 @@
   image: doc/widgets/colorpickerdialog.png
   url: doc/widgets/colorpickerdialog.html
 
+- name: DataView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/dataview.html
+
 - name: Dialog
   image: doc/widgets/dialog.png
   url: doc/widgets/dialog.html
@@ -58,6 +62,10 @@
   image: doc/widgets/fluidlayout.png
   url: doc/widgets/fluidlayout.html
 
+- name: FluidView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/fluidview.html
+
 - name: FontSelect
   image: doc/widgets/fontselect.png
   url: doc/widgets/fontselect.html
@@ -70,6 +78,10 @@
   image: doc/widgets/iconbutton.png
   url: doc/widgets/iconbutton.html
 
+- name: IconView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/iconview.html
+
 - name: Image
   image: doc/widgets/image.png
   url: doc/widgets/image.html
@@ -81,6 +93,10 @@
 - name: Label
   image: doc/widgets/label.png
   url: doc/widgets/label.html
+
+- name: ListView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/listview.html
 
 - name: Menu
   image: doc/widgets/menu.png
@@ -141,6 +157,10 @@
 - name: TabLayout
   image: doc/widgets/tablayout.png
   url: doc/widgets/tablayout.html
+
+- name: TableView
+  image: doc/widgets/default.png # TODO
+  url: doc/widgets/tableview.html
 
 - name: Template
   image: doc/widgets/template.png
