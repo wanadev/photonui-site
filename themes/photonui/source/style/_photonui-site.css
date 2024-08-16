@@ -319,6 +319,10 @@ figure .run-script:hover {
     background: #D25440;
 }
 
+figure.highlight.javascript .code pre br {
+    display: none;
+}
+
 article > pre {
     box-sizing: border-box;
     width: 100%;
