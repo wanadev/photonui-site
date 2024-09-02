@@ -71,7 +71,7 @@ deploy:
 
 # Menu
 menu:
-    Home: /
-    Documentation: /doc/
+    Home: /PhotonUI/
+    Documentation: /PhotonUI/doc/
     GitHub: https://github.com/wanadev/PhotonUI
     Download: https://github.com/wanadev/PhotonUI/archive/master.zip
